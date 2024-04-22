@@ -1,0 +1,7 @@
+{"model_name":"cohere.command-r-16k",
+"embedding_model_name":"cohere.embed-english-v3.0",
+"endpoint":"",
+"compartment_ocid":"",
+"langchain_endpoint":"",
+"langchain_key":""
+}
