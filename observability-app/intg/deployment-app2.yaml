@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2
+  namespace: observability-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app2
+  template:
+    metadata:
+      labels:
+        app: app2
+    spec:
+      containers:
+      - name: app
+        image: localhost:5000/observability-app:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8000
+        volumeMounts:
+        - name: log-volume
+          mountPath: /app/logs
+      volumes:
+      - name: log-volume
+        hostPath:
+          path: /tmp/app2-logs
+          type: DirectoryOrCreate

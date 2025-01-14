@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: promtail
+  namespace: observability-demo
+spec:
+  selector:
+    matchLabels:
+      app: promtail
+  template:
+    metadata:
+      labels:
+        app: promtail
+    spec:
+      containers:
+        - name: promtail
+          image: grafana/promtail:2.9.3
+          args:
+            - "-config.file=/etc/promtail/promtail.yaml"
+          volumeMounts:
+            - name: config
+              mountPath: /etc/promtail
+            - name: logs
+              mountPath: /app
+            - name: positions
+              mountPath: /tmp
+            - name: app-logs
+              mountPath: /app/logs
+      volumes:
+        - name: config
+          configMap:
+            name: promtail-config
+        - name: logs
+          hostPath:
+            path: /tmp/app1-logs  # For example; can be modified per node or app
+            type: DirectoryOrCreate
+        - name: positions
+          emptyDir: {}
+        - name: app1-logs
+          hostPath:
+            path: /tmp/app1-logs
+            type: DirectoryOrCreate
+        - name: app2-logs
+          hostPath:
+            path: /tmp/app2-logs
+            type: DirectoryOrCreate

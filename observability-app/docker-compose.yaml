@@ -1,0 +1,40 @@
+version: "3.9"
+
+services:
+  app1:
+    image: localhost:5000/observability-app:latest
+    container_name: app1
+    volumes:
+      - app1-logs:/app/logs
+    networks:
+      - appnet
+    depends_on:
+      - nginx
+
+  app2:
+    image: localhost:5000/observability-app:latest
+    container_name: app2
+    volumes:
+      - app2-logs:/app/logs
+    networks:
+      - appnet
+    depends_on:
+      - nginx
+
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      - "8080:80"
+    networks:
+      - appnet
+
+volumes:
+  app1-logs:
+  app2-logs:
+
+networks:
+  appnet:
+    driver: bridge
