@@ -1,0 +1,94 @@
+---
+apiVersion: kagent.dev/v1alpha1
+kind: ModelConfig
+metadata:
+  name: phi3-model-config
+  namespace: kagent
+spec:
+  model: phi3
+  provider: Ollama
+  ollama:
+    host: http://ollama.ollama.svc.cluster.local
+  modelInfo:
+    vision: false
+    functionCalling: true 
+    jsonOutput: true      
+    structuredOutput: true
+    family: "phi"
+    multipleSystemMessages: false
+
+---
+apiVersion: kagent.dev/v1alpha1
+kind: ModelConfig
+metadata:
+  name: llama3-2-3b-model-config
+  namespace: kagent
+spec:
+  model: llama3.2:3b
+  provider: Ollama
+  ollama:
+    host: http://ollama.ollama.svc.cluster.local
+  modelInfo:
+    vision: false
+    functionCalling: true 
+    jsonOutput: true      
+    structuredOutput: true
+    family: "unknown"
+    multipleSystemMessages: false
+---
+apiVersion: kagent.dev/v1alpha1
+kind: ModelConfig
+metadata:
+  name: mistral-model-config
+  namespace: kagent
+spec:
+  model: mistral
+  provider: Ollama
+  ollama:
+    host: http://ollama.ollama.svc.cluster.local
+  modelInfo:
+    vision: false
+    functionCalling: true 
+    jsonOutput: true      
+    structuredOutput: true
+    family: "mistral"
+    multipleSystemMessages: false
+
+---
+apiVersion: kagent.dev/v1alpha1
+kind: ModelConfig
+metadata:
+  name: openchat-model-config
+  namespace: kagent
+spec:
+  model: openchat
+  provider: Ollama
+  ollama:
+    host: http://ollama.ollama.svc.cluster.local
+  modelInfo:
+    vision: false
+    functionCalling: true 
+    jsonOutput: true
+    structuredOutput: true
+    family: "openchat"
+    multipleSystemMessages: false
+
+
+---
+apiVersion: kagent.dev/v1alpha1
+kind: ModelConfig
+metadata:
+  name: llama3-model-config
+  namespace: kagent
+spec:
+  model: llama3
+  provider: Ollama
+  ollama:
+    host: http://ollama.ollama.svc.cluster.local
+  modelInfo:
+    vision: false
+    functionCalling: true
+    jsonOutput: true
+    family: "unknown"
+    structuredOutput: true
+    multipleSystemMessages: false
