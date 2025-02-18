@@ -1,0 +1,8 @@
+apiVersion: kagent.dev/v1alpha1
+kind: PromptRequest
+metadata:
+  name: phi3-test
+  namespace: kagent
+spec:
+  agent: my-first-k8s-agent
+  input: "What is the status of my Kubernetes cluster?"

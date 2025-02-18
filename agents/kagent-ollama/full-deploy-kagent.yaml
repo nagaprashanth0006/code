@@ -1,0 +1,94 @@
+---
+# 1. Namespace for Ollama
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: ollama
+
+---
+# 2. Ollama Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ollama
+  namespace: ollama
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ollama
+  template:
+    metadata:
+      labels:
+        app: ollama
+    spec:
+      containers:
+        - name: ollama
+          image: ollama/ollama:latest
+          ports:
+            - containerPort: 11434
+          command: ["sh", "-c"]
+          args:
+            - >
+              ollama serve &
+              sleep 5 && ollama pull phi3 && tail -f /dev/null
+
+---
+# 3. Ollama Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: ollama
+  namespace: ollama
+spec:
+  selector:
+    app: ollama
+  ports:
+    - port: 80
+      targetPort: 11434
+      protocol: TCP
+  type: ClusterIP
+
+---
+# 4. ModelConfig for Kagent
+apiVersion: kagent.dev/v1alpha1
+kind: ModelConfig
+metadata:
+  name: phi3-model-config
+  namespace: kagent
+spec:
+  model: phi3
+  provider: Ollama
+  ollama:
+    host: http://ollama.ollama.svc.cluster.local
+  modelInfo:
+    vision: false
+    functionCalling: false
+    jsonOutput: false
+    structuredOutput: false
+    family: "phi"
+    multipleSystemMessages: false
+
+---
+# 5. Agent for auto-deployment
+apiVersion: kagent.dev/v1alpha1
+kind: Agent
+metadata:
+  name: deploy-webapp-agent
+  namespace: kagent
+spec:
+  modelConfigRef: kagent/phi3-model-config
+  instructions: |
+    You are a Kubernetes DevOps assistant. When asked to deploy an application, do the following:
+    - Generate a Python Flask script with two endpoints: /health and /data
+    - /health returns status ok; /data returns some sample JSON
+    - Generate a Dockerfile
+    - Generate Kubernetes manifests: Namespace, Deployment, Service
+    - Apply them using the available tools
+    - Do not ask the user for confirmation — act directly.
+  tools:
+    - k8s.CreateNamespace
+    - k8s.ApplyManifest
+    - k8s.GetPods
+    - k8s.GetServices
+    - k8s.DescribeDeployment
