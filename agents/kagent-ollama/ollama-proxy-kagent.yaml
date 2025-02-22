@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ollama-proxy
+  namespace: kagent
+spec:
+  selector:
+    app: ollama-proxy
+  ports:
+    - port: 11434
+      targetPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ollama-proxy
+  namespace: kagent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ollama-proxy
+  template:
+    metadata:
+      labels:
+        app: ollama-proxy
+    spec:
+      containers:
+        - name: proxy
+          image: alpine/socat
+          args:
+            - tcp-listen:8080,fork
+            - tcp-connect:192.168.0.194:11434
