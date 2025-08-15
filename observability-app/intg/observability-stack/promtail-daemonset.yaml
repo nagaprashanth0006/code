@@ -24,8 +24,10 @@ spec:
               mountPath: /app
             - name: positions
               mountPath: /tmp
-            - name: app-logs
-              mountPath: /app/logs
+            - name: app1-logs
+              mountPath: /app/logs1
+            - name: app2-logs
+              mountPath: /app/logs2
       volumes:
         - name: config
           configMap:

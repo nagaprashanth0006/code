@@ -1,0 +1,51 @@
+server:
+  http_listen_port: 9080
+
+positions:
+  filename: /tmp/positions.yaml
+
+clients:
+  - url: http://loki:3100/loki/api/v1/push
+
+scrape_configs:
+  # A) Discover container logs via Docker (great for infra services like mysql/redis)
+  - job_name: docker
+    docker_sd_configs:
+      - host: unix:///var/run/docker.sock
+        refresh_interval: 5s
+    relabel_configs:
+      - source_labels: ['__meta_docker_container_name']
+        target_label: 'container'
+        regex: '/(.*)'
+      - source_labels: ['__meta_docker_container_label_app']
+        target_label: 'app'
+      - source_labels: ['__meta_docker_container_label_env']
+        target_label: 'env'
+      - source_labels: ['__meta_docker_container_label_stack']
+        target_label: 'stack'
+      - source_labels: ['__meta_docker_container_log_stream']
+        target_label: 'stream'
+      # Point promtail at the actual JSON log file
+      - source_labels: ['__meta_docker_container_log_path']
+        target_label: '__path__'
+
+    pipeline_stages:
+      - docker: {}     # parse docker JSON log payload into line + labels
+
+  # B) Tail your application file logs (nginx, tomcat, agent)
+  - job_name: app_filelogs
+    static_configs:
+      - targets: ['localhost']
+        labels:
+          job: app_filelogs
+          env: dev
+          __path__: /var/log/app/**.log   # we mounted ./logs -> /var/log/app
+    pipeline_stages:
+      - multiline:
+          firstline: '^\[.*\] '           # matches your agent’s log format
+          max_wait_time: 3s
+      - regex:
+          expression: '^\[(?P<ts>.+?)\] (?P<level>[A-Z]+) in (?P<module>[^:]+): (?P<msg>.*)'
+      - labels:
+          level:
+          module:

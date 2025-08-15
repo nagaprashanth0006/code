@@ -29,4 +29,9 @@ data:
               - localhost
             labels:
               job: app1
-              __path__: /app/logs/*.log
+              __path__: /app/logs1/*.log
+          - targets:
+              - localhost
+            labels:
+              job: app2
+              __path__: /app/logs2/*.log

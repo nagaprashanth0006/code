@@ -1,0 +1,7 @@
+*.log
+**/__pychache__
+*.pyc
+*.pyo
+*.pyd
+*.log.*
+*/loki/data/*
