@@ -8,7 +8,7 @@ clients:
   - url: http://loki:3100/loki/api/v1/push
 
 scrape_configs:
-  # A) Discover container logs via Docker (great for infra services like mysql/redis)
+  # A) Discover all container logs (great for infra + anything without file mounts)
   - job_name: docker
     docker_sd_configs:
       - host: unix:///var/run/docker.sock
@@ -25,27 +25,26 @@ scrape_configs:
         target_label: 'stack'
       - source_labels: ['__meta_docker_container_log_stream']
         target_label: 'stream'
-      # Point promtail at the actual JSON log file
       - source_labels: ['__meta_docker_container_log_path']
         target_label: '__path__'
-
     pipeline_stages:
-      - docker: {}     # parse docker JSON log payload into line + labels
+      - docker: {}   # parse docker JSON log
 
-  # B) Tail your application file logs (nginx, tomcat, agent)
+  # B) Tail file logs we purposely write to disk (nginx, fastapi, flask)
   - job_name: app_filelogs
     static_configs:
       - targets: ['localhost']
         labels:
           job: app_filelogs
           env: dev
-          __path__: /var/log/app/**.log   # we mounted ./logs -> /var/log/app
+          __path__: /var/log/app/**.log
     pipeline_stages:
+      # Simple multiline for Python loggers with [YYYY-MM-DD ...] prefix
       - multiline:
-          firstline: '^\[.*\] '           # matches your agent’s log format
+          firstline: '^\['
           max_wait_time: 3s
       - regex:
-          expression: '^\[(?P<ts>.+?)\] (?P<level>[A-Z]+) in (?P<module>[^:]+): (?P<msg>.*)'
+          expression: '^\[(?P<ts>[^]]+)\]\s+(?P<level>[A-Z]+)\s+in\s+(?P<module>[^:]+):\s+(?P<msg>.*)'
       - labels:
           level:
           module:
