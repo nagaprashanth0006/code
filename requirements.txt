@@ -1,0 +1,11 @@
+fastapi
+langchain
+langchain-community
+langchain-experimental
+langchain-ollama
+requests
+beautifulsoup4
+uvicorn
+streamlit
+chromadb
+dotenv
