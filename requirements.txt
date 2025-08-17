@@ -9,3 +9,5 @@ uvicorn
 streamlit
 chromadb
 dotenv
+selenium
+tabulate
