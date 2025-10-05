@@ -1,8 +1,6 @@
 from langchain_core.tools import tool
 from pydantic import BaseModel, Field
-
 from langchain_ollama import ChatOllama
-#from langchain.agents import create_react_agent
 
 from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
@@ -66,8 +64,9 @@ input_message = {
     "content": "Hi, what does the tool1 and tool2 tools say?",
 }
 
-for step in agent.stream(
-        {"messages": [input_message]}, config, stream_mode="values"
-):
-    pprint(step["messages"][-1])
+# for step in agent.stream(
+#         {"messages": [input_message]}, config, stream_mode="values"
+# ):
+#     pprint(step["messages"][-1])
 
+response = agent.invoke()
