@@ -1,2 +1,5 @@
 .idea/
 *.env
+agents/agentic-exercise/agentic-exercise/langgraph_agents/data/chroma_db/
+**/__pycache__/
+agents/text-embed-rag/chroma_db/
