@@ -1,0 +1,27 @@
+services:
+  loki:
+    image: grafana/loki:latest
+    command: -config.file=/etc/loki/local-config.yaml
+    ports: ["3100:3100"]
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana-oss:latest
+    depends_on: [loki]
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin
+    ports: ["3000:3000"]
+    volumes:
+      - ./provisioning:/etc/grafana/provisioning
+    restart: unless-stopped
+
+  wiki-ingester:
+    build:
+      context: .
+      dockerfile: Dockerfile.ingester
+    environment:
+      WIKI_SSE: https://stream.wikimedia.org/v2/stream/recentchange
+      LOKI_URL: http://loki:3100/loki/api/v1/push
+    depends_on: [loki]
+    restart: unless-stopped
