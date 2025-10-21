@@ -1,0 +1,9 @@
+name: prophet_env
+dependencies:
+  - python=3.10
+  - pip
+  - pip:
+      - pandas
+      - prophet
+      - mlflow
+      - scikit-learn

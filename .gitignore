@@ -3,3 +3,6 @@
 agents/agentic-exercise/agentic-exercise/langgraph_agents/data/chroma_db/
 **/__pycache__/
 agents/text-embed-rag/chroma_db/
+python/mlruns/0/
+python/mlflow-prophet/mlruns/0/
+python/mlartifacts/0/
