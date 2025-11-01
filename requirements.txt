@@ -1,8 +1,10 @@
 fastapi
 langchain
+langchain-core
 langchain-community
 langchain-experimental
 langchain-ollama
+langchain-chroma
 requests
 beautifulsoup4
 uvicorn
@@ -11,3 +13,7 @@ chromadb
 dotenv
 selenium
 tabulate
+langgraph
+pydantic
+langsmith
+pymupdf
