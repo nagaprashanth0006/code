@@ -1,4 +1,16 @@
 """
+
+Datastores:
+
+Different types:
+
+1. RDBMS(oracle, mysql, MS SQL, postgres) - CRUD: Create, Read, Update, Delete
+2. NoSql(Redis, InfluxDB, Cassandra)
+3. Time-series DB(OpenTSDB, etc)
+4. Vector stores(vector data and corresponding metadata) - E.g. : ChromaDB, Weaviate, PineCone, Oracle 26AI
+
+------
+
 Operations on VectorStore:
 
 1. Embeddings generation(vectorization)
@@ -19,7 +31,7 @@ Operations on VectorStore:
 - Retriever can retrieve data from local or external vector stores. Can take args like search type(default MMR), top_k, fetch_k etc.
 - Similarity Searches - Performs one of the Cosine similarity(default), Euclidean distance or Dot Product type searches and retrieves the documents that are similar to given query.
 
-Note: Efficient search employs indexing methods like HNSW(Hierarchial Navigavle Small Worlds) and is dependent on vector store type.
+Note: Efficient search employs indexing methods like HNSW (Hierarchical Navigable Small Worlds) and is dependent on vector store type.
 
 """
 
@@ -159,7 +171,7 @@ def refresh_embeddings(collection_name="default"):
         ids = [sid(c.page_content) for c in chunks]
         vs.add_documents(chunks, ids=ids)
 
-    pdf_files = [path.join(DATA_DIR, f) for f in listdir(DATA_DIR) if f.lower().endswith("pdf")]
+    pdf_files = [path.join(DATA_DIR, f) for f in listdir(DATA_DIR) if f.lower().endswith(".pdf")]
     for file in pdf_files:
         docs = PyMuPDFLoader(file).load()
         chunks = splitter.split_documents(docs)
