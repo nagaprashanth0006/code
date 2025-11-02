@@ -6,3 +6,5 @@ agents/text-embed-rag/chroma_db/
 python/mlruns/0/
 python/mlflow-prophet/mlruns/0/
 python/mlartifacts/0/
+.venv/
+langgraph_scaffoldings/vector-store/
