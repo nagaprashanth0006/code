@@ -3,7 +3,8 @@ from vector_store_operations import ensure_vectorstore, retrieve_context
 from pprint import pprint
 
 ## Globals
-LLM_MODEL = "llama3.1:8b-instruct-q4_K_M"
+# LLM_MODEL = "llama3.1:8b-instruct-q4_K_M"
+LLM_MODEL = "phi3:mini"
 MODEL_CONTEXT = 4092
 
 def create_chatbot():
@@ -14,7 +15,7 @@ def create_chatbot():
     )
     return chatbot
 
-def rag_response(prompt, collection_name="documentation"):
+def rag_response(prompt, collection_name="documentation", uploaded_file=None):
     system_message = ("""You are a helpful RAG agent. You have access to Documentation pertaining to linux and IT systems in particular."
             Ensure your responses abide by the following rules:
             - never hallucinate
@@ -32,12 +33,14 @@ def rag_response(prompt, collection_name="documentation"):
           """)
 
     llm = create_chatbot()
-    vectorstore = ensure_vectorstore(collection_name)
-    context = retrieve_context(vectorstore, prompt, k=3)
-    print("Obtained context:", context)
-    print("Collection name:", collection_name)
-    print("Prompt:", prompt)
-
+    # vectorstore = ensure_vectorstore(collection_name)
+    # context = retrieve_context(vectorstore, prompt, k=3)
+    # print("Obtained context:", context)
+    # print("Collection name:", collection_name)
+    # print("Prompt:", prompt)
+    #uploaded_file.seek(0)
+    text = uploaded_file.read().decode("utf-8", errors="ignore")
+    context = text
     response = llm.invoke(
         system_message.format(context=context, prompt=prompt)
     )

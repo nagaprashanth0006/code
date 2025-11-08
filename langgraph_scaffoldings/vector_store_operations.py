@@ -51,8 +51,8 @@ from io import BytesIO
 
 # Global constants
 
-#PERSISTENCE_DIR = "./vector-store"
-PERSISTENCE_DIR = "C:\\vector-store"
+PERSISTENCE_DIR = "./vector-store"
+#PERSISTENCE_DIR = "C:\\vector-store"
 DATA_DIR = "./data"
 EMBEDDINGS_MODEL = "nomic-embed-text"
 
