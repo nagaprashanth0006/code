@@ -44,15 +44,16 @@ from os import path, mkdir, makedirs, listdir
 from langchain_core.documents import Document
 
 import hashlib
-from PyPDF2 import PdfReader
 import fitz
+import os
 from pathlib import Path
 from io import BytesIO
+from dotenv import load_dotenv
 
+load_dotenv()
 # Global constants
-
-#PERSISTENCE_DIR = "./vector-store"
-PERSISTENCE_DIR = "C:\\vector-store"
+OLLAMA_BASE_URL=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+PERSISTENCE_DIR = "./vector-store"
 DATA_DIR = "./data"
 EMBEDDINGS_MODEL = "nomic-embed-text"
 
@@ -60,7 +61,6 @@ if not path.exists(PERSISTENCE_DIR):
     mkdir(PERSISTENCE_DIR)
 if not path.exists(DATA_DIR):
     mkdir(DATA_DIR)
-
 
 ## Helpers
 def sid(page_content):
@@ -74,27 +74,6 @@ def uploaded_file_to_text(uploaded_file):
     return [Document(page_content=text, metadata={"source": uploaded_file.name})]
 
 def uploaded_file_to_pdf(uploaded_file):
-    # uploaded_file.seek(0)
-    # data = BytesIO(uploaded_file.read())
-    # pdf = PdfReader(data)
-    # docs = []
-    # for i, page in enumerate(pdf.pages):
-    #     try:
-    #         text = page.extract_text() or ""
-    #     except Exception:
-    #         text = ""
-    #     if text.strip():
-    #         docs.append(
-    #             Document(
-    #                 page_content=text,
-    #                 metadata={
-    #                     "source": uploaded_file.name,
-    #                     "page": i + 1,
-    #                     "pages": len(pdf.pages),
-    #                 },
-    #             )
-    #         )
-    # return docs
     uploaded_file.seek(0)
     blob = uploaded_file.read()
     pdf = fitz.open(stream=blob, filetype="pdf")
@@ -126,7 +105,7 @@ def _uploads_to_documents(uploaded_files) -> list[Document]:
 
 def ensure_vectorstore(collection_name):
     makedirs(PERSISTENCE_DIR, exist_ok=True)
-    embeddings = OllamaEmbeddings(model=EMBEDDINGS_MODEL, num_ctx=8192)
+    embeddings = OllamaEmbeddings(model=EMBEDDINGS_MODEL, num_ctx=8192, base_url=OLLAMA_BASE_URL)
     return Chroma(
         collection_name = collection_name,
         persist_directory=PERSISTENCE_DIR,
@@ -181,6 +160,14 @@ def refresh_embeddings(collection_name="default"):
 
 def retrieve_context(vectorstore, query, k=4):
     return vectorstore.similarity_search(query, k=k)
+
+def check_vs(collection_name):
+    vs = ensure_vectorstore(collection_name)
+    col_name = getattr(vs, "_collection")
+    col_count = vs._collection.count()
+    print("Collection name", col_name, "Count of documents:", col_count)
+    return (col_name, col_count)
+
 
 if __name__ == "__main__":
     collections_name = "documentation"

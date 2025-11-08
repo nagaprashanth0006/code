@@ -1,0 +1,52 @@
+services:
+  app:
+    build: .
+    container_name: app
+    environment:
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      ollama:
+        condition: service_healthy
+    ports:
+      - 8501:8501
+    volumes:
+      - ./vector-data:/app/vector-data
+      - ./data:/app/data
+    restart: unless-stopped
+    networks:
+      - ollama-net
+
+  ollama:
+    container_name: ollama
+    image: ollama/ollama:latest
+    ports:
+      - 11474:11434
+    volumes:
+      - ollama-models:/root/.ollama
+      - ./vector-data:/root/vector-data:ro
+      - ./data:/root/data:ro
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [ gpu ]
+
+    healthcheck:
+      test: ["CMD", "ollama", "ps"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    networks:
+      - ollama-net
+
+volumes:
+  ollama-models:
+    external: true
+
+networks:
+  ollama-net:
+    driver: bridge

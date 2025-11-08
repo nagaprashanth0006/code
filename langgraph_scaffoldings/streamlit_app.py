@@ -1,10 +1,11 @@
 import streamlit as st
 from rag_chat import rag_response
-from vector_store_operations import ensure_vectorstore, retrieve_context, vectorize_docs
+from vector_store_operations import check_vs, vectorize_docs
 
 st.title("Streamlit App")
 session = st.session_state
 session["vs_collections_name"] = "temporary_from_streamlit_app"
+st.info(check_vs(session["vs_collections_name"]))
 
 uploaded_files = st.file_uploader(
     label="Select file to upload",
@@ -13,7 +14,6 @@ uploaded_files = st.file_uploader(
 )
 
 if st.button("Upload file"):
-    #st.info("Vectorizing docs:", ",".join(uploaded_files))
     with st.spinner("Processing..", show_time=True):
         vectorized, e = vectorize_docs(uploaded_files, collection_name=session["vs_collections_name"])
 

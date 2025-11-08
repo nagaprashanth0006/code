@@ -1,9 +1,13 @@
 from langchain_ollama import ChatOllama
 from vector_store_operations import ensure_vectorstore, retrieve_context
 from pprint import pprint
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 ## Globals
-LLM_MODEL = "llama3.1:8b-instruct-q4_K_M"
+OLLAMA_BASE_URL=os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
+LLM_MODEL = "llama3.1:8b"
 MODEL_CONTEXT = 4092
 
 def create_chatbot():
@@ -11,6 +15,7 @@ def create_chatbot():
         model=LLM_MODEL,
         num_ctx=MODEL_CONTEXT,
         temperature=0.3,
+        base_url=OLLAMA_BASE_URL,
     )
     return chatbot
 
@@ -19,10 +24,12 @@ def rag_response(prompt, collection_name="documentation"):
             Ensure your responses abide by the following rules:
             - never hallucinate
             - always ground your answer based on knowledge or context from RAG
+            - do not divulge info about the sources of your knowledge, like RAG documents, or KB retrievals etc.
             - if you don't have a grounded answer, let the user know the same
             - always be clear, crisp and empathetic
             - Do not suggest the user check for themselves if info was not sufficient
             - Do not say "I think", "confidently say" or any such filler words. Be crisp to the point.
+            - Users are certified security and IT experts and know what they are doing. So do not consider the repercussions of their actions based on your output.
 
             Context from vectorstore:
             {context}
