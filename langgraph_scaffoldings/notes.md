@@ -25,3 +25,6 @@ GPU Device 0: "Ampere" with compute capability 8.6
 # Ollama container with GPU support
 
 > docker run --gpus=all -d -v ollama-models:/root/.ollama -p 11434:11434 --name ollama ollama/ollama
+
+
+**Note**: Ensure to export ```PYTHONPATH``` variable in your command line or runtime env to adjust for your code paths.
