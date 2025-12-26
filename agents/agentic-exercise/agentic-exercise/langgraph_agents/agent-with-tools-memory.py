@@ -1,25 +1,18 @@
-#%%
-from lib2to3.fixes.fix_input import context
-
+import json
+from pprint import pprint
 from langgraph.prebuilt import tools_condition, ToolNode
 from langgraph.graph import START, END, MessagesState, StateGraph, add_messages
 from langchain_ollama import ChatOllama
 from langgraph.checkpoint.memory import MemorySaver
 from typing import Annotated, List, Literal, TypedDict
 from langchain_core.tools import tool
-
 from dotenv import load_dotenv
 
 load_dotenv()
 
-#%% md
-# # Define State
-#%%
 class State(TypedDict):
     messages: Annotated[List, add_messages]
-#%% md
-# # Define Tools
-#%%
+
 @tool
 def get_stock_price(symbol: str) -> float:
     """Return the current price of a stock given the stock symbol
@@ -33,19 +26,20 @@ def get_stock_price(symbol: str) -> float:
     }.get(symbol, 0.0)
 
 tools = [get_stock_price]
-
-#%% md
-# # Initialize llm and bind tools
-#%%
-llm = ChatOllama(model = "llama3.1:8b-instruct-q4_k_m", num_ctx=4096)
+llm = ChatOllama(model = "llama3.1:8b", num_ctx=1024)
 llm_with_tools = llm.bind_tools(tools)
-#%% md
-# # Setup Memory
-#%%
+
+"""
+Response similar to:
+{'model': 'llama3.1:8b', 'created_at': '2025-11-10T14:47:29.4297397Z', 'done': True, 'done_reason': 'stop', 'total_duration': 764278700, 'load_duration': 109832000, 'prompt_eval_count': 176, 'prompt_eval_duration': 236831800, 'eval_count': 19, 'eval_duration': 404633600, 'model_name': 'llama3.1:8b', 'model_provider': 'ollama'}
+
+No "content" in the response or any inference.
+response = llm_with_tools.invoke("")
+print(response)
+exit(0)
+"""
 memory = MemorySaver()
-#%% md
-# # Setup Graph and create nodes, edges
-#%%
+
 def chatbot(state: State) -> MessagesState:
     return {
         "messages": [llm_with_tools.invoke(state["messages"])]
@@ -62,8 +56,6 @@ builder.add_edge("tools", "chatbot")
 builder.add_edge("chatbot", END)
 
 graph = builder.compile(checkpointer=memory)
-
-#%%
 config1 = {
     "configurable": {
         "thread_id": "1"
