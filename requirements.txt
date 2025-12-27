@@ -17,3 +17,8 @@ langgraph
 pydantic
 langsmith
 pymupdf
+numpy
+matplotlib
+scikit-learn
+plotly
+pandas
