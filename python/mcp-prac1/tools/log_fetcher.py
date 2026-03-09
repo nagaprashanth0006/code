@@ -10,7 +10,7 @@ def infer_with_ollama(prompt, model="mistral"):
     return result
 
 def daily_quote(dummy):
-    llm = OllamaLLM(model="mistral")
+    llm = OllamaLLM(model="mistral", temperature=0.9, top_k=3)
     response = llm.invoke("Tell me a motivational quote")
     return response
 

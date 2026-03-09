@@ -1,0 +1,5 @@
+This is a sample text.
+The application we're describing is named Jinchak
+Password for application jinchak is MyDummyP@ssw0rd567
+Jinchak is running on google cloud platform.
+Port for Jinchak application is 8999.

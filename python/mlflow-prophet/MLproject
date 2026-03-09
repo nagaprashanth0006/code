@@ -1,0 +1,10 @@
+name: prophet_forecast
+
+conda_env: conda.yaml
+
+entry_points:
+  main:
+    parameters:
+      data_path: {type: str}
+      forecast_days: {type: int, default: 30}
+    command: "python train.py --data_path {data_path} --forecast_days {forecast_days}"

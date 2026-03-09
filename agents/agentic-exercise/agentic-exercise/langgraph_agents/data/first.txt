@@ -1,0 +1,4 @@
+Name for the frontend application is Dancing Dinosaur. This is a very ambitious project and serves as flagship for our organization ACME-Foo corp. Dancing dinosaur is hosted on AWS cloud.
+Application is listening on 4467 port and uses Flask + FastAPI frameworks.
+Credentials are for the application are: Username=dummyXYZ; password=CanThereBeAStr0ngerPassword?
+Incoming traffic as per last quarter is 3 TRPS(thousand requests per second).

@@ -1,0 +1,6 @@
+Latest application frontend project is named "headless fish".
+Headless fish is running on aws infra.
+this application is listening on port 2133
+Credentials for this application are:
+Username = dummy
+Password = CryingDinosaur@258

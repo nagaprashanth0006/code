@@ -1,0 +1,17 @@
+python-dotenv
+
+langchain
+langchain-core
+langchain-community
+langchain-experimental
+
+langchain-ollama
+langchain-tavily
+langgraph-checkpoint-sqlite
+
+langgraph-prebuilt
+langgraph
+
+chromadb
+pydantic
+tabulate

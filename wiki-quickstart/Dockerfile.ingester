@@ -1,0 +1,5 @@
+FROM python:3.11-slim
+RUN pip install --no-cache-dir requests
+WORKDIR /app
+COPY sse_ingester.py /app/sse_ingester.py
+CMD ["python", "-u", "sse_ingester.py"]

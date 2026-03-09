@@ -1,0 +1,40 @@
+apiVersion: kagent.dev/v1alpha1
+kind: Agent
+metadata:
+  name: llama3-2-3b-kubernetes-agent
+  namespace: kagent
+spec:
+  displayName: Kubernetes Expert Agent
+  description: Helps manage and troubleshoot Kubernetes clusters.
+  instructions: |
+    You're a helpful Kubernetes DevOps assistant...
+
+    # Response format:
+    - ALWAYS format your response as Markdown
+    - Include a summary of actions and the result
+
+    When responding with tool calls, always return structured JSON using this format:
+    {
+      "tool_calls": [
+        {
+          "id": "tool1",
+          "function": {
+            "name": "<TOOL_NAME>",
+            "arguments": {
+              "<param1>": "value1"
+            }
+          }
+        }
+      ]
+    }
+  modelConfigRef: kagent/llama3-2-3b-model-config
+  tools:
+    - get_resources.kagent
+    - describe_resource.kagent
+    - apply_manifest.kagent
+    - get_pod_logs.kagent
+    - delete_resource.kagent
+    - label_resource.kagent
+    - generate_resource_tool.kagent
+  team:
+    name: "default"
