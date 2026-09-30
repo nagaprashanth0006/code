@@ -1,0 +1,117 @@
+{"kind":"deck","id":"pr/zk5282","name":"Deck"}
+{"kind":"layout","layoutId":"e3cace16-a1d5-4803-912b-0fcdf87923a5","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"143a8a3e-cfa9-495e-856f-5a588a293cc3","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/b2d7lt","slide":1,"title":"Agenda","textShapes":4}
+{"kind":"textbox","id":"sh/do7axgby","slide":1,"text":"Agenda","textPreview":"Agenda","textChars":6,"textLines":1,"bbox":[64,44,1150,100]}
+{"kind":"textbox","id":"sh/qlwb21cn","slide":1,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[1175,667,50,30]}
+{"kind":"textbox","id":"sh/bmpsv6t8","slide":1,"text":"01   Data and feature decisions\n02   Algorithm choice and data checks\n03   Training, validation and evaluation","textPreview":"01   Data and feature decisions | 02   Algorithm choice and data checks | 03   Training, validation and evaluation","textChars":110,"textLines":3,"bbox":[75,190,1120,210]}
+{"kind":"textbox","id":"sh/0byt8bup","slide":1,"text":"04   Live inference through Kafka\n05   An LLM application that calls the model","textPreview":"04   Live inference through Kafka | 05   An LLM application that calls the model","textChars":78,"textLines":2,"bbox":[75,446,1120,130]}
+{"kind":"notes","id":"nt/b2d7lt","slide":1,"text":"Use the notebook for the show-and-tell portions, then switch to the Kafka terminals. End with the proposed agent architecture. Suggested pacing: notebook 40 minutes, Kafka 12 minutes, agent design and discussion 8 minutes."}
+{"kind":"slide","id":"sl/l6436h","slide":2,"title":"ML training flow / pipeline","textShapes":10}
+{"kind":"textbox","id":"sh/xsvy5sbm","slide":2,"text":"ML training flow / pipeline","textPreview":"ML training flow / pipeline","textChars":27,"textLines":1,"bbox":[64,44,1150,100]}
+{"kind":"textbox","id":"sh/apkfadcv","slide":2,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[1175,667,50,30]}
+{"kind":"textbox","id":"sh/bqtg3itg","slide":2,"text":"Raw AI4I+ data","textPreview":"Raw AI4I+ data","textChars":14,"textLines":1,"bbox":[70,190,240,74]}
+{"kind":"textbox","id":"sh/on2x8nu5","slide":2,"text":"Checks + split","textPreview":"Checks + split","textChars":14,"textLines":1,"bbox":[385,190,240,74]}
+{"kind":"textbox","id":"sh/poby1sba","slide":2,"text":"Fit preprocessing","textPreview":"Fit preprocessing","textChars":17,"textLines":1,"bbox":[700,190,240,74]}
+{"kind":"shape","id":"sh/21kf6dcz","slide":2,"bbox":[0,0,0,0]}
+{"kind":"shape","id":"sh/nmtwzitk","slide":2,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/0zix43ut","slide":2,"text":"Train candidates","textPreview":"Train candidates","textChars":16,"textLines":1,"bbox":[700,340,240,74]}
+{"kind":"textbox","id":"sh/10red8be","slide":2,"text":"Validate + threshold","textPreview":"Validate + threshold","textChars":20,"textLines":1,"bbox":[385,340,240,74]}
+{"kind":"textbox","id":"sh/1ofalkne","slide":2,"text":"Final test","textPreview":"Final test","textChars":10,"textLines":1,"bbox":[70,340,240,74]}
+{"kind":"shape","id":"sh/0n6tcfmt","slide":2,"bbox":[0,0,0,0]}
+{"kind":"shape","id":"sh/fmxsja5o","slide":2,"bbox":[0,0,0,0]}
+{"kind":"shape","id":"sh/e1oba543","slide":2,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/d0fah0ni","slide":2,"text":"Export pipeline + metadata","textPreview":"Export pipeline + metadata","textChars":26,"textLines":1,"bbox":[70,490,555,74]}
+{"kind":"shape","id":"sh/sz6t8vmx","slide":2,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/rydsfq5c","slide":2,"text":"Same fitted preprocessing\nat training and inference","textPreview":"Same fitted preprocessing | at training and inference","textChars":51,"textLines":2,"bbox":[700,491,470,100]}
+{"kind":"notes","id":"nt/l6436h","slide":2,"text":"Show src/reference.ipynb. This is the full process. Data assertions check structure and known constraints before the split. Learn all statistical preprocessing from training rows only. Choose model and threshold using validation. Open the test set after freezing decisions. Source: src/reference.ipynb sections 3–11."}
+{"kind":"slide","id":"sl/0rqq3y","slide":3,"title":"Dataset","textShapes":6}
+{"kind":"textbox","id":"sh/u9g3adwb","slide":3,"text":"Dataset","textPreview":"Dataset","textChars":7,"textLines":1,"bbox":[64,44,1150,100]}
+{"kind":"textbox","id":"sh/hcr25svm","slide":3,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[1175,667,50,30]}
+{"kind":"textbox","id":"sh/gbilcne1","slide":3,"text":"10,000 observations","textPreview":"10,000 observations","textChars":19,"textLines":1,"bbox":[72,185,1120,75]}
+{"kind":"textbox","id":"sh/76pkzidk","slide":3,"text":"339 failure rows (3.39%)\nOne row describes an operating state and its outcome","textPreview":"339 failure rows (3.39%) | One row describes an operating state and its outcome","textChars":77,"textLines":2,"bbox":[72,289,1120,130]}
+{"kind":"textbox","id":"sh/65g36dwz","slide":3,"text":"AI4I: 14 columns     AI4I+: 29 columns\nThe extension adds simulated signals, missingness and leakage examples","textPreview":"AI4I: 14 columns     AI4I+: 29 columns | The extension adds simulated signals, missingness and leakage examples","textChars":109,"textLines":2,"bbox":[72,462,1120,110]}
+{"kind":"textbox","id":"sh/t87218vq","slide":3,"text":"Target: current machine failure condition","textPreview":"Target: current machine failure condition","textChars":41,"textLines":1,"bbox":[72,616,1120,40]}
+{"kind":"notes","id":"nt/0rqq3y","slide":3,"text":"Show the original CSV and AI4I+ preview in src/reference.ipynb sections 2–4. Counts were read from data/ai4i2020.csv and data/processed/ai4i_plus.csv. UCI AI4I 2020 is synthetic, and our augmentation is simulated. Source attribution from the notebook: UCI AI4I 2020, DOI 10.24432/C5HS5C, CC BY 4.0. No temporal forecasting target exists."}
+{"kind":"slide","id":"sl/5k6ejm","slide":4,"title":"Features of the dataset","textShapes":7}
+{"kind":"textbox","id":"sh/6dkfihor","slide":4,"text":"Features of the dataset","textPreview":"Features of the dataset","textChars":23,"textLines":1,"bbox":[64,44,1150,100]}
+{"kind":"textbox","id":"sh/tgvytwn2","slide":4,"text":"04","textPreview":"04","textChars":2,"textLines":1,"bbox":[1175,667,50,30]}
+{"kind":"textbox","id":"sh/sfmxkr6h","slide":4,"text":"Model inputs","textPreview":"Model inputs","textChars":12,"textLines":1,"bbox":[72,177,510,45]}
+{"kind":"textbox","id":"sh/jqtgn2p0","slide":4,"text":"Air and process temperature (K)\nRotational speed (RPM)\nTorque (Nm), tool wear (min)\nSimulated vibration RMS\nProduct type (L / M / H)","textPreview":"Air and process temperature (K) | Rotational speed (RPM) | Torque (Nm), tool wear (min) | Simulated vibration RMS | Product type (L / M / H)","textChars":132,"textLines":5,"bbox":[72,241,560,270]}
+{"kind":"textbox","id":"sh/ipkfuxof","slide":4,"text":"Excluded inputs","textPreview":"Excluded inputs","textChars":15,"textLines":1,"bbox":[690,177,510,45]}
+{"kind":"textbox","id":"sh/5sbypcn6","slide":4,"text":"Machine failure target\nFailure-mode indicators\nPost-failure alarm and failure code\nEmergency stop\nIDs and unused context / noise","textPreview":"Machine failure target | Failure-mode indicators | Post-failure alarm and failure code | Emergency stop | IDs and unused context / noise","textChars":128,"textLines":5,"bbox":[690,241,510,270]}
+{"kind":"textbox","id":"sh/kr2xw76l","slide":4,"text":"Key question: would this value exist when we make the prediction?","textPreview":"Key question: would this value exist when we make the prediction?","textChars":65,"textLines":1,"bbox":[72,602,1120,70]}
+{"kind":"notes","id":"nt/5k6ejm","slide":4,"text":"Show the feature-decision table in notebook section 5. Six numeric inputs and one categorical input are retained. Product type L/M/H is a product quality variant. The vibration signal is simulated. Excluded redundant/context/noise fields remain in the raw data for teaching. PCA is unnecessary for this small interpretable feature set. Sources: artifacts/machine_failure_metadata.json; src/reference.ipynb sections 3–5."}
+{"kind":"slide","id":"sl/970j8r","slide":5,"title":"Algorithm selection","textShapes":9}
+{"kind":"textbox","id":"sh/i5c725gb","slide":5,"text":"Algorithm selection","textPreview":"Algorithm selection","textChars":19,"textLines":1,"bbox":[64,44,1150,100]}
+{"kind":"textbox","id":"sh/5836xkf2","slide":5,"text":"05","textPreview":"05","textChars":2,"textLines":1,"bbox":[1175,667,50,30]}
+{"kind":"textbox","id":"sh/47up4fyh","slide":5,"text":"Dummy classifier","textPreview":"Dummy classifier","textChars":16,"textLines":1,"bbox":[72,187,345,55]}
+{"kind":"textbox","id":"sh/v21orqx0","slide":5,"text":"Baseline: what happens when we ignore sensors?","textPreview":"Baseline: what happens when we ignore sensors?","textChars":46,"textLines":1,"bbox":[455,187,740,80]}
+{"kind":"textbox","id":"sh/u1s7y5gf","slide":5,"text":"Small decision tree","textPreview":"Small decision tree","textChars":19,"textLines":1,"bbox":[72,315,365,60]}
+{"kind":"textbox","id":"sh/h436t0f6","slide":5,"text":"Readable rules reveal thresholds and interactions","textPreview":"Readable rules reveal thresholds and interactions","textChars":49,"textLines":1,"bbox":[455,315,740,90]}
+{"kind":"textbox","id":"sh/w3up0vyl","slide":5,"text":"Random Forest","textPreview":"Random Forest","textChars":13,"textLines":1,"bbox":[72,449,345,55]}
+{"kind":"textbox","id":"sh/7y1onqho","slide":5,"text":"Primary model for nonlinear tabular relationships","textPreview":"Primary model for nonlinear tabular relationships","textChars":49,"textLines":1,"bbox":[455,449,740,90]}
+{"kind":"textbox","id":"sh/mdsnulgj","slide":5,"text":"Compare training and validation performance, including rare failures","textPreview":"Compare training and validation performance, including rare failures","textChars":68,"textLines":1,"bbox":[72,610,1130,55]}
+{"kind":"notes","id":"nt/970j8r","slide":5,"text":"Show notebook section 7. Moderate tabular dataset, nonlinear relationships, feature interactions and rare positive labels motivate the candidate set. Deep tree is diagnostic only. Class weights do not guarantee recall or calibrated probabilities. Sources: src/reference.ipynb section 7; src/reference.py model definitions."}
+{"kind":"slide","id":"sl/qjxljh","slide":6,"title":"Data checks and three-way split","textShapes":10}
+{"kind":"textbox","id":"sh/h4zytcva","slide":6,"text":"Data checks and three-way split","textPreview":"Data checks and three-way split","textChars":31,"textLines":1,"bbox":[64,44,1150,100]}
+{"kind":"textbox","id":"sh/uhofixwz","slide":6,"text":"06","textPreview":"06","textChars":2,"textLines":1,"bbox":[1175,667,50,30]}
+{"kind":"textbox","id":"sh/vixgr2xk","slide":6,"text":"Check schema, target values, missingness and duplicates\nAssert split isolation and exclude leaky inputs","textPreview":"Check schema, target values, missingness and duplicates | Assert split isolation and exclude leaky inputs","textChars":103,"textLines":2,"bbox":[72,178,1130,115]}
+{"kind":"textbox","id":"sh/47qxo7e1","slide":6,"text":"Train: 6,000 rows","textPreview":"Train: 6,000 rows","textChars":17,"textLines":1,"bbox":[72,354,320,92]}
+{"kind":"textbox","id":"sh/58zyxcvm","slide":6,"text":"Validation: 2,000 rows","textPreview":"Validation: 2,000 rows","textChars":22,"textLines":1,"bbox":[468,354,340,92]}
+{"kind":"textbox","id":"sh/i58fmhwv","slide":6,"text":"Test: 2,000 rows","textPreview":"Test: 2,000 rows","textChars":16,"textLines":1,"bbox":[884,354,320,92]}
+{"kind":"textbox","id":"sh/36hgv2dg","slide":6,"text":"Learn preprocessing\nand model parameters","textPreview":"Learn preprocessing | and model parameters","textChars":40,"textLines":2,"bbox":[72,467,320,100]}
+{"kind":"textbox","id":"sh/kbmxcnex","slide":6,"text":"Choose model\nand decision threshold","textPreview":"Choose model | and decision threshold","textChars":35,"textLines":2,"bbox":[468,467,340,100]}
+{"kind":"textbox","id":"sh/lcfelsf2","slide":6,"text":"Evaluate the\nfrozen decision","textPreview":"Evaluate the | frozen decision","textChars":28,"textLines":2,"bbox":[884,467,320,100]}
+{"kind":"textbox","id":"sh/98bqlkjm","slide":6,"text":"Stratified 60 / 20 / 20 split, seed 42","textPreview":"Stratified 60 / 20 / 20 split, seed 42","textChars":38,"textLines":1,"bbox":[72,611,1120,40]}
+{"kind":"notes","id":"nt/qjxljh","slide":6,"text":"Before splitting, inspect schema, required columns, valid target labels, numeric validity and duplicate policy. These are the teaching data-contract checks, not a claim that every listed check already exists as an assertion in the notebook. After splitting, assert disjoint row indexes and fit transformations on training rows only. Explore target relationships on training data. Actual split: 60/20/20 stratified, seed 42. Source: src/reference.ipynb sections 4–6, 13."}
+{"kind":"slide","id":"sl/m2e6wc","slide":7,"title":"Train the model and test it","textShapes":4}
+{"kind":"textbox","id":"sh/gvyho72t","slide":7,"text":"Train the model and test it","textPreview":"Train the model and test it","textChars":27,"textLines":1,"bbox":[64,44,1150,100]}
+{"kind":"textbox","id":"sh/vap0f218","slide":7,"text":"07","textPreview":"07","textChars":2,"textLines":1,"bbox":[1175,667,50,30]}
+{"kind":"textbox","id":"sh/u9gzmhkn","slide":7,"text":"1   Fit preprocessing and candidates on training rows\n2   Compare validation scores and the overfitting gap\n3   Select the threshold using validation error costs\n4   Freeze the pipeline and threshold, then test once","textPreview":"1   Fit preprocessing and candidates on training rows | 2   Compare validation scores and the overfitting gap | 3   Select the threshold ...","textChars":215,"textLines":4,"bbox":[72,186,1130,300]}
+{"kind":"textbox","id":"sh/t87idcji","slide":7,"text":"Saved decision: failure score ≥ 0.13\nExport the entire pipeline plus schema, threshold and versions","textPreview":"Saved decision: failure score ≥ 0.13 | Export the entire pipeline plus schema, threshold and versions","textChars":99,"textLines":2,"bbox":[72,547,1120,105]}
+{"kind":"notes","id":"nt/m2e6wc","slide":7,"text":"Show src/reference.ipynb sections 6–10. Numeric median imputation, categorical most-frequent imputation, one-hot encoding. Fit candidates only on train. Compare on validation and inspect overfit gap. Select threshold by minimizing 10*FN + FP using hypothetical teaching costs. Saved threshold 0.13. Keep forest unchanged rather than refitting on train+validation, then evaluate held-out test. Source: artifacts/machine_failure_metadata.json and notebook."}
+{"kind":"slide","id":"sl/t82h9s","slide":8,"title":"Evaluation metrics","textShapes":9}
+{"kind":"textbox","id":"sh/orm54rmt","slide":8,"text":"Evaluation metrics","textPreview":"Evaluation metrics","textChars":18,"textLines":1,"bbox":[64,44,1150,100]}
+{"kind":"textbox","id":"sh/nqd4bm5o","slide":8,"text":"08","textPreview":"08","textChars":2,"textLines":1,"bbox":[1175,667,50,30]}
+{"kind":"textbox","id":"sh/2p4n2h43","slide":8,"text":"88.2% recall","textPreview":"88.2% recall","textChars":12,"textLines":1,"bbox":[72,187,510,65]}
+{"kind":"textbox","id":"sh/1ovm9cni","slide":8,"text":"60 of 68 failures detected","textPreview":"60 of 68 failures detected","textChars":26,"textLines":1,"bbox":[72,263,510,60]}
+{"kind":"textbox","id":"sh/0nml07mx","slide":8,"text":"31.6% precision","textPreview":"31.6% precision","textChars":15,"textLines":1,"bbox":[685,187,510,65]}
+{"kind":"textbox","id":"sh/fmd4725c","slide":8,"text":"60 of 190 alerts were failures","textPreview":"60 of 190 alerts were failures","textChars":30,"textLines":1,"bbox":[685,263,510,60]}
+{"kind":"textbox","id":"sh/el43yx4r","slide":8,"text":"8 missed failures     130 false alarms","textPreview":"8 missed failures     130 false alarms","textChars":38,"textLines":1,"bbox":[72,366,1120,65]}
+{"kind":"textbox","id":"sh/dkbm5cn6","slide":8,"text":"Accuracy 93.1%     F1 0.465\nAverage precision 0.688     ROC-AUC 0.974","textPreview":"Accuracy 93.1%     F1 0.465 | Average precision 0.688     ROC-AUC 0.974","textChars":69,"textLines":2,"bbox":[72,465,1120,115]}
+{"kind":"textbox","id":"sh/sj2lw7m1","slide":8,"text":"Accuracy alone hides the cost of rare failures","textPreview":"Accuracy alone hides the cost of rare failures","textChars":46,"textLines":1,"bbox":[72,615,1120,40]}
+{"kind":"notes","id":"nt/t82h9s","slide":8,"text":"Saved test results: accuracy .931, precision .315789, recall .882353, F1 .465116, average precision .687856, ROC-AUC .973774. Confusion counts: TP 60, TN 1802, FP 130, FN 8. An always-normal prediction would score 96.6% accuracy but zero recall. AP is average precision, not trapezoidal PR-AUC. Values refer to current saved artifacts, not a rerun. Sources: artifacts/machine_failure_metadata.json; local/STREAMING.md."}
+{"kind":"slide","id":"sl/fz7ia4","slide":9,"title":"Inference using Kafka","textShapes":7}
+{"kind":"textbox","id":"sh/l0vet4fm","slide":9,"text":"Inference using Kafka","textPreview":"Inference using Kafka","textChars":21,"textLines":1,"bbox":[64,44,1150,100]}
+{"kind":"textbox","id":"sh/yx4vy9gv","slide":9,"text":"09","textPreview":"09","textChars":2,"textLines":1,"bbox":[1175,667,50,30]}
+{"kind":"textbox","id":"sh/zydwruxg","slide":9,"text":"producer.py\nTest-row replay","textPreview":"producer.py | Test-row replay","textChars":27,"textLines":2,"bbox":[72,180,280,95]}
+{"kind":"textbox","id":"sh/cbmdwzyp","slide":9,"text":"Kafka topic\nmachine.telemetry","textPreview":"Kafka topic | machine.telemetry","textChars":29,"textLines":2,"bbox":[478,180,310,95]}
+{"kind":"textbox","id":"sh/dcvep4fa","slide":9,"text":"consumer.py\nSaved pipeline","textPreview":"consumer.py | Saved pipeline","textChars":26,"textLines":2,"bbox":[914,180,290,95]}
+{"kind":"shape","id":"sh/q9kvupgz","slide":9,"bbox":[0,0,0,0]}
+{"kind":"shape","id":"sh/badwnuxk","slide":9,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/w76xsje9","slide":9,"text":"python src/consumer.py --metrics-every 20\npython src/producer.py --rate 5","textPreview":"python src/consumer.py --metrics-every 20 | python src/producer.py --rate 5","textChars":73,"textLines":2,"bbox":[72,340,1130,105]}
+{"kind":"textbox","id":"sh/h8fe1ofu","slide":9,"text":"Output: failure score, decision, actual label and running metrics\nOnly features enter the model. Labels serve demo scoring.","textPreview":"Output: failure score, decision, actual label and running metrics | Only features enter the model. Labels serve demo scoring.","textChars":123,"textLines":2,"bbox":[72,500,1130,115]}
+{"kind":"notes","id":"nt/fz7ia4","slide":9,"text":"Switch to terminals. Start the prepared Kafka broker and create machine.telemetry if needed, following local/STREAMING.md. Run from the current repository with the compatible Python environment. Commands on slide use script defaults; optional --bootstrap-servers 127.0.0.1:9092 avoids IPv6 retry. Producer replays the matching test rows, not new labeled synthetic evidence. Consumer calls predict_event and applies metadata threshold. Missing sensors are imputed and flagged; invalid values are skipped. Ground truth stays out of features. Sources: src/producer.py; src/consumer.py; local/STREAMING.md."}
+{"kind":"slide","id":"sl/kakpp4","slide":10,"title":"Agentic application with the model","textShapes":13}
+{"kind":"textbox","id":"sh/zq18rep0","slide":10,"text":"Agentic application with the model","textPreview":"Agentic application with the model","textChars":34,"textLines":1,"bbox":[64,44,1150,100]}
+{"kind":"textbox","id":"sh/0rap0jql","slide":10,"text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1175,667,50,30]}
+{"kind":"textbox","id":"sh/lsjqto76","slide":10,"text":"Proposed architecture: tool calling inside the harness","textPreview":"Proposed architecture: tool calling inside the harness","textChars":54,"textLines":1,"bbox":[64,151,1150,45]}
+{"kind":"textbox","id":"sh/mdc72t8r","slide":10,"text":"User request\n+ observation","textPreview":"User request | + observation","textChars":26,"textLines":2,"bbox":[64,216,230,88]}
+{"kind":"textbox","id":"sh/nel8vypc","slide":10,"text":"LLM orchestrator\nRegistered tool schema","textPreview":"LLM orchestrator | Registered tool schema","textChars":39,"textLines":2,"bbox":[364,216,330,88]}
+{"kind":"textbox","id":"sh/8fu94jqh","slide":10,"text":"Inference tool\nPipeline + metadata","textPreview":"Inference tool | Pipeline + metadata","textChars":34,"textLines":2,"bbox":[764,216,440,88]}
+{"kind":"shape","id":"sh/9g3qxo72","slide":10,"bbox":[0,0,0,0]}
+{"kind":"shape","id":"sh/ahcr6t8n","slide":10,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/vil8zyp8","slide":10,"text":"Execution DAG for one assessment","textPreview":"Execution DAG for one assessment","textChars":32,"textLines":1,"bbox":[64,337,1150,45]}
+{"kind":"textbox","id":"sh/r6dsn6t0","slide":10,"text":"Plan tool call","textPreview":"Plan tool call","textChars":14,"textLines":1,"bbox":[64,400,230,64]}
+{"kind":"textbox","id":"sh/654be1sf","slide":10,"text":"Validate + infer","textPreview":"Validate + infer","textChars":16,"textLines":1,"bbox":[364,400,330,64]}
+{"kind":"textbox","id":"sh/tsvapgb6","slide":10,"text":"Explain result","textPreview":"Explain result","textChars":14,"textLines":1,"bbox":[764,400,235,64]}
+{"kind":"shape","id":"sh/srmtgbal","slide":10,"bbox":[0,0,0,0]}
+{"kind":"shape","id":"sh/j2tsj6t4","slide":10,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/i1kba1sj","slide":10,"text":"Invalid / failed:\nclarify or report error","textPreview":"Invalid / failed: | clarify or report error","textChars":41,"textLines":2,"bbox":[364,518,330,76]}
+{"kind":"shape","id":"sh/54valgbu","slide":10,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/43mtcba9","slide":10,"text":"Response +\nraw ML output","textPreview":"Response + | raw ML output","textChars":24,"textLines":2,"bbox":[764,518,440,76]}
+{"kind":"shape","id":"sh/3yxcvqt8","slide":10,"bbox":[0,0,0,0]}
+{"kind":"shape","id":"sh/2xobm5sn","slide":10,"bbox":[0,0,0,0]}
+{"kind":"textbox","id":"sh/y5snatg7","slide":10,"text":"Raw result passes through unchanged: p_failure, prediction, threshold, notices","textPreview":"Raw result passes through unchanged: p_failure, prediction, threshold, notices","textChars":78,"textLines":1,"bbox":[64,630,1130,55]}
+{"kind":"notes","id":"nt/kakpp4","slide":10,"text":"Proposed architecture, not an implemented capability in this repository. Assumption: the user supplies the current observation. The LLM receives the registered predict_machine_failure tool description and schema, decides to call it, and supplies structured arguments. The harness validates arguments and invokes deterministic inference code, reusing the consumer predict_event contract with the saved pipeline and metadata. The tool returns p_failure, prediction, threshold and notices; model version may be added by the harness. The LLM explains the result without inventing readings or changing the decision. The application attaches the original structured tool result directly so the raw output is not regenerated by the LLM. Invalid inputs or tool failures terminate with a clear error or request for clarification, with no invented prediction. DAG below represents one request, with separate LLM planning and explanation nodes rather than a loop. A later clarification starts a new request. Kafka is the preceding delivery demo and is not required for direct tool inference."}
