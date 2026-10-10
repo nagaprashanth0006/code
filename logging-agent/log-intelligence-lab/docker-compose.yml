@@ -5,6 +5,12 @@ x-common-labels: &common_labels
   env: "dev"
   stack: "demo"
 
+x-uim-labels: &uim_labels
+  logging: "promtail"
+  env: "local-demo"
+  stack: "logsphere-validation"
+  namespace: "uim-demo"
+
 services:
   nginx:
     image: nginx:1.25
@@ -96,6 +102,70 @@ services:
     labels:
       <<: *common_labels
       app: "flask-blog"
+
+  uim-auth:
+    build: ./uim-simulator
+    environment:
+      - SERVICE_NAME=uim-auth
+      - NAMESPACE=uim-demo
+      - APP_ENV=local-demo
+      - SCENARIO=mixed
+      - ERROR_RATE=0.25
+      - INTERVAL_SECS=0.7
+      - CONTROL_PORT=9001
+    ports:
+      - "9011:9001"
+    labels:
+      <<: *uim_labels
+      app: "uim-auth"
+
+  uim-apps:
+    build: ./uim-simulator
+    environment:
+      - SERVICE_NAME=uim-apps
+      - NAMESPACE=uim-demo
+      - APP_ENV=local-demo
+      - SCENARIO=mixed
+      - ERROR_RATE=0.22
+      - INTERVAL_SECS=0.8
+      - CONTROL_PORT=9001
+    ports:
+      - "9012:9001"
+    labels:
+      <<: *uim_labels
+      app: "uim-apps"
+
+  uim-smart-search:
+    build: ./uim-simulator
+    environment:
+      - SERVICE_NAME=uim-smart-search
+      - NAMESPACE=uim-demo
+      - APP_ENV=local-demo
+      - SCENARIO=mixed
+      - ERROR_RATE=0.18
+      - INTERVAL_SECS=1.0
+      - CONTROL_PORT=9001
+    ports:
+      - "9013:9001"
+    labels:
+      <<: *uim_labels
+      app: "uim-smart-search"
+
+  uim-topology:
+    build: ./uim-simulator
+    environment:
+      - SERVICE_NAME=uim-topology
+      - NAMESPACE=uim-demo
+      - APP_ENV=local-demo
+      - SCENARIO=mixed
+      - ERROR_RATE=0.16
+      - INTERVAL_SECS=1.1
+      - CONTROL_PORT=9001
+    ports:
+      - "9014:9001"
+    labels:
+      <<: *uim_labels
+      app: "uim-topology"
 
   locust:
     build: ./locust
