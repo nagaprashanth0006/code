@@ -1,0 +1,5 @@
+model,model_type,accuracy,precision,recall,f1
+Logistic Regression,sklearn,1.0,1.0,1.0,1.0
+Random Forest,sklearn,1.0,1.0,1.0,1.0
+TensorFlow MLP,tensorflow,1.0,1.0,1.0,1.0
+Naive Bayes,sklearn,0.98,1.0,0.9,0.9473684210526315

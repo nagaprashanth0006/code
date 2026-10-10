@@ -77,15 +77,17 @@ def plot_cosine_similarity_matrix(sim_matrix, ax=None):
     return ax
 
 def main(n=5, dim=2, seed=42):
-    vectors = generate_vectors(n=n, dim=dim, seed=seed)
-    # vectors = np.array([
-    #     [2, 5],
-    #     [1, 4],
-    #     [4, 1],
-    #     [1, 5],
-    #     [3, 3],
-    #     [3, 4]
-    # ], dtype=float)
+    #vectors = generate_vectors(n=n, dim=dim, seed=seed)
+    vectors = np.array([
+        [2, 5],
+        [1, 4],
+        [4, 1],
+        [1, 5],
+        [3, 3],
+        [3, 4],
+        #[2, 1]
+        [-5, -7]
+    ], dtype=float)
 
     n, dim = vectors.shape
 

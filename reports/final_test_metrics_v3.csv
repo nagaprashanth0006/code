@@ -1,0 +1,2 @@
+best_model,best_model_type,accuracy,precision,recall,f1,roc_auc
+Logistic Regression,sklearn,1.0,1.0,1.0,1.0,1.0

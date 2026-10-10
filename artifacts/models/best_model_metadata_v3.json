@@ -1,0 +1,7 @@
+{
+  "artifact_version": "v3",
+  "best_model_name": "Logistic Regression",
+  "best_model_type": "sklearn",
+  "best_model_path": "artifacts\\models\\logistic_regression_v3.joblib",
+  "vectorizer_path": "artifacts\\models\\tfidf_vectorizer_v3.joblib"
+}

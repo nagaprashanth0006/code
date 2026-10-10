@@ -1,0 +1,5 @@
+model,model_type,artifact_path
+Logistic Regression,sklearn,artifacts\models\logistic_regression_v3.joblib
+Naive Bayes,sklearn,artifacts\models\naive_bayes_v3.joblib
+Random Forest,sklearn,artifacts\models\random_forest_v3.joblib
+TensorFlow MLP,tensorflow,artifacts\models\tensorflow_mlp_v3.keras

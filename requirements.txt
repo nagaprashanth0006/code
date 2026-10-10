@@ -22,3 +22,5 @@ matplotlib
 scikit-learn
 plotly
 pandas
+fitz
+langchain-tavily
