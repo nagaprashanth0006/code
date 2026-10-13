@@ -7,6 +7,7 @@ an in-memory cache for 15 minutes so the experience slider can re-score instantl
 "Clear", on expiry, or when the server stops. Nothing is logged or written to disk.
 """
 import datetime as dt
+import gzip
 import io
 import logging
 import os
@@ -17,7 +18,7 @@ from flask import Flask, Request, jsonify, request, send_from_directory
 
 from shortlist import score
 from shortlist.extract import SUPPORTED, ExtractError, extract_document
-from shortlist.knowledge import COUNTRIES, FAMILIES, LEVEL_IDS, LEVELS, ROLES
+from shortlist.knowledge import COUNTRIES, LEVEL_IDS, LEVELS, ROLES
 
 
 class MemoryRequest(Request):
@@ -31,6 +32,7 @@ logging.basicConfig(level=logging.INFO, format="%(levelname)s %(message)s")
 HERE = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__, static_folder=None)
 app.request_class = MemoryRequest
+app.json.sort_keys = False  # families, roles and tiers are ordered; keep the template order in the JSON
 app.config["MAX_CONTENT_LENGTH"] = 25 * 1024 * 1024
 # Load the small embedding model in the background so startup is instant; /api/meta reports when it's ready.
 threading.Thread(target=score.embedder, daemon=True).start()
@@ -40,6 +42,12 @@ threading.Thread(target=score.embedder, daemon=True).start()
 def no_store(resp):
     if request.path.startswith("/api/"):
         resp.headers["Cache-Control"] = "no-store"   # results contain resume data: keep them out of the browser cache
+        # A full analysis is a few hundred KB of JSON (51 roles x 5 positions); gzip shrinks it ~8x.
+        if (resp.mimetype == "application/json" and not resp.direct_passthrough and "gzip" in request.headers.get("Accept-Encoding", "")
+                and resp.content_length and resp.content_length > 16_000):
+            resp.set_data(gzip.compress(resp.get_data(), compresslevel=5))
+            resp.headers["Content-Encoding"] = "gzip"
+            resp.headers["Vary"] = "Accept-Encoding"
     return resp
 
 
@@ -56,9 +64,9 @@ def static_file(name):
 @app.get("/api/meta")
 def meta():
     return jsonify(
-        roles=[{"id": k, "label": v["label"], "family": v.get("family", "Other")} for k, v in ROLES.items()],
-        families=FAMILIES,
-        levels=[{"id": k, "label": LEVELS[k]["label"], "years": LEVELS[k]["years"]} for k in LEVEL_IDS],
+        roles=[{"id": k, "label": v["label"], "family": v["family"]} for k, v in ROLES.items()],
+        families=score.family_meta(),
+        levels=[{"id": k, "label": LEVELS[k]["label"]} for k in LEVEL_IDS],
         countries=[{"id": k, "label": v["label"]} for k, v in COUNTRIES.items()],
         min_years=score.MIN_YEARS,
         formats=SUPPORTED,

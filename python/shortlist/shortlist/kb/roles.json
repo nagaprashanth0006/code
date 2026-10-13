@@ -1,8 +1,8 @@
 {
-  "_doc": "Role templates. family groups roles in the UI (IT / Infrastructure & AI, later Engineering, ...). skills: each entry is a group of skill ids (any one satisfies it) with a weight: 3 = core, 2 = important, 1 = nice to have. titles: phrases that identify the role in job titles, with how strongly they indicate it (0-1).",
+  "_doc": "Role templates, grouped by family (families.json, which also sets each family's seniority ladder and typical years). title / arch: the role's job title and its architect-tier title, used to suggest headlines; title_by_level overrides the family's title pattern for a tier, and head fills {h} in 'Head of {h}'. years: per-tier [min, max] overriding the family's bands. skills: each entry is a group of skill ids (any one satisfies it) with a weight: 3 = core, 2 = important, 1 = nice to have; 'from': '<tier>' makes a group count only at that tier and above (what a senior/lead/architect in the role is additionally expected to show). titles: phrases that identify the role in job titles, with how strongly they indicate it (0-1).",
 
   "platform": {
-    "label": "Platform Engineering", "family": "IT / Infrastructure & AI",
+    "label": "Platform Engineering", "family": "infra", "title": "Platform Engineer", "arch": "Platform Architect",
     "description": "Platform engineer building an internal developer platform on Kubernetes and public cloud: infrastructure as code with Terraform, GitOps delivery with Argo CD, golden paths and self-service templates, Kubernetes operators, service mesh, observability, policy as code and developer experience for product teams.",
     "titles": {"platform engineer": 1, "platform engineering": 1, "developer platform": 1, "infrastructure engineer": 0.8, "cloud engineer": 0.7, "cloud platform": 0.9, "kubernetes engineer": 0.8, "devops engineer": 0.6, "site reliability": 0.5, "sre": 0.5, "cloud infrastructure": 0.8},
     "skills": [
@@ -28,7 +28,7 @@
   },
 
   "devops": {
-    "label": "DevOps", "family": "IT / Infrastructure & AI",
+    "label": "DevOps", "family": "infra", "title": "DevOps Engineer", "arch": "DevOps Architect",
     "description": "DevOps engineer automating build, test and release: CI/CD pipelines with Jenkins, GitHub Actions or GitLab CI, Docker and Kubernetes deployments, infrastructure as code with Terraform and Ansible, cloud operations on AWS, Azure or GCP, Linux administration, scripting in Bash and Python, monitoring and DevSecOps scanning.",
     "titles": {"devops engineer": 1, "devops": 1, "build engineer": 0.8, "release engineer": 0.8, "cloud engineer": 0.7, "infrastructure engineer": 0.7, "systems engineer": 0.5, "platform engineer": 0.6, "site reliability": 0.5, "sre": 0.5, "devsecops": 0.9},
     "skills": [
@@ -52,7 +52,7 @@
   },
 
   "sre": {
-    "label": "Site Reliability Engineering", "family": "IT / Infrastructure & AI",
+    "label": "Site Reliability Engineering", "family": "infra", "title": "Site Reliability Engineer", "arch": "Reliability Architect",
     "description": "Site reliability engineer owning production reliability: SLOs, SLIs and error budgets, incident response and on-call, blameless postmortems, observability with Prometheus, Grafana and OpenTelemetry, capacity planning, performance and load testing, chaos engineering, Linux and networking depth, automation in Go or Python, Kubernetes and cloud infrastructure.",
     "titles": {"site reliability": 1, "sre": 1, "reliability engineer": 1, "production engineer": 0.9, "systems engineer": 0.5, "devops engineer": 0.5, "infrastructure engineer": 0.6, "operations engineer": 0.6, "platform engineer": 0.5},
     "skills": [
@@ -77,34 +77,267 @@
     ]
   },
 
-  "ai_eng": {
-    "label": "AI Engineering", "family": "IT / Infrastructure & AI",
-    "description": "AI engineer building LLM-powered products: retrieval augmented generation with embeddings and vector databases, AI agents with tool use and function calling, prompt engineering, LLM evaluation and guardrails, frameworks like LangChain or LlamaIndex, OpenAI, Anthropic or Bedrock APIs, Python backend services and APIs, fine-tuning and model serving.",
-    "titles": {"ai engineer": 1, "generative ai engineer": 1, "genai engineer": 1, "llm engineer": 1, "applied ai": 0.9, "ai developer": 0.9, "applied scientist": 0.6, "machine learning engineer": 0.6, "ml engineer": 0.6, "nlp engineer": 0.8, "software engineer": 0.3},
+  "cloud_eng": {
+    "label": "Cloud Engineering", "family": "infra", "title": "Cloud Engineer", "arch": "Cloud Architect",
+    "description": "Cloud engineer designing, provisioning and running workloads on AWS, Azure or Google Cloud: VPC and cloud networking, IAM and security controls, infrastructure as code with Terraform or CloudFormation, containers and Kubernetes, serverless, CI/CD, monitoring, backup and cost optimisation, migrations from on-premises and cloud certifications.",
+    "titles": {"cloud engineer": 1, "cloud architect": 0.9, "cloud infrastructure": 0.9, "cloud operations": 0.9, "cloud consultant": 0.8, "aws engineer": 1, "azure engineer": 1, "gcp engineer": 1, "cloud administrator": 0.9, "cloud specialist": 0.8, "infrastructure engineer": 0.6, "devops engineer": 0.6, "platform engineer": 0.5, "solutions architect": 0.6},
     "skills": [
-      {"ids": ["llm"], "w": 3},
-      {"ids": ["rag"], "w": 3},
-      {"ids": ["llm_eval"], "w": 3},
+      {"ids": ["aws", "azure", "gcp"], "w": 3},
+      {"ids": ["terraform", "cloudformation", "pulumi", "iac"], "w": 3},
+      {"ids": ["cloud_networking", "networking"], "w": 3},
+      {"ids": ["iam"], "w": 2},
+      {"ids": ["linux", "windows_server"], "w": 2},
+      {"ids": ["python", "bash"], "w": 2},
+      {"ids": ["docker", "kubernetes"], "w": 2},
+      {"ids": ["cicd", "github_actions", "gitlab_ci", "jenkins"], "w": 2},
+      {"ids": ["observability", "datadog", "prometheus", "grafana"], "w": 1},
+      {"ids": ["serverless"], "w": 1},
+      {"ids": ["cost"], "w": 1, "from": "senior"},
+      {"ids": ["migration"], "w": 2, "from": "senior"},
+      {"ids": ["reliability"], "w": 1},
+      {"ids": ["cloud_arch"], "w": 3, "from": "architect"},
+      {"ids": ["cloud_security", "compliance"], "w": 1, "from": "lead"},
+      {"ids": ["cert_aws", "cert_azure", "cert_gcp"], "w": 2}
+    ]
+  },
+
+  "sysadmin": {
+    "label": "Systems Administration", "family": "infra", "title": "Systems Administrator", "arch": "Infrastructure Architect",
+    "title_by_level": {"senior": "Senior Systems Engineer", "lead": "Lead Systems Engineer"},
+    "years": {"engineer": [2, 7], "senior": [5, 10], "lead": [7, 14], "architect": [10, 20], "sr_architect": [14, 30]},
+    "description": "Systems administrator running servers and infrastructure: Linux and Windows Server administration, Active Directory, DNS and DHCP, VMware or Hyper-V virtualisation, backup and recovery with Veeam, patch management, monitoring with Nagios or Zabbix, PowerShell and Bash scripting, storage, Microsoft 365, ticketing with ServiceNow and ITIL processes.",
+    "titles": {"system administrator": 1, "systems administrator": 1, "sysadmin": 1, "linux administrator": 1, "windows administrator": 1, "server administrator": 1, "systems engineer": 0.8, "system engineer": 0.8, "infrastructure engineer": 0.7, "it administrator": 0.9, "unix administrator": 1, "vmware administrator": 0.9, "wintel": 0.9, "it support engineer": 0.5, "technical support engineer": 0.4},
+    "skills": [
+      {"ids": ["linux"], "w": 3},
+      {"ids": ["windows_server"], "w": 3},
+      {"ids": ["bash", "scripting"], "w": 3},
+      {"ids": ["active_directory"], "w": 2},
+      {"ids": ["virtualization"], "w": 2},
+      {"ids": ["networking"], "w": 2},
+      {"ids": ["backup", "db_backup"], "w": 2},
+      {"ids": ["infra_monitoring", "observability"], "w": 2},
+      {"ids": ["patching", "m365"], "w": 1},
+      {"ids": ["ansible", "config_mgmt"], "w": 1},
+      {"ids": ["storage"], "w": 1},
+      {"ids": ["itsm"], "w": 1},
+      {"ids": ["aws", "azure", "gcp"], "w": 1},
+      {"ids": ["docker"], "w": 1},
+      {"ids": ["reliability"], "w": 1, "from": "senior"},
+      {"ids": ["migration"], "w": 1, "from": "lead"},
+      {"ids": ["cert_sysadmin", "cert_itil", "cert_azure"], "w": 1}
+    ]
+  },
+
+  "network_eng": {
+    "label": "Network Engineering", "family": "infra", "title": "Network Engineer", "arch": "Network Architect",
+    "description": "Network engineer designing and operating enterprise and data-centre networks: routing and switching with BGP, OSPF, VLANs and MPLS, Cisco, Juniper or Arista, firewalls such as Palo Alto and Fortinet, VPN, SD-WAN, wireless, F5 load balancers, cloud networking, network monitoring, troubleshooting with Wireshark and automation with Python and Ansible; CCNA/CCNP.",
+    "titles": {"network engineer": 1, "network administrator": 1, "network architect": 0.9, "network specialist": 0.9, "network security engineer": 0.8, "noc engineer": 0.8, "network analyst": 0.8, "lan/wan": 0.8, "network consultant": 0.9, "infrastructure engineer": 0.5, "firewall engineer": 0.9},
+    "skills": [
+      {"ids": ["routing"], "w": 3},
+      {"ids": ["networking"], "w": 3},
+      {"ids": ["firewalls"], "w": 3},
+      {"ids": ["netsec"], "w": 2},
+      {"ids": ["sdwan"], "w": 1},
+      {"ids": ["wireless"], "w": 1},
+      {"ids": ["adc"], "w": 1},
+      {"ids": ["net_automation", "python", "ansible"], "w": 2},
+      {"ids": ["cloud_networking", "aws", "azure"], "w": 2},
+      {"ids": ["infra_monitoring", "observability"], "w": 1},
+      {"ids": ["dc_network"], "w": 1, "from": "senior"},
+      {"ids": ["itsm"], "w": 1},
+      {"ids": ["linux"], "w": 1},
+      {"ids": ["cert_network"], "w": 2}
+    ]
+  },
+
+  "dba": {
+    "label": "Database Administration", "family": "infra", "title": "Database Administrator", "arch": "Database Architect",
+    "years": {"engineer": [2, 7], "senior": [5, 11], "lead": [8, 15], "architect": [10, 22], "sr_architect": [14, 30]},
+    "description": "Database administrator keeping databases fast, safe and available: Oracle, SQL Server, PostgreSQL or MySQL installation, upgrades and patching, backup and recovery with RMAN, replication and high availability with Data Guard, RAC or Always On, performance and query tuning, security, monitoring, cloud databases such as RDS, scripting and automation.",
+    "titles": {"database administrator": 1, "dba": 1, "oracle dba": 1, "sql server dba": 1, "postgresql dba": 1, "mysql dba": 1, "database engineer": 0.9, "database architect": 0.8, "database specialist": 0.8, "data platform engineer": 0.5},
+    "skills": [
+      {"ids": ["oracle_db", "sql_server", "postgresql", "mysql"], "w": 3},
+      {"ids": ["db_backup"], "w": 3},
+      {"ids": ["db_ha"], "w": 3},
+      {"ids": ["query_tuning"], "w": 3},
+      {"ids": ["db_ops"], "w": 2},
+      {"ids": ["sql", "sql_programming"], "w": 2},
+      {"ids": ["bash", "scripting", "python"], "w": 2},
+      {"ids": ["linux", "windows_server"], "w": 2},
+      {"ids": ["cloud_db", "aws", "azure", "gcp"], "w": 2},
+      {"ids": ["databases"], "w": 1},
+      {"ids": ["observability", "infra_monitoring"], "w": 1},
+      {"ids": ["ansible", "terraform"], "w": 1},
+      {"ids": ["migration"], "w": 1, "from": "senior"},
+      {"ids": ["data_modeling"], "w": 2, "from": "architect"},
+      {"ids": ["cert_db"], "w": 1}
+    ]
+  },
+
+  "aiops": {
+    "label": "AIOps", "family": "infra", "title": "AIOps Engineer", "arch": "AIOps Architect",
+    "description": "AIOps engineer applying machine learning to IT operations: anomaly detection on metrics and logs, event and alert correlation to reduce noise, automated root cause analysis, auto-remediation and runbook automation, observability platforms, ITSM integration with ServiceNow, forecasting and predictive operations, Python automation and incident management.",
+    "titles": {"aiops": 1, "ai ops": 1, "observability engineer": 0.7, "monitoring engineer": 0.7, "operations engineer": 0.5, "site reliability": 0.5, "sre": 0.5, "automation engineer": 0.5, "itom": 0.7, "data scientist": 0.4},
+    "skills": [
+      {"ids": ["aiops"], "w": 3},
+      {"ids": ["anomaly_detection"], "w": 3},
+      {"ids": ["event_correlation"], "w": 3},
+      {"ids": ["observability"], "w": 3},
+      {"ids": ["auto_remediation"], "w": 3},
+      {"ids": ["itsm"], "w": 2},
+      {"ids": ["aiops_tools", "datadog", "splunk"], "w": 2},
+      {"ids": ["log_analytics", "elk"], "w": 2},
+      {"ids": ["ml"], "w": 2},
+      {"ids": ["python"], "w": 2},
+      {"ids": ["incident", "postmortem"], "w": 2},
+      {"ids": ["prometheus", "grafana", "opentelemetry"], "w": 1},
+      {"ids": ["predictive", "stats"], "w": 1},
+      {"ids": ["kafka"], "w": 1},
+      {"ids": ["llm", "genai"], "w": 1},
+      {"ids": ["cert_itil"], "w": 1}
+    ]
+  },
+
+  "automation": {
+    "label": "Automation (Infra & Ops)", "family": "infra", "title": "Automation Engineer", "arch": "Automation Architect",
+    "description": "Automation engineer eliminating manual work: scripting and tooling in Python and Bash, test automation with Selenium, Playwright, Cypress or pytest, CI/CD pipeline integration, infrastructure and configuration automation with Ansible and Terraform, workflow and process automation, RPA, API integration, runbook automation and quality engineering.",
+    "titles": {"automation engineer": 1, "test automation": 1, "sdet": 0.9, "software development engineer in test": 1, "test engineer": 0.8, "quality engineer": 0.8, "automation test engineer": 1, "qa engineer": 0.6, "qa automation": 1, "rpa developer": 0.9, "rpa engineer": 0.9, "infrastructure automation": 1, "devops engineer": 0.6, "build engineer": 0.5, "software engineer": 0.3},
+    "skills": [
       {"ids": ["python"], "w": 3},
-      {"ids": ["vector_db"], "w": 2},
-      {"ids": ["embeddings"], "w": 2},
-      {"ids": ["agents"], "w": 2},
-      {"ids": ["llm_frameworks"], "w": 2},
-      {"ids": ["llm_apis"], "w": 2},
-      {"ids": ["prompt_eng"], "w": 2},
+      {"ids": ["test_automation"], "w": 3},
+      {"ids": ["cicd"], "w": 3},
+      {"ids": ["scripting", "bash"], "w": 2},
+      {"ids": ["ansible", "config_mgmt"], "w": 2},
+      {"ids": ["jenkins", "github_actions", "gitlab_ci"], "w": 2},
+      {"ids": ["workflow"], "w": 2},
       {"ids": ["api"], "w": 2},
-      {"ids": ["fine_tuning"], "w": 1},
-      {"ids": ["llm_serving"], "w": 1},
-      {"ids": ["llmops"], "w": 1},
-      {"ids": ["genai"], "w": 1},
-      {"ids": ["nlp", "deep_learning", "pytorch"], "w": 1},
-      {"ids": ["typescript"], "w": 1},
-      {"ids": ["docker", "aws", "azure", "gcp"], "w": 1}
+      {"ids": ["terraform", "iac"], "w": 1},
+      {"ids": ["rpa"], "w": 1},
+      {"ids": ["auto_remediation"], "w": 1},
+      {"ids": ["qa", "bdd"], "w": 1},
+      {"ids": ["docker"], "w": 1},
+      {"ids": ["performance"], "w": 1},
+      {"ids": ["java", "typescript", "go"], "w": 1},
+      {"ids": ["linux"], "w": 1}
+    ]
+  },
+
+  "data_eng": {
+    "label": "Data Engineering", "family": "data_ai", "title": "Data Engineer", "arch": "Data Architect",
+    "description": "Data engineer building reliable data pipelines and platforms: batch and streaming ETL/ELT with Spark, Kafka and Airflow, SQL and Python, data warehouses such as Snowflake, BigQuery or Redshift, lakehouse with Databricks and Delta Lake, dbt, data modelling, data quality and testing, cloud data services on AWS, Azure or GCP, CI/CD and governance.",
+    "titles": {"data engineer": 1, "big data engineer": 1, "etl developer": 0.8, "etl engineer": 0.9, "data platform engineer": 1, "analytics engineer": 0.8, "data architect": 0.8, "data integration": 0.8, "spark developer": 0.9, "hadoop developer": 0.8, "databricks engineer": 1, "bi developer": 0.4},
+    "skills": [
+      {"ids": ["sql"], "w": 3},
+      {"ids": ["python", "scala", "java"], "w": 3},
+      {"ids": ["spark"], "w": 3},
+      {"ids": ["data_pipelines", "etl_tools"], "w": 3},
+      {"ids": ["airflow"], "w": 2},
+      {"ids": ["warehouse"], "w": 2},
+      {"ids": ["lakehouse"], "w": 2},
+      {"ids": ["kafka"], "w": 2},
+      {"ids": ["aws", "azure", "gcp"], "w": 2},
+      {"ids": ["data_modeling"], "w": 2},
+      {"ids": ["data_quality"], "w": 1},
+      {"ids": ["docker", "kubernetes"], "w": 1},
+      {"ids": ["cicd", "git"], "w": 1},
+      {"ids": ["terraform", "iac"], "w": 1},
+      {"ids": ["system_design"], "w": 1, "from": "senior"},
+      {"ids": ["data_governance"], "w": 2, "from": "lead"},
+      {"ids": ["cost"], "w": 1, "from": "lead"},
+      {"ids": ["cloud_arch"], "w": 2, "from": "architect"}
+    ]
+  },
+
+  "data_sci": {
+    "label": "Data Science", "family": "data_ai", "title": "Data Scientist", "arch": "Principal Data Scientist",
+    "title_by_level": {"architect": "Principal Data Scientist", "sr_architect": "Head of Data Science"},
+    "description": "Data scientist turning data into decisions and models: statistics and hypothesis testing, machine learning with scikit-learn, XGBoost and deep learning, feature engineering, model evaluation, A/B testing and causal inference, Python with pandas and NumPy, SQL, data visualisation, NLP or computer vision, forecasting and communicating insights to stakeholders.",
+    "titles": {"data scientist": 1, "data science": 1, "applied scientist": 0.9, "research scientist": 0.7, "machine learning scientist": 1, "decision scientist": 0.9, "quantitative analyst": 0.6, "statistician": 0.8, "ml engineer": 0.6, "machine learning engineer": 0.6, "data analyst": 0.5, "ai engineer": 0.4},
+    "skills": [
+      {"ids": ["python", "r_lang"], "w": 3},
+      {"ids": ["ml"], "w": 3},
+      {"ids": ["stats"], "w": 3},
+      {"ids": ["sklearn"], "w": 3},
+      {"ids": ["sql"], "w": 2},
+      {"ids": ["model_training"], "w": 2},
+      {"ids": ["model_eval", "ab_testing"], "w": 2},
+      {"ids": ["deep_learning", "pytorch", "tensorflow"], "w": 2},
+      {"ids": ["data_viz", "bi_tools"], "w": 2},
+      {"ids": ["nlp", "cv"], "w": 1},
+      {"ids": ["predictive"], "w": 1},
+      {"ids": ["spark"], "w": 1},
+      {"ids": ["ml_platforms", "experiment_tracking"], "w": 1},
+      {"ids": ["llm", "genai"], "w": 1},
+      {"ids": ["aws", "azure", "gcp"], "w": 1},
+      {"ids": ["model_serving"], "w": 1, "from": "senior"},
+      {"ids": ["stakeholder"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "data_analyst": {
+    "label": "Data Analytics", "family": "data_ai", "title": "Data Analyst", "arch": "Principal Data Analyst",
+    "title_by_level": {"lead": "Lead Data Analyst", "architect": "Analytics Manager", "sr_architect": "Head of Analytics"},
+    "years": {"engineer": [1, 5], "senior": [4, 9], "lead": [6, 12], "architect": [9, 18], "sr_architect": [12, 30]},
+    "description": "Data analyst answering business questions with data: SQL queries, Excel with pivot tables and VLOOKUP, dashboards in Power BI or Tableau, data cleaning and preparation, descriptive statistics, KPIs and reporting, Python or R for analysis, A/B test readouts and presenting insights and recommendations to stakeholders.",
+    "titles": {"data analyst": 1, "business intelligence analyst": 0.9, "bi analyst": 0.9, "analytics": 0.8, "reporting analyst": 0.9, "mis analyst": 0.9, "mis executive": 0.8, "product analyst": 0.9, "business analyst": 0.5, "marketing analyst": 0.8, "insights analyst": 0.9, "data scientist": 0.4},
+    "skills": [
+      {"ids": ["sql"], "w": 3},
+      {"ids": ["excel"], "w": 3},
+      {"ids": ["bi_tools"], "w": 3},
+      {"ids": ["data_viz", "reporting"], "w": 2},
+      {"ids": ["python", "r_lang"], "w": 2},
+      {"ids": ["stats"], "w": 2},
+      {"ids": ["data_wrangling"], "w": 2},
+      {"ids": ["ab_testing", "product_analytics"], "w": 1},
+      {"ids": ["warehouse"], "w": 1},
+      {"ids": ["stakeholder"], "w": 1},
+      {"ids": ["data_modeling"], "w": 1, "from": "senior"},
+      {"ids": ["ml"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "bi_dev": {
+    "label": "BI Development", "family": "data_ai", "title": "BI Developer", "arch": "BI Architect",
+    "description": "Business intelligence developer delivering reporting and analytics: Power BI with DAX and Power Query, Tableau, SSRS and SSAS, SQL and stored procedures, data warehouse and dimensional modelling with star schemas, ETL with SSIS, Informatica or Azure Data Factory, KPI dashboards and performance tuning of reports.",
+    "titles": {"bi developer": 1, "power bi developer": 1, "tableau developer": 1, "business intelligence developer": 1, "bi engineer": 1, "bi consultant": 0.9, "msbi developer": 1, "reporting developer": 0.9, "etl developer": 0.7, "data warehouse developer": 0.9, "bi architect": 0.8, "data analyst": 0.5},
+    "skills": [
+      {"ids": ["bi_tools"], "w": 3},
+      {"ids": ["sql"], "w": 3},
+      {"ids": ["data_modeling"], "w": 3},
+      {"ids": ["etl_tools", "data_pipelines"], "w": 2},
+      {"ids": ["warehouse"], "w": 2},
+      {"ids": ["sql_programming"], "w": 2},
+      {"ids": ["reporting", "data_viz"], "w": 2},
+      {"ids": ["sql_server", "oracle_db", "postgresql"], "w": 1},
+      {"ids": ["excel"], "w": 1},
+      {"ids": ["python"], "w": 1},
+      {"ids": ["azure", "aws", "gcp"], "w": 1},
+      {"ids": ["query_tuning"], "w": 1, "from": "senior"},
+      {"ids": ["data_governance"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "sql_dev": {
+    "label": "SQL / Database Development", "family": "data_ai", "title": "SQL Developer", "arch": "Database Architect",
+    "description": "SQL and database developer writing and optimising database code: complex SQL queries, PL/SQL or T-SQL stored procedures, functions and triggers, Oracle, SQL Server, PostgreSQL or MySQL, query tuning and indexing, data modelling and normalised schemas, ETL with SSIS or Informatica, reports and data migration.",
+    "titles": {"sql developer": 1, "pl/sql developer": 1, "plsql developer": 1, "t-sql developer": 1, "database developer": 1, "oracle developer": 0.9, "sql server developer": 1, "etl developer": 0.6, "database engineer": 0.7, "bi developer": 0.5, "dba": 0.4},
+    "skills": [
+      {"ids": ["sql"], "w": 3},
+      {"ids": ["sql_programming"], "w": 3},
+      {"ids": ["query_tuning"], "w": 3},
+      {"ids": ["oracle_db", "sql_server", "postgresql", "mysql"], "w": 2},
+      {"ids": ["data_modeling"], "w": 2},
+      {"ids": ["etl_tools", "data_pipelines"], "w": 2},
+      {"ids": ["reporting", "bi_tools"], "w": 1},
+      {"ids": ["python", "bash"], "w": 1},
+      {"ids": ["git"], "w": 1},
+      {"ids": ["warehouse"], "w": 1},
+      {"ids": ["migration"], "w": 1, "from": "senior"}
     ]
   },
 
   "ml_eng": {
-    "label": "ML Engineering", "family": "IT / Infrastructure & AI",
+    "label": "ML Engineering", "family": "data_ai", "title": "Machine Learning Engineer", "arch": "ML Architect",
     "description": "Machine learning engineer developing and productionising models: feature engineering, model training and hyperparameter tuning with PyTorch, TensorFlow, scikit-learn or XGBoost, model evaluation and A/B testing, deep learning for NLP or computer vision, data pipelines with Spark and SQL, model deployment and serving, experiment tracking and GPU training.",
     "titles": {"machine learning engineer": 1, "ml engineer": 1, "applied scientist": 0.8, "data scientist": 0.7, "research engineer": 0.8, "deep learning engineer": 1, "computer vision engineer": 0.9, "nlp engineer": 0.9, "ai engineer": 0.6, "software engineer": 0.3},
     "skills": [
@@ -129,32 +362,34 @@
     ]
   },
 
-  "aiops": {
-    "label": "AIOps", "family": "IT / Infrastructure & AI",
-    "description": "AIOps engineer applying machine learning to IT operations: anomaly detection on metrics and logs, event and alert correlation to reduce noise, automated root cause analysis, auto-remediation and runbook automation, observability platforms, ITSM integration with ServiceNow, forecasting and predictive operations, Python automation and incident management.",
-    "titles": {"aiops": 1, "ai ops": 1, "observability engineer": 0.7, "monitoring engineer": 0.7, "operations engineer": 0.5, "site reliability": 0.5, "sre": 0.5, "automation engineer": 0.5, "itom": 0.7, "data scientist": 0.4},
+  "ai_eng": {
+    "label": "AI Engineering", "family": "data_ai", "title": "AI Engineer", "arch": "AI Architect",
+    "description": "AI engineer building LLM-powered products: retrieval augmented generation with embeddings and vector databases, AI agents with tool use and function calling, prompt engineering, LLM evaluation and guardrails, frameworks like LangChain or LlamaIndex, OpenAI, Anthropic or Bedrock APIs, Python backend services and APIs, fine-tuning and model serving.",
+    "titles": {"ai engineer": 1, "generative ai engineer": 1, "genai engineer": 1, "llm engineer": 1, "applied ai": 0.9, "ai developer": 0.9, "applied scientist": 0.6, "machine learning engineer": 0.6, "ml engineer": 0.6, "nlp engineer": 0.8, "software engineer": 0.3},
     "skills": [
-      {"ids": ["aiops"], "w": 3},
-      {"ids": ["anomaly_detection"], "w": 3},
-      {"ids": ["event_correlation"], "w": 3},
-      {"ids": ["observability"], "w": 3},
-      {"ids": ["auto_remediation"], "w": 3},
-      {"ids": ["itsm"], "w": 2},
-      {"ids": ["aiops_tools", "datadog", "splunk"], "w": 2},
-      {"ids": ["log_analytics", "elk"], "w": 2},
-      {"ids": ["ml"], "w": 2},
-      {"ids": ["python"], "w": 2},
-      {"ids": ["incident", "postmortem"], "w": 2},
-      {"ids": ["prometheus", "grafana", "opentelemetry"], "w": 1},
-      {"ids": ["predictive", "stats"], "w": 1},
-      {"ids": ["kafka"], "w": 1},
-      {"ids": ["llm", "genai"], "w": 1},
-      {"ids": ["cert_itil"], "w": 1}
+      {"ids": ["llm"], "w": 3},
+      {"ids": ["rag"], "w": 3},
+      {"ids": ["llm_eval"], "w": 3},
+      {"ids": ["python"], "w": 3},
+      {"ids": ["vector_db"], "w": 2},
+      {"ids": ["embeddings"], "w": 2},
+      {"ids": ["agents"], "w": 2},
+      {"ids": ["llm_frameworks"], "w": 2},
+      {"ids": ["llm_apis"], "w": 2},
+      {"ids": ["prompt_eng"], "w": 2},
+      {"ids": ["api"], "w": 2},
+      {"ids": ["fine_tuning"], "w": 1},
+      {"ids": ["llm_serving"], "w": 1},
+      {"ids": ["llmops"], "w": 1},
+      {"ids": ["genai"], "w": 1},
+      {"ids": ["nlp", "deep_learning", "pytorch"], "w": 1},
+      {"ids": ["typescript"], "w": 1},
+      {"ids": ["docker", "aws", "azure", "gcp"], "w": 1}
     ]
   },
 
   "mlops": {
-    "label": "MLOps", "family": "IT / Infrastructure & AI",
+    "label": "MLOps", "family": "data_ai", "title": "MLOps Engineer", "arch": "MLOps Architect",
     "description": "MLOps engineer running the machine learning lifecycle in production: ML pipelines and continuous training, ML platforms such as MLflow, Kubeflow, SageMaker or Vertex AI, model serving with KServe, Seldon or Triton, model registry and versioning, model monitoring and drift detection, experiment tracking, feature stores, CI/CD for models, Docker, Kubernetes and Terraform on cloud, GPU infrastructure.",
     "titles": {"mlops": 1, "ml ops": 1, "ml platform": 1, "machine learning platform": 1, "ml infrastructure": 1, "machine learning engineer": 0.6, "ml engineer": 0.6, "devops engineer": 0.4, "platform engineer": 0.5, "data engineer": 0.4},
     "skills": [
@@ -180,7 +415,7 @@
   },
 
   "ml_ai_ops_eng": {
-    "label": "ML/AI Ops & Engineering", "family": "IT / Infrastructure & AI",
+    "label": "ML/AI Ops & Engineering", "family": "data_ai", "title": "ML/AI Platform Engineer", "arch": "AI/ML Platform Architect",
     "description": "Hybrid ML and AI engineer who both builds and operates models and LLM systems: model training and fine-tuning, RAG and LLM applications, ML pipelines and ML platforms, model and LLM serving with vLLM, Triton or KServe, LLMOps, evaluation and monitoring for drift and quality, GPU infrastructure on Kubernetes, CI/CD and infrastructure as code on cloud.",
     "titles": {"mlops": 0.9, "ml ops": 0.9, "llmops": 1, "ai engineer": 0.8, "machine learning engineer": 0.8, "ml engineer": 0.8, "ml platform": 0.9, "ai platform": 1, "ai infrastructure": 1, "ml infrastructure": 0.9, "applied ai": 0.7},
     "skills": [
@@ -206,27 +441,740 @@
     ]
   },
 
-  "automation": {
-    "label": "Automation", "family": "IT / Infrastructure & AI",
-    "description": "Automation engineer eliminating manual work: scripting and tooling in Python and Bash, test automation with Selenium, Playwright, Cypress or pytest, CI/CD pipeline integration, infrastructure and configuration automation with Ansible and Terraform, workflow and process automation, RPA, API integration, runbook automation and quality engineering.",
-    "titles": {"automation engineer": 1, "test automation": 1, "sdet": 0.9, "software development engineer in test": 1, "test engineer": 0.8, "quality engineer": 0.8, "automation test engineer": 1, "qa engineer": 0.6, "qa automation": 1, "rpa developer": 0.9, "rpa engineer": 0.9, "infrastructure automation": 1, "devops engineer": 0.6, "build engineer": 0.5, "software engineer": 0.3},
+  "backend": {
+    "label": "Backend Development", "family": "software", "title": "Backend Developer", "arch": "Software Architect",
+    "description": "Backend developer building server-side services and APIs: Java, Python, Go, C# or Node.js, REST and GraphQL APIs, relational and NoSQL databases, microservices, messaging with Kafka or RabbitMQ, caching with Redis, Docker and Kubernetes, CI/CD, unit and integration testing, cloud services and scalable distributed system design.",
+    "titles": {"backend developer": 1, "back-end developer": 1, "backend engineer": 1, "back end developer": 1, "server-side developer": 1, "api developer": 0.9, "software engineer": 0.6, "software developer": 0.6, "java developer": 0.7, "python developer": 0.7, "golang developer": 0.8, "node.js developer": 0.8, "full stack developer": 0.5, "sde": 0.5},
+    "skills": [
+      {"ids": ["java", "python", "go", "csharp", "nodejs", "kotlin", "ruby", "php", "rust", "scala"], "w": 3},
+      {"ids": ["api"], "w": 3},
+      {"ids": ["sql"], "w": 3},
+      {"ids": ["databases"], "w": 2},
+      {"ids": ["microservices"], "w": 2},
+      {"ids": ["docker"], "w": 2},
+      {"ids": ["unit_testing"], "w": 2},
+      {"ids": ["cicd", "jenkins", "github_actions", "gitlab_ci"], "w": 2},
+      {"ids": ["aws", "azure", "gcp"], "w": 2},
+      {"ids": ["kafka", "event_driven"], "w": 2},
+      {"ids": ["git"], "w": 1},
+      {"ids": ["kubernetes"], "w": 1},
+      {"ids": ["orm"], "w": 1},
+      {"ids": ["design_patterns"], "w": 1},
+      {"ids": ["linux"], "w": 1},
+      {"ids": ["system_design"], "w": 2, "from": "senior"},
+      {"ids": ["performance", "observability"], "w": 1, "from": "senior"},
+      {"ids": ["cloud_arch"], "w": 2, "from": "architect"}
+    ]
+  },
+
+  "frontend": {
+    "label": "Frontend Development", "family": "software", "title": "Frontend Developer", "arch": "Frontend Architect",
+    "description": "Frontend developer building responsive web interfaces: JavaScript and TypeScript, React, Angular or Vue, HTML5 and CSS3 with Sass or Tailwind, state management with Redux, REST and GraphQL integration, unit testing with Jest and end-to-end tests with Cypress or Playwright, webpack or Vite, accessibility, web performance and design systems with Figma handoff.",
+    "titles": {"frontend developer": 1, "front-end developer": 1, "front end developer": 1, "frontend engineer": 1, "front-end engineer": 1, "ui developer": 1, "react developer": 1, "angular developer": 1, "vue developer": 1, "javascript developer": 0.9, "web developer": 0.7, "ui engineer": 0.9, "full stack developer": 0.5, "software engineer": 0.3},
+    "skills": [
+      {"ids": ["typescript"], "w": 3},
+      {"ids": ["react", "angular", "vue"], "w": 3},
+      {"ids": ["html_css"], "w": 3},
+      {"ids": ["responsive"], "w": 2},
+      {"ids": ["api"], "w": 2},
+      {"ids": ["fe_testing", "unit_testing", "test_automation"], "w": 2},
+      {"ids": ["accessibility"], "w": 2},
+      {"ids": ["fe_build"], "w": 1},
+      {"ids": ["git"], "w": 1},
+      {"ids": ["design_tools", "design_systems"], "w": 1},
+      {"ids": ["nodejs"], "w": 1},
+      {"ids": ["cicd"], "w": 1},
+      {"ids": ["web_perf"], "w": 2, "from": "senior"},
+      {"ids": ["design_systems"], "w": 1, "from": "lead"},
+      {"ids": ["microfrontends"], "w": 2, "from": "architect"}
+    ]
+  },
+
+  "fullstack": {
+    "label": "Full-Stack Development", "family": "software", "title": "Full Stack Developer", "arch": "Software Architect",
+    "description": "Full-stack developer delivering features end to end: React, Angular or Vue front ends with TypeScript, HTML and CSS, back-end services in Node.js, Java, Python, C# or PHP, REST and GraphQL APIs, SQL and NoSQL databases, authentication, Docker, CI/CD, cloud deployment on AWS or Azure, testing and Git workflows.",
+    "titles": {"full stack developer": 1, "full-stack developer": 1, "fullstack developer": 1, "full stack engineer": 1, "full-stack engineer": 1, "mern stack": 1, "mean stack": 1, "web developer": 0.7, "software engineer": 0.5, "software developer": 0.5, "frontend developer": 0.5, "backend developer": 0.5},
+    "skills": [
+      {"ids": ["typescript"], "w": 3},
+      {"ids": ["react", "angular", "vue"], "w": 3},
+      {"ids": ["nodejs", "spring", "dotnet", "py_web", "php", "ruby"], "w": 3},
+      {"ids": ["java", "python", "csharp", "go", "kotlin"], "w": 1},
+      {"ids": ["api"], "w": 3},
+      {"ids": ["sql", "databases"], "w": 2},
+      {"ids": ["html_css"], "w": 2},
+      {"ids": ["fe_build", "fe_testing", "responsive"], "w": 2},
+      {"ids": ["unit_testing"], "w": 1},
+      {"ids": ["docker"], "w": 1},
+      {"ids": ["aws", "azure", "gcp"], "w": 1},
+      {"ids": ["cicd"], "w": 1},
+      {"ids": ["git"], "w": 1},
+      {"ids": ["iam"], "w": 1},
+      {"ids": ["system_design"], "w": 2, "from": "senior"},
+      {"ids": ["microservices"], "w": 1, "from": "lead"},
+      {"ids": ["cloud_arch"], "w": 2, "from": "architect"}
+    ]
+  },
+
+  "mobile": {
+    "label": "Mobile Development", "family": "software", "title": "Mobile Developer", "arch": "Mobile Architect",
+    "description": "Mobile developer building iOS and Android apps: Swift and SwiftUI or Kotlin and Jetpack Compose, cross-platform Flutter or React Native, MVVM and clean architecture, REST APIs, offline storage, push notifications with Firebase, unit and UI testing, CI/CD with Fastlane and publishing to the App Store and Google Play.",
+    "titles": {"mobile developer": 1, "mobile engineer": 1, "ios developer": 1, "ios engineer": 1, "android developer": 1, "android engineer": 1, "flutter developer": 1, "react native developer": 1, "mobile app developer": 1, "app developer": 0.8, "software engineer": 0.3},
+    "skills": [
+      {"ids": ["android", "ios"], "w": 3},
+      {"ids": ["kotlin", "ios", "flutter", "react_native", "java"], "w": 3},
+      {"ids": ["api"], "w": 2},
+      {"ids": ["mobile_release"], "w": 2},
+      {"ids": ["flutter", "react_native"], "w": 1},
+      {"ids": ["mobile_storage"], "w": 1},
+      {"ids": ["unit_testing", "mobile_testing"], "w": 2},
+      {"ids": ["git"], "w": 1},
+      {"ids": ["cicd"], "w": 1},
+      {"ids": ["design_patterns"], "w": 1},
+      {"ids": ["mobile_arch"], "w": 2, "from": "senior"},
+      {"ids": ["performance"], "w": 1, "from": "senior"},
+      {"ids": ["system_design"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "java_dev": {
+    "label": "Java Development", "family": "software", "title": "Java Developer", "arch": "Java Architect",
+    "description": "Java developer building enterprise applications and microservices: core Java and J2EE, Spring Boot, Spring MVC and Spring Security, Hibernate and JPA, REST APIs, SQL databases such as Oracle, MySQL or PostgreSQL, Maven or Gradle, JUnit and Mockito, Kafka, Docker, Jenkins and cloud deployment.",
+    "titles": {"java developer": 1, "java engineer": 1, "j2ee developer": 1, "java software engineer": 1, "spring boot developer": 1, "java full stack": 0.9, "backend developer": 0.6, "software engineer": 0.5, "software developer": 0.5},
+    "skills": [
+      {"ids": ["java"], "w": 3},
+      {"ids": ["spring"], "w": 3},
+      {"ids": ["api"], "w": 3},
+      {"ids": ["sql"], "w": 2},
+      {"ids": ["orm"], "w": 2},
+      {"ids": ["microservices"], "w": 2},
+      {"ids": ["unit_testing"], "w": 2},
+      {"ids": ["build_tools"], "w": 1},
+      {"ids": ["kafka", "event_driven"], "w": 1},
+      {"ids": ["docker", "kubernetes"], "w": 1},
+      {"ids": ["cicd", "jenkins"], "w": 1},
+      {"ids": ["git"], "w": 1},
+      {"ids": ["aws", "azure", "gcp"], "w": 1},
+      {"ids": ["design_patterns"], "w": 1},
+      {"ids": ["system_design"], "w": 2, "from": "senior"},
+      {"ids": ["performance", "profiling"], "w": 1, "from": "senior"},
+      {"ids": ["cloud_arch"], "w": 2, "from": "architect"}
+    ]
+  },
+
+  "dotnet_dev": {
+    "label": ".NET Development", "family": "software", "title": ".NET Developer", "arch": ".NET Architect",
+    "description": ".NET developer building applications on the Microsoft stack: C#, ASP.NET Core and Web API, MVC, Entity Framework and LINQ, SQL Server with T-SQL, Azure App Service and Functions, Angular or React front ends, unit testing with xUnit or NUnit, Azure DevOps pipelines and microservices.",
+    "titles": {".net developer": 1, "dotnet developer": 1, "c# developer": 1, "asp.net developer": 1, ".net engineer": 1, ".net full stack": 0.9, "software engineer": 0.5, "software developer": 0.5, "backend developer": 0.5},
+    "skills": [
+      {"ids": ["csharp"], "w": 3},
+      {"ids": ["dotnet"], "w": 3},
+      {"ids": ["api"], "w": 3},
+      {"ids": ["sql_server", "sql"], "w": 2},
+      {"ids": ["orm"], "w": 2},
+      {"ids": ["azure"], "w": 2},
+      {"ids": ["unit_testing"], "w": 2},
+      {"ids": ["angular", "react", "typescript"], "w": 1},
+      {"ids": ["microservices"], "w": 1},
+      {"ids": ["cicd", "azure"], "w": 1},
+      {"ids": ["git"], "w": 1},
+      {"ids": ["docker"], "w": 1},
+      {"ids": ["design_patterns"], "w": 1},
+      {"ids": ["system_design"], "w": 2, "from": "senior"},
+      {"ids": ["cloud_arch"], "w": 2, "from": "architect"}
+    ]
+  },
+
+  "python_dev": {
+    "label": "Python Development", "family": "software", "title": "Python Developer", "arch": "Python Architect",
+    "description": "Python developer building web services, automation and data applications: Python 3, Django, Flask or FastAPI, REST APIs, SQL and ORMs such as SQLAlchemy, PostgreSQL and Redis, Celery and asyncio, pytest, Docker, Linux, AWS, pandas and NumPy for data processing, Git and CI/CD.",
+    "titles": {"python developer": 1, "python engineer": 1, "django developer": 1, "python software engineer": 1, "backend developer": 0.6, "software engineer": 0.5, "software developer": 0.5, "automation engineer": 0.3},
     "skills": [
       {"ids": ["python"], "w": 3},
-      {"ids": ["test_automation"], "w": 3},
-      {"ids": ["cicd"], "w": 3},
-      {"ids": ["scripting", "bash"], "w": 2},
-      {"ids": ["ansible", "config_mgmt"], "w": 2},
-      {"ids": ["jenkins", "github_actions", "gitlab_ci"], "w": 2},
-      {"ids": ["workflow"], "w": 2},
+      {"ids": ["py_web"], "w": 3},
+      {"ids": ["api"], "w": 3},
+      {"ids": ["sql"], "w": 2},
+      {"ids": ["unit_testing"], "w": 2},
+      {"ids": ["docker"], "w": 2},
+      {"ids": ["orm"], "w": 1},
+      {"ids": ["databases"], "w": 1},
+      {"ids": ["async_py"], "w": 1},
+      {"ids": ["sklearn"], "w": 1},
+      {"ids": ["aws", "azure", "gcp"], "w": 1},
+      {"ids": ["linux", "bash"], "w": 1},
+      {"ids": ["git"], "w": 1},
+      {"ids": ["cicd"], "w": 1},
+      {"ids": ["system_design"], "w": 2, "from": "senior"},
+      {"ids": ["microservices"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "embedded_sw": {
+    "label": "Embedded Software", "family": "software", "title": "Embedded Software Engineer", "arch": "Embedded Software Architect",
+    "description": "Embedded software engineer writing firmware close to hardware: embedded C and C++, microcontrollers such as ARM Cortex-M and STM32, RTOS like FreeRTOS or Zephyr, device drivers, I2C, SPI, UART and CAN, embedded Linux with Yocto, bootloaders, debugging with JTAG and oscilloscopes, unit testing, MISRA and AUTOSAR for automotive.",
+    "titles": {"embedded software engineer": 1, "embedded engineer": 1, "firmware engineer": 1, "embedded developer": 1, "firmware developer": 1, "embedded systems engineer": 1, "bsp engineer": 1, "device driver": 0.9, "autosar": 0.9, "software engineer": 0.3},
+    "skills": [
+      {"ids": ["c_lang", "cpp"], "w": 3},
+      {"ids": ["microcontrollers"], "w": 3},
+      {"ids": ["rtos"], "w": 3},
+      {"ids": ["embedded_protocols"], "w": 2},
+      {"ids": ["embedded_linux"], "w": 2},
+      {"ids": ["hw_debug"], "w": 2},
+      {"ids": ["cpp"], "w": 1},
+      {"ids": ["automotive_sw"], "w": 1},
+      {"ids": ["python", "bash"], "w": 1},
+      {"ids": ["git"], "w": 1},
+      {"ids": ["unit_testing"], "w": 1},
+      {"ids": ["pcb", "circuit_design"], "w": 1},
+      {"ids": ["system_design"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "sap": {
+    "label": "SAP", "family": "enterprise", "title": "SAP Consultant", "arch": "SAP Solution Architect",
+    "description": "SAP consultant implementing and supporting SAP ERP: S/4HANA and ECC, functional modules such as FICO, MM, SD or PP, or ABAP development with RICEF objects, BAPIs, BADIs and IDocs, Fiori and SAPUI5, HANA CDS views, integration with SAP PI/PO or CPI, end-to-end implementations, go-live, hypercare and support.",
+    "titles": {"sap consultant": 1, "sap abap": 1, "abap developer": 1, "abap consultant": 1, "sap fico": 1, "sap mm": 1, "sap sd": 1, "sap pp": 1, "sap basis": 0.9, "sap functional": 1, "sap technical": 1, "sap developer": 1, "sap analyst": 0.9, "sap architect": 0.9, "sap": 0.7, "erp consultant": 0.7},
+    "skills": [
+      {"ids": ["sap"], "w": 3},
+      {"ids": ["abap", "sap_modules"], "w": 3},
+      {"ids": ["erp_impl"], "w": 2},
+      {"ids": ["sap_hana"], "w": 2},
+      {"ids": ["sap_fiori"], "w": 2},
+      {"ids": ["sap_integration"], "w": 1},
+      {"ids": ["sql"], "w": 1},
+      {"ids": ["requirements", "ba_docs"], "w": 1},
+      {"ids": ["itsm"], "w": 1},
+      {"ids": ["migration"], "w": 2, "from": "senior"},
+      {"ids": ["stakeholder"], "w": 1, "from": "lead"},
+      {"ids": ["cert_sap"], "w": 1}
+    ]
+  },
+
+  "salesforce": {
+    "label": "Salesforce", "family": "enterprise", "title": "Salesforce Developer", "arch": "Salesforce Technical Architect",
+    "description": "Salesforce developer and consultant customising the Salesforce platform: Apex classes and triggers, SOQL, Lightning Web Components and Aura, Visualforce, flows and declarative configuration, Sales Cloud and Service Cloud, integrations with REST APIs and MuleSoft, deployments with SFDX and Copado, security model and Salesforce certifications.",
+    "titles": {"salesforce developer": 1, "salesforce consultant": 1, "salesforce administrator": 0.9, "salesforce admin": 0.9, "sfdc developer": 1, "salesforce engineer": 1, "salesforce architect": 0.9, "salesforce technical lead": 1, "crm developer": 0.7},
+    "skills": [
+      {"ids": ["salesforce"], "w": 3},
+      {"ids": ["apex"], "w": 3},
+      {"ids": ["lwc"], "w": 3},
+      {"ids": ["sf_admin"], "w": 2},
+      {"ids": ["api", "sap_integration"], "w": 2},
+      {"ids": ["typescript"], "w": 1},
+      {"ids": ["cicd", "git"], "w": 1},
+      {"ids": ["agile"], "w": 1},
+      {"ids": ["requirements"], "w": 1},
+      {"ids": ["system_design"], "w": 1, "from": "senior"},
+      {"ids": ["data_modeling"], "w": 1, "from": "lead"},
+      {"ids": ["cert_salesforce"], "w": 2}
+    ]
+  },
+
+  "servicenow_dev": {
+    "label": "ServiceNow", "family": "enterprise", "title": "ServiceNow Developer", "arch": "ServiceNow Architect",
+    "description": "ServiceNow developer configuring and extending the Now Platform: ITSM incident, problem and change, ITOM, CMDB and Discovery, HRSD or CSM, JavaScript with GlideRecord, business rules, client scripts and script includes, Service Portal, Flow Designer and IntegrationHub, REST integrations, ITIL processes and ServiceNow certifications.",
+    "titles": {"servicenow developer": 1, "servicenow consultant": 1, "servicenow administrator": 0.9, "servicenow admin": 0.9, "servicenow engineer": 1, "servicenow architect": 0.9, "servicenow technical lead": 1, "itsm developer": 0.8, "itsm consultant": 0.7},
+    "skills": [
+      {"ids": ["servicenow"], "w": 3},
+      {"ids": ["sn_dev"], "w": 3},
+      {"ids": ["typescript"], "w": 2},
+      {"ids": ["itsm"], "w": 2},
+      {"ids": ["sn_modules"], "w": 2},
       {"ids": ["api"], "w": 2},
-      {"ids": ["terraform", "iac"], "w": 1},
-      {"ids": ["rpa"], "w": 1},
-      {"ids": ["auto_remediation"], "w": 1},
-      {"ids": ["qa", "bdd"], "w": 1},
+      {"ids": ["agile"], "w": 1},
+      {"ids": ["requirements"], "w": 1},
+      {"ids": ["cert_itil"], "w": 1},
+      {"ids": ["erp_impl"], "w": 1, "from": "senior"},
+      {"ids": ["system_design"], "w": 1, "from": "lead"},
+      {"ids": ["cert_servicenow"], "w": 2}
+    ]
+  },
+
+  "qa_automation": {
+    "label": "Automation QA / SDET", "family": "quality", "title": "QA Automation Engineer", "arch": "Test Automation Architect",
+    "title_by_level": {"lead": "QA Automation Lead"},
+    "description": "QA automation engineer and SDET building automated test suites: Selenium WebDriver, Playwright or Cypress, Java, Python or JavaScript, TestNG, JUnit or pytest, API testing with Postman and Rest Assured, BDD with Cucumber, page object model frameworks, CI/CD with Jenkins, mobile testing with Appium, test management in Jira and Agile delivery.",
+    "titles": {"automation test engineer": 1, "qa automation": 1, "test automation": 1, "automation tester": 1, "sdet": 1, "software development engineer in test": 1, "automation engineer": 0.8, "qa engineer": 0.8, "test engineer": 0.8, "quality engineer": 0.8, "selenium": 0.9, "software tester": 0.6, "qa analyst": 0.6, "test analyst": 0.6},
+    "skills": [
+      {"ids": ["test_automation"], "w": 3},
+      {"ids": ["java", "python", "typescript", "csharp"], "w": 3},
+      {"ids": ["api_testing"], "w": 3},
+      {"ids": ["test_framework"], "w": 2},
+      {"ids": ["bdd"], "w": 2},
+      {"ids": ["cicd", "jenkins", "github_actions", "gitlab_ci"], "w": 2},
+      {"ids": ["test_design", "qa"], "w": 2},
+      {"ids": ["mobile_testing"], "w": 1},
+      {"ids": ["performance", "perf_tools"], "w": 1},
+      {"ids": ["sql"], "w": 1},
+      {"ids": ["git"], "w": 1},
+      {"ids": ["defect_mgmt", "test_mgmt", "jira"], "w": 1},
+      {"ids": ["agile"], "w": 1},
       {"ids": ["docker"], "w": 1},
-      {"ids": ["performance"], "w": 1},
-      {"ids": ["java", "typescript", "go"], "w": 1},
-      {"ids": ["linux"], "w": 1}
+      {"ids": ["test_framework"], "w": 2, "from": "senior"},
+      {"ids": ["qa"], "w": 2, "from": "lead"},
+      {"ids": ["cert_qa"], "w": 1}
+    ]
+  },
+
+  "qa_manual": {
+    "label": "QA / Manual Testing", "family": "quality", "title": "QA Engineer", "arch": "Test Architect",
+    "title_by_level": {"engineer": "QA Analyst", "senior": "Senior QA Analyst", "lead": "QA Lead", "sr_architect": "QA Manager"},
+    "years": {"engineer": [1, 5], "senior": [4, 9], "lead": [6, 12], "architect": [9, 18], "sr_architect": [12, 30]},
+    "description": "QA analyst and software tester ensuring releases work: manual, functional, regression, smoke and exploratory testing, writing test plans, test scenarios and test cases, requirement traceability, defect logging and tracking in Jira, API testing with Postman, SQL for data validation, UAT support, mobile and cross-browser testing, Agile ceremonies and ISTQB practices.",
+    "titles": {"qa analyst": 1, "test analyst": 1, "software tester": 1, "manual tester": 1, "qa engineer": 0.9, "test engineer": 0.9, "quality analyst": 1, "qa tester": 1, "testing engineer": 0.9, "qa lead": 0.9, "test lead": 0.9, "uat": 0.7, "quality assurance": 0.9, "automation test engineer": 0.5},
+    "skills": [
+      {"ids": ["manual_testing"], "w": 3},
+      {"ids": ["test_design"], "w": 3},
+      {"ids": ["defect_mgmt"], "w": 3},
+      {"ids": ["qa"], "w": 2},
+      {"ids": ["sql"], "w": 2},
+      {"ids": ["api_testing"], "w": 2},
+      {"ids": ["test_mgmt", "jira"], "w": 2},
+      {"ids": ["agile"], "w": 2},
+      {"ids": ["mobile_testing"], "w": 1},
+      {"ids": ["uat"], "w": 1},
+      {"ids": ["test_automation"], "w": 1},
+      {"ids": ["performance", "perf_tools"], "w": 1},
+      {"ids": ["requirements"], "w": 1, "from": "senior"},
+      {"ids": ["stakeholder"], "w": 1, "from": "lead"},
+      {"ids": ["cert_qa"], "w": 1}
+    ]
+  },
+
+  "perf_test": {
+    "label": "Performance Testing", "family": "quality", "title": "Performance Test Engineer", "arch": "Performance Architect",
+    "description": "Performance test engineer making systems fast and scalable: load, stress, soak and spike testing with JMeter, LoadRunner, Gatling, k6 or NeoLoad, workload modelling, correlation and parameterisation, APM with Dynatrace, AppDynamics or New Relic, profiling, heap and thread dumps, JVM and database tuning, capacity planning and CI integration.",
+    "titles": {"performance test engineer": 1, "performance tester": 1, "performance engineer": 1, "performance testing": 1, "load test engineer": 1, "performance analyst": 0.9, "performance architect": 0.9, "nft": 0.8, "non-functional test": 0.9, "test engineer": 0.5, "sre": 0.3},
+    "skills": [
+      {"ids": ["performance"], "w": 3},
+      {"ids": ["perf_tools"], "w": 3},
+      {"ids": ["datadog", "observability"], "w": 2},
+      {"ids": ["profiling"], "w": 2},
+      {"ids": ["scripting", "python", "java", "typescript"], "w": 2},
+      {"ids": ["capacity"], "w": 2},
+      {"ids": ["sql", "query_tuning"], "w": 1},
+      {"ids": ["cicd", "jenkins"], "w": 1},
+      {"ids": ["aws", "azure", "gcp"], "w": 1},
+      {"ids": ["linux"], "w": 1},
+      {"ids": ["prometheus", "grafana", "elk", "splunk"], "w": 1},
+      {"ids": ["system_design"], "w": 1, "from": "lead"},
+      {"ids": ["cloud_arch"], "w": 1, "from": "architect"}
+    ]
+  },
+
+  "sec_eng": {
+    "label": "Security Engineering", "family": "security", "title": "Security Engineer", "arch": "Security Architect",
+    "description": "Security engineer protecting systems end to end: vulnerability management with Nessus or Qualys, application security and OWASP Top 10, SIEM and log monitoring, EDR, network security with firewalls, IDS/IPS and WAF, IAM, encryption and PKI, threat modelling, incident response, scripting in Python, cloud security and compliance with ISO 27001 or SOC 2.",
+    "titles": {"security engineer": 1, "cyber security engineer": 1, "cybersecurity engineer": 1, "information security engineer": 1, "infosec engineer": 1, "security analyst": 0.8, "information security analyst": 0.8, "application security engineer": 0.9, "devsecops": 0.8, "security consultant": 0.9, "security architect": 0.8, "network security engineer": 0.8},
+    "skills": [
+      {"ids": ["vuln_mgmt"], "w": 3},
+      {"ids": ["netsec", "firewalls"], "w": 3},
+      {"ids": ["siem", "splunk"], "w": 2},
+      {"ids": ["appsec", "devsecops"], "w": 2},
+      {"ids": ["iam"], "w": 2},
+      {"ids": ["sec_incident"], "w": 2},
+      {"ids": ["edr"], "w": 2},
+      {"ids": ["python", "bash", "scripting"], "w": 2},
+      {"ids": ["aws", "azure", "gcp", "cloud_security"], "w": 2},
+      {"ids": ["pki"], "w": 1},
+      {"ids": ["compliance", "sec_frameworks"], "w": 1},
+      {"ids": ["linux", "windows_server"], "w": 1},
+      {"ids": ["threat_model"], "w": 2, "from": "senior"},
+      {"ids": ["risk_mgmt"], "w": 1, "from": "lead"},
+      {"ids": ["cert_security"], "w": 2}
+    ]
+  },
+
+  "cloud_sec": {
+    "label": "Cloud Security", "family": "security", "title": "Cloud Security Engineer", "arch": "Cloud Security Architect",
+    "description": "Cloud security engineer securing AWS, Azure and Google Cloud: IAM and least privilege, CSPM and CNAPP tools such as Wiz or Prisma Cloud, GuardDuty and Security Hub, Kubernetes and container security, infrastructure as code scanning and policy as code, secrets management and KMS, network segmentation, logging and detection, compliance with CIS benchmarks, SOC 2 and ISO 27001.",
+    "titles": {"cloud security engineer": 1, "cloud security architect": 0.9, "cloud security": 1, "devsecops engineer": 0.8, "security engineer": 0.7, "platform security": 0.9, "infrastructure security": 0.9, "kubernetes security": 0.9, "cloud engineer": 0.4},
+    "skills": [
+      {"ids": ["aws", "azure", "gcp"], "w": 3},
+      {"ids": ["cloud_security"], "w": 3},
+      {"ids": ["iam"], "w": 3},
+      {"ids": ["container_sec", "kubernetes"], "w": 2},
+      {"ids": ["terraform", "iac"], "w": 2},
+      {"ids": ["policy", "devsecops"], "w": 2},
+      {"ids": ["vault", "pki"], "w": 2},
+      {"ids": ["compliance", "sec_frameworks"], "w": 2},
+      {"ids": ["cloud_networking", "netsec"], "w": 1},
+      {"ids": ["siem", "splunk"], "w": 1},
+      {"ids": ["python", "go", "bash"], "w": 1},
+      {"ids": ["vuln_mgmt"], "w": 1},
+      {"ids": ["threat_model"], "w": 2, "from": "senior"},
+      {"ids": ["cloud_arch"], "w": 2, "from": "architect"},
+      {"ids": ["cert_security", "cert_aws", "cert_azure", "cert_gcp"], "w": 1}
+    ]
+  },
+
+  "soc_analyst": {
+    "label": "SOC Analysis", "family": "security", "title": "SOC Analyst", "arch": "Security Operations Architect",
+    "title_by_level": {"lead": "SOC Lead", "architect": "SOC Manager", "sr_architect": "Head of Security Operations"},
+    "years": {"engineer": [1, 5], "senior": [3, 8], "lead": [6, 12], "architect": [9, 18], "sr_architect": [12, 30]},
+    "description": "SOC analyst monitoring and responding to threats around the clock: SIEM monitoring and alert triage in Splunk, QRadar or Microsoft Sentinel, EDR investigations with CrowdStrike or Defender, incident handling and escalation, threat hunting, threat intelligence and MITRE ATT&CK, phishing and malware analysis, playbooks and SOAR, network traffic analysis and reporting.",
+    "titles": {"soc analyst": 1, "security operations analyst": 1, "security operations center": 1, "soc engineer": 1, "cyber security analyst": 0.9, "cybersecurity analyst": 0.9, "security analyst": 0.9, "information security analyst": 0.8, "incident responder": 0.9, "threat hunter": 0.9, "l1 analyst": 0.8, "l2 analyst": 0.8, "soc lead": 1},
+    "skills": [
+      {"ids": ["siem", "splunk"], "w": 3},
+      {"ids": ["sec_incident"], "w": 3},
+      {"ids": ["edr"], "w": 2},
+      {"ids": ["threat_intel"], "w": 2},
+      {"ids": ["netsec"], "w": 2},
+      {"ids": ["soar"], "w": 1},
+      {"ids": ["vuln_mgmt"], "w": 1},
+      {"ids": ["windows_server", "active_directory", "linux"], "w": 1},
+      {"ids": ["python", "scripting", "bash"], "w": 1},
+      {"ids": ["itsm"], "w": 1},
+      {"ids": ["sec_frameworks"], "w": 1, "from": "lead"},
+      {"ids": ["cert_security"], "w": 2}
+    ]
+  },
+
+  "pentester": {
+    "label": "Penetration Testing", "family": "security", "title": "Penetration Tester", "arch": "Offensive Security Architect",
+    "title_by_level": {"lead": "Red Team Lead", "architect": "Principal Penetration Tester", "sr_architect": "Head of Offensive Security"},
+    "description": "Penetration tester and ethical hacker finding vulnerabilities before attackers do: web application and API testing against the OWASP Top 10, network and Active Directory penetration testing, red teaming, Burp Suite, Metasploit, Nmap and Kali Linux, exploitation and privilege escalation, scripting in Python and Bash, clear reporting of findings and remediation; OSCP.",
+    "titles": {"penetration tester": 1, "pen tester": 1, "pentester": 1, "ethical hacker": 1, "red team": 1, "offensive security": 1, "security consultant": 0.7, "vapt": 1, "vulnerability assessment": 0.8, "application security": 0.6, "security tester": 0.9, "security analyst": 0.4},
+    "skills": [
+      {"ids": ["pentest"], "w": 3},
+      {"ids": ["pentest_tools"], "w": 3},
+      {"ids": ["appsec"], "w": 3},
+      {"ids": ["netsec"], "w": 2},
+      {"ids": ["active_directory"], "w": 2},
+      {"ids": ["python", "bash", "scripting"], "w": 2},
+      {"ids": ["vuln_mgmt"], "w": 2},
+      {"ids": ["linux"], "w": 1},
+      {"ids": ["mobile_testing"], "w": 1},
+      {"ids": ["aws", "azure", "gcp", "cloud_security"], "w": 1},
+      {"ids": ["threat_intel"], "w": 1, "from": "senior"},
+      {"ids": ["threat_model"], "w": 1, "from": "lead"},
+      {"ids": ["cert_offsec", "cert_security"], "w": 2}
+    ]
+  },
+
+  "grc": {
+    "label": "GRC & Risk", "family": "security", "title": "GRC Analyst", "arch": "GRC Manager",
+    "title_by_level": {"lead": "GRC Lead", "architect": "GRC Manager", "sr_architect": "Head of GRC"},
+    "description": "Governance, risk and compliance analyst managing security risk and audits: ISO 27001, SOC 2, NIST CSF, PCI DSS and GDPR programmes, risk assessments and risk registers, third-party and vendor risk, policies and procedures, internal and external audits, controls testing and evidence collection, GRC tools such as Archer or OneTrust, and data privacy.",
+    "titles": {"grc analyst": 1, "grc": 1, "governance risk": 1, "risk and compliance": 1, "compliance analyst": 0.9, "it risk": 1, "information security risk": 1, "cyber risk": 1, "it auditor": 0.9, "it audit": 0.9, "security compliance": 1, "risk analyst": 0.8, "privacy analyst": 0.8, "security analyst": 0.4},
+    "skills": [
+      {"ids": ["compliance"], "w": 3},
+      {"ids": ["risk_mgmt"], "w": 3},
+      {"ids": ["sec_frameworks"], "w": 3},
+      {"ids": ["audit"], "w": 2},
+      {"ids": ["sec_policy"], "w": 2},
+      {"ids": ["privacy"], "w": 2},
+      {"ids": ["grc_tools"], "w": 1},
+      {"ids": ["vendor_mgmt"], "w": 1},
+      {"ids": ["stakeholder"], "w": 1},
+      {"ids": ["excel", "reporting"], "w": 1},
+      {"ids": ["iam", "vuln_mgmt"], "w": 1},
+      {"ids": ["governance"], "w": 2, "from": "lead"},
+      {"ids": ["cert_grc"], "w": 2}
+    ]
+  },
+
+  "mech_design": {
+    "label": "Mechanical Design", "family": "engineering", "title": "Mechanical Design Engineer",
+    "description": "Mechanical design engineer developing products and machines: 3D CAD modelling in SolidWorks, CATIA, Creo or NX, 2D engineering drawings with GD&T and tolerance stack-up, design calculations, FEA with ANSYS, DFM and DFA, sheet metal, casting and plastic part design, material selection, DFMEA, prototyping and validation, BOMs and PLM such as Teamcenter or Windchill.",
+    "titles": {"mechanical design engineer": 1, "design engineer": 0.9, "mechanical engineer": 0.9, "product design engineer": 1, "cad engineer": 0.9, "r&d engineer": 0.7, "mechanical designer": 1, "machine designer": 1, "tool design engineer": 0.9, "product development engineer": 0.9, "engineer": 0.2},
+    "skills": [
+      {"ids": ["mech_cad"], "w": 3},
+      {"ids": ["mech_design"], "w": 3},
+      {"ids": ["gdt"], "w": 3},
+      {"ids": ["eng_drawings", "autocad"], "w": 2},
+      {"ids": ["fea"], "w": 2},
+      {"ids": ["dfm"], "w": 2},
+      {"ids": ["mfg_processes"], "w": 2},
+      {"ids": ["fmea"], "w": 2},
+      {"ids": ["plm"], "w": 1},
+      {"ids": ["prototyping"], "w": 1},
+      {"ids": ["modeling_3d"], "w": 1},
+      {"ids": ["eng_standards"], "w": 1},
+      {"ids": ["matlab"], "w": 1},
+      {"ids": ["six_sigma", "quality_tools"], "w": 1, "from": "senior"},
+      {"ids": ["project_mgmt"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "cad_designer": {
+    "label": "CAD / BIM Design & Drafting", "family": "engineering", "title": "CAD Designer",
+    "title_by_level": {"architect": "CAD / BIM Manager", "sr_architect": "Head of Design & Drafting"},
+    "years": {"engineer": [1, 6], "senior": [4, 10], "lead": [7, 15], "architect": [10, 20], "sr_architect": [14, 30]},
+    "description": "CAD designer and draughtsman producing accurate drawings and models: AutoCAD 2D drafting, 3D modelling in SolidWorks, Inventor or Revit, general arrangement, fabrication and shop drawings, detailing to drawing standards, GD&T, bills of materials, BIM coordination with Navisworks, sheet metal and piping or steel detailing, drawing revisions and document control.",
+    "titles": {"cad designer": 1, "cad technician": 1, "cad draughtsman": 1, "draughtsman": 1, "draftsman": 1, "drafter": 1, "cad operator": 1, "designer": 0.6, "detailer": 0.9, "bim modeler": 1, "bim modeller": 1, "bim technician": 1, "bim coordinator": 0.9, "design draughtsman": 1, "piping designer": 0.9, "structural detailer": 1},
+    "skills": [
+      {"ids": ["autocad"], "w": 3},
+      {"ids": ["eng_drawings"], "w": 3},
+      {"ids": ["mech_cad", "civil_cad", "elec_cad"], "w": 3},
+      {"ids": ["modeling_3d"], "w": 2},
+      {"ids": ["gdt"], "w": 2},
+      {"ids": ["bim"], "w": 2},
+      {"ids": ["eng_standards", "civil_codes"], "w": 1},
+      {"ids": ["mfg_processes"], "w": 1},
+      {"ids": ["plm"], "w": 1},
+      {"ids": ["struct_software"], "w": 1},
+      {"ids": ["excel"], "w": 1},
+      {"ids": ["bim"], "w": 1, "from": "lead"},
+      {"ids": ["project_mgmt"], "w": 1, "from": "architect"}
+    ]
+  },
+
+  "electrical": {
+    "label": "Electrical Engineering", "family": "engineering", "title": "Electrical Engineer",
+    "description": "Electrical engineer designing power and control systems: power distribution, switchgear, transformers and substations, single line diagrams, load calculations, cable sizing, earthing and lighting design, load flow, short circuit and protection studies in ETAP, AutoCAD Electrical or EPLAN, PLC and SCADA, motors and VFDs, testing and commissioning to IEC, IEEE and NEC standards.",
+    "titles": {"electrical engineer": 1, "electrical design engineer": 1, "electrical designer": 0.9, "power systems engineer": 1, "electrical project engineer": 1, "electrical maintenance engineer": 0.9, "substation engineer": 1, "protection engineer": 1, "commissioning engineer": 0.8, "control engineer": 0.7, "instrumentation engineer": 0.6, "mep engineer": 0.7, "electrical site engineer": 0.9, "engineer": 0.2},
+    "skills": [
+      {"ids": ["power_systems"], "w": 3},
+      {"ids": ["elec_design"], "w": 3},
+      {"ids": ["elec_cad", "autocad"], "w": 2},
+      {"ids": ["elec_standards"], "w": 2},
+      {"ids": ["commissioning"], "w": 2},
+      {"ids": ["plc_scada"], "w": 2},
+      {"ids": ["drives"], "w": 1},
+      {"ids": ["instrumentation"], "w": 1},
+      {"ids": ["renewables"], "w": 1},
+      {"ids": ["matlab"], "w": 1},
+      {"ids": ["ehs"], "w": 1},
+      {"ids": ["excel"], "w": 1},
+      {"ids": ["site_execution", "project_mgmt"], "w": 1, "from": "senior"},
+      {"ids": ["vendor_mgmt"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "civil_struct": {
+    "label": "Civil / Structural Engineering", "family": "engineering", "title": "Structural Engineer",
+    "description": "Civil and structural engineer designing buildings and infrastructure: structural analysis and design of RCC and steel structures and foundations, STAAD Pro, ETABS, SAP2000 or Tekla, design codes such as IS 456, ACI 318, Eurocode and AISC, AutoCAD and Revit, BIM coordination, seismic design, quantity estimation and BOQ, site supervision and execution, scheduling with Primavera.",
+    "titles": {"structural engineer": 1, "civil engineer": 1, "structural design engineer": 1, "civil design engineer": 1, "site engineer": 0.8, "project engineer": 0.6, "bridge engineer": 1, "geotechnical engineer": 0.9, "civil site engineer": 0.9, "quantity surveyor": 0.6, "planning engineer": 0.6, "construction engineer": 0.8, "engineer": 0.2},
+    "skills": [
+      {"ids": ["structural"], "w": 3},
+      {"ids": ["struct_software"], "w": 3},
+      {"ids": ["civil_codes"], "w": 2},
+      {"ids": ["autocad", "civil_cad"], "w": 2},
+      {"ids": ["bim"], "w": 1},
+      {"ids": ["site_execution"], "w": 2},
+      {"ids": ["geotech"], "w": 1},
+      {"ids": ["pm_tools"], "w": 1},
+      {"ids": ["surveying"], "w": 1},
+      {"ids": ["excel"], "w": 1},
+      {"ids": ["ehs"], "w": 1},
+      {"ids": ["project_mgmt"], "w": 1, "from": "senior"},
+      {"ids": ["budgeting", "vendor_mgmt"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "electronics_hw": {
+    "label": "Electronics / Hardware Design", "family": "engineering", "title": "Hardware Design Engineer",
+    "description": "Electronics hardware design engineer taking boards from schematic to production: analog, digital and mixed-signal circuit design, power supplies and DC-DC converters, microcontrollers and interfaces, schematic capture and PCB layout in Altium, OrCAD or Allegro, SPICE simulation, signal and power integrity, board bring-up with oscilloscopes, EMC/EMI compliance, DFM and FPGA.",
+    "titles": {"hardware design engineer": 1, "hardware engineer": 1, "electronics engineer": 1, "electronics design engineer": 1, "pcb design engineer": 1, "pcb designer": 1, "board design engineer": 1, "circuit design engineer": 1, "power electronics engineer": 1, "analog design engineer": 0.9, "rf engineer": 0.7, "fpga engineer": 0.6, "embedded hardware": 1, "engineer": 0.2},
+    "skills": [
+      {"ids": ["circuit_design"], "w": 3},
+      {"ids": ["pcb"], "w": 3},
+      {"ids": ["microcontrollers"], "w": 2},
+      {"ids": ["circuit_sim"], "w": 2},
+      {"ids": ["hw_test"], "w": 2},
+      {"ids": ["emc"], "w": 2},
+      {"ids": ["embedded_protocols"], "w": 2},
+      {"ids": ["fpga"], "w": 1},
+      {"ids": ["c_lang", "python"], "w": 1},
+      {"ids": ["dfm"], "w": 1},
+      {"ids": ["matlab"], "w": 1},
+      {"ids": ["fmea"], "w": 1, "from": "senior"},
+      {"ids": ["project_mgmt"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "vlsi": {
+    "label": "VLSI / Chip Design", "family": "engineering", "title": "VLSI Design Engineer",
+    "description": "VLSI engineer designing and verifying silicon: RTL design in Verilog and SystemVerilog, design verification with UVM, constrained random tests, assertions and coverage closure, synthesis and static timing analysis, physical design, DFT, AMBA AXI, PCIe and DDR protocols, Cadence and Synopsys tools such as VCS, Xcelium, Innovus and PrimeTime, Tcl and Perl scripting, ASIC and SoC tape-outs.",
+    "titles": {"vlsi engineer": 1, "vlsi design engineer": 1, "asic design engineer": 1, "asic engineer": 1, "rtl design engineer": 1, "design verification engineer": 1, "verification engineer": 1, "dv engineer": 1, "physical design engineer": 1, "sta engineer": 1, "dft engineer": 1, "soc design engineer": 1, "silicon engineer": 0.9, "fpga engineer": 0.7, "analog layout engineer": 0.9, "chip design": 1},
+    "skills": [
+      {"ids": ["rtl", "dv"], "w": 3},
+      {"ids": ["eda"], "w": 3},
+      {"ids": ["asic"], "w": 2},
+      {"ids": ["dv"], "w": 2},
+      {"ids": ["physical_design"], "w": 2},
+      {"ids": ["soc_protocols"], "w": 2},
+      {"ids": ["eda_scripting", "python"], "w": 2},
+      {"ids": ["fpga"], "w": 1},
+      {"ids": ["low_power"], "w": 1},
+      {"ids": ["c_lang", "cpp"], "w": 1},
+      {"ids": ["git"], "w": 1},
+      {"ids": ["low_power"], "w": 1, "from": "senior"},
+      {"ids": ["system_design"], "w": 1, "from": "architect"}
+    ]
+  },
+
+  "manufacturing": {
+    "label": "Manufacturing / Process Engineering", "family": "engineering", "title": "Manufacturing Engineer",
+    "description": "Manufacturing and process engineer improving production: lean manufacturing, kaizen, 5S, value stream mapping and SMED, Six Sigma DMAIC, SPC and process capability, PFMEA and control plans, APQP and PPAP, 8D, CAPA and root cause analysis, line balancing and cycle time reduction, work instructions, ISO 9001 or IATF 16949, ERP/MES, tooling and EHS.",
+    "titles": {"manufacturing engineer": 1, "process engineer": 1, "production engineer": 0.9, "industrial engineer": 1, "quality engineer": 0.7, "continuous improvement": 1, "lean engineer": 1, "operational excellence": 0.9, "production supervisor": 0.6, "plant engineer": 0.8, "supplier quality engineer": 0.7, "engineer": 0.2},
+    "skills": [
+      {"ids": ["lean"], "w": 3},
+      {"ids": ["process_eng"], "w": 3},
+      {"ids": ["six_sigma"], "w": 3},
+      {"ids": ["quality_tools"], "w": 2},
+      {"ids": ["fmea"], "w": 2},
+      {"ids": ["apqp"], "w": 2},
+      {"ids": ["mfg_processes"], "w": 2},
+      {"ids": ["mes"], "w": 1},
+      {"ids": ["autocad", "mech_cad"], "w": 1},
+      {"ids": ["ehs"], "w": 1},
+      {"ids": ["plc_scada"], "w": 1},
+      {"ids": ["excel"], "w": 1},
+      {"ids": ["project_mgmt"], "w": 1, "from": "senior"},
+      {"ids": ["budgeting"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "ux_designer": {
+    "label": "UI / UX Design", "family": "design", "title": "UI/UX Designer",
+    "description": "UI/UX and product designer creating usable, accessible digital products: user research, interviews and usability testing, personas and journey maps, information architecture and user flows, wireframes and interactive prototypes in Figma, visual and UI design, design systems and components, interaction design, accessibility to WCAG, analytics and close collaboration with product and engineering.",
+    "titles": {"ux designer": 1, "ui designer": 1, "ui/ux designer": 1, "ux/ui designer": 1, "product designer": 1, "interaction designer": 1, "user experience designer": 1, "ux researcher": 0.8, "visual designer": 0.6, "experience designer": 1, "service designer": 0.8, "web designer": 0.5, "designer": 0.4},
+    "skills": [
+      {"ids": ["design_tools"], "w": 3},
+      {"ids": ["ux_research"], "w": 3},
+      {"ids": ["wireframing"], "w": 3},
+      {"ids": ["ui_design"], "w": 2},
+      {"ids": ["design_systems"], "w": 2},
+      {"ids": ["accessibility"], "w": 2},
+      {"ids": ["interaction"], "w": 1},
+      {"ids": ["product_analytics", "ab_testing"], "w": 1},
+      {"ids": ["html_css"], "w": 1},
+      {"ids": ["adobe_cs"], "w": 1},
+      {"ids": ["agile"], "w": 1},
+      {"ids": ["stakeholder"], "w": 1, "from": "senior"},
+      {"ids": ["design_systems"], "w": 2, "from": "lead"}
+    ]
+  },
+
+  "graphic_designer": {
+    "label": "Graphic / Visual Design", "family": "design", "title": "Graphic Designer",
+    "title_by_level": {"architect": "Art Director", "sr_architect": "Creative Director"},
+    "description": "Graphic and visual designer creating brand and marketing visuals: Adobe Photoshop, Illustrator and InDesign, branding and logo design, typography and layout, print and packaging design, social media and digital ad creatives, illustration, motion graphics and video editing in After Effects and Premiere Pro, brand guidelines and Figma.",
+    "titles": {"graphic designer": 1, "visual designer": 1, "creative designer": 1, "brand designer": 1, "communication designer": 1, "art director": 0.8, "creative director": 0.7, "motion designer": 0.8, "motion graphics": 0.8, "illustrator": 0.8, "packaging designer": 0.9, "designer": 0.5, "multimedia designer": 0.9, "dtp operator": 0.8},
+    "skills": [
+      {"ids": ["adobe_cs"], "w": 3},
+      {"ids": ["branding"], "w": 3},
+      {"ids": ["ui_design", "visual_design"], "w": 3},
+      {"ids": ["social_creative"], "w": 2},
+      {"ids": ["motion"], "w": 2},
+      {"ids": ["illustration"], "w": 1},
+      {"ids": ["design_tools"], "w": 1},
+      {"ids": ["art_3d"], "w": 1},
+      {"ids": ["html_css", "cms"], "w": 1},
+      {"ids": ["stakeholder"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "web_designer": {
+    "label": "Web Design", "family": "design", "title": "Web Designer",
+    "description": "Web designer building attractive, responsive websites: HTML5, CSS3 and JavaScript with Bootstrap or Tailwind, responsive and mobile-first layouts, WordPress, Shopify or Webflow, Figma and Adobe Photoshop mockups, UI design, basic SEO, web accessibility, landing pages and site maintenance.",
+    "titles": {"web designer": 1, "website designer": 1, "web developer": 0.6, "wordpress developer": 0.9, "ui developer": 0.6, "front end designer": 1, "frontend designer": 1, "ui designer": 0.6, "shopify developer": 0.8, "designer": 0.4},
+    "skills": [
+      {"ids": ["html_css"], "w": 3},
+      {"ids": ["responsive"], "w": 3},
+      {"ids": ["cms"], "w": 2},
+      {"ids": ["typescript"], "w": 2},
+      {"ids": ["design_tools", "adobe_cs"], "w": 2},
+      {"ids": ["ui_design"], "w": 2},
+      {"ids": ["seo"], "w": 1},
+      {"ids": ["wireframing"], "w": 1},
+      {"ids": ["accessibility"], "w": 1},
+      {"ids": ["git"], "w": 1},
+      {"ids": ["web_perf"], "w": 1, "from": "senior"},
+      {"ids": ["design_systems"], "w": 1, "from": "lead"}
+    ]
+  },
+
+  "product_mgr": {
+    "label": "Product Management", "family": "product", "title": "Product Manager", "head": "Product",
+    "title_by_level": {"lead": "Group Product Manager", "architect": "Director of Product", "sr_architect": "VP of Product"},
+    "description": "Product manager owning outcomes for a product: product strategy, vision and roadmap, customer discovery and market research, prioritisation, PRDs, user stories and acceptance criteria, working with engineering and design in Agile teams, product analytics, A/B experiments and KPIs such as retention and conversion, go-to-market launches, pricing and stakeholder management.",
+    "titles": {"product manager": 1, "product owner": 0.9, "product lead": 1, "senior product manager": 1, "group product manager": 1, "technical product manager": 1, "associate product manager": 0.9, "director of product": 1, "head of product": 1, "vp product": 1, "product management": 1, "business analyst": 0.3, "program manager": 0.3},
+    "skills": [
+      {"ids": ["product_mgmt"], "w": 3},
+      {"ids": ["requirements"], "w": 3},
+      {"ids": ["discovery"], "w": 3},
+      {"ids": ["okrs", "product_analytics"], "w": 2},
+      {"ids": ["agile", "scrum"], "w": 2},
+      {"ids": ["stakeholder"], "w": 2},
+      {"ids": ["ab_testing"], "w": 1},
+      {"ids": ["sql", "excel"], "w": 1},
+      {"ids": ["jira"], "w": 1},
+      {"ids": ["wireframing", "design_tools"], "w": 1},
+      {"ids": ["api"], "w": 1},
+      {"ids": ["monetization"], "w": 1, "from": "senior"},
+      {"ids": ["okrs"], "w": 2, "from": "lead"},
+      {"ids": ["budgeting"], "w": 2, "from": "architect"},
+      {"ids": ["cert_product"], "w": 1}
+    ]
+  },
+
+  "business_analyst": {
+    "label": "Business Analysis", "family": "product", "title": "Business Analyst", "head": "Business Analysis",
+    "title_by_level": {"lead": "Lead Business Analyst", "architect": "Principal Business Analyst", "sr_architect": "Head of Business Analysis"},
+    "description": "Business analyst bridging business and technology: requirements elicitation through workshops and interviews, BRD, FRD and user stories with acceptance criteria, process mapping in BPMN and as-is to-be gap analysis, use cases and UML in Visio, SQL and Excel analysis, Power BI or Tableau dashboards, UAT planning and sign-off, Agile backlog grooming and stakeholder management.",
+    "titles": {"business analyst": 1, "business systems analyst": 1, "it business analyst": 1, "functional analyst": 0.9, "functional consultant": 0.7, "requirements analyst": 1, "process analyst": 0.9, "systems analyst": 0.8, "product owner": 0.6, "data analyst": 0.4, "ba": 0.7},
+    "skills": [
+      {"ids": ["requirements"], "w": 3},
+      {"ids": ["ba_docs"], "w": 3},
+      {"ids": ["process_modeling"], "w": 3},
+      {"ids": ["stakeholder"], "w": 2},
+      {"ids": ["uml"], "w": 2},
+      {"ids": ["sql"], "w": 2},
+      {"ids": ["excel"], "w": 2},
+      {"ids": ["uat"], "w": 2},
+      {"ids": ["agile", "scrum"], "w": 2},
+      {"ids": ["bi_tools", "reporting"], "w": 1},
+      {"ids": ["jira"], "w": 1},
+      {"ids": ["wireframing"], "w": 1},
+      {"ids": ["data_modeling"], "w": 1, "from": "senior"},
+      {"ids": ["project_mgmt"], "w": 1, "from": "lead"},
+      {"ids": ["cert_ba"], "w": 1}
+    ]
+  },
+
+  "project_mgr": {
+    "label": "Project / Program Management", "family": "product", "title": "Project Manager", "head": "Delivery",
+    "title_by_level": {"lead": "Program Manager", "architect": "Senior Program Manager", "sr_architect": "Head of Delivery / PMO"},
+    "years": {"engineer": [3, 8], "senior": [6, 12], "lead": [8, 15], "architect": [11, 22], "sr_architect": [14, 30]},
+    "description": "Project and program manager delivering on scope, time and budget: project planning and scheduling with MS Project or Jira, Agile and Waterfall delivery, risk, issue and dependency management with RAID logs, budget and cost control, resource planning, stakeholder and steering committee reporting, vendor and contract management, change control, PMP or PRINCE2.",
+    "titles": {"project manager": 1, "program manager": 1, "programme manager": 1, "technical project manager": 1, "it project manager": 1, "delivery manager": 1, "project lead": 0.9, "pmo": 0.9, "project coordinator": 0.7, "engagement manager": 0.8, "technical program manager": 1, "scrum master": 0.5},
+    "skills": [
+      {"ids": ["project_mgmt"], "w": 3},
+      {"ids": ["stakeholder"], "w": 3},
+      {"ids": ["agile", "pm_methods"], "w": 2},
+      {"ids": ["risk_mgmt"], "w": 2},
+      {"ids": ["budgeting"], "w": 2},
+      {"ids": ["pm_tools", "jira"], "w": 2},
+      {"ids": ["vendor_mgmt"], "w": 1},
+      {"ids": ["reporting"], "w": 1},
+      {"ids": ["requirements"], "w": 1},
+      {"ids": ["excel"], "w": 1},
+      {"ids": ["scaled_agile"], "w": 1, "from": "lead"},
+      {"ids": ["governance"], "w": 1, "from": "architect"},
+      {"ids": ["cert_pm"], "w": 2}
+    ]
+  },
+
+  "scrum_master": {
+    "label": "Scrum Master / Agile Coach", "family": "product", "title": "Scrum Master", "head": "Agile Delivery",
+    "title_by_level": {"lead": "Agile Coach", "architect": "Enterprise Agile Coach", "sr_architect": "Head of Agile Delivery"},
+    "years": {"engineer": [2, 6], "senior": [4, 9], "lead": [6, 12], "architect": [8, 16], "sr_architect": [12, 30]},
+    "description": "Scrum master and agile coach helping teams deliver: facilitating sprint planning, daily stand-ups, reviews and retrospectives, backlog refinement with the product owner, removing impediments, velocity, burndown and flow metrics in Jira, Kanban, coaching teams and leaders in Scrum and SAFe, PI planning and agile transformation; CSM, PSM or SAFe certifications.",
+    "titles": {"scrum master": 1, "agile coach": 1, "agile delivery lead": 1, "delivery lead": 0.8, "release train engineer": 1, "rte": 0.8, "agile project manager": 0.9, "iteration manager": 1, "agile practitioner": 0.9, "project manager": 0.4},
+    "skills": [
+      {"ids": ["scrum"], "w": 3},
+      {"ids": ["agile"], "w": 3},
+      {"ids": ["agile_coaching"], "w": 2},
+      {"ids": ["jira"], "w": 2},
+      {"ids": ["stakeholder"], "w": 2},
+      {"ids": ["lean"], "w": 1},
+      {"ids": ["requirements"], "w": 1},
+      {"ids": ["reporting"], "w": 1},
+      {"ids": ["scaled_agile"], "w": 2, "from": "lead"},
+      {"ids": ["agile_coaching"], "w": 2, "from": "lead"},
+      {"ids": ["cert_agile"], "w": 2}
     ]
   }
 }

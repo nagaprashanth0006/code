@@ -4,7 +4,7 @@
   const el = (tag, cls, text) => { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; };
   const pct = v => Math.round(v * 100);
   const st = { file: null, tab: "file", data: null, meta: null, role: "all", level: null, country: "all", years: null,
-               busy: false, focus: null, ready: false };
+               busy: false, focus: null, ready: false, open: null };
   let timer = null;
 
   // ---------------------------------------------------------------- theme
@@ -25,10 +25,10 @@
     st.meta = m;
     const fams = Object.keys(m.families);
     const role = $("#rf-role");
-    role.replaceChildren(opt("all", "All roles"));
+    role.replaceChildren(opt("all", `All roles (${m.roles.length})`));
     fams.forEach(f => {
-      const g = el("optgroup"); g.label = f;
-      if (fams.length > 1) g.append(opt("family:" + f, `All in ${f}`));
+      const g = el("optgroup"); g.label = m.families[f].label;
+      if (fams.length > 1) g.append(opt("family:" + f, `All in ${m.families[f].label}`));
       m.roles.filter(r => r.family === f).forEach(r => g.append(opt(r.id, r.label)));
       role.append(g);
     });
@@ -39,7 +39,7 @@
     st.level = $("#rf-level").value;
     $("#rf-country").replaceChildren(opt("all", "All countries / regions"), ...m.countries.map(c => opt(c.id, c.label)));
     $("#rf-country").value = "all";
-    role.onchange = () => { st.role = role.value; st.focus = null; render(); };
+    role.onchange = () => { st.role = role.value; st.focus = null; relabelLevels(); render(); };
     $("#rf-level").onchange = () => { st.level = $("#rf-level").value; pref("level", st.level); render(); };
     $("#rf-country").onchange = () => { st.country = $("#rf-country").value; render(); };
     setModel(m.ready);
@@ -63,7 +63,20 @@
     st[kind] = value;
     $({ role: "#rf-role", level: "#rf-level", country: "#rf-country" }[kind]).value = value;
     if (kind === "level") pref("level", value);
+    if (kind === "role") relabelLevels();
     render();
+  }
+
+  // Each family names the five position tiers its own way (Senior Designer, Principal Engineer, SOC Lead...).
+  const familyOf = rid => st.meta.roles.find(r => r.id === rid)?.family;
+  const tierLabel = (fid, lid) => fid ? st.meta.families[fid].ladder[lid] : st.meta.levels.find(l => l.id === lid).label;
+  function contextFamily() {
+    if (st.role.startsWith("family:")) return st.role.slice(7);
+    return st.role !== "all" ? familyOf(st.role) : null;
+  }
+  function relabelLevels() {
+    const fid = contextFamily();
+    [...$("#rf-level").options].forEach(o => o.textContent = tierLabel(fid, o.value));
   }
 
   // ---------------------------------------------------------------- input
@@ -177,6 +190,7 @@
       done();
       const data = x.response || { error: `Server error (${x.status}).` };
       if (x.status >= 400 || data.error) { status(null); showError(data.error || `Server error (${x.status}).`); return; }
+      if (!quiet) st.open = null;
       st.data = data;
       if (!st.ready) setModel(true);
       const t = data.timing_ms || {};
@@ -233,10 +247,9 @@
     if (!d || !st.meta || !st.level) return;
     $("#rf-results").classList.add("show");
     const roles = Object.fromEntries(st.meta.roles.map(r => [r.id, r.label]));
-    const levels = Object.fromEntries(st.meta.levels.map(l => [l.id, l.label]));
     const roleMode = st.role === "all" ? "all" : st.role.startsWith("family:") ? "family" : "one";
     const oneCountry = st.country !== "all";
-    const scope = roleMode === "one" ? [st.role] : roleMode === "family" ? d.families[st.role.slice(7)] : d.role_order;
+    const scope = roleMode === "one" ? [st.role] : roleMode === "family" ? d.families[st.role.slice(7)].roles : d.role_order;
 
     // The role-fit panel always shows one role: the selected one, or with "All roles" the heatmap cell the
     // user clicked, defaulting to the best fit at the selected position.
@@ -253,11 +266,11 @@
     $("#rf-cty-card").hidden = oneCountry;
     $("#rf-fit-actions").hidden = roleMode === "one";
 
-    renderRole(d, roles, levels, focus, roleMode === "one" ? null : (focus === best && !st.focus ? "best" : "picked"));
-    if (roleMode !== "one") renderMatrix(d, roles, levels, scope, roleMode, focus);
+    renderRole(d, roles, focus, roleMode === "one" ? null : (focus === best && !st.focus ? "best" : "picked"));
+    if (roleMode !== "one") renderMatrix(d, roles, scope, roleMode, focus);
     if (oneCountry) renderCountry(d); else renderCountries(d);
     renderJd(d);
-    renderSeniority(d, levels);
+    renderSeniority(d, focus);
     renderProfile(d);
     renderAts(d);
     const sugg = [...d.suggestions];
@@ -267,19 +280,21 @@
     if (scroll) $("#rf-results").scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
-  function renderRole(d, roles, levels, rid, why) {
-    const cell = d.matrix[rid][st.level], role = d.roles[rid], lv = d.levels[st.level];
+  function renderRole(d, roles, rid, why) {
+    const cell = d.matrix[rid][st.level], role = d.roles[rid], lv = cell.seniority, fid = role.family;
+    const tiers = d.families[fid].ladder;
     const C = 2 * Math.PI * 76, arc = $("#rf-arc");
     arc.style.stroke = solid(cell.score);
     arc.style.strokeDashoffset = C;
     requestAnimationFrame(() => requestAnimationFrame(() => arc.style.strokeDashoffset = C * (1 - cell.score)));
     countUp($("#rf-pct"), pct(cell.score));
     const prefix = why === "best" ? "Best fit · " : why === "picked" ? "Selected · " : "";
-    $("#rf-fit-title").textContent = `${prefix}${levels[st.level]} · ${roles[rid]}`;
-    $("#rf-fit-sub").textContent = `Role fit ${pct(cell.role_fit)}% × seniority ${pct(cell.gate)}%` + (d.profile.exp_factor < 1 ? ` × experience ${d.profile.exp_factor}` : "")
-      + (why ? " · click any cell in the heatmap below to inspect it" : "");
+    $("#rf-fit-title").textContent = `${prefix}${cell.title}`;
+    $("#rf-fit-sub").textContent = `${roles[rid]} · ${d.families[fid].label} · ${tiers[st.level]} typically ${lv.band[0]}–${lv.band[1]} yrs`;
+    $("#rf-fit-calc").textContent = `Role fit ${pct(cell.role_fit)}% × seniority ${pct(cell.gate)}%` + (d.profile.exp_factor < 1 ? ` × experience ${d.profile.exp_factor}` : "")
+      + (why ? " · click any heatmap cell below to inspect it" : "");
     bars($("#rf-bars"), [
-      ["Skills", role.skills, `${pct(role.coverage)}% of the weighted template covered`],
+      ["Skills", cell.parts.skills, `${pct(cell.coverage)}% of the weighted ${tiers[st.level]} template covered`],
       ["Similarity", role.semantic, "Meaning-based similarity to the role profile"],
       ["Job titles", role.title, role.title_evidence ? `Matched: ${role.title_evidence}` : "No matching title"],
       ["ATS readability", d.ats.score],
@@ -291,7 +306,7 @@
 
     // how to improve
     const im = cell.improve, cur = $("#rf-imp-cur"), pot = $("#rf-imp-pot"), top = Math.max(im.potential, cell.score);
-    $("#rf-imp-title").textContent = `How to improve: ${levels[st.level]} · ${roles[rid]}`;
+    $("#rf-imp-title").textContent = `How to improve: ${cell.title}`;
     $("#rf-imp-now").textContent = `Now ${pct(cell.score)}%`;
     $("#rf-imp-pot-v").textContent = `Up to ~${pct(top)}%`;
     cur.style.background = solid(cell.score); pot.style.background = solid(top);
@@ -301,7 +316,7 @@
     $("#rf-imp-list").replaceChildren(...(im.actions.length ? im.actions.map(a => {
       const li = el("li"), k = el("span", "k", icons[a.kind] || "•");
       k.title = kinds[a.kind] || a.kind;
-      li.append(el("span", "gain", `+${(a.gain * 100).toFixed(a.gain < 0.1 ? 1 : 0)} pts`), k, el("span", "t", a.text));
+      li.append(el("span", "gain", `+${(a.gain * 100).toFixed(a.gain < 0.1 ? 1 : 0)} pts`), k, el("span", "t", d.texts[a.text] ?? a.text));
       return li;
     }) : [el("li", "imp-empty", "No meaningful edits left for this target — it's already a strong match.")]));
     $("#rf-imp-notes").replaceChildren(...im.notes.map(n => el("div", "rf-note", n)));
@@ -309,51 +324,99 @@
     // this role at every position
     $("#rf-strip-title").textContent = `${roles[rid]} at every position`;
     $("#rf-strip").replaceChildren(...d.level_order.map(l => {
-      const v = d.matrix[rid][l].score, b = el("button", l === st.level ? "sel" : "");
-      b.append(el("span", null, levels[l]), document.createTextNode(pct(v) + "%"));
+      const c = d.matrix[rid][l], v = c.score, b = el("button", l === st.level ? "sel" : "");
+      b.append(el("span", null, tiers[l]), document.createTextNode(pct(v) + "%"));
       b.style.background = tint(v);
-      b.title = `Typical: ${d.levels[l].band[0]}–${d.levels[l].band[1]} yrs`;
+      b.title = `${c.title}: typically ${c.seniority.band[0]}–${c.seniority.band[1]} yrs`;
       b.onclick = () => select("level", l);
       return b;
     }));
 
-    // skills
-    $("#rf-skills-title").textContent = `Skills for ${roles[rid]} · ${pct(role.coverage)}% of template`;
+    // skills: what counts at this position, merged by skill; groups that only higher positions add are listed apart
+    const order = Object.fromEntries(d.level_order.map((l, i) => [l, i])), here = order[st.level];
+    const now = new Map(), later = new Map();
+    role.skills.forEach(g => {
+      const target = g.from == null || order[g.from] <= here ? now : later;
+      const prev = target.get(g.skill);
+      target.set(g.skill, prev ? { ...prev, weight: Math.min(3, prev.weight + g.weight) } : { ...g });
+    });
+    [...later.keys()].forEach(k => { if (now.has(k)) later.delete(k); });
+    const all = [...now.values()].sort((a, b) => b.weight - a.weight || b.credit - a.credit);
+    const matched = all.filter(g => g.credit > 0), missing = all.filter(g => !g.credit);
+    $("#rf-skills-title").textContent = `Skills for ${cell.title} · ${pct(cell.coverage)}% of template`;
     const sk = $("#rf-skills"); sk.replaceChildren();
-    sk.append(el("div", "subhead", `Matched (${role.matched.length})`), chips(role.matched, "ok", true));
-    sk.append(el("div", "subhead", `Missing (${role.missing.length}) — add only what you've really used`), chips(role.missing, "miss"));
+    sk.append(el("div", "subhead", `Matched (${matched.length})`), chips(matched, "ok", true));
+    sk.append(el("div", "subhead", `Missing (${missing.length}) — add only what you've really used`), chips(missing, "miss"));
+    if (later.size) {
+      const items = [...later.values()].map(g => ({ ...g, weight: 0, skill: `${g.skill} · ${tiers[g.from]}+` }));
+      sk.append(el("div", "subhead", "Expected at higher positions"), chips(items, "later", true));
+    }
   }
 
-  function renderMatrix(d, roles, levels, scope, roleMode, focus) {
+  function renderMatrix(d, roles, scope, roleMode, focus) {
     const cells = [];
     scope.forEach(r => d.level_order.forEach(l => cells.push([d.matrix[r][l].score, r, l])));
     cells.sort((a, b) => b[0] - a[0]);
     const rank = new Map(cells.slice(0, 3).map(([, r, l], i) => [`${r}|${l}`, i + 1]));
-    const fam = roleMode === "family" ? st.role.slice(7) : null;
-    $("#rf-mx-title").textContent = fam ? `${fam}: roles × positions` : "All roles × positions";
-    $("#rf-mx-sub").textContent = `Experience: ${d.profile.years_used} yrs ${st.years != null ? "(override)" : "(from resume)"} · click a cell for its breakdown`;
+    const famId = roleMode === "family" ? st.role.slice(7) : null;
+    $("#rf-mx-title").textContent = famId ? `${d.families[famId].label}: roles × positions` : `All ${scope.length} roles × positions`;
+    $("#rf-mx-sub").textContent = `Experience: ${d.profile.years_used} yrs ${st.years != null ? "(override)" : "(from resume)"} · click a cell for its breakdown`
+      + (famId ? "" : " · click a family to expand or collapse it");
     const cg = el("colgroup"); cg.append(el("col", "rc")); d.level_order.forEach(() => cg.append(el("col")));
     const head = el("tr"); head.append(el("th", "role", ""));
-    d.level_order.forEach(l => { const th = el("th", l === st.level ? "sel" : "", levels[l]); th.title = `Typical: ${d.levels[l].band[0]}–${d.levels[l].band[1]} yrs`; head.append(th); });
+    d.level_order.forEach(l => head.append(el("th", l === st.level ? "sel" : "", famId ? d.families[famId].ladder[l] : d.levels[l].label)));
     const thead = el("thead"); thead.append(head);
     const tbody = el("tbody");
-    const groups = Object.entries(d.families).map(([f, ids]) => [f, ids.filter(i => scope.includes(i))]).filter(([, ids]) => ids.length);
+    const groups = Object.entries(d.families).map(([f, fam]) => [f, fam.roles.filter(i => scope.includes(i))]).filter(([, ids]) => ids.length);
+    const bestIn = (ids, l) => ids.reduce((a, r) => d.matrix[r][l].score > d.matrix[a][l].score ? r : a, ids[0]);
+    // By default open the two families with the strongest fits at the selected position, plus the inspected role's family
+    if (!st.open) {
+      const top = f => d.matrix[bestIn(f[1], st.level)][st.level].score;
+      st.open = new Set([...groups].sort((a, b) => top(b) - top(a)).slice(0, 2).map(([f]) => f));
+      if (focus) st.open.add(d.roles[focus].family);
+    }
+    const cellButton = (r, l) => {
+      const c = d.matrix[r][l], b = el("button", null, pct(c.score));
+      b.style.background = tint(c.score);
+      b.title = `${c.title}: ${pct(c.score)}% — click for details`;
+      b.setAttribute("aria-label", b.title);
+      // Inspect the cell in the role-fit panel above while keeping the heatmap
+      b.onclick = () => {
+        st.focus = r; st.level = l; $("#rf-level").value = l; pref("level", l);
+        st.open.add(d.roles[r].family); render();
+        $("#rf-fit").scrollIntoView({ behavior: "smooth", block: "nearest" });
+      };
+      return b;
+    };
     groups.forEach(([f, ids]) => {
-      if (groups.length > 1) { const tr = el("tr"), th = el("th", "fam", f); th.colSpan = d.level_order.length + 1; tr.append(th); tbody.append(tr); }
+      const open = groups.length === 1 || st.open.has(f), fam = d.families[f];
+      if (groups.length > 1) {
+        const tr = el("tr", "famrow" + (open ? " open" : "")), th = el("th", "fam");
+        const t = el("button", "fam-toggle");
+        t.setAttribute("aria-expanded", String(open));
+        t.title = open ? "Collapse this family" : "Show every role in this family";
+        t.append(el("span", "car", "▸"), el("span", "fl", fam.label), el("span", "fn", String(ids.length)));
+        t.onclick = () => { open ? st.open.delete(f) : st.open.add(f); render(); };
+        th.append(t); tr.append(th);
+        d.level_order.forEach(l => {
+          const td = el("td", open ? "ladder-cell" : "sum" + (l === st.level ? " col" : ""));
+          if (open) td.append(el("span", "ladder", fam.ladder[l]));
+          else {
+            // collapsed: the family's best role at each position
+            const r = bestIn(ids, l), b = cellButton(r, l);
+            b.title = `Best in ${fam.label} at ${fam.ladder[l]}: ${roles[r]} ${pct(d.matrix[r][l].score)}% — click for details`;
+            td.append(b);
+          }
+          tr.append(td);
+        });
+        tbody.append(tr);
+      }
+      if (!open) return;
       ids.forEach(r => {
         const tr = el("tr"); tr.append(el("th", "role", roles[r]));
         d.level_order.forEach(l => {
-          const v = d.matrix[r][l].score, b = el("button", null, pct(v));
           const td = el("td", (l === st.level ? "col" : "") + (r === focus && l === st.level ? " focus" : ""));
-          b.style.background = tint(v);
-          b.title = `${levels[l]} · ${roles[r]}: ${pct(v)}% — click for details`;
-          b.setAttribute("aria-label", b.title);
-          // Inspect the cell in the role-fit panel above while keeping the "All roles" heatmap
-          b.onclick = () => {
-            st.focus = r; st.level = l; $("#rf-level").value = l; pref("level", l); render();
-            $("#rf-fit").scrollIntoView({ behavior: "smooth", block: "nearest" });
-          };
-          td.append(b);
+          td.append(cellButton(r, l));
           if (rank.has(`${r}|${l}`)) td.append(el("span", "rank", "#" + rank.get(`${r}|${l}`)));
           tr.append(td);
         });
@@ -395,13 +458,13 @@
     body.append(el("div", "subhead", `In the posting, missing from your resume (${jd.missing.length})`), chips(jd.missing, "miss"));
   }
 
-  function renderSeniority(d, levels) {
-    const lv = d.levels[st.level];
-    $("#rf-sen-title").textContent = `Seniority evidence · ${levels[st.level]}`;
+  function renderSeniority(d, rid) {
+    const cell = d.matrix[rid][st.level], lv = cell.seniority;
+    $("#rf-sen-title").textContent = `Seniority evidence · ${cell.title}`;
     const sen = $("#rf-sen"); sen.replaceChildren();
     const kv = el("dl", "kv");
     const add = (k, v) => kv.append(el("dt", null, k), el("dd", null, v));
-    add("Experience", `${d.profile.years_used} yrs · typical for ${levels[st.level]}: ${lv.band[0]}–${lv.band[1]}`);
+    add("Experience", `${d.profile.years_used} yrs · typical for ${cell.title}: ${lv.band[0]}–${lv.band[1]}`);
     add("Title level", d.profile.title_level ? `${d.profile.title_level} (from recent titles)` : "Not detected");
     add("Scope signals", lv.found.length ? `${pct(lv.signals)}% of what this level usually shows` : "None found");
     sen.append(kv);

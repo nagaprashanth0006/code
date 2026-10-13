@@ -1,8 +1,8 @@
 # Shortlist: resume and ATS fit checker
 
 Shortlist is a small local web app. It reads a resume the way an applicant tracking system (ATS)
-parser does, then scores it for 9 infrastructure and AI roles × 5 seniority levels and for 17 countries
-and regions. It explains every score and shows which edits would raise it.
+parser does, then scores it for 51 roles in 9 families × 5 seniority levels and for 17 countries and
+regions. It explains every score and shows which edits would raise it.
 
 ```
 pip install -r requirements.txt
@@ -21,8 +21,8 @@ nothing is uploaded anywhere.
 
 | Control | Default | Behaviour |
 |---|---|---|
-| **Role** | All | **All:** a role × position heatmap. **One role:** its match dial and breakdown, *How to improve*, its skills, and that role at every position. Clicking a heatmap cell selects that role. |
-| **Position** | Senior | Engineer, Senior, Lead/Principal, Architect, Sr. Architect |
+| **Role** | All | **All** or **All in a family:** a role × position heatmap. **One role:** its match dial and breakdown, *How to improve*, its skills, and that role at every position. Clicking a heatmap cell inspects it. |
+| **Position** | Senior | Five tiers, named the way each family names them: Engineer → Sr. Architect for IT, Designer → Head of Design, Engineer → Chief Engineer, QA Engineer → Head of Quality… |
 | **Experience** | from the resume | Slider from 5 to 30 years overrides it. Under 5 years, every score is reduced. |
 | **Country / region** | All | **All:** a fit heatmap for all 17 markets. **One country:** a detail panel (work rights, location, language, CV norms, notes). Clicking a tile selects that country. |
 
@@ -31,7 +31,39 @@ Each combination lays the page out differently:
 - **One role, Country All:** the role panel spans the full width.
 - **Any role, one country:** the country panel takes the right-hand column.
 
+With Role on **All**, the heatmap groups roles by family. The two families with the strongest fits
+open by default; collapsed families show their best role's score at each position, and clicking a
+family name expands or collapses it.
+
 The page uses 80% of the window on desktop screens (HD to 4K) and full width on phones.
+
+## Roles
+
+| Family | Roles | Position ladder |
+|---|---|---|
+| Cloud, Infrastructure & Ops | Platform, DevOps, SRE, Cloud, Systems Administration, Network, Database Administration, AIOps, Automation (Infra & Ops) | Engineer · Senior · Lead/Principal · Architect · Sr. Architect |
+| Data & AI | Data Engineering, Data Science, Data Analytics, BI, SQL/Database Development, ML Engineering, AI Engineering, MLOps, ML/AI Ops & Engineering | Engineer/Analyst · Senior · Lead/Principal · Architect · Sr. Architect/Head |
+| Software Development | Backend, Frontend, Full-Stack, Mobile, Java, .NET, Python, Embedded Software | Developer · Senior · Lead/Staff · Architect · Principal/Chief Architect |
+| Enterprise Applications | SAP, Salesforce, ServiceNow | Consultant · Senior · Lead · Solution Architect · Sr. Solution Architect |
+| Quality Engineering | Automation QA/SDET, QA/Manual Testing, Performance Testing | QA Engineer · Senior · QA Lead · Test Architect · Head of Quality |
+| Cybersecurity | Security Engineering, Cloud Security, SOC Analysis, Penetration Testing, GRC & Risk | Analyst/Engineer · Senior · Lead · Security Architect · Principal/CISO track |
+| Engineering & Design (Core) | Mechanical Design, CAD/BIM Design & Drafting, Electrical, Civil/Structural, Electronics/Hardware, VLSI, Manufacturing/Process | Engineer · Senior · Lead · Principal Engineer · Chief Engineer/Head |
+| UX & Creative Design | UI/UX, Graphic/Visual, Web Design | Designer · Senior · Lead · Principal · Head of Design |
+| Product & Delivery | Product Management, Business Analysis, Project/Program Management, Scrum Master/Agile Coach | Mid-level · Senior · Lead · Principal/Director · Head/VP |
+
+Each role has:
+* **Skills** weighted core (×3), important (×2) or nice to have (×1). Some groups count only **from a
+  position up**: a Cloud Architect is also expected to show cloud architecture, a Senior Cloud Engineer
+  cost optimisation and migrations, a Lead SDET test strategy. Below that position they're listed as
+  *expected at higher positions* rather than missing.
+* **Typical years per position.** These come from the family, and a role can override them: a SOC
+  Analyst at the first tier is 1–5 years, a Project Manager 3–8.
+* **Seniority signals** per family: "design reviews" and "technical authority" for engineers, "design
+  system" and "design critique" for designers, "test strategy" and "TCoE" for QA, and so on.
+* **Title words** per family, so "Principal Engineer" ranks as Principal in Engineering and "Art
+  Director" as Principal in Design.
+* **Target titles** for headline suggestions: "Senior DevOps Engineer", "Principal Mechanical Design
+  Engineer", "SOC Lead", "VP of Product".
 
 ## Where your resume goes
 
@@ -89,11 +121,12 @@ Everything stays on your machine, in memory:
 
 * **Role fit** is 55% skills, 20% meaning-based similarity, 12% job titles and 13% ATS readability.
   * Skills: each role template marks skills as core (×3), important (×2) or nice to have (×1), with
-    synonyms. A skill used in a job counts fully (less for older jobs); one only listed in a skills
-    section counts 70%.
-* **Cell score** = role fit × a seniority gate of 40–100%. The gate combines years against the position's
-  typical range, scope signals (led, mentored, architected, governance…), and the level of recent
-  titles. Below 5 years of experience, the score is also multiplied by 0.4 + 0.12 × years.
+    synonyms, and some only count from a given position up, so the skills score differs by position.
+    A skill used in a job counts fully (less for older jobs); one only listed in a skills section
+    counts 70%.
+* **Cell score** = role fit × a seniority gate of 40–100%. The gate combines years against the role's
+  typical range for that position, the family's scope signals (led, mentored, architected, design
+  reviews, test strategy…), and the level of recent titles. Below 5 years of experience, the score is also multiplied by 0.4 + 0.12 × years.
 * **How to improve** re-scores the resume with one concrete edit at a time and lists the points each
   adds:
   * a missing core skill
@@ -144,15 +177,42 @@ Measured on public data from Hugging Face; only aggregate numbers were inspected
 job-portal CVs): an experience section was found in 73% of all files, including non-English ones. Median
 time is 0.4 s per resume.
 
-**Role ranking** ([resume-atlas](https://huggingface.co/datasets/ahmedheakl/resume-atlas), lowercased text):
+**Role ranking** ([resume-atlas](https://huggingface.co/datasets/ahmedheakl/resume-atlas), 1,000
+resumes: 40 from each of 18 mapped categories plus 7 unrelated ones). This text is lowercased with job
+titles and punctuation stripped, so the 12% title part (and aliases like C#, C++ and Node.js) can't
+help. Real resumes do better on near neighbours.
 
-| Category | AUROC vs every other category | Top-ranked role |
-|---|---|---|
-| DevOps | **0.975** | DevOps for 94% |
-| Data Science (as ML Engineering) | 0.69 | |
-| Testing (as Automation) | 0.63 | |
+| Category | AUROC of its role vs all others | Top-1 role in the right set | Top-3 | Right family |
+|---|---|---|---|---|
+| SAP Developer | **0.995** | 75% | 90% | 75% |
+| Mechanical Engineer | **0.976** | 90% | 100% | 92% |
+| Network Security Engineer | **0.965** | 82% | 100% | 100% |
+| DevOps | **0.963** | 78% | 92% | 85% |
+| SQL Developer | 0.943 | 92% | 98% | 98% |
+| React Developer (Frontend) | 0.942 | 65% | 90% | 90% |
+| ETL Developer (Data Engineering) | 0.940 | 82% | 90% | 88% |
+| Python Developer | 0.939 | 35% | 80% | 80% |
+| Java Developer | 0.930 | 90% | 98% | 92% |
+| .NET Developer | 0.919 | 60% | 78% | 62% |
+| Web Designing | 0.903 | 60% | 80% | 85% |
+| Electrical Engineering | 0.901 | 65% | 75% | 78% |
+| PMO (Project Management) | 0.887 | 82% | 88% | 85% |
+| Business Analyst | 0.871 | 72% | 98% | 90% |
+| Database (DBA) | 0.848 | 52% | 75% | 78% |
+| Civil Engineer | 0.838 | 60% | 88% | 72% |
+| Testing (QA / Manual) | 0.709 | 45% | 57% | 45% |
+| Data Science | 0.524 | 48% | 72% | 48% |
 
-Many "Testing" resumes are manual QA, and many "Data Science" ones are student or analyst profiles.
+The median AUROC is 0.92. Overall, the top-ranked role is in the right set for 69% of resumes and among
+the top 3 for 86%.
+
+* **Near neighbours explain most top-1 misses:** Full-Stack vs Python or .NET Developer, DBA vs SQL
+  Developer, Civil vs CAD/BIM Designer. On real resumes the job title settles these.
+* **Two labels are noisy:**
+  * Only 28% of "Testing" resumes mention software testing; many are lab or inspection testing.
+  * Only 37% of "Data Science" resumes mention machine learning (27% of "Python Developer" ones do too).
+* **The original roles didn't regress:** DevOps AUROC on the previous pass's 9-category sample is 0.974
+  (it was 0.975).
 
 **Job-description match:** only 0.60 AUROC on
 [resume-job-description-fit](https://huggingface.co/datasets/cnamuangtoun/resume-job-description-fit),
@@ -177,13 +237,14 @@ All templates are plain JSON in `shortlist/kb/`. Edit them and restart the serve
 | File | Contents |
 |---|---|
 | `skills.json` | skill catalogue and synonyms; a leading `=` makes an alias case-sensitive |
-| `roles.json` | per-role `family`, skill weights, title phrases and description |
-| `levels.json` | year ranges, scope signals, title words |
+| `roles.json` | per role: `family`, skill groups (weight and optional `from` position), title phrases, description, target titles and optional per-position `years` |
+| `families.json` | per family: names of the 5 positions, typical years, extra scope signals, seniority skills and title words |
+| `levels.json` | the 5 shared position tiers: default scope signals, seniority skills, title words |
 | `countries.json` | places, languages, work-rights phrases, CV norms, notes |
 
-Roles carry a `family` field (currently `IT / Infrastructure & AI`). New families, such as Engineering,
-appear as their own groups in the Role dropdown ("All in Engineering") and in the heatmap with no code
-changes.
+Adding a role or a whole family is a data change only: add it to `families.json` and `roles.json` and
+restart. The templates are validated at startup, so an unknown skill id, family or position name stops
+the server with a message saying which file and entry to fix.
 
 ## Layout
 

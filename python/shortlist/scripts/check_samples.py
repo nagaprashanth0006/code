@@ -39,9 +39,17 @@ def main(paths):
         langs = dict(p["languages"])
         print("  languages:", langs or "none listed", "| location:", p["location"] or "-")
         print("  ATS issues:", [c["label"] for c in r["ats"]["checks"] if c["status"] != "pass"] or "none")
-        cells = sorted(((r["matrix"][ro][lv]["score"], r["roles"][ro]["label"], r["levels"][lv]["label"])
+        cells = sorted(((r["matrix"][ro][lv]["score"], r["matrix"][ro][lv]["title"])
                         for ro in r["role_order"] for lv in r["level_order"]), reverse=True)[:3]
-        print("  top fits:", "; ".join(f"{lvl} {role} {s * 100:.0f}%" for s, role, lvl in cells))
+        print("  top fits:", "; ".join(f"{title} {s * 100:.0f}%" for s, title in cells))
+        best = {}
+        for ro in r["role_order"]:
+            fam = r["roles"][ro]["family"]
+            s = max(c["score"] for c in r["matrix"][ro].values())
+            if s > best.get(fam, (0, ""))[0]:
+                best[fam] = (s, r["roles"][ro]["label"])
+        print("  best per family:", "; ".join(f"{r['families'][f]['label']}: {lab} {s * 100:.0f}%"
+                                             for f, (s, lab) in sorted(best.items(), key=lambda x: -x[1][0])[:4]))
         top_c = sorted(r["countries"], key=lambda c: -c["score"])[:3]
         print("  top countries:", ", ".join(f"{c['label']} {c['score'] * 100:.0f}%" for c in top_c))
 

@@ -369,3 +369,110 @@ def test_uploads_stay_in_memory_and_results_are_not_cached_by_browser():
     assert r.status_code == 200 and r.headers["Cache-Control"] == "no-store"
     assert seen and all(s == "BytesIO" for s in seen)
     assert client.post("/api/forget", json={"key": r.get_json()["doc_key"]}).get_json()["forgotten"] == 1
+
+
+# ------------------------------------------------------------------ role families and per-tier templates
+
+def test_templates_cover_every_family_and_tier():
+    from shortlist.knowledge import FAMILIES, FAMILY_INFO, LEVEL_IDS, ROLES, level_config, role_band, role_groups
+    assert len(FAMILIES) >= 9 and len(ROLES) >= 50
+    assert list(FAMILIES)[0] == "infra"   # families.json order, not alphabetical
+    for rid, r in ROLES.items():
+        assert r["family"] in FAMILY_INFO and r["description"] and r["titles"]
+        for lid in LEVEL_IDS:
+            a, b = role_band(rid, lid)
+            assert 0 <= a < b
+            assert role_groups(rid, lid)
+            assert level_config(r["family"], lid)["label"]
+    # bands rise with the tier for every role
+    for rid in ROLES:
+        mins = [role_band(rid, lid)[0] for lid in LEVEL_IDS]
+        assert mins == sorted(mins), rid
+
+
+def test_level_gated_skills_join_at_their_tier():
+    from shortlist.knowledge import role_groups
+    ids = lambda rid, lid: {g for g, _, _ in role_groups(rid, lid)}
+    assert ("cloud_arch",) not in ids("cloud_eng", "senior")
+    assert ("cloud_arch",) in ids("cloud_eng", "architect")
+    # a group repeated "from" a tier weighs more there, but still shows as one skill
+    w = lambda lid: dict((g, w) for g, w, _ in role_groups("qa_automation", lid))[("test_framework",)]
+    assert w("engineer") == 2 and w("senior") == 4
+    assert all(tier <= 3 for _, _, tier in role_groups("qa_automation", "senior"))
+
+
+def test_target_titles_follow_each_familys_ladder():
+    from shortlist.score import _target_title
+    assert _target_title("devops", "senior") == "Senior DevOps Engineer"
+    assert _target_title("devops", "architect") == "DevOps Architect"
+    assert _target_title("mech_design", "architect") == "Principal Mechanical Design Engineer"
+    assert _target_title("ux_designer", "sr_architect") == "Head of Design"
+    assert _target_title("soc_analyst", "lead") == "SOC Lead"
+    assert _target_title("product_mgr", "sr_architect") == "VP of Product"
+
+
+QA_RESUME = """Priya Sharma
+Senior QA Automation Engineer
+Pune, India | priya@example.com
+
+EXPERIENCE
+Senior QA Automation Engineer | Gamma Tech
+Mar 2019 – Dec 2023
+- Built a Selenium WebDriver and TestNG framework in Java using the page object model; 1,200 regression tests.
+- API testing with Postman and Rest Assured; BDD with Cucumber; Jenkins CI runs on every merge.
+- Mobile automation with Appium; defects tracked in Jira; test plans and test cases for each sprint.
+
+QA Engineer | Delta Soft
+Jun 2015 – Feb 2019
+- Manual, functional and regression testing; wrote test scenarios; SQL for data validation.
+
+EDUCATION
+B.E. Computer Science, 2011 – 2015
+"""
+
+MECH_RESUME = """Arjun Rao
+Mechanical Design Engineer
+Chennai, India | arjun@example.com
+
+EXPERIENCE
+Senior Design Engineer | Omega Machines
+Jan 2018 – Dec 2023
+- 3D modelling in SolidWorks and Creo; 2D engineering drawings with GD&T and tolerance stack-up analysis.
+- FEA in ANSYS for brackets and frames; DFM reviews with suppliers for sheet metal and casting parts.
+- DFMEA for new products; BOMs released through Windchill PLM; prototyping and validation testing.
+
+Design Engineer | Sigma Industries
+Jul 2014 – Dec 2017
+- Machine design and design calculations; AutoCAD detailing to ASME standards.
+
+EDUCATION
+B.E. Mechanical Engineering, 2010 – 2014
+"""
+
+
+@pytest.mark.parametrize("text, family, role", [(QA_RESUME, "quality", "qa_automation"),
+                                                (MECH_RESUME, "engineering", "mech_design")])
+def test_resumes_land_in_their_family(text, family, role):
+    pytest.importorskip("torch")
+    from shortlist.score import analyze
+    r = analyze(text)
+    best = max(r["role_order"], key=lambda ro: r["matrix"][ro]["senior"]["score"])
+    assert best == role and r["roles"][best]["family"] == family
+    cell = r["matrix"][best]["senior"]
+    assert cell["seniority"]["band"] and cell["title"].startswith("Senior")
+    # improvement texts are shared via an index table
+    assert all(isinstance(a["text"], int) and r["texts"][a["text"]] for a in cell["improve"]["actions"])
+
+
+def test_role_band_overrides_family_band():
+    from shortlist.knowledge import role_band
+    assert role_band("soc_analyst", "engineer") == [1, 5]           # role's own band
+    assert role_band("sec_eng", "engineer") == [2, 6]               # family band
+
+
+def test_meta_keeps_family_order():
+    pytest.importorskip("flask")
+    import app as server
+    m = server.app.test_client().get("/api/meta").get_json()
+    assert list(m["families"])[:3] == ["infra", "data_ai", "software"]
+    assert m["families"]["design"]["ladder"]["sr_architect"] == "Head of Design"

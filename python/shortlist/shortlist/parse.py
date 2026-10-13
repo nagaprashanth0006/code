@@ -459,6 +459,22 @@ def _ym_int(ym):
 
 # ------------------------------------------------------------------ main
 
+def title_rank(p: "Profile", title_words) -> int | None:
+    """Highest seniority rank among recent job titles and the headline (None when there are none).
+    title_words: [{"words": [...], "rank": n}, ...], most senior first; the first group that matches wins."""
+    recent = [j for j in p.jobs if j.years_since_end <= 3] or p.jobs[:2]
+    titles = [j.title.lower() for j in recent[:3]] + ([p.headline.lower()] if p.headline else [])
+    ranks = []
+    for t in titles:
+        r = 0
+        for group in title_words:
+            if any(re.search(rf"(?<![a-z]){re.escape(w.strip())}(?![a-z])", t) for w in group["words"]):
+                r = group["rank"]
+                break
+        ranks.append(r)
+    return max(ranks) if ranks else None
+
+
 def parse(text: str, styled: dict[str, float] | None = None, doc_date: dt.date | None = None) -> Profile:
     """styled: normalised line -> formatting score from the extractor (bold / heading style / size).
     doc_date: the document's last-saved date from metadata, if known."""
@@ -494,17 +510,7 @@ def parse(text: str, styled: dict[str, float] | None = None, doc_date: dt.date |
     _languages(p, low)
 
     # --- seniority from recent titles
-    recent = [j for j in p.jobs if j.years_since_end <= 3] or p.jobs[:2]
-    titles = [j.title.lower() for j in recent[:3]] + ([p.headline.lower()] if p.headline else [])
-    ranks = []
-    for t in titles:
-        r = 0
-        for group in LEVELS["title_words"]:
-            if any(re.search(rf"(?<![a-z]){re.escape(w.strip())}(?![a-z])", t) for w in group["words"]):
-                r = group["rank"]
-                break
-        ranks.append(r)
-    p.title_rank = max(ranks) if ranks else None
+    p.title_rank = title_rank(p, LEVELS["title_words"])
 
     # --- location: country places in the header block, contact lines, or the latest job header
     loc_zone = top + "\n" + "\n".join(l for l in lines if re.match(r"\s*(location|address|based in|city)\b", l, re.I))

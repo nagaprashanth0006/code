@@ -1,0 +1,186 @@
+{
+  "_doc": "Role families. Each family names its own seniority ladder for the five position tiers in levels.json (engineer, senior, lead, architect, sr_architect) and may override per tier: years [min, max] of the typical band, extra scope signals (merged with the tier's defaults), seniority skills (replacing the tier's defaults) and title_words (replacing the global list). titles: how a target job title is formed at each tier; {t} is the role's title and {a} its architect title. A role can override years and titles per tier in roles.json.",
+
+  "infra": {
+    "label": "Cloud, Infrastructure & Ops",
+    "ladder": {"engineer": "Engineer", "senior": "Senior", "lead": "Lead / Principal", "architect": "Architect", "sr_architect": "Sr. Architect"},
+    "titles": {"engineer": "{t}", "senior": "Senior {t}", "lead": "Lead {t}", "architect": "{a}", "sr_architect": "Principal {a}"},
+    "years": {"engineer": [3, 8], "senior": [5, 12], "lead": [8, 18], "architect": [10, 22], "sr_architect": [14, 30]}
+  },
+
+  "data_ai": {
+    "label": "Data & AI",
+    "ladder": {"engineer": "Engineer / Analyst", "senior": "Senior", "lead": "Lead / Principal", "architect": "Architect", "sr_architect": "Sr. Architect / Head"},
+    "titles": {"engineer": "{t}", "senior": "Senior {t}", "lead": "Lead {t}", "architect": "{a}", "sr_architect": "Principal {a}"},
+    "years": {"engineer": [2, 7], "senior": [4, 10], "lead": [7, 15], "architect": [9, 20], "sr_architect": [12, 30]},
+    "signals": {
+      "senior": {"productionized": 2, "productionised": 2, "a/b": 1, "experiment design": 2},
+      "architect": {"data architecture": 3, "data strategy": 3, "ml platform": 2, "ai strategy": 3, "data governance": 2},
+      "sr_architect": {"head of data": 3, "head of ai": 3, "chief data": 3, "data strategy": 3, "ai strategy": 3}
+    },
+    "skills": {
+      "architect": ["system_design", "cloud_arch", "governance", "data_governance", "data_modeling", "cost", "cert_arch"],
+      "sr_architect": ["cloud_arch", "governance", "data_governance", "system_design", "cost"]
+    }
+  },
+
+  "software": {
+    "label": "Software Development",
+    "ladder": {"engineer": "Developer", "senior": "Senior", "lead": "Lead / Staff", "architect": "Architect", "sr_architect": "Principal / Chief Architect"},
+    "titles": {"engineer": "{t}", "senior": "Senior {t}", "lead": "Lead {t}", "architect": "{a}", "sr_architect": "Principal {a}"},
+    "years": {"engineer": [2, 7], "senior": [5, 12], "lead": [8, 16], "architect": [10, 20], "sr_architect": [14, 30]},
+    "signals": {
+      "senior": {"code reviews": 1, "design patterns": 1, "refactored": 1, "performance optimization": 1},
+      "lead": {"staff engineer": 3, "staff software engineer": 3, "engineering lead": 3},
+      "architect": {"software architecture": 3, "application architecture": 3, "api strategy": 2}
+    }
+  },
+
+  "enterprise": {
+    "label": "Enterprise Applications",
+    "ladder": {"engineer": "Consultant / Developer", "senior": "Senior Consultant", "lead": "Lead Consultant", "architect": "Solution Architect", "sr_architect": "Sr. Solution Architect"},
+    "titles": {"engineer": "{t}", "senior": "Senior {t}", "lead": "Lead {t}", "architect": "{a}", "sr_architect": "Senior {a}"},
+    "years": {"engineer": [2, 7], "senior": [5, 11], "lead": [8, 15], "architect": [10, 20], "sr_architect": [14, 30]},
+    "signals": {
+      "engineer": {"configured": 1, "customized": 1, "customised": 1, "go-live": 1, "support": 1},
+      "senior": {"end-to-end implementation": 2, "full life cycle": 2, "full lifecycle": 2, "go-live": 1, "hypercare": 1, "fit-gap": 2, "fit gap": 2, "client-facing": 2},
+      "lead": {"workshops": 2, "solution design": 2, "offshore": 1, "onsite": 1, "team of": 2},
+      "architect": {"solution architect": 3, "solution design": 2, "integration architecture": 2, "landscape": 2, "roadmap": 1},
+      "sr_architect": {"enterprise architecture": 3, "transformation": 2, "program": 1, "programme": 1}
+    },
+    "skills": {
+      "senior": ["erp_impl"],
+      "lead": ["erp_impl", "governance"],
+      "architect": ["erp_impl", "system_design", "migration", "governance", "sap_integration"],
+      "sr_architect": ["erp_impl", "migration", "governance", "cert_arch"]
+    }
+  },
+
+  "quality": {
+    "label": "Quality Engineering",
+    "ladder": {"engineer": "QA Engineer", "senior": "Senior QA", "lead": "QA Lead", "architect": "Test Architect", "sr_architect": "QA Manager / Head of Quality"},
+    "titles": {"engineer": "{t}", "senior": "Senior {t}", "lead": "Lead {t}", "architect": "{a}", "sr_architect": "Head of Quality Engineering"},
+    "years": {"engineer": [2, 7], "senior": [5, 10], "lead": [7, 14], "architect": [10, 20], "sr_architect": [13, 30]},
+    "signals": {
+      "senior": {"test framework": 2, "automation framework": 2, "framework from scratch": 2, "test strategy": 1},
+      "lead": {"qa lead": 3, "test lead": 3, "test strategy": 2, "test plan": 1, "defect triage": 2, "release sign-off": 2, "sign-off": 1, "qa process": 2},
+      "architect": {"test architecture": 3, "test architect": 3, "automation strategy": 3, "quality strategy": 3, "framework design": 2, "shift-left": 1, "shift left": 1},
+      "sr_architect": {"head of qa": 3, "head of quality": 3, "qa manager": 2, "test manager": 2, "center of excellence": 3, "centre of excellence": 3, "tcoe": 3, "quality engineering practice": 3}
+    },
+    "skills": {
+      "senior": ["test_framework"],
+      "lead": ["test_framework", "qa"],
+      "architect": ["test_framework", "qa", "cicd", "governance"],
+      "sr_architect": ["qa", "governance"]
+    },
+    "title_words": [
+      {"words": ["head of qa", "head of quality", "qa manager", "test manager", "quality manager", "director"], "rank": 4},
+      {"words": ["architect"], "rank": 3},
+      {"words": ["lead", "principal", "staff"], "rank": 2},
+      {"words": ["senior", "sr.", "sr ", "snr"], "rank": 1},
+      {"words": ["junior", "jr.", "graduate", "intern", "trainee", "associate"], "rank": -1}
+    ]
+  },
+
+  "security": {
+    "label": "Cybersecurity",
+    "ladder": {"engineer": "Analyst / Engineer", "senior": "Senior", "lead": "Lead", "architect": "Security Architect", "sr_architect": "Principal Architect / CISO track"},
+    "titles": {"engineer": "{t}", "senior": "Senior {t}", "lead": "Lead {t}", "architect": "{a}", "sr_architect": "Principal {a}"},
+    "years": {"engineer": [2, 6], "senior": [5, 10], "lead": [7, 15], "architect": [10, 20], "sr_architect": [13, 30]},
+    "signals": {
+      "senior": {"threat model": 2, "threat modeling": 2, "security reviews": 2, "hardening": 1, "playbooks": 1},
+      "lead": {"security program": 2, "led the soc": 3, "soc lead": 3, "incident commander": 2},
+      "architect": {"security architecture": 3, "zero trust": 2, "threat modeling": 2, "reference architecture": 2, "security design": 2},
+      "sr_architect": {"ciso": 3, "head of security": 3, "security strategy": 3, "risk appetite": 2, "board": 2}
+    },
+    "skills": {
+      "senior": ["threat_model"],
+      "lead": ["threat_model", "sec_frameworks"],
+      "architect": ["threat_model", "cloud_arch", "sec_frameworks", "governance", "iam"],
+      "sr_architect": ["sec_frameworks", "governance", "risk_mgmt"]
+    }
+  },
+
+  "engineering": {
+    "label": "Engineering & Design (Core)",
+    "ladder": {"engineer": "Engineer", "senior": "Senior Engineer", "lead": "Lead Engineer", "architect": "Principal Engineer", "sr_architect": "Chief Engineer / Head"},
+    "titles": {"engineer": "{t}", "senior": "Senior {t}", "lead": "Lead {t}", "architect": "Principal {t}", "sr_architect": "Chief Engineer"},
+    "years": {"engineer": [2, 7], "senior": [5, 12], "lead": [8, 16], "architect": [12, 25], "sr_architect": [15, 35]},
+    "signals": {
+      "engineer": {"designed": 1, "modeled": 1, "modelled": 1, "drawings": 1, "calculations": 1, "validation": 1, "testing": 1},
+      "senior": {"design reviews": 2, "design review": 2, "value engineering": 2, "vave": 2, "cost reduction": 2, "customer": 1, "checked": 1},
+      "lead": {"lead engineer": 3, "project lead": 2, "led a team": 3, "team of": 2, "client coordination": 1, "design approval": 2, "checked and approved": 2, "reviewed and approved": 2},
+      "architect": {"principal engineer": 3, "technical authority": 3, "design authority": 3, "subject matter expert": 2, "sme": 2, "concept design": 2, "design philosophy": 2},
+      "sr_architect": {"chief engineer": 3, "head of engineering": 3, "engineering manager": 2, "department head": 3, "head of department": 3, "hod": 2, "p&l": 2}
+    },
+    "skills": {
+      "senior": ["fmea"],
+      "lead": ["fmea", "eng_standards"],
+      "architect": ["eng_standards", "fmea"],
+      "sr_architect": ["eng_standards"]
+    },
+    "title_words": [
+      {"words": ["chief engineer", "head of engineering", "head of department", "engineering manager", "general manager", "director", "head of"], "rank": 4},
+      {"words": ["principal", "technical authority", "manager"], "rank": 3},
+      {"words": ["lead", "team lead", "staff"], "rank": 2},
+      {"words": ["senior", "sr.", "sr ", "snr"], "rank": 1},
+      {"words": ["junior", "jr.", "graduate", "intern", "trainee", "apprentice", "assistant"], "rank": -1}
+    ]
+  },
+
+  "design": {
+    "label": "UX & Creative Design",
+    "ladder": {"engineer": "Designer", "senior": "Senior Designer", "lead": "Lead Designer", "architect": "Principal Designer", "sr_architect": "Head of Design"},
+    "titles": {"engineer": "{t}", "senior": "Senior {t}", "lead": "Lead {t}", "architect": "Principal {t}", "sr_architect": "Head of Design"},
+    "years": {"engineer": [2, 6], "senior": [5, 10], "lead": [7, 14], "architect": [10, 20], "sr_architect": [12, 30]},
+    "signals": {
+      "engineer": {"designed": 1, "wireframes": 1, "prototypes": 1, "mockups": 1, "iterated": 1},
+      "senior": {"design system": 2, "user research": 1, "owned": 2, "end-to-end": 1, "mentored": 2, "design critique": 2, "design critiques": 2},
+      "lead": {"lead designer": 3, "design lead": 3, "led design": 3, "design team": 2, "design reviews": 2, "designops": 2, "design ops": 2},
+      "architect": {"principal designer": 3, "design strategy": 3, "design vision": 3, "design language": 2, "design principles": 2},
+      "sr_architect": {"head of design": 3, "design director": 3, "creative director": 3, "design manager": 2, "built the design team": 3, "hiring": 2, "budget": 2}
+    },
+    "skills": {
+      "engineer": [],
+      "senior": ["design_systems"],
+      "lead": ["design_systems", "ux_research"],
+      "architect": ["design_systems", "ux_research"],
+      "sr_architect": []
+    },
+    "title_words": [
+      {"words": ["head of design", "design director", "creative director", "director", "vp"], "rank": 4},
+      {"words": ["principal", "design manager", "art director"], "rank": 3},
+      {"words": ["lead", "staff"], "rank": 2},
+      {"words": ["senior", "sr.", "sr ", "snr"], "rank": 1},
+      {"words": ["junior", "jr.", "graduate", "intern", "trainee", "associate"], "rank": -1}
+    ]
+  },
+
+  "product": {
+    "label": "Product & Delivery",
+    "ladder": {"engineer": "Mid-level", "senior": "Senior", "lead": "Lead", "architect": "Principal / Director", "sr_architect": "Head / VP"},
+    "titles": {"engineer": "{t}", "senior": "Senior {t}", "lead": "Lead {t}", "architect": "Principal {t}", "sr_architect": "Head of {h}"},
+    "years": {"engineer": [2, 6], "senior": [5, 10], "lead": [7, 14], "architect": [10, 20], "sr_architect": [13, 30]},
+    "signals": {
+      "engineer": {"launched": 1, "delivered": 1, "user stories": 1, "requirements": 1, "coordinated": 1},
+      "senior": {"owned": 2, "prioritization": 2, "prioritisation": 2, "stakeholders": 2, "go-to-market": 2, "on time": 1, "budget": 1},
+      "lead": {"led a team": 3, "team of": 2, "cross-functional": 2, "okrs": 2, "mentored": 2, "portfolio": 1, "program": 1, "programme": 1},
+      "architect": {"product vision": 3, "multi-year": 2, "portfolio": 2, "product strategy": 3, "director": 2, "p&l": 2, "pmo": 2},
+      "sr_architect": {"head of": 3, "vp": 2, "vice president": 3, "chief product": 3, "executive": 2, "board": 2, "budget": 2, "organization-wide": 2}
+    },
+    "skills": {
+      "engineer": [],
+      "senior": ["stakeholder"],
+      "lead": ["stakeholder", "okrs"],
+      "architect": ["stakeholder", "okrs", "budgeting"],
+      "sr_architect": ["budgeting", "okrs"]
+    },
+    "title_words": [
+      {"words": ["vp", "vice president", "head of", "chief product", "cpo"], "rank": 4},
+      {"words": ["director", "principal", "senior manager"], "rank": 3},
+      {"words": ["lead", "group product manager", "staff", "program manager"], "rank": 2},
+      {"words": ["senior", "sr.", "sr ", "snr"], "rank": 1},
+      {"words": ["junior", "jr.", "associate", "apm", "intern", "trainee"], "rank": -1}
+    ]
+  }
+}

@@ -12,8 +12,9 @@ import time
 import numpy as np
 
 from . import layout
-from .knowledge import COUNTRIES, FAMILIES, LEVEL_IDS, LEVELS, ROLES, SKILLS
-from .parse import Profile, normalize, parse
+from .knowledge import (COUNTRIES, FAMILIES, FAMILY_INFO, LEVEL_IDS, LEVELS, RANK, ROLES, SKILLS, level_config,
+                        role_band, role_groups)
+from .parse import Profile, normalize, parse, title_rank
 
 log = logging.getLogger(__name__)
 # Role fit = weighted mix of these; the cell score = role fit x seniority gate x experience factor.
@@ -152,29 +153,42 @@ def _semantic(text: str) -> dict[str, float] | None:
 
 # ---------------------------------------------------------------- per-part scores
 
-def _skills_for_role(p: Profile, hits, rid):
-    role = ROLES[rid]
-    num = den = 0.0
-    matched, missing, groups = [], [], []
-    for g in role["skills"]:
+def _group_credit(p: Profile, hits, ids, memo):
+    """Best evidence among a group's skills: (credit 0-1, where, matched skill id)."""
+    if ids not in memo:
         best, where, sid_best = 0.0, "", None
-        for sid in g["ids"]:
+        for sid in ids:
             if sid in hits:
                 v, w = _evidence(p, sid, hits[sid])
                 if v > best:
                     best, where, sid_best = v, w, sid
-        num += g["w"] * best
-        den += g["w"]
-        groups.append({"label": SKILLS[sid_best]["label"] if sid_best else _group_label(g["ids"]), "w": g["w"],
-                       "credit": best, "where": where})
-        if best:
-            matched.append({"skill": SKILLS[sid_best]["label"], "weight": g["w"], "credit": round(best, 2), "where": where})
-        else:
-            missing.append({"skill": _group_label(g["ids"]), "weight": g["w"]})
-    coverage = num / den
-    missing.sort(key=lambda m: -m["weight"])
-    matched.sort(key=lambda m: (-m["weight"], -m["credit"]))
-    return min(1.0, coverage / 0.7), coverage, matched, missing, groups
+        memo[ids] = (best, where, sid_best)
+    return memo[ids]
+
+
+def _skills_for_role(p: Profile, hits, rid, lid, memo):
+    """Skills part of role fit at one tier: weighted coverage of the groups that count at that tier."""
+    num = den = 0.0
+    groups = []
+    for ids, w, tier in role_groups(rid, lid):
+        credit, where, sid = _group_credit(p, hits, ids, memo)
+        num += w * credit
+        den += w
+        groups.append({"label": SKILLS[sid]["label"] if sid else _group_label(ids), "w": w, "tier": tier,
+                       "credit": credit, "where": where})
+    coverage = num / den if den else 0.0
+    return min(1.0, coverage / SKILL_SATURATION), coverage, groups
+
+
+def _role_skill_view(p: Profile, hits, rid, memo):
+    """Every skill group of a role with its evidence, for the Skills panel. 'from' marks groups expected
+    only from a tier up; the UI shows them as "expected at <tier>" below that tier."""
+    out = []
+    for g in ROLES[rid]["skills"]:
+        credit, where, sid = _group_credit(p, hits, tuple(g["ids"]), memo)
+        out.append({"skill": SKILLS[sid]["label"] if sid else _group_label(g["ids"]), "weight": g["w"],
+                    "from": g.get("from"), "credit": round(credit, 2), "where": where})
+    return out
 
 
 SKILL_SATURATION = 0.7  # covering 70% of a role's weighted template already counts as a full skills score
@@ -195,42 +209,51 @@ def _title_for_role(p: Profile, rid):
     return best, why
 
 
-def _seniority(p: Profile, years: float, lid: str, hits):
-    lv = LEVELS[lid]
-    a, b = lv["years"]
-    if years < a:
-        ys = max(0.0, 1 - (a - years) / 4)
-    elif years > b:
-        ys = max(0.5, 1 - (years - b) / 10)
-    else:
-        ys = 1.0
-    exp_text = (p.section_text("experience") or p.text).lower() + "\n" + p.section_text("summary").lower()
+def _level_evidence(p: Profile, fid: str, lid: str, hits, exp_text: str):
+    """Scope signals, seniority skills and title level for a tier as one family defines it."""
+    cfg = level_config(fid, lid)
     found, total, absent = [], 0.0, []
-    for phrase, w in lv["signals"].items():
+    for phrase, w in cfg["signals"].items():
         if re.search(rf"(?<![a-z]){re.escape(phrase)}(?![a-z])", exp_text):
             found.append(phrase)
             total += w
         else:
             absent.append((w, phrase))
-    for sid in lv["skills"]:
+    for sid in cfg["skills"]:
         if sid in hits:
             found.append(SKILLS[sid]["label"])
             total += 1.5
         else:
             absent.append((1.5, SKILLS[sid]["label"]))
-    sig = min(1.0, total / lv["target"])
     # Don't suggest variants of what's already there ("mentoring" when the resume says "mentored")
     stems = {w[:5] for f in found for w in f.lower().split() if len(w) >= 5}
     absent = [(w, ph) for w, ph in absent if not any(x[:5] in stems for x in ph.lower().split() if len(x) >= 5)]
-    if p.title_rank is None:
+    absent.sort(key=lambda x: -x[0])
+    rank = p.title_rank if cfg["title_words"] is LEVELS["title_words"] else title_rank(p, cfg["title_words"])
+    if rank is None:
         ts = 0.5
     else:
-        d = abs(lv["rank"] - max(p.title_rank, 0))
-        ts = [1.0, 0.65, 0.3, 0.1, 0.05][min(d, 4)]
-    score = 0.45 * ys + 0.35 * sig + 0.20 * ts
-    absent.sort(key=lambda x: -x[0])
-    return score, {"years": round(ys, 2), "signals": round(sig, 2), "title": round(ts, 2), "found": found[:12],
-                   "band": [a, b], "_raw": {"ys": ys, "total": total, "target": lv["target"], "ts": ts, "absent": absent}}
+        ts = [1.0, 0.65, 0.3, 0.1, 0.05][min(abs(cfg["rank"] - max(rank, 0)), 4)]
+    return {"total": total, "found": found, "absent": absent, "target": cfg["target"], "ts": ts, "title_rank": rank}
+
+
+def _years_fit(years: float, band) -> float:
+    a, b = band
+    if years < a:
+        return max(0.0, 1 - (a - years) / 4)
+    if years > b:
+        return max(0.5, 1 - (years - b) / 10)
+    return 1.0
+
+
+def _seniority(years: float, rid: str, lid: str, ev: dict):
+    band = role_band(rid, lid)
+    ys = _years_fit(years, band)
+    sig = min(1.0, ev["total"] / ev["target"])
+    score = _seniority_score(ys, ev["total"], ev["target"], ev["ts"])
+    return score, {"score": round(score, 3), "years": round(ys, 2), "signals": round(sig, 2), "title": round(ev["ts"], 2),
+                   "found": ev["found"][:12], "band": list(band),
+                   "_raw": {"ys": ys, "total": ev["total"], "target": ev["target"], "ts": ev["ts"], "absent": ev["absent"]}}
 
 
 def _seniority_score(ys, total, target, ts):
@@ -447,15 +470,13 @@ def _ats_score(checks, fixed):
 
 
 def _target_title(rid, lid):
-    base = next((t for t, s in ROLES[rid]["titles"].items() if s >= 1), ROLES[rid]["label"]).title()
-    for raw, fixed in (("Sre", "SRE"), ("Mlops", "MLOps"), ("Aiops", "AIOps"), ("Devops", "DevOps"), ("Llmops", "LLMOps"),
-                       ("Ai", "AI"), ("Ml", "ML"), ("Genai", "GenAI"), ("Llm", "LLM"), ("Qa", "QA"), ("Sdet", "SDET")):
-        base = re.sub(rf"\b{raw}\b", fixed, base)
-    if not re.search(r"Engineer|Architect", base):
-        base += " Engineer"
-    arch = re.sub(r"Engineer(ing)?$", "Architect", base)
-    return {"engineer": base, "senior": "Senior " + base, "lead": "Lead " + base, "architect": arch,
-            "sr_architect": "Principal " + arch}[lid]
+    """The job title a headline would use for this role at this tier, e.g. "Senior DevOps Engineer",
+    "Principal Mechanical Design Engineer", "Head of Design"."""
+    r = ROLES[rid]
+    t = r.get("title") or r["label"]
+    a = r.get("arch") or (re.sub(r"Engineer(ing)?$", "Architect", t) if t.endswith(("Engineer", "Engineering")) else t + " Architect")
+    tpl = r.get("title_by_level", {}).get(lid) or FAMILY_INFO[r["family"]]["titles"][lid]
+    return tpl.format(t=t, a=a, h=r.get("head", r["label"]))
 
 
 def _improve(p, rid, lid, parts, groups, sraw, ats, weights, factor, years):
@@ -476,7 +497,7 @@ def _improve(p, rid, lid, parts, groups, sraw, ats, weights, factor, years):
     base = score(st0)
     cands = []  # (kind, text, change-function)
     for g in sorted(groups, key=lambda g: -g["w"]):
-        tier = {3: "Core", 2: "Important", 1: "Nice-to-have"}[g["w"]]
+        tier = {3: "Core", 2: "Important", 1: "Nice-to-have"}[g["tier"]]
         if g["credit"] == 0:
             cands.append(("skill", f"{tier} skill missing: {g['label']}. If you have used it, add a bullet to a recent "
                                    "role showing what you did with it and the result.",
@@ -507,7 +528,7 @@ def _improve(p, rid, lid, parts, groups, sraw, ats, weights, factor, years):
             need -= w
         gain_sig = sraw["target"] - sraw["total"] - max(need, 0)
         if picks:
-            label = LEVELS[lid]["label"]
+            label = level_config(ROLES[rid]["family"], lid)["label"]
             cands.append(("scope", f"Show {label}-level scope in your bullets, e.g. "
                                    + ", ".join(f"“{x}”" for x in picks) + ": who you led or influenced, what you "
                                    "decided, and the measurable outcome (only where it's accurate).",
@@ -523,9 +544,9 @@ def _improve(p, rid, lid, parts, groups, sraw, ats, weights, factor, years):
     for _, _, fn in cands:
         st_all = fn(st_all)
     notes = []
-    a, b = LEVELS[lid]["years"]
+    a, b = role_band(rid, lid)
     if years < a:
-        notes.append(f"{LEVELS[lid]['label']} roles typically ask for {a}+ years; the resume shows {years:g}. "
+        notes.append(f"{_target_title(rid, lid)} roles typically ask for {a}+ years; the resume shows {years:g}. "
                      "Editing can't change that — make sure every role has dates, or target a lower level.")
     if factor < 1:
         notes.append(f"Under {MIN_YEARS} years of experience caps every score (×{factor:.2f}).")
@@ -587,30 +608,38 @@ def analyze(text: str, filename: str | None = None, data: bytes | None = None, y
         s = sum(weights.values())
         weights = {k: v / s for k, v in weights.items()}
 
-    roles, groups = {}, {}
-    for rid in ROLES:
-        sk, cov, matched, missing, groups[rid] = _skills_for_role(p, hits, rid)
+    memo = {}
+    exp_text = (p.section_text("experience") or p.text).lower() + "\n" + p.section_text("summary").lower()
+    evidence = {(fid, lid): _level_evidence(p, fid, lid, hits, exp_text) for fid in FAMILIES for lid in LEVEL_IDS}
+    roles, matrix = {}, {}
+    for rid, role in ROLES.items():
         ts, why = _title_for_role(p, rid)
-        roles[rid] = {"label": ROLES[rid]["label"], "skills": round(sk, 3), "coverage": round(cov, 3),
+        roles[rid] = {"label": role["label"], "family": role["family"],
                       "semantic": None if sem is None else round(sem[rid], 3), "title": round(ts, 3),
-                      "title_evidence": why, "matched": matched, "missing": missing}
-    levels, matrix, raw = {}, {}, {}
-    for lid in LEVEL_IDS:
-        sc, detail = _seniority(p, y, lid, hits)
-        raw[lid] = detail.pop("_raw")
-        levels[lid] = {"label": LEVELS[lid]["label"], "score": round(sc, 3), **detail}
-    for rid, r in roles.items():
+                      "title_evidence": why, "skills": _role_skill_view(p, hits, rid, memo)}
         row = {}
-        for lid, lv in levels.items():
-            parts = {"skills": r["skills"], "semantic": r["semantic"], "title": r["title"], "seniority": lv["score"],
-                     "ats": round(ats["score"], 3)}
+        for lid in LEVEL_IDS:
+            sk, cov, groups = _skills_for_role(p, hits, rid, lid, memo)
+            sen, sdetail = _seniority(y, rid, lid, evidence[(role["family"], lid)])
+            sraw = sdetail.pop("_raw")
+            parts = {"skills": round(sk, 3), "semantic": roles[rid]["semantic"], "title": roles[rid]["title"],
+                     "seniority": round(sen, 3), "ats": round(ats["score"], 3)}
             role_fit = sum(weights[k] * parts[k] for k in weights)
-            gate = SENIORITY_FLOOR + (1 - SENIORITY_FLOOR) * lv["score"]
-            row[lid] = {"score": round(role_fit * gate * factor, 3), "role_fit": round(role_fit, 3),
-                        "gate": round(gate, 3), "parts": parts,
-                        "improve": _improve(p, rid, lid, parts, groups[rid], raw[lid], ats, weights, factor, y)}
+            gate = SENIORITY_FLOOR + (1 - SENIORITY_FLOOR) * parts["seniority"]
+            row[lid] = {"score": round(role_fit * gate * factor, 3), "role_fit": round(role_fit, 3), "gate": round(gate, 3),
+                        "coverage": round(cov, 3), "parts": parts, "seniority": sdetail, "title": _target_title(rid, lid),
+                        "improve": _improve(p, rid, lid, parts, groups, sraw, ats, weights, factor, y)}
         matrix[rid] = row
 
+    # The same improvement sentence recurs across tiers and related roles: send each once, cells refer to it by index.
+    texts, index = [], {}
+    for row in matrix.values():
+        for cell in row.values():
+            for a in cell["improve"]["actions"]:
+                if a["text"] not in index:
+                    index[a["text"]] = len(texts)
+                    texts.append(a["text"])
+                a["text"] = index[a["text"]]
     countries = [_country(p, cid, ats) for cid in COUNTRIES]
     jd_res = _jd(p, hits, jd) if jd and jd.strip() else None
 
@@ -636,19 +665,26 @@ def analyze(text: str, filename: str | None = None, data: bytes | None = None, y
         "weights": weights, "seniority_floor": SENIORITY_FLOOR,
         "ats": ats,
         "roles": roles,
-        "levels": levels,
+        "levels": {lid: {"label": LEVELS[lid]["label"], "rank": LEVELS[lid]["rank"]} for lid in LEVEL_IDS},
         "matrix": matrix,
+        "texts": texts,
         "role_order": list(ROLES),
-        "families": FAMILIES,
+        "families": family_meta(),
         "doc_key": key,
         "level_order": LEVEL_IDS,
         "countries": countries,
         "jd": jd_res,
-        "suggestions": _suggestions(p, roles, levels, ats, y),
+        "suggestions": _suggestions(p, ats, y),
     }
 
 
-def _suggestions(p, roles, levels, ats, years):
+def family_meta() -> dict:
+    """family id -> label, role ids and the family's names for the five position tiers."""
+    return {fid: {"label": FAMILY_INFO[fid]["label"], "roles": rids,
+                  "ladder": {lid: level_config(fid, lid)["label"] for lid in LEVEL_IDS}} for fid, rids in FAMILIES.items()}
+
+
+def _suggestions(p, ats, years):
     out = []
     if years < MIN_YEARS:
         out.append(f"The resume shows about {years:g} years of experience; these roles expect 5+, so all scores are reduced "

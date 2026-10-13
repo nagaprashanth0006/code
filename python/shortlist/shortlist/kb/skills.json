@@ -552,7 +552,10 @@
       "javascript",
       "node.js",
       "nodejs",
-      "react"
+      "react",
+      "es6",
+      "ecmascript",
+      "jquery"
     ]
   },
   "sql": {
@@ -1398,6 +1401,3614 @@
       "aws solutions architect professional",
       "azure solutions architect expert",
       "professional cloud architect"
+    ]
+  },
+  "csharp": {
+    "label": "C#",
+    "aliases": [
+      "c#",
+      "csharp",
+      "c sharp"
+    ]
+  },
+  "dotnet": {
+    "label": ".NET",
+    "aliases": [
+      ".net",
+      "asp.net",
+      "asp.net core",
+      ".net core",
+      ".net framework",
+      "dotnet",
+      "asp.net mvc",
+      "web api",
+      "blazor",
+      "wcf",
+      "linq",
+      "vb.net"
+    ]
+  },
+  "kotlin": {
+    "label": "Kotlin",
+    "aliases": [
+      "kotlin"
+    ]
+  },
+  "scala": {
+    "label": "Scala",
+    "aliases": [
+      "scala"
+    ]
+  },
+  "spring": {
+    "label": "Spring / Spring Boot",
+    "aliases": [
+      "spring boot",
+      "spring framework",
+      "spring mvc",
+      "spring cloud",
+      "spring security",
+      "spring data",
+      "springboot"
+    ]
+  },
+  "nodejs": {
+    "label": "Node.js",
+    "aliases": [
+      "node.js",
+      "nodejs",
+      "node js",
+      "express.js",
+      "expressjs",
+      "nestjs"
+    ]
+  },
+  "react": {
+    "label": "React",
+    "aliases": [
+      "=React",
+      "react.js",
+      "reactjs",
+      "react js",
+      "react hooks",
+      "redux",
+      "next.js",
+      "nextjs"
+    ]
+  },
+  "angular": {
+    "label": "Angular",
+    "aliases": [
+      "angular",
+      "angularjs",
+      "angular.js",
+      "ngrx",
+      "rxjs"
+    ]
+  },
+  "vue": {
+    "label": "Vue",
+    "aliases": [
+      "vue",
+      "vue.js",
+      "vuejs",
+      "nuxt",
+      "nuxt.js",
+      "vuex",
+      "pinia"
+    ]
+  },
+  "html_css": {
+    "label": "HTML / CSS",
+    "aliases": [
+      "html",
+      "html5",
+      "css",
+      "css3",
+      "sass",
+      "scss",
+      "less css",
+      "tailwind",
+      "tailwind css",
+      "bootstrap",
+      "styled-components"
+    ]
+  },
+  "responsive": {
+    "label": "Responsive web design",
+    "aliases": [
+      "responsive design",
+      "responsive web design",
+      "mobile-first",
+      "mobile first",
+      "flexbox",
+      "css grid",
+      "media queries",
+      "cross-browser"
+    ]
+  },
+  "fe_build": {
+    "label": "Front-end tooling",
+    "aliases": [
+      "webpack",
+      "vite",
+      "babel",
+      "rollup",
+      "esbuild",
+      "npm",
+      "yarn",
+      "pnpm",
+      "turborepo",
+      "storybook"
+    ]
+  },
+  "fe_testing": {
+    "label": "Front-end testing",
+    "aliases": [
+      "jest",
+      "react testing library",
+      "testing library",
+      "vitest",
+      "enzyme",
+      "jasmine",
+      "karma",
+      "mocha",
+      "chai"
+    ]
+  },
+  "web_perf": {
+    "label": "Web performance / SSR",
+    "aliases": [
+      "web performance",
+      "core web vitals",
+      "lighthouse",
+      "lazy loading",
+      "code splitting",
+      "server-side rendering",
+      "server side rendering",
+      "ssr",
+      "pwa",
+      "progressive web app"
+    ]
+  },
+  "microfrontends": {
+    "label": "Micro-frontends",
+    "aliases": [
+      "micro-frontend",
+      "micro-frontends",
+      "micro frontends",
+      "microfrontends",
+      "module federation"
+    ]
+  },
+  "php": {
+    "label": "PHP",
+    "aliases": [
+      "php",
+      "laravel",
+      "symfony",
+      "codeigniter",
+      "cakephp"
+    ]
+  },
+  "ruby": {
+    "label": "Ruby / Rails",
+    "aliases": [
+      "ruby",
+      "ruby on rails",
+      "=Rails",
+      "=RoR",
+      "sinatra"
+    ]
+  },
+  "cpp": {
+    "label": "C++",
+    "aliases": [
+      "c++",
+      "cpp",
+      "c/c++",
+      "modern c++",
+      "stl",
+      "c++11",
+      "c++14",
+      "c++17",
+      "c++20"
+    ]
+  },
+  "c_lang": {
+    "label": "C",
+    "aliases": [
+      "embedded c",
+      "c programming",
+      "ansi c",
+      "c/c++",
+      "c99",
+      "c language",
+      "=C,"
+    ]
+  },
+  "unit_testing": {
+    "label": "Unit testing / TDD",
+    "aliases": [
+      "unit testing",
+      "unit tests",
+      "tdd",
+      "test-driven",
+      "test driven development",
+      "junit",
+      "mockito",
+      "pytest",
+      "nunit",
+      "xunit",
+      "mstest",
+      "jest",
+      "integration tests",
+      "integration testing"
+    ]
+  },
+  "git": {
+    "label": "Git / version control",
+    "aliases": [
+      "git",
+      "github",
+      "gitlab",
+      "bitbucket",
+      "version control",
+      "svn",
+      "subversion"
+    ]
+  },
+  "orm": {
+    "label": "ORM / data access",
+    "aliases": [
+      "orm",
+      "hibernate",
+      "jpa",
+      "entity framework",
+      "ef core",
+      "sqlalchemy",
+      "django orm",
+      "prisma",
+      "typeorm",
+      "sequelize",
+      "mybatis",
+      "dapper"
+    ]
+  },
+  "design_patterns": {
+    "label": "OOP / design patterns",
+    "aliases": [
+      "design patterns",
+      "object-oriented",
+      "object oriented",
+      "oop",
+      "oops",
+      "solid principles",
+      "clean code",
+      "clean architecture"
+    ]
+  },
+  "build_tools": {
+    "label": "Maven / Gradle",
+    "aliases": [
+      "maven",
+      "gradle",
+      "=Ant",
+      "apache ant"
+    ]
+  },
+  "py_web": {
+    "label": "Django / Flask / FastAPI",
+    "aliases": [
+      "django",
+      "flask",
+      "fastapi",
+      "tornado",
+      "django rest framework",
+      "drf"
+    ]
+  },
+  "async_py": {
+    "label": "Async / task queues",
+    "aliases": [
+      "celery",
+      "asyncio",
+      "async/await",
+      "dramatiq"
+    ]
+  },
+  "android": {
+    "label": "Android",
+    "aliases": [
+      "android",
+      "android sdk",
+      "android studio",
+      "jetpack compose",
+      "jetpack"
+    ]
+  },
+  "ios": {
+    "label": "iOS",
+    "aliases": [
+      "=iOS",
+      "ios development",
+      "ios app",
+      "ios apps",
+      "swiftui",
+      "uikit",
+      "xcode",
+      "cocoapods",
+      "objective-c",
+      "=Swift",
+      "swift 5"
+    ]
+  },
+  "flutter": {
+    "label": "Flutter / Dart",
+    "aliases": [
+      "flutter",
+      "dart"
+    ]
+  },
+  "react_native": {
+    "label": "React Native",
+    "aliases": [
+      "react native",
+      "react-native"
+    ]
+  },
+  "mobile_release": {
+    "label": "App store release / mobile CI",
+    "aliases": [
+      "app store",
+      "play store",
+      "google play",
+      "testflight",
+      "fastlane",
+      "firebase",
+      "crashlytics",
+      "app center",
+      "bitrise"
+    ]
+  },
+  "mobile_arch": {
+    "label": "Mobile architecture (MVVM ...)",
+    "aliases": [
+      "mvvm",
+      "mvi",
+      "viper",
+      "dagger",
+      "hilt",
+      "koin",
+      "mvp architecture"
+    ]
+  },
+  "mobile_storage": {
+    "label": "Mobile storage / offline",
+    "aliases": [
+      "sqlite",
+      "core data",
+      "realm",
+      "offline-first",
+      "offline sync"
+    ]
+  },
+  "rtos": {
+    "label": "RTOS",
+    "aliases": [
+      "rtos",
+      "freertos",
+      "zephyr",
+      "threadx",
+      "vxworks",
+      "qnx",
+      "micrium",
+      "real-time operating system"
+    ]
+  },
+  "microcontrollers": {
+    "label": "Microcontrollers",
+    "aliases": [
+      "microcontroller",
+      "microcontrollers",
+      "mcu",
+      "arm cortex",
+      "cortex-m",
+      "stm32",
+      "esp32",
+      "avr",
+      "arduino",
+      "nxp",
+      "renesas",
+      "ti msp430",
+      "nrf52",
+      "pic microcontroller",
+      "pic16",
+      "pic18"
+    ]
+  },
+  "embedded_protocols": {
+    "label": "Embedded protocols",
+    "aliases": [
+      "i2c",
+      "spi",
+      "uart",
+      "can bus",
+      "canbus",
+      "=CAN",
+      "modbus",
+      "rs-485",
+      "rs485",
+      "rs-232",
+      "ble",
+      "bluetooth low energy",
+      "usb",
+      "ethernet",
+      "lin bus",
+      "=LIN"
+    ]
+  },
+  "embedded_linux": {
+    "label": "Embedded Linux / drivers",
+    "aliases": [
+      "embedded linux",
+      "yocto",
+      "buildroot",
+      "device drivers",
+      "device driver",
+      "linux kernel",
+      "kernel drivers",
+      "u-boot",
+      "bootloader",
+      "bsp",
+      "board support package"
+    ]
+  },
+  "hw_debug": {
+    "label": "Hardware debugging",
+    "aliases": [
+      "jtag",
+      "swd",
+      "lauterbach",
+      "trace32",
+      "gdb",
+      "oscilloscope",
+      "logic analyzer",
+      "logic analyser",
+      "board bring-up",
+      "bring-up",
+      "hardware debugging"
+    ]
+  },
+  "automotive_sw": {
+    "label": "Automotive software (AUTOSAR ...)",
+    "aliases": [
+      "autosar",
+      "misra",
+      "iso 26262",
+      "aspice",
+      "automotive spice",
+      "uds",
+      "flexray",
+      "ecu",
+      "ecus",
+      "vector canoe",
+      "canoe",
+      "canalyzer"
+    ]
+  },
+  "sap": {
+    "label": "SAP",
+    "aliases": [
+      "sap",
+      "s/4hana",
+      "s4hana",
+      "s/4 hana",
+      "sap ecc",
+      "sap erp",
+      "sap r/3"
+    ]
+  },
+  "abap": {
+    "label": "ABAP",
+    "aliases": [
+      "abap",
+      "abap oo",
+      "abap/4",
+      "ricef",
+      "ricefw",
+      "bapi",
+      "badi",
+      "badis",
+      "smartforms",
+      "smart forms",
+      "adobe forms",
+      "idoc",
+      "idocs",
+      "user exits",
+      "alv",
+      "bdc"
+    ]
+  },
+  "sap_modules": {
+    "label": "SAP functional modules",
+    "aliases": [
+      "sap fico",
+      "fico",
+      "sap fi",
+      "sap co",
+      "sap mm",
+      "sap sd",
+      "sap pp",
+      "sap qm",
+      "sap pm",
+      "sap hcm",
+      "sap hr",
+      "successfactors",
+      "sap ewm",
+      "sap wm",
+      "sap ariba",
+      "sap bw",
+      "sap ps",
+      "sap ibp",
+      "sap apo",
+      "sap tm",
+      "sap gts"
+    ]
+  },
+  "sap_fiori": {
+    "label": "SAP Fiori / UI5",
+    "aliases": [
+      "fiori",
+      "sapui5",
+      "ui5",
+      "openui5",
+      "fiori elements",
+      "odata"
+    ]
+  },
+  "sap_hana": {
+    "label": "SAP HANA / CDS",
+    "aliases": [
+      "sap hana",
+      "hana",
+      "cds views",
+      "cds view",
+      "amdp",
+      "hana modeling",
+      "sap bw/4hana"
+    ]
+  },
+  "sap_integration": {
+    "label": "Integration (SAP PI/PO, CPI, MuleSoft ...)",
+    "aliases": [
+      "sap pi",
+      "sap po",
+      "pi/po",
+      "sap cpi",
+      "sap btp",
+      "btp",
+      "integration suite",
+      "mulesoft",
+      "boomi",
+      "dell boomi",
+      "tibco",
+      "webmethods",
+      "esb"
+    ]
+  },
+  "erp_impl": {
+    "label": "ERP implementation lifecycle",
+    "aliases": [
+      "end-to-end implementation",
+      "full life cycle implementation",
+      "go-live",
+      "go live",
+      "hypercare",
+      "blueprinting",
+      "fit-gap",
+      "fit gap",
+      "sap activate",
+      "asap methodology",
+      "cutover",
+      "full lifecycle implementation",
+      "implementation projects",
+      "business blueprint",
+      "rollout projects"
+    ]
+  },
+  "cert_sap": {
+    "label": "SAP certification",
+    "aliases": [
+      "sap certified",
+      "sap certification",
+      "certified application associate",
+      "certified development associate"
+    ]
+  },
+  "salesforce": {
+    "label": "Salesforce",
+    "aliases": [
+      "salesforce",
+      "sfdc",
+      "sales cloud",
+      "service cloud",
+      "experience cloud",
+      "community cloud",
+      "marketing cloud",
+      "salesforce cpq",
+      "force.com",
+      "commerce cloud",
+      "health cloud",
+      "financial services cloud"
+    ]
+  },
+  "apex": {
+    "label": "Apex / SOQL",
+    "aliases": [
+      "apex classes",
+      "apex triggers",
+      "apex class",
+      "apex trigger",
+      "apex code",
+      "batch apex",
+      "=Apex",
+      "soql",
+      "sosl",
+      "visualforce",
+      "governor limits"
+    ]
+  },
+  "lwc": {
+    "label": "Lightning (LWC / Aura)",
+    "aliases": [
+      "lightning web components",
+      "lwc",
+      "aura components",
+      "aura",
+      "salesforce lightning",
+      "lightning experience",
+      "lightning components"
+    ]
+  },
+  "sf_admin": {
+    "label": "Salesforce admin / declarative",
+    "aliases": [
+      "flow builder",
+      "process builder",
+      "workflow rules",
+      "validation rules",
+      "page layouts",
+      "permission sets",
+      "profiles and roles",
+      "salesforce admin",
+      "salesforce administration",
+      "approval processes",
+      "salesforce flows",
+      "record-triggered flows",
+      "screen flows"
+    ]
+  },
+  "cert_salesforce": {
+    "label": "Salesforce certification",
+    "aliases": [
+      "salesforce certified",
+      "platform developer i",
+      "platform developer ii",
+      "pd1",
+      "pd2",
+      "salesforce administrator",
+      "certified administrator",
+      "app builder",
+      "salesforce certified application architect"
+    ]
+  },
+  "servicenow": {
+    "label": "ServiceNow",
+    "aliases": [
+      "servicenow",
+      "service now",
+      "now platform",
+      "snow platform"
+    ]
+  },
+  "sn_dev": {
+    "label": "ServiceNow development",
+    "aliases": [
+      "glide",
+      "gliderecord",
+      "business rules",
+      "client scripts",
+      "script includes",
+      "ui policies",
+      "ui actions",
+      "service portal",
+      "flow designer",
+      "integration hub",
+      "workflow editor",
+      "scoped applications",
+      "transform maps"
+    ]
+  },
+  "sn_modules": {
+    "label": "ServiceNow modules",
+    "aliases": [
+      "itom",
+      "hrsd",
+      "cmdb",
+      "service mapping",
+      "itam",
+      "sam pro",
+      "ham pro",
+      "servicenow itom",
+      "servicenow csm",
+      "customer service management",
+      "servicenow discovery",
+      "servicenow spm"
+    ]
+  },
+  "cert_servicenow": {
+    "label": "ServiceNow certification",
+    "aliases": [
+      "certified system administrator",
+      "certified application developer",
+      "cis-itsm",
+      "cis-itom",
+      "cis-hr",
+      "cis-csm",
+      "certified implementation specialist",
+      "servicenow csa",
+      "servicenow cad"
+    ]
+  },
+  "warehouse": {
+    "label": "Data warehouse",
+    "aliases": [
+      "data warehouse",
+      "data warehousing",
+      "snowflake",
+      "redshift",
+      "bigquery",
+      "synapse",
+      "azure synapse",
+      "teradata",
+      "netezza",
+      "vertica",
+      "edw",
+      "data mart",
+      "data marts"
+    ]
+  },
+  "lakehouse": {
+    "label": "Data lake / lakehouse",
+    "aliases": [
+      "data lake",
+      "datalake",
+      "lakehouse",
+      "delta lake",
+      "databricks",
+      "iceberg",
+      "apache iceberg",
+      "hudi",
+      "adls",
+      "s3 data lake"
+    ]
+  },
+  "data_modeling": {
+    "label": "Data modelling",
+    "aliases": [
+      "data modeling",
+      "data modelling",
+      "dimensional modeling",
+      "dimensional modelling",
+      "star schema",
+      "snowflake schema",
+      "kimball",
+      "data vault",
+      "erwin",
+      "er diagrams",
+      "fact tables",
+      "dimension tables"
+    ]
+  },
+  "data_quality": {
+    "label": "Data quality / testing",
+    "aliases": [
+      "data quality",
+      "great expectations",
+      "data validation",
+      "soda",
+      "monte carlo",
+      "data observability",
+      "data profiling"
+    ]
+  },
+  "data_governance": {
+    "label": "Data governance / catalog",
+    "aliases": [
+      "data governance",
+      "data catalog",
+      "collibra",
+      "alation",
+      "unity catalog",
+      "purview",
+      "data lineage",
+      "master data management",
+      "mdm",
+      "data stewardship",
+      "metadata management"
+    ]
+  },
+  "etl_tools": {
+    "label": "ETL tools (SSIS, Informatica, ADF ...)",
+    "aliases": [
+      "ssis",
+      "informatica",
+      "informatica powercenter",
+      "iics",
+      "talend",
+      "datastage",
+      "ibm datastage",
+      "azure data factory",
+      "adf",
+      "pentaho",
+      "ab initio",
+      "odi",
+      "oracle data integrator",
+      "matillion",
+      "fivetran",
+      "glue",
+      "aws glue",
+      "alteryx",
+      "sap bods",
+      "bods"
+    ]
+  },
+  "bi_tools": {
+    "label": "BI tools (Power BI, Tableau ...)",
+    "aliases": [
+      "power bi",
+      "powerbi",
+      "tableau",
+      "looker",
+      "qlik",
+      "qlikview",
+      "qlik sense",
+      "qliksense",
+      "dax",
+      "power query",
+      "ssrs",
+      "ssas",
+      "cognos",
+      "microstrategy",
+      "spotfire",
+      "metabase",
+      "superset",
+      "obiee",
+      "sisense",
+      "quicksight"
+    ]
+  },
+  "excel": {
+    "label": "Excel (advanced)",
+    "aliases": [
+      "excel",
+      "ms excel",
+      "microsoft excel",
+      "advanced excel",
+      "pivot tables",
+      "pivot table",
+      "vlookup",
+      "xlookup",
+      "excel macros",
+      "vba",
+      "power pivot"
+    ]
+  },
+  "data_viz": {
+    "label": "Data visualisation",
+    "aliases": [
+      "data visualization",
+      "data visualisation",
+      "matplotlib",
+      "seaborn",
+      "plotly",
+      "ggplot2",
+      "d3.js",
+      "dashboards",
+      "dashboard",
+      "visualizations"
+    ]
+  },
+  "reporting": {
+    "label": "Reporting / KPIs",
+    "aliases": [
+      "kpi",
+      "kpis",
+      "mis reports",
+      "mis reporting",
+      "ad hoc reports",
+      "management reports",
+      "business reporting",
+      "ad-hoc reporting",
+      "kpi reporting",
+      "report development",
+      "reporting tools",
+      "operational reporting",
+      "dashboards and reports"
+    ]
+  },
+  "data_wrangling": {
+    "label": "Data cleaning / wrangling",
+    "aliases": [
+      "data cleaning",
+      "data cleansing",
+      "data wrangling",
+      "data preparation",
+      "data munging",
+      "data transformation"
+    ]
+  },
+  "r_lang": {
+    "label": "R",
+    "aliases": [
+      "r programming",
+      "r language",
+      "rstudio",
+      "tidyverse",
+      "dplyr",
+      "ggplot",
+      "ggplot2",
+      "shiny",
+      "r shiny"
+    ]
+  },
+  "ab_testing": {
+    "label": "A/B testing / causal inference",
+    "aliases": [
+      "a/b testing",
+      "a/b tests",
+      "ab testing",
+      "split testing",
+      "causal inference",
+      "experiment design",
+      "uplift modeling",
+      "hypothesis testing"
+    ]
+  },
+  "sql_programming": {
+    "label": "PL/SQL / T-SQL",
+    "aliases": [
+      "pl/sql",
+      "plsql",
+      "t-sql",
+      "tsql",
+      "stored procedures",
+      "stored procedure",
+      "cursors",
+      "user-defined functions",
+      "dynamic sql",
+      "database triggers"
+    ]
+  },
+  "query_tuning": {
+    "label": "Query tuning / indexing",
+    "aliases": [
+      "query optimization",
+      "query optimisation",
+      "query tuning",
+      "sql tuning",
+      "execution plan",
+      "execution plans",
+      "explain plan",
+      "index tuning",
+      "awr",
+      "query performance",
+      "database performance tuning",
+      "indexing strategy"
+    ]
+  },
+  "oracle_db": {
+    "label": "Oracle Database",
+    "aliases": [
+      "oracle database",
+      "oracle db",
+      "oracle 11g",
+      "oracle 12c",
+      "oracle 19c",
+      "oracle 21c",
+      "oracle rac",
+      "rman",
+      "data guard",
+      "oracle exadata",
+      "exadata"
+    ]
+  },
+  "sql_server": {
+    "label": "SQL Server",
+    "aliases": [
+      "sql server",
+      "mssql",
+      "ms sql",
+      "ssms",
+      "sql server 2016",
+      "sql server 2019",
+      "sql server 2022",
+      "azure sql"
+    ]
+  },
+  "postgresql": {
+    "label": "PostgreSQL",
+    "aliases": [
+      "postgresql",
+      "postgres",
+      "pgbouncer",
+      "patroni",
+      "aurora postgresql",
+      "pg_dump"
+    ]
+  },
+  "mysql": {
+    "label": "MySQL / MariaDB",
+    "aliases": [
+      "mysql",
+      "mariadb",
+      "percona",
+      "aurora mysql",
+      "galera"
+    ]
+  },
+  "db_backup": {
+    "label": "Backup & recovery",
+    "aliases": [
+      "backup and recovery",
+      "backup & recovery",
+      "backup/recovery",
+      "rman",
+      "point-in-time recovery",
+      "pitr",
+      "backups"
+    ]
+  },
+  "db_ha": {
+    "label": "Replication / HA",
+    "aliases": [
+      "replication",
+      "always on",
+      "alwayson",
+      "availability groups",
+      "data guard",
+      "oracle rac",
+      "rac",
+      "log shipping",
+      "mirroring",
+      "patroni",
+      "galera",
+      "golden gate",
+      "goldengate"
+    ]
+  },
+  "db_ops": {
+    "label": "Database administration",
+    "aliases": [
+      "database administration",
+      "database administrator",
+      "dba",
+      "space management",
+      "tablespace",
+      "schema management",
+      "database security",
+      "database migration",
+      "database monitoring",
+      "oem",
+      "oracle enterprise manager",
+      "=DBA",
+      "database upgrades",
+      "database patching",
+      "tablespaces",
+      "database migrations"
+    ]
+  },
+  "cloud_db": {
+    "label": "Cloud databases",
+    "aliases": [
+      "amazon rds",
+      "rds",
+      "aurora",
+      "azure sql",
+      "cloud sql",
+      "cosmos db",
+      "cosmosdb",
+      "managed databases",
+      "dynamodb",
+      "alloydb",
+      "spanner"
+    ]
+  },
+  "cert_db": {
+    "label": "Database certification",
+    "aliases": [
+      "oracle certified",
+      "oracle certified professional",
+      "oracle certified associate",
+      "mcdba",
+      "azure database administrator",
+      "dp-300",
+      "mongodb certified",
+      "oracle ocp",
+      "oracle oca"
+    ]
+  },
+  "windows_server": {
+    "label": "Windows Server",
+    "aliases": [
+      "windows server",
+      "windows server 2012",
+      "windows server 2016",
+      "windows server 2019",
+      "windows server 2022",
+      "iis",
+      "windows administration"
+    ]
+  },
+  "active_directory": {
+    "label": "Active Directory / Entra ID",
+    "aliases": [
+      "active directory",
+      "ad ds",
+      "group policy",
+      "group policies",
+      "gpo",
+      "gpos",
+      "ldap",
+      "azure ad",
+      "azure active directory",
+      "entra id",
+      "adfs",
+      "kerberos"
+    ]
+  },
+  "virtualization": {
+    "label": "Virtualisation (VMware ...)",
+    "aliases": [
+      "vmware",
+      "vsphere",
+      "esxi",
+      "vcenter",
+      "hyper-v",
+      "hyperv",
+      "kvm",
+      "proxmox",
+      "xen",
+      "nutanix",
+      "citrix",
+      "virtualization",
+      "virtualisation",
+      "vdi",
+      "horizon view"
+    ]
+  },
+  "infra_monitoring": {
+    "label": "Infrastructure monitoring",
+    "aliases": [
+      "nagios",
+      "zabbix",
+      "solarwinds",
+      "prtg",
+      "checkmk",
+      "icinga",
+      "scom",
+      "site24x7",
+      "observium"
+    ]
+  },
+  "backup": {
+    "label": "Backup tools",
+    "aliases": [
+      "veeam",
+      "commvault",
+      "netbackup",
+      "backup exec",
+      "rubrik",
+      "cohesity",
+      "avamar",
+      "data domain"
+    ]
+  },
+  "storage": {
+    "label": "Storage (SAN / NAS)",
+    "aliases": [
+      "=SAN",
+      "=NAS",
+      "storage area network",
+      "network attached storage",
+      "netapp",
+      "dell emc",
+      "pure storage",
+      "hitachi vsp",
+      "3par",
+      "fibre channel",
+      "iscsi",
+      "nfs"
+    ]
+  },
+  "m365": {
+    "label": "Microsoft 365 / endpoint",
+    "aliases": [
+      "office 365",
+      "microsoft 365",
+      "o365",
+      "m365",
+      "exchange online",
+      "exchange server",
+      "intune",
+      "sccm",
+      "mecm",
+      "wsus",
+      "endpoint manager",
+      "sharepoint online"
+    ]
+  },
+  "patching": {
+    "label": "Patch management",
+    "aliases": [
+      "patch management",
+      "patching",
+      "os patching",
+      "wsus",
+      "sccm",
+      "mecm",
+      "red hat satellite",
+      "ivanti"
+    ]
+  },
+  "cert_sysadmin": {
+    "label": "Sysadmin certification (RHCE, MCSA ...)",
+    "aliases": [
+      "rhcsa",
+      "rhce",
+      "red hat certified",
+      "mcsa",
+      "mcse",
+      "lfcs",
+      "lpic",
+      "comptia linux+",
+      "comptia server+",
+      "vcp",
+      "vmware certified"
+    ]
+  },
+  "routing": {
+    "label": "Routing & switching",
+    "aliases": [
+      "routing and switching",
+      "routing & switching",
+      "routing protocols",
+      "ospf",
+      "eigrp",
+      "bgp",
+      "mpls",
+      "vlan",
+      "vlans",
+      "stp",
+      "spanning tree",
+      "hsrp",
+      "vrrp",
+      "layer 2",
+      "layer 3",
+      "lan/wan",
+      "lan",
+      "wan",
+      "cisco ios",
+      "=IOS",
+      "cisco",
+      "juniper",
+      "junos",
+      "arista",
+      "switching"
+    ]
+  },
+  "firewalls": {
+    "label": "Firewalls",
+    "aliases": [
+      "firewall",
+      "firewalls",
+      "palo alto networks",
+      "palo alto firewall",
+      "palo alto firewalls",
+      "pan-os",
+      "panorama",
+      "fortinet",
+      "fortigate",
+      "check point",
+      "checkpoint",
+      "cisco asa",
+      "asa",
+      "firepower",
+      "ngfw",
+      "sophos",
+      "juniper srx"
+    ]
+  },
+  "sdwan": {
+    "label": "SD-WAN",
+    "aliases": [
+      "sd-wan",
+      "sdwan",
+      "viptela",
+      "velocloud",
+      "silver peak",
+      "versa",
+      "prisma sd-wan"
+    ]
+  },
+  "wireless": {
+    "label": "Wireless / Wi-Fi",
+    "aliases": [
+      "wireless",
+      "wifi",
+      "wi-fi",
+      "wlan",
+      "aruba",
+      "meraki",
+      "ruckus",
+      "cisco wlc",
+      "wireless lan controller",
+      "802.11"
+    ]
+  },
+  "adc": {
+    "label": "Load balancers (F5, NetScaler)",
+    "aliases": [
+      "f5",
+      "big-ip",
+      "f5 ltm",
+      "ltm",
+      "netscaler",
+      "citrix adc",
+      "avi networks"
+    ]
+  },
+  "net_automation": {
+    "label": "Network automation",
+    "aliases": [
+      "network automation",
+      "netmiko",
+      "napalm",
+      "nornir",
+      "netbox",
+      "pyats",
+      "ansible network"
+    ]
+  },
+  "cloud_networking": {
+    "label": "Cloud networking",
+    "aliases": [
+      "vpc",
+      "vnet",
+      "transit gateway",
+      "expressroute",
+      "direct connect",
+      "cloud interconnect",
+      "private link",
+      "privatelink",
+      "vpc peering",
+      "azure firewall",
+      "cloud networking",
+      "hub and spoke",
+      "hub-and-spoke"
+    ]
+  },
+  "dc_network": {
+    "label": "Data-centre networking",
+    "aliases": [
+      "cisco aci",
+      "aci fabric",
+      "cisco nexus",
+      "nexus 9000",
+      "nexus 7000",
+      "vxlan",
+      "evpn",
+      "spine-leaf",
+      "spine leaf",
+      "data center networking",
+      "data centre networking"
+    ]
+  },
+  "cert_network": {
+    "label": "Network certification (CCNA, CCNP ...)",
+    "aliases": [
+      "ccna",
+      "ccnp",
+      "ccie",
+      "jncia",
+      "jncis",
+      "jncip",
+      "nse 4",
+      "nse4",
+      "pcnse",
+      "comptia network+",
+      "network+",
+      "ccnp enterprise",
+      "ccnp security"
+    ]
+  },
+  "test_framework": {
+    "label": "Test framework design",
+    "aliases": [
+      "test framework",
+      "automation framework",
+      "framework design",
+      "page object model",
+      "page object",
+      "=POM",
+      "hybrid framework",
+      "data-driven framework",
+      "keyword-driven",
+      "keyword driven",
+      "bdd framework",
+      "framework from scratch"
+    ]
+  },
+  "api_testing": {
+    "label": "API testing",
+    "aliases": [
+      "api testing",
+      "api test",
+      "postman",
+      "rest assured",
+      "restassured",
+      "rest-assured",
+      "karate",
+      "soapui",
+      "soap ui",
+      "newman",
+      "contract testing",
+      "pact"
+    ]
+  },
+  "mobile_testing": {
+    "label": "Mobile testing",
+    "aliases": [
+      "mobile testing",
+      "mobile automation",
+      "appium",
+      "espresso",
+      "xcuitest",
+      "browserstack",
+      "sauce labs",
+      "saucelabs",
+      "perfecto"
+    ]
+  },
+  "manual_testing": {
+    "label": "Manual / functional testing",
+    "aliases": [
+      "manual testing",
+      "functional testing",
+      "regression testing",
+      "smoke testing",
+      "sanity testing",
+      "exploratory testing",
+      "system testing",
+      "integration testing",
+      "black box testing",
+      "black-box testing",
+      "end-to-end testing",
+      "e2e testing",
+      "uat",
+      "user acceptance testing",
+      "retesting"
+    ]
+  },
+  "test_design": {
+    "label": "Test design / test cases",
+    "aliases": [
+      "test cases",
+      "test case design",
+      "test scenarios",
+      "test scenario",
+      "test plan",
+      "test plans",
+      "test design",
+      "traceability matrix",
+      "rtm",
+      "boundary value",
+      "equivalence partitioning",
+      "test coverage",
+      "test data"
+    ]
+  },
+  "defect_mgmt": {
+    "label": "Defect management",
+    "aliases": [
+      "defect tracking",
+      "bug tracking",
+      "defect management",
+      "defect life cycle",
+      "bug life cycle",
+      "defect lifecycle",
+      "bugzilla",
+      "defect triage",
+      "bug reports",
+      "defect reports"
+    ]
+  },
+  "test_mgmt": {
+    "label": "Test management tools",
+    "aliases": [
+      "testrail",
+      "zephyr",
+      "xray",
+      "hp alm",
+      "alm",
+      "quality center",
+      "qtest",
+      "testlink",
+      "practitest",
+      "azure test plans"
+    ]
+  },
+  "agile": {
+    "label": "Agile / Scrum",
+    "aliases": [
+      "agile",
+      "scrum",
+      "kanban",
+      "sprint",
+      "sprints",
+      "sprint planning",
+      "agile methodology",
+      "agile methodologies",
+      "safe agile",
+      "scaled agile framework"
+    ]
+  },
+  "perf_tools": {
+    "label": "Load-testing tools",
+    "aliases": [
+      "loadrunner",
+      "load runner",
+      "neoload",
+      "jmeter",
+      "gatling",
+      "k6",
+      "locust",
+      "blazemeter",
+      "silk performer",
+      "performance center",
+      "vugen"
+    ]
+  },
+  "profiling": {
+    "label": "Profiling / JVM tuning",
+    "aliases": [
+      "profiling",
+      "profiler",
+      "heap dump",
+      "heap dumps",
+      "thread dump",
+      "thread dumps",
+      "jvm tuning",
+      "gc tuning",
+      "garbage collection",
+      "memory leak",
+      "memory leaks",
+      "jprofiler",
+      "yourkit",
+      "visualvm",
+      "flame graph",
+      "flame graphs"
+    ]
+  },
+  "cert_qa": {
+    "label": "Testing certification (ISTQB ...)",
+    "aliases": [
+      "istqb",
+      "istqb foundation",
+      "ctfl",
+      "ctal",
+      "csste",
+      "certified tester",
+      "csqa"
+    ]
+  },
+  "netsec": {
+    "label": "Network security",
+    "aliases": [
+      "network security",
+      "ids/ips",
+      "intrusion detection",
+      "intrusion prevention",
+      "waf",
+      "web application firewall",
+      "wireshark",
+      "tcpdump",
+      "packet analysis",
+      "network segmentation",
+      "zero trust",
+      "nac"
+    ]
+  },
+  "siem": {
+    "label": "SIEM",
+    "aliases": [
+      "siem",
+      "qradar",
+      "arcsight",
+      "microsoft sentinel",
+      "azure sentinel",
+      "logrhythm",
+      "securonix",
+      "exabeam",
+      "elastic siem",
+      "chronicle",
+      "sumo logic",
+      "rsa netwitness"
+    ]
+  },
+  "edr": {
+    "label": "EDR / XDR",
+    "aliases": [
+      "edr",
+      "xdr",
+      "crowdstrike",
+      "falcon",
+      "sentinelone",
+      "carbon black",
+      "defender for endpoint",
+      "microsoft defender",
+      "cortex xdr",
+      "trend micro",
+      "symantec endpoint",
+      "mcafee epo",
+      "tanium"
+    ]
+  },
+  "vuln_mgmt": {
+    "label": "Vulnerability management",
+    "aliases": [
+      "vulnerability management",
+      "vulnerability assessment",
+      "vulnerability scanning",
+      "nessus",
+      "qualys",
+      "tenable",
+      "rapid7",
+      "insightvm",
+      "openvas",
+      "cvss",
+      "patch compliance",
+      "remediation tracking"
+    ]
+  },
+  "threat_model": {
+    "label": "Threat modelling",
+    "aliases": [
+      "threat modeling",
+      "threat modelling",
+      "threat model",
+      "threat models",
+      "stride",
+      "attack surface",
+      "attack trees",
+      "security design review",
+      "security architecture review"
+    ]
+  },
+  "sec_incident": {
+    "label": "Security incident response / DFIR",
+    "aliases": [
+      "security incident",
+      "security incidents",
+      "incident handling",
+      "incident response",
+      "dfir",
+      "digital forensics",
+      "forensics",
+      "threat hunting",
+      "malware analysis",
+      "alert triage",
+      "containment",
+      "eradication",
+      "security triage"
+    ]
+  },
+  "threat_intel": {
+    "label": "Threat intelligence / MITRE ATT&CK",
+    "aliases": [
+      "threat intelligence",
+      "cyber threat intelligence",
+      "cti",
+      "mitre att&ck",
+      "mitre attack",
+      "mitre",
+      "iocs",
+      "ioc",
+      "indicators of compromise",
+      "ttps",
+      "misp",
+      "threat feeds"
+    ]
+  },
+  "soar": {
+    "label": "SOAR / security automation",
+    "aliases": [
+      "soar",
+      "cortex xsoar",
+      "xsoar",
+      "splunk soar",
+      "phantom",
+      "swimlane",
+      "tines",
+      "security automation",
+      "security orchestration"
+    ]
+  },
+  "pentest": {
+    "label": "Penetration testing",
+    "aliases": [
+      "penetration testing",
+      "penetration tester",
+      "pentesting",
+      "pen testing",
+      "pentest",
+      "vapt",
+      "red team",
+      "red teaming",
+      "ethical hacking",
+      "exploitation",
+      "exploit development",
+      "privilege escalation",
+      "bug bounty"
+    ]
+  },
+  "pentest_tools": {
+    "label": "Offensive tools (Burp, Metasploit ...)",
+    "aliases": [
+      "burp suite",
+      "metasploit",
+      "nmap",
+      "kali linux",
+      "kali",
+      "sqlmap",
+      "bloodhound",
+      "cobalt strike",
+      "hashcat",
+      "john the ripper",
+      "nikto",
+      "owasp zap",
+      "mimikatz",
+      "impacket",
+      "burp suite pro"
+    ]
+  },
+  "appsec": {
+    "label": "Application security (OWASP)",
+    "aliases": [
+      "application security",
+      "appsec",
+      "owasp",
+      "owasp top 10",
+      "xss",
+      "cross-site scripting",
+      "sql injection",
+      "csrf",
+      "ssrf",
+      "secure code review",
+      "secure coding",
+      "web application security",
+      "api security"
+    ]
+  },
+  "cloud_security": {
+    "label": "Cloud security / CSPM",
+    "aliases": [
+      "cloud security",
+      "cspm",
+      "cnapp",
+      "wiz",
+      "prisma cloud",
+      "orca security",
+      "lacework",
+      "defender for cloud",
+      "security hub",
+      "aws security hub",
+      "guardduty",
+      "aws guardduty",
+      "security command center",
+      "cloud security posture"
+    ]
+  },
+  "container_sec": {
+    "label": "Container / Kubernetes security",
+    "aliases": [
+      "container security",
+      "kubernetes security",
+      "falco",
+      "aqua security",
+      "sysdig",
+      "pod security",
+      "image scanning",
+      "runtime security",
+      "kube-bench",
+      "neuvector"
+    ]
+  },
+  "pki": {
+    "label": "Cryptography / PKI",
+    "aliases": [
+      "pki",
+      "tls",
+      "ssl",
+      "encryption",
+      "cryptography",
+      "kms",
+      "hsm",
+      "key management",
+      "certificate management",
+      "x.509",
+      "public key infrastructure"
+    ]
+  },
+  "risk_mgmt": {
+    "label": "Risk management",
+    "aliases": [
+      "risk management",
+      "risk assessment",
+      "risk assessments",
+      "risk register",
+      "third-party risk",
+      "third party risk",
+      "vendor risk",
+      "tprm",
+      "risk analysis",
+      "risk mitigation",
+      "enterprise risk",
+      "operational risk"
+    ]
+  },
+  "sec_frameworks": {
+    "label": "Security frameworks (NIST, ISO, CIS)",
+    "aliases": [
+      "nist",
+      "nist csf",
+      "nist 800-53",
+      "nist sp 800-53",
+      "cis controls",
+      "cis benchmarks",
+      "iso 27001",
+      "iso 27002",
+      "cobit",
+      "hitrust",
+      "cmmc",
+      "csa ccm",
+      "essential eight"
+    ]
+  },
+  "audit": {
+    "label": "Audit / controls testing",
+    "aliases": [
+      "internal audit",
+      "it audit",
+      "controls testing",
+      "control testing",
+      "sox",
+      "sox compliance",
+      "itgc",
+      "itgcs",
+      "control design",
+      "audit readiness",
+      "evidence collection",
+      "audit findings",
+      "audit support",
+      "external audit",
+      "external audits",
+      "internal audits",
+      "it audits"
+    ]
+  },
+  "sec_policy": {
+    "label": "Security policy & awareness",
+    "aliases": [
+      "security policies",
+      "security policy",
+      "policies and procedures",
+      "policy development",
+      "security awareness",
+      "security training",
+      "standards and procedures"
+    ]
+  },
+  "privacy": {
+    "label": "Data privacy",
+    "aliases": [
+      "data privacy",
+      "privacy",
+      "dpia",
+      "privacy impact assessment",
+      "ccpa",
+      "dpdp",
+      "data protection",
+      "pii",
+      "privacy by design"
+    ]
+  },
+  "grc_tools": {
+    "label": "GRC tools",
+    "aliases": [
+      "archer",
+      "rsa archer",
+      "servicenow grc",
+      "onetrust",
+      "metricstream",
+      "logicgate",
+      "auditboard",
+      "vanta",
+      "drata"
+    ]
+  },
+  "cert_security": {
+    "label": "Security certification (CISSP, CEH ...)",
+    "aliases": [
+      "cissp",
+      "cism",
+      "ceh",
+      "certified ethical hacker",
+      "security+",
+      "comptia security+",
+      "cysa+",
+      "comptia cysa+",
+      "gsec",
+      "gcih",
+      "gcia",
+      "giac",
+      "ccsp",
+      "ccsk",
+      "sc-200",
+      "az-500",
+      "aws security specialty",
+      "cpts",
+      "ecih"
+    ]
+  },
+  "cert_offsec": {
+    "label": "Offensive certification (OSCP ...)",
+    "aliases": [
+      "oscp",
+      "oswe",
+      "osep",
+      "oscp+",
+      "crtp",
+      "crto",
+      "pnpt",
+      "ejpt",
+      "ecppt",
+      "gpen",
+      "gwapt",
+      "ceh practical",
+      "crest"
+    ]
+  },
+  "cert_grc": {
+    "label": "GRC certification (CISA, CRISC ...)",
+    "aliases": [
+      "cisa",
+      "crisc",
+      "cgrc",
+      "cism",
+      "iso 27001 lead auditor",
+      "iso 27001 lead implementer",
+      "lead auditor",
+      "lead implementer",
+      "cipp",
+      "cipp/e",
+      "cipm",
+      "cipt"
+    ]
+  },
+  "autocad": {
+    "label": "AutoCAD",
+    "aliases": [
+      "autocad",
+      "auto cad",
+      "autocad 2d",
+      "autocad lt",
+      "autocad mechanical",
+      "autocad electrical",
+      "autocad civil 3d"
+    ]
+  },
+  "mech_cad": {
+    "label": "3D CAD (SolidWorks, CATIA, Creo, NX ...)",
+    "aliases": [
+      "solidworks",
+      "solid works",
+      "catia",
+      "catia v5",
+      "creo",
+      "pro/e",
+      "pro-e",
+      "pro engineer",
+      "=NX",
+      "siemens nx",
+      "unigraphics",
+      "nx cad",
+      "autodesk inventor",
+      "=Inventor",
+      "fusion 360",
+      "solid edge",
+      "3dexperience"
+    ]
+  },
+  "mech_design": {
+    "label": "Mechanical design",
+    "aliases": [
+      "mechanical design",
+      "machine design",
+      "design calculations",
+      "mechanism design",
+      "sheet metal design",
+      "plastic part design",
+      "fixture design",
+      "jig and fixture",
+      "tool design",
+      "concept design"
+    ]
+  },
+  "gdt": {
+    "label": "GD&T / tolerancing",
+    "aliases": [
+      "gd&t",
+      "gdt",
+      "geometric dimensioning",
+      "geometric dimensioning and tolerancing",
+      "asme y14.5",
+      "tolerance stack-up",
+      "tolerance stack up",
+      "tolerance stackup",
+      "tolerance analysis",
+      "stack-up analysis"
+    ]
+  },
+  "eng_drawings": {
+    "label": "Engineering drawings / BOM",
+    "aliases": [
+      "engineering drawings",
+      "2d drawings",
+      "detailed drawings",
+      "detailing",
+      "drafting",
+      "drawings",
+      "bill of materials",
+      "=BOM",
+      "boms",
+      "shop drawings",
+      "fabrication drawings",
+      "ga drawings",
+      "general arrangement",
+      "as-built drawings",
+      "as built drawings",
+      "assembly drawings",
+      "manufacturing drawings"
+    ]
+  },
+  "fea": {
+    "label": "FEA / CFD / simulation",
+    "aliases": [
+      "fea",
+      "finite element",
+      "finite element analysis",
+      "ansys",
+      "abaqus",
+      "hypermesh",
+      "nastran",
+      "ls-dyna",
+      "cfd",
+      "computational fluid dynamics",
+      "comsol",
+      "star-ccm",
+      "structural simulation",
+      "thermal analysis",
+      "modal analysis",
+      "ansys fluent"
+    ]
+  },
+  "dfm": {
+    "label": "DFM / DFA",
+    "aliases": [
+      "dfm",
+      "dfa",
+      "dfma",
+      "design for manufacturing",
+      "design for manufacturability",
+      "design for assembly",
+      "manufacturability"
+    ]
+  },
+  "mfg_processes": {
+    "label": "Manufacturing processes / materials",
+    "aliases": [
+      "sheet metal",
+      "casting",
+      "forging",
+      "injection molding",
+      "injection moulding",
+      "machining",
+      "cnc",
+      "welding",
+      "fabrication",
+      "die casting",
+      "stamping",
+      "extrusion",
+      "additive manufacturing",
+      "3d printing",
+      "material selection",
+      "heat treatment"
+    ]
+  },
+  "plm": {
+    "label": "PLM / PDM",
+    "aliases": [
+      "plm",
+      "pdm",
+      "teamcenter",
+      "windchill",
+      "enovia",
+      "agile plm",
+      "arena plm",
+      "smarteam",
+      "vault pdm",
+      "engineering change",
+      "ecn"
+    ]
+  },
+  "fmea": {
+    "label": "FMEA",
+    "aliases": [
+      "fmea",
+      "dfmea",
+      "pfmea",
+      "failure mode and effects analysis",
+      "failure mode effects analysis"
+    ]
+  },
+  "eng_standards": {
+    "label": "Engineering standards & codes",
+    "aliases": [
+      "asme",
+      "astm",
+      "iso standards",
+      "din",
+      "en standards",
+      "api 650",
+      "api standards",
+      "asme b31",
+      "asme section viii",
+      "ped",
+      "ce marking",
+      "ul standards",
+      "design codes",
+      "codes and standards"
+    ]
+  },
+  "prototyping": {
+    "label": "Prototyping & validation",
+    "aliases": [
+      "prototyping",
+      "prototype",
+      "prototypes",
+      "design validation",
+      "design verification",
+      "dvp&r",
+      "dvp",
+      "testing and validation",
+      "validation testing",
+      "product validation",
+      "test rigs"
+    ]
+  },
+  "modeling_3d": {
+    "label": "3D modelling",
+    "aliases": [
+      "3d modeling",
+      "3d modelling",
+      "3d models",
+      "3d model",
+      "solid modeling",
+      "surface modeling",
+      "surface modelling",
+      "parametric modeling"
+    ]
+  },
+  "matlab": {
+    "label": "MATLAB / Simulink",
+    "aliases": [
+      "matlab",
+      "simulink",
+      "stateflow"
+    ]
+  },
+  "power_systems": {
+    "label": "Power systems",
+    "aliases": [
+      "power systems",
+      "power system",
+      "power distribution",
+      "switchgear",
+      "power transformer",
+      "power transformers",
+      "distribution transformer",
+      "distribution transformers",
+      "substation",
+      "substations",
+      "load flow",
+      "short circuit",
+      "short-circuit",
+      "protection coordination",
+      "relay coordination",
+      "protection relays",
+      "switchyard",
+      "transmission lines",
+      "ht/lt",
+      "hv/lv",
+      "power quality",
+      "harmonics"
+    ]
+  },
+  "elec_design": {
+    "label": "Electrical design",
+    "aliases": [
+      "electrical design",
+      "single line diagram",
+      "single-line diagram",
+      "single line diagrams",
+      "=SLD",
+      "cable sizing",
+      "cable schedule",
+      "cable schedules",
+      "earthing",
+      "grounding design",
+      "lighting design",
+      "load calculation",
+      "load calculations",
+      "load schedule",
+      "panel design",
+      "mcc",
+      "pcc",
+      "lv panels",
+      "wiring diagrams",
+      "schematic diagrams",
+      "electrical layouts"
+    ]
+  },
+  "elec_cad": {
+    "label": "Electrical CAD / analysis (ETAP, EPLAN ...)",
+    "aliases": [
+      "etap",
+      "eplan",
+      "dialux",
+      "skm",
+      "skm powertools",
+      "see electrical",
+      "revit mep",
+      "amtech",
+      "digsilent",
+      "powerfactory",
+      "pscad",
+      "pss/e"
+    ]
+  },
+  "plc_scada": {
+    "label": "PLC / SCADA / DCS",
+    "aliases": [
+      "plc",
+      "plcs",
+      "scada",
+      "hmi",
+      "dcs",
+      "siemens s7",
+      "s7-1200",
+      "s7-1500",
+      "tia portal",
+      "allen bradley",
+      "allen-bradley",
+      "rockwell",
+      "rslogix",
+      "studio 5000",
+      "ladder logic",
+      "wincc",
+      "factorytalk",
+      "codesys",
+      "industrial automation"
+    ]
+  },
+  "elec_standards": {
+    "label": "Electrical codes (IEC, IEEE, NEC ...)",
+    "aliases": [
+      "iec",
+      "iec 61439",
+      "iec 60364",
+      "iec 61850",
+      "ieee",
+      "nec",
+      "nfpa 70",
+      "bs 7671",
+      "is 732",
+      "is 3043",
+      "nfpa 70e",
+      "cea regulations"
+    ]
+  },
+  "drives": {
+    "label": "Motors & drives",
+    "aliases": [
+      "vfd",
+      "vfds",
+      "variable frequency drive",
+      "variable frequency drives",
+      "motor control",
+      "ac drives",
+      "servo drives",
+      "motor starters",
+      "soft starters",
+      "induction motors"
+    ]
+  },
+  "renewables": {
+    "label": "Renewables / storage",
+    "aliases": [
+      "solar pv",
+      "solar",
+      "photovoltaic",
+      "pv systems",
+      "pv plant",
+      "wind energy",
+      "wind farm",
+      "wind turbine",
+      "bess",
+      "battery energy storage",
+      "renewable energy",
+      "pvsyst",
+      "ev charging"
+    ]
+  },
+  "commissioning": {
+    "label": "Testing & commissioning",
+    "aliases": [
+      "commissioning",
+      "testing and commissioning",
+      "testing & commissioning",
+      "t&c",
+      "factory acceptance test",
+      "site acceptance test",
+      "fat/sat",
+      "pre-commissioning",
+      "energization",
+      "energisation"
+    ]
+  },
+  "instrumentation": {
+    "label": "Instrumentation & control",
+    "aliases": [
+      "instrumentation",
+      "p&id",
+      "p&ids",
+      "control systems",
+      "transmitters",
+      "control valves",
+      "loop checking",
+      "field instruments",
+      "hook-up drawings"
+    ]
+  },
+  "structural": {
+    "label": "Structural design / analysis",
+    "aliases": [
+      "structural design",
+      "structural analysis",
+      "rcc",
+      "reinforced concrete",
+      "rcc design",
+      "steel design",
+      "steel structures",
+      "steel structure",
+      "foundation design",
+      "seismic design",
+      "seismic analysis",
+      "post-tensioned",
+      "prestressed",
+      "connection design",
+      "retaining walls",
+      "bridge design"
+    ]
+  },
+  "struct_software": {
+    "label": "Structural software (STAAD, ETABS ...)",
+    "aliases": [
+      "staad",
+      "staad pro",
+      "staad.pro",
+      "etabs",
+      "sap2000",
+      "tekla",
+      "tekla structures",
+      "robot structural",
+      "midas",
+      "midas civil",
+      "risa",
+      "ram concept",
+      "csi safe",
+      "safe software",
+      "plaxis",
+      "prokon"
+    ]
+  },
+  "civil_cad": {
+    "label": "Civil / building CAD (Civil 3D, Revit)",
+    "aliases": [
+      "civil 3d",
+      "autocad civil 3d",
+      "revit",
+      "revit structure",
+      "revit architecture",
+      "microstation",
+      "openroads",
+      "sketchup",
+      "archicad"
+    ]
+  },
+  "civil_codes": {
+    "label": "Design codes (IS, ACI, Eurocode ...)",
+    "aliases": [
+      "is 456",
+      "is 800",
+      "is 1893",
+      "is 875",
+      "is 13920",
+      "aci 318",
+      "eurocode",
+      "eurocodes",
+      "aisc",
+      "aisc 360",
+      "bs 8110",
+      "bs 5950",
+      "asce 7",
+      "ibc",
+      "aashto",
+      "csa a23.3",
+      "as 3600"
+    ]
+  },
+  "bim": {
+    "label": "BIM",
+    "aliases": [
+      "bim",
+      "building information modeling",
+      "building information modelling",
+      "navisworks",
+      "bim 360",
+      "autodesk construction cloud",
+      "clash detection",
+      "lod 300",
+      "lod 400",
+      "ifc",
+      "common data environment"
+    ]
+  },
+  "site_execution": {
+    "label": "Site execution / estimation",
+    "aliases": [
+      "site execution",
+      "site supervision",
+      "site management",
+      "quantity surveying",
+      "quantity survey",
+      "boq",
+      "bill of quantities",
+      "bbs",
+      "bar bending schedule",
+      "rate analysis",
+      "cost estimation",
+      "material reconciliation",
+      "contractor billing",
+      "ra bills",
+      "method statements"
+    ]
+  },
+  "geotech": {
+    "label": "Geotechnical",
+    "aliases": [
+      "geotechnical",
+      "soil investigation",
+      "soil mechanics",
+      "pile foundation",
+      "pile foundations",
+      "piling",
+      "ground improvement",
+      "slope stability"
+    ]
+  },
+  "pm_tools": {
+    "label": "Project scheduling tools (Primavera, MS Project ...)",
+    "aliases": [
+      "primavera",
+      "primavera p6",
+      "p6",
+      "ms project",
+      "microsoft project",
+      "smartsheet",
+      "asana",
+      "monday.com",
+      "wrike",
+      "clarity ppm"
+    ]
+  },
+  "surveying": {
+    "label": "Surveying / GIS",
+    "aliases": [
+      "surveying",
+      "land surveying",
+      "total station",
+      "auto level",
+      "dgps",
+      "gis",
+      "arcgis",
+      "qgis",
+      "topographic survey"
+    ]
+  },
+  "pcb": {
+    "label": "Schematic & PCB design",
+    "aliases": [
+      "pcb design",
+      "pcb layout",
+      "pcb",
+      "schematic design",
+      "schematic capture",
+      "schematics",
+      "altium",
+      "altium designer",
+      "orcad",
+      "allegro",
+      "cadence allegro",
+      "kicad",
+      "mentor pads",
+      "pads layout",
+      "eagle cad",
+      "autodesk eagle",
+      "xpedition",
+      "multilayer pcb",
+      "high-speed pcb"
+    ]
+  },
+  "circuit_design": {
+    "label": "Analog / digital circuit design",
+    "aliases": [
+      "analog design",
+      "analog circuit",
+      "analog circuits",
+      "digital circuit",
+      "digital circuits",
+      "mixed signal",
+      "mixed-signal",
+      "power supply design",
+      "power electronics",
+      "smps",
+      "dc-dc",
+      "dc/dc",
+      "buck converter",
+      "boost converter",
+      "ldo",
+      "op-amp",
+      "op amp",
+      "opamp",
+      "adc/dac",
+      "circuit design",
+      "hardware design",
+      "board design"
+    ]
+  },
+  "circuit_sim": {
+    "label": "Circuit simulation / SI-PI",
+    "aliases": [
+      "spice",
+      "ltspice",
+      "pspice",
+      "hyperlynx",
+      "signal integrity",
+      "power integrity",
+      "si/pi",
+      "hspice",
+      "ads keysight",
+      "keysight ads",
+      "sigrity"
+    ]
+  },
+  "hw_test": {
+    "label": "Lab test & bring-up",
+    "aliases": [
+      "oscilloscope",
+      "spectrum analyzer",
+      "spectrum analyser",
+      "network analyzer",
+      "logic analyzer",
+      "multimeter",
+      "function generator",
+      "board bring-up",
+      "bring-up",
+      "hardware testing",
+      "hardware validation",
+      "dvt",
+      "evt"
+    ]
+  },
+  "emc": {
+    "label": "EMC / EMI / compliance",
+    "aliases": [
+      "emc",
+      "emi",
+      "esd",
+      "emc compliance",
+      "emi/emc",
+      "fcc",
+      "fcc certification",
+      "ce certification",
+      "ul certification",
+      "pre-compliance",
+      "radiated emissions",
+      "conducted emissions"
+    ]
+  },
+  "fpga": {
+    "label": "FPGA",
+    "aliases": [
+      "fpga",
+      "fpgas",
+      "xilinx",
+      "vivado",
+      "quartus",
+      "altera",
+      "intel fpga",
+      "lattice",
+      "zynq",
+      "vitis"
+    ]
+  },
+  "rtl": {
+    "label": "RTL design (Verilog / SystemVerilog / VHDL)",
+    "aliases": [
+      "rtl design",
+      "rtl coding",
+      "rtl development",
+      "=RTL",
+      "verilog",
+      "systemverilog",
+      "system verilog",
+      "vhdl",
+      "micro-architecture",
+      "microarchitecture"
+    ]
+  },
+  "dv": {
+    "label": "Design verification (UVM)",
+    "aliases": [
+      "uvm",
+      "functional verification",
+      "design verification",
+      "testbench",
+      "testbenches",
+      "test bench",
+      "sva",
+      "systemverilog assertions",
+      "assertion-based verification",
+      "coverage closure",
+      "functional coverage",
+      "constrained random",
+      "formal verification",
+      "jaspergold",
+      "ovm",
+      "cocotb"
+    ]
+  },
+  "eda": {
+    "label": "EDA tools (Cadence, Synopsys ...)",
+    "aliases": [
+      "synopsys",
+      "synopsys vcs",
+      "xcelium",
+      "questa",
+      "questasim",
+      "modelsim",
+      "design compiler",
+      "primetime",
+      "innovus",
+      "icc2",
+      "ic compiler",
+      "virtuoso",
+      "calibre",
+      "spyglass",
+      "verdi",
+      "genus",
+      "tempus",
+      "fusion compiler",
+      "conformal",
+      "mentor graphics",
+      "siemens eda",
+      "cadence virtuoso",
+      "cadence innovus",
+      "cadence xcelium",
+      "cadence genus",
+      "cadence tools",
+      "cadence spectre"
+    ]
+  },
+  "physical_design": {
+    "label": "STA / synthesis / physical design / DFT",
+    "aliases": [
+      "sta",
+      "static timing analysis",
+      "timing closure",
+      "logic synthesis",
+      "physical design",
+      "place and route",
+      "pnr",
+      "floorplanning",
+      "floorplan",
+      "clock tree synthesis",
+      "=CTS",
+      "dft",
+      "scan insertion",
+      "atpg",
+      "mbist",
+      "lec",
+      "drc",
+      "lvs",
+      "power planning",
+      "ir drop"
+    ]
+  },
+  "soc_protocols": {
+    "label": "SoC protocols (AXI, PCIe, DDR ...)",
+    "aliases": [
+      "axi",
+      "axi4",
+      "ahb",
+      "apb",
+      "amba",
+      "pcie",
+      "ddr",
+      "ddr4",
+      "ddr5",
+      "lpddr",
+      "lpddr4",
+      "lpddr5",
+      "mipi",
+      "ucie",
+      "cxl",
+      "hbm"
+    ]
+  },
+  "eda_scripting": {
+    "label": "Tcl / Perl scripting",
+    "aliases": [
+      "tcl",
+      "tcl/tk",
+      "perl",
+      "perl scripting",
+      "tcl scripting"
+    ]
+  },
+  "asic": {
+    "label": "ASIC / SoC design",
+    "aliases": [
+      "asic",
+      "asic design",
+      "asics",
+      "soc design",
+      "system on chip",
+      "system-on-chip",
+      "soc architecture",
+      "soc integration",
+      "chip design",
+      "tape-out",
+      "tapeout",
+      "tape out",
+      "post-silicon"
+    ]
+  },
+  "low_power": {
+    "label": "Low-power design",
+    "aliases": [
+      "upf",
+      "cpf",
+      "low power design",
+      "low-power design",
+      "power analysis",
+      "clock gating",
+      "power gating",
+      "multi-voltage"
+    ]
+  },
+  "lean": {
+    "label": "Lean manufacturing",
+    "aliases": [
+      "lean manufacturing",
+      "lean six sigma",
+      "lean principles",
+      "lean tools",
+      "kaizen",
+      "5s",
+      "value stream mapping",
+      "=VSM",
+      "smed",
+      "total productive maintenance",
+      "poka-yoke",
+      "poka yoke",
+      "gemba",
+      "kanban",
+      "just in time",
+      "oee"
+    ]
+  },
+  "six_sigma": {
+    "label": "Six Sigma / SPC",
+    "aliases": [
+      "six sigma",
+      "dmaic",
+      "green belt",
+      "black belt",
+      "yellow belt",
+      "spc",
+      "statistical process control",
+      "measurement system analysis",
+      "gage r&r",
+      "gauge r&r",
+      "cpk",
+      "ppk",
+      "process capability",
+      "minitab",
+      "design of experiments"
+    ]
+  },
+  "process_eng": {
+    "label": "Process engineering / improvement",
+    "aliases": [
+      "process improvement",
+      "process engineering",
+      "process optimization",
+      "process optimisation",
+      "yield improvement",
+      "cycle time reduction",
+      "line balancing",
+      "work instructions",
+      "standard operating procedures",
+      "sops",
+      "sop",
+      "time study",
+      "time and motion",
+      "process validation",
+      "iq/oq/pq",
+      "scrap reduction"
+    ]
+  },
+  "quality_tools": {
+    "label": "Quality tools (8D, CAPA, RCA)",
+    "aliases": [
+      "8d",
+      "8d report",
+      "capa",
+      "corrective action",
+      "corrective and preventive action",
+      "fishbone",
+      "ishikawa",
+      "5 why",
+      "5 whys",
+      "5-why",
+      "root cause analysis",
+      "pareto",
+      "control charts",
+      "ncr",
+      "non-conformance"
+    ]
+  },
+  "apqp": {
+    "label": "APQP / PPAP / quality systems",
+    "aliases": [
+      "apqp",
+      "ppap",
+      "control plan",
+      "control plans",
+      "iatf 16949",
+      "iatf",
+      "iso 9001",
+      "as9100",
+      "iso 13485",
+      "first article inspection",
+      "fai",
+      "qms",
+      "quality management system"
+    ]
+  },
+  "mes": {
+    "label": "ERP / MES (production)",
+    "aliases": [
+      "=MES",
+      "manufacturing execution system",
+      "sap pp",
+      "sap qm",
+      "erp",
+      "oracle erp",
+      "mrp",
+      "production planning"
+    ]
+  },
+  "ehs": {
+    "label": "EHS / safety",
+    "aliases": [
+      "ehs",
+      "hse",
+      "health and safety",
+      "osha",
+      "iso 14001",
+      "iso 45001",
+      "ohsas 18001",
+      "safety audits",
+      "hira",
+      "jsa",
+      "job safety analysis",
+      "lockout/tagout",
+      "loto"
+    ]
+  },
+  "design_tools": {
+    "label": "Design tools (Figma, Sketch, XD)",
+    "aliases": [
+      "figma",
+      "figjam",
+      "=Sketch",
+      "sketch app",
+      "adobe xd",
+      "invision",
+      "axure",
+      "axure rp",
+      "balsamiq",
+      "framer",
+      "protopie",
+      "zeplin"
+    ]
+  },
+  "ux_research": {
+    "label": "UX research / usability",
+    "aliases": [
+      "user research",
+      "ux research",
+      "usability testing",
+      "usability tests",
+      "user interviews",
+      "personas",
+      "persona",
+      "journey map",
+      "journey maps",
+      "journey mapping",
+      "card sorting",
+      "contextual inquiry",
+      "heuristic evaluation",
+      "user testing",
+      "design thinking",
+      "empathy maps",
+      "jobs to be done",
+      "jtbd"
+    ]
+  },
+  "wireframing": {
+    "label": "Wireframes / prototypes / IA",
+    "aliases": [
+      "wireframes",
+      "wireframe",
+      "wireframing",
+      "prototyping",
+      "prototypes",
+      "high-fidelity",
+      "low-fidelity",
+      "hi-fi",
+      "lo-fi",
+      "mockups",
+      "mock-ups",
+      "user flows",
+      "user flow",
+      "information architecture",
+      "sitemaps",
+      "storyboards",
+      "click-through prototypes"
+    ]
+  },
+  "ui_design": {
+    "label": "UI / visual design",
+    "aliases": [
+      "ui design",
+      "user interface design",
+      "visual design",
+      "ui/ux",
+      "ux/ui",
+      "interface design",
+      "typography",
+      "color theory",
+      "colour theory",
+      "layout design",
+      "iconography",
+      "pixel-perfect",
+      "pixel perfect"
+    ]
+  },
+  "design_systems": {
+    "label": "Design systems",
+    "aliases": [
+      "design system",
+      "design systems",
+      "component library",
+      "component libraries",
+      "design tokens",
+      "atomic design",
+      "style guide",
+      "style guides",
+      "ui kit",
+      "pattern library"
+    ]
+  },
+  "accessibility": {
+    "label": "Accessibility (WCAG)",
+    "aliases": [
+      "accessibility",
+      "wcag",
+      "wcag 2.1",
+      "wcag 2.2",
+      "a11y",
+      "ada compliance",
+      "section 508",
+      "aria",
+      "screen readers",
+      "inclusive design"
+    ]
+  },
+  "interaction": {
+    "label": "Interaction / motion design",
+    "aliases": [
+      "interaction design",
+      "micro-interactions",
+      "microinteractions",
+      "motion design",
+      "ui animation",
+      "ixd"
+    ]
+  },
+  "product_analytics": {
+    "label": "Product analytics",
+    "aliases": [
+      "google analytics",
+      "ga4",
+      "mixpanel",
+      "amplitude",
+      "hotjar",
+      "fullstory",
+      "heap analytics",
+      "pendo",
+      "posthog",
+      "funnel analysis",
+      "cohort analysis",
+      "event tracking"
+    ]
+  },
+  "adobe_cs": {
+    "label": "Adobe Creative Suite / CorelDRAW",
+    "aliases": [
+      "photoshop",
+      "adobe photoshop",
+      "illustrator",
+      "adobe illustrator",
+      "indesign",
+      "adobe indesign",
+      "adobe creative suite",
+      "creative suite",
+      "creative cloud",
+      "adobe creative cloud",
+      "coreldraw",
+      "corel draw",
+      "lightroom",
+      "affinity designer",
+      "canva"
+    ]
+  },
+  "branding": {
+    "label": "Branding / identity",
+    "aliases": [
+      "branding",
+      "brand identity",
+      "logo design",
+      "logos",
+      "brand guidelines",
+      "visual identity",
+      "brand design",
+      "rebranding",
+      "corporate identity"
+    ]
+  },
+  "visual_design": {
+    "label": "Layout / print / packaging",
+    "aliases": [
+      "print design",
+      "editorial design",
+      "packaging design",
+      "brochures",
+      "brochure",
+      "posters",
+      "flyers",
+      "magazine",
+      "infographics",
+      "prepress",
+      "print production",
+      "publication design"
+    ]
+  },
+  "motion": {
+    "label": "Motion graphics / video",
+    "aliases": [
+      "motion graphics",
+      "after effects",
+      "adobe after effects",
+      "premiere pro",
+      "adobe premiere",
+      "video editing",
+      "animation",
+      "2d animation",
+      "final cut pro",
+      "davinci resolve",
+      "lottie"
+    ]
+  },
+  "social_creative": {
+    "label": "Digital / social creatives",
+    "aliases": [
+      "social media",
+      "social media creatives",
+      "social media posts",
+      "digital marketing",
+      "banners",
+      "web banners",
+      "display ads",
+      "ad creatives",
+      "email templates",
+      "newsletters"
+    ]
+  },
+  "illustration": {
+    "label": "Illustration",
+    "aliases": [
+      "illustration",
+      "illustrations",
+      "digital illustration",
+      "procreate",
+      "hand drawn",
+      "character design",
+      "vector illustration",
+      "vector art"
+    ]
+  },
+  "art_3d": {
+    "label": "3D art / rendering",
+    "aliases": [
+      "blender",
+      "cinema 4d",
+      "c4d",
+      "3ds max",
+      "keyshot",
+      "v-ray",
+      "vray",
+      "3d rendering",
+      "zbrush",
+      "substance painter",
+      "autodesk maya"
+    ]
+  },
+  "cms": {
+    "label": "CMS (WordPress, Shopify ...)",
+    "aliases": [
+      "wordpress",
+      "drupal",
+      "joomla",
+      "cms",
+      "shopify",
+      "wix",
+      "webflow",
+      "elementor",
+      "squarespace",
+      "magento",
+      "woocommerce",
+      "contentful",
+      "strapi",
+      "headless cms"
+    ]
+  },
+  "seo": {
+    "label": "SEO",
+    "aliases": [
+      "seo",
+      "search engine optimization",
+      "search engine optimisation",
+      "on-page seo",
+      "technical seo",
+      "google search console",
+      "keyword research",
+      "schema markup"
+    ]
+  },
+  "product_mgmt": {
+    "label": "Product strategy / roadmap",
+    "aliases": [
+      "product roadmap",
+      "product roadmaps",
+      "roadmap",
+      "roadmapping",
+      "product strategy",
+      "product vision",
+      "prioritization",
+      "prioritisation",
+      "go-to-market",
+      "go to market",
+      "gtm",
+      "product lifecycle",
+      "product life cycle",
+      "product management",
+      "product launch",
+      "product launches",
+      "mvp",
+      "product-market fit"
+    ]
+  },
+  "requirements": {
+    "label": "Requirements / user stories",
+    "aliases": [
+      "requirements gathering",
+      "requirement gathering",
+      "requirements elicitation",
+      "requirement analysis",
+      "requirements analysis",
+      "user stories",
+      "user story",
+      "acceptance criteria",
+      "prd",
+      "prds",
+      "product requirements",
+      "backlog",
+      "product backlog",
+      "backlog management",
+      "epics",
+      "use cases"
+    ]
+  },
+  "stakeholder": {
+    "label": "Stakeholder management",
+    "aliases": [
+      "stakeholder management",
+      "stakeholder engagement",
+      "stakeholders",
+      "stakeholder communication",
+      "executive communication",
+      "client management",
+      "steering committee",
+      "steerco"
+    ]
+  },
+  "discovery": {
+    "label": "Customer discovery / market research",
+    "aliases": [
+      "customer discovery",
+      "product discovery",
+      "customer interviews",
+      "market research",
+      "competitive analysis",
+      "competitor analysis",
+      "market analysis",
+      "voice of the customer",
+      "customer feedback",
+      "user feedback"
+    ]
+  },
+  "okrs": {
+    "label": "OKRs / product metrics",
+    "aliases": [
+      "okrs",
+      "okr",
+      "kpis",
+      "north star metric",
+      "north star",
+      "success metrics",
+      "product metrics",
+      "conversion rate",
+      "nps",
+      "arr",
+      "mrr",
+      "churn"
+    ]
+  },
+  "jira": {
+    "label": "Jira / Confluence",
+    "aliases": [
+      "jira",
+      "confluence",
+      "jira align",
+      "azure boards",
+      "productboard",
+      "aha!",
+      "trello",
+      "rally",
+      "versionone"
+    ]
+  },
+  "monetization": {
+    "label": "Pricing / monetisation",
+    "aliases": [
+      "pricing",
+      "pricing strategy",
+      "monetization",
+      "monetisation",
+      "business case",
+      "business cases",
+      "unit economics",
+      "revenue growth",
+      "p&l"
+    ]
+  },
+  "process_modeling": {
+    "label": "Process modelling / gap analysis",
+    "aliases": [
+      "bpmn",
+      "process mapping",
+      "process modeling",
+      "process modelling",
+      "process flows",
+      "process flow",
+      "as-is",
+      "to-be",
+      "as-is/to-be",
+      "gap analysis",
+      "swot",
+      "swot analysis",
+      "value stream",
+      "business process"
+    ]
+  },
+  "uml": {
+    "label": "UML / use cases / Visio",
+    "aliases": [
+      "uml",
+      "use case diagrams",
+      "use case diagram",
+      "activity diagrams",
+      "sequence diagrams",
+      "visio",
+      "ms visio",
+      "lucidchart",
+      "draw.io",
+      "data flow diagrams",
+      "dfd",
+      "er diagram"
+    ]
+  },
+  "uat": {
+    "label": "UAT coordination",
+    "aliases": [
+      "uat",
+      "user acceptance testing",
+      "uat coordination",
+      "uat sign-off",
+      "test scenarios",
+      "business validation"
+    ]
+  },
+  "ba_docs": {
+    "label": "BRD / FRD / specifications",
+    "aliases": [
+      "brd",
+      "frd",
+      "srs",
+      "business requirements document",
+      "functional requirements document",
+      "functional specification",
+      "functional specifications",
+      "functional specs",
+      "business requirements",
+      "functional requirements",
+      "non-functional requirements",
+      "requirement documents",
+      "requirements documentation"
+    ]
+  },
+  "cert_ba": {
+    "label": "BA certification (CBAP ...)",
+    "aliases": [
+      "cbap",
+      "ccba",
+      "ecba",
+      "pmi-pba",
+      "iiba",
+      "cpre",
+      "ireb"
+    ]
+  },
+  "project_mgmt": {
+    "label": "Project management",
+    "aliases": [
+      "project management",
+      "project planning",
+      "project delivery",
+      "project schedule",
+      "project scheduling",
+      "project plans",
+      "work breakdown structure",
+      "=WBS",
+      "raid log",
+      "risk and issue management",
+      "resource planning",
+      "resource allocation",
+      "scope management",
+      "change requests",
+      "project governance",
+      "critical path"
+    ]
+  },
+  "pm_methods": {
+    "label": "Delivery methods (Waterfall, PRINCE2 ...)",
+    "aliases": [
+      "waterfall",
+      "prince2",
+      "pmbok",
+      "sdlc",
+      "hybrid methodology",
+      "stage gate",
+      "stage-gate",
+      "v-model"
+    ]
+  },
+  "budgeting": {
+    "label": "Budget / cost control",
+    "aliases": [
+      "budget",
+      "budgets",
+      "budgeting",
+      "budget management",
+      "cost control",
+      "financial tracking",
+      "p&l",
+      "capex",
+      "opex",
+      "cost management",
+      "earned value",
+      "evm"
+    ]
+  },
+  "vendor_mgmt": {
+    "label": "Vendor / contract management",
+    "aliases": [
+      "vendor management",
+      "contract management",
+      "procurement",
+      "statement of work",
+      "=SOW",
+      "sows",
+      "rfp",
+      "rfps",
+      "rfq",
+      "supplier management",
+      "outsourcing",
+      "third-party vendors"
+    ]
+  },
+  "cert_pm": {
+    "label": "PM certification (PMP, PRINCE2 ...)",
+    "aliases": [
+      "pmp",
+      "project management professional",
+      "prince2 practitioner",
+      "prince2 foundation",
+      "capm",
+      "pgmp",
+      "pmi-acp",
+      "pmi acp"
+    ]
+  },
+  "scrum": {
+    "label": "Scrum ceremonies / metrics",
+    "aliases": [
+      "sprint planning",
+      "retrospectives",
+      "retrospective",
+      "daily stand-up",
+      "daily standup",
+      "daily scrum",
+      "stand-ups",
+      "standups",
+      "sprint review",
+      "sprint reviews",
+      "backlog grooming",
+      "backlog refinement",
+      "refinement",
+      "velocity",
+      "burndown",
+      "burn-down",
+      "burnup",
+      "impediments",
+      "scrum ceremonies",
+      "scrum events",
+      "definition of done"
+    ]
+  },
+  "agile_coaching": {
+    "label": "Agile coaching / facilitation",
+    "aliases": [
+      "agile coaching",
+      "agile coach",
+      "servant leadership",
+      "servant leader",
+      "team coaching",
+      "agile transformation",
+      "agile adoption",
+      "coached agile teams",
+      "scrum coaching",
+      "kanban coaching"
+    ]
+  },
+  "scaled_agile": {
+    "label": "Scaled agile (SAFe, LeSS)",
+    "aliases": [
+      "scaled agile",
+      "safe 5",
+      "safe 6",
+      "scrum of scrums",
+      "pi planning",
+      "program increment",
+      "agile release train",
+      "=ART",
+      "release train engineer",
+      "=RTE",
+      "nexus framework",
+      "spotify model",
+      "safe agile",
+      "scaled agile framework",
+      "large-scale scrum"
+    ]
+  },
+  "cert_agile": {
+    "label": "Agile certification (CSM, PSM, SAFe)",
+    "aliases": [
+      "csm",
+      "certified scrummaster",
+      "certified scrum master",
+      "psm",
+      "psm i",
+      "psm ii",
+      "professional scrum master",
+      "safe agilist",
+      "safe scrum master",
+      "safe advanced scrum master",
+      "icp-acc",
+      "a-csm",
+      "cspo",
+      "pspo",
+      "kmp"
+    ]
+  },
+  "cert_product": {
+    "label": "Product certification (CSPO ...)",
+    "aliases": [
+      "cspo",
+      "pspo",
+      "certified scrum product owner",
+      "professional scrum product owner",
+      "aipmm",
+      "cpm",
+      "pragmatic institute",
+      "safe popm"
     ]
   }
 }
