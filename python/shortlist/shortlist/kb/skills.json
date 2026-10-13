@@ -1,0 +1,1403 @@
+{
+  "_doc": "Skill catalogue. Each skill has a display label and aliases (case-insensitive, matched on word boundaries; a leading = makes an alias case-sensitive, for words like Go/Ray). Roles reference skills by id.",
+  "aws": {
+    "label": "AWS",
+    "aliases": [
+      "aws",
+      "amazon web services",
+      "ec2",
+      "s3",
+      "eks",
+      "ecs",
+      "lambda",
+      "cloudwatch",
+      "iam roles"
+    ]
+  },
+  "azure": {
+    "label": "Azure",
+    "aliases": [
+      "azure",
+      "aks",
+      "azure devops",
+      "arm templates",
+      "bicep"
+    ]
+  },
+  "gcp": {
+    "label": "Google Cloud",
+    "aliases": [
+      "gcp",
+      "google cloud",
+      "gke",
+      "bigquery",
+      "cloud run"
+    ]
+  },
+  "kubernetes": {
+    "label": "Kubernetes",
+    "aliases": [
+      "kubernetes",
+      "k8s",
+      "eks",
+      "aks",
+      "gke",
+      "openshift",
+      "rancher",
+      "k3s"
+    ]
+  },
+  "docker": {
+    "label": "Docker / containers",
+    "aliases": [
+      "docker",
+      "containers",
+      "containerization",
+      "containerd",
+      "podman",
+      "dockerfile"
+    ]
+  },
+  "helm": {
+    "label": "Helm",
+    "aliases": [
+      "helm",
+      "helm charts",
+      "kustomize"
+    ]
+  },
+  "terraform": {
+    "label": "Terraform",
+    "aliases": [
+      "terraform",
+      "opentofu",
+      "terragrunt"
+    ]
+  },
+  "pulumi": {
+    "label": "Pulumi",
+    "aliases": [
+      "pulumi"
+    ]
+  },
+  "cloudformation": {
+    "label": "CloudFormation / CDK",
+    "aliases": [
+      "cloudformation",
+      "aws cdk",
+      "cdk"
+    ]
+  },
+  "iac": {
+    "label": "Infrastructure as Code",
+    "aliases": [
+      "infrastructure as code",
+      "iac"
+    ]
+  },
+  "ansible": {
+    "label": "Ansible",
+    "aliases": [
+      "ansible"
+    ]
+  },
+  "config_mgmt": {
+    "label": "Chef / Puppet / Salt",
+    "aliases": [
+      "chef",
+      "puppet",
+      "saltstack",
+      "salt stack"
+    ]
+  },
+  "crossplane": {
+    "label": "Crossplane",
+    "aliases": [
+      "crossplane"
+    ]
+  },
+  "cicd": {
+    "label": "CI/CD",
+    "aliases": [
+      "ci/cd",
+      "ci cd",
+      "cicd",
+      "continuous integration",
+      "continuous delivery",
+      "continuous deployment",
+      "build pipelines",
+      "release pipelines",
+      "deployment pipelines"
+    ]
+  },
+  "jenkins": {
+    "label": "Jenkins",
+    "aliases": [
+      "jenkins"
+    ]
+  },
+  "github_actions": {
+    "label": "GitHub Actions",
+    "aliases": [
+      "github actions"
+    ]
+  },
+  "gitlab_ci": {
+    "label": "GitLab CI",
+    "aliases": [
+      "gitlab ci",
+      "gitlab-ci",
+      "gitlab pipelines"
+    ]
+  },
+  "argocd": {
+    "label": "Argo CD / Flux",
+    "aliases": [
+      "argocd",
+      "argo cd",
+      "fluxcd",
+      "flux cd",
+      "argo rollouts",
+      "argo workflows"
+    ]
+  },
+  "gitops": {
+    "label": "GitOps",
+    "aliases": [
+      "gitops"
+    ]
+  },
+  "tekton": {
+    "label": "Tekton / Spinnaker",
+    "aliases": [
+      "tekton",
+      "spinnaker"
+    ]
+  },
+  "observability": {
+    "label": "Observability / monitoring",
+    "aliases": [
+      "observability",
+      "monitoring and alerting",
+      "monitoring & alerting",
+      "infrastructure monitoring",
+      "application monitoring",
+      "system monitoring",
+      "production monitoring",
+      "monitoring stack",
+      "monitoring tools",
+      "alerting",
+      "telemetry",
+      "sli dashboards",
+      "golden signals",
+      "apm"
+    ]
+  },
+  "prometheus": {
+    "label": "Prometheus",
+    "aliases": [
+      "prometheus",
+      "alertmanager",
+      "thanos",
+      "victoriametrics",
+      "cortex",
+      "mimir"
+    ]
+  },
+  "grafana": {
+    "label": "Grafana",
+    "aliases": [
+      "grafana",
+      "loki",
+      "tempo"
+    ]
+  },
+  "opentelemetry": {
+    "label": "OpenTelemetry / tracing",
+    "aliases": [
+      "opentelemetry",
+      "otel",
+      "distributed tracing",
+      "jaeger",
+      "zipkin"
+    ]
+  },
+  "datadog": {
+    "label": "Datadog / New Relic / Dynatrace",
+    "aliases": [
+      "datadog",
+      "new relic",
+      "newrelic",
+      "dynatrace",
+      "appdynamics",
+      "honeycomb"
+    ]
+  },
+  "elk": {
+    "label": "ELK / OpenSearch",
+    "aliases": [
+      "elk",
+      "elasticsearch",
+      "logstash",
+      "kibana",
+      "opensearch",
+      "fluentd",
+      "fluent bit",
+      "efk"
+    ]
+  },
+  "splunk": {
+    "label": "Splunk",
+    "aliases": [
+      "splunk"
+    ]
+  },
+  "slo": {
+    "label": "SLOs / SLIs / error budgets",
+    "aliases": [
+      "slo",
+      "slos",
+      "sli",
+      "slis",
+      "service level objective",
+      "service level objectives",
+      "service level indicator",
+      "error budget",
+      "error budgets",
+      "sla",
+      "slas"
+    ]
+  },
+  "incident": {
+    "label": "Incident response / on-call",
+    "aliases": [
+      "incident response",
+      "incident management",
+      "incident commander",
+      "on-call",
+      "on call",
+      "oncall",
+      "pagerduty",
+      "opsgenie",
+      "major incident",
+      "sev1",
+      "sev-1"
+    ]
+  },
+  "postmortem": {
+    "label": "Postmortems / RCA",
+    "aliases": [
+      "postmortem",
+      "postmortems",
+      "post-mortem",
+      "post-mortems",
+      "root cause analysis",
+      "rca",
+      "blameless"
+    ]
+  },
+  "capacity": {
+    "label": "Capacity planning",
+    "aliases": [
+      "capacity planning",
+      "capacity management",
+      "autoscaling",
+      "auto-scaling",
+      "hpa"
+    ]
+  },
+  "chaos": {
+    "label": "Chaos engineering",
+    "aliases": [
+      "chaos engineering",
+      "chaos monkey",
+      "litmus",
+      "gremlin",
+      "fault injection",
+      "game days",
+      "gameday"
+    ]
+  },
+  "reliability": {
+    "label": "Reliability / HA / DR",
+    "aliases": [
+      "reliability",
+      "high availability",
+      "disaster recovery",
+      "failover",
+      "resilience",
+      "resiliency",
+      "fault tolerance",
+      "fault-tolerant",
+      "uptime",
+      "99.9",
+      "99.99",
+      "multi-region"
+    ]
+  },
+  "performance": {
+    "label": "Performance / load testing",
+    "aliases": [
+      "performance tuning",
+      "performance engineering",
+      "load testing",
+      "stress testing",
+      "k6",
+      "jmeter",
+      "locust",
+      "gatling",
+      "latency"
+    ]
+  },
+  "idp": {
+    "label": "Internal developer platform",
+    "aliases": [
+      "internal developer platform",
+      "developer platform",
+      "platform engineering",
+      "developer portal",
+      "backstage",
+      "developer experience",
+      "devex"
+    ]
+  },
+  "golden_paths": {
+    "label": "Golden paths / self-service",
+    "aliases": [
+      "golden path",
+      "golden paths",
+      "paved road",
+      "self-service",
+      "self service",
+      "service templates",
+      "scaffolding"
+    ]
+  },
+  "operators": {
+    "label": "Kubernetes operators / CRDs",
+    "aliases": [
+      "kubernetes operator",
+      "kubernetes operators",
+      "operator sdk",
+      "kubebuilder",
+      "crd",
+      "crds",
+      "custom resource",
+      "custom controllers"
+    ]
+  },
+  "service_mesh": {
+    "label": "Service mesh",
+    "aliases": [
+      "service mesh",
+      "istio",
+      "linkerd",
+      "envoy",
+      "consul connect",
+      "cilium"
+    ]
+  },
+  "multi_tenancy": {
+    "label": "Multi-tenancy",
+    "aliases": [
+      "multi-tenant",
+      "multi-tenancy",
+      "multitenancy",
+      "tenant isolation"
+    ]
+  },
+  "networking": {
+    "label": "Networking",
+    "aliases": [
+      "tcp/ip",
+      "dns",
+      "load balancer",
+      "load balancers",
+      "load balancing",
+      "vpc",
+      "networking",
+      "cdn",
+      "nginx",
+      "haproxy",
+      "bgp",
+      "vpn",
+      "ingress"
+    ]
+  },
+  "linux": {
+    "label": "Linux",
+    "aliases": [
+      "linux",
+      "unix",
+      "systemd",
+      "kernel",
+      "rhel",
+      "ubuntu",
+      "centos",
+      "debian"
+    ]
+  },
+  "devsecops": {
+    "label": "DevSecOps",
+    "aliases": [
+      "devsecops",
+      "sast",
+      "dast",
+      "snyk",
+      "trivy",
+      "sonarqube",
+      "shift-left",
+      "shift left",
+      "vulnerability scanning",
+      "sbom",
+      "supply chain security"
+    ]
+  },
+  "iam": {
+    "label": "IAM / RBAC / SSO",
+    "aliases": [
+      "iam",
+      "rbac",
+      "oidc",
+      "oauth",
+      "sso",
+      "saml",
+      "keycloak",
+      "okta",
+      "least privilege"
+    ]
+  },
+  "vault": {
+    "label": "Secrets management",
+    "aliases": [
+      "hashicorp vault",
+      "vault",
+      "secrets management",
+      "secret management",
+      "sealed secrets",
+      "external secrets"
+    ]
+  },
+  "policy": {
+    "label": "Policy as code",
+    "aliases": [
+      "policy as code",
+      "opa",
+      "open policy agent",
+      "gatekeeper",
+      "kyverno",
+      "sentinel"
+    ]
+  },
+  "compliance": {
+    "label": "Compliance (SOC 2 / ISO 27001 ...)",
+    "aliases": [
+      "soc 2",
+      "soc2",
+      "iso 27001",
+      "iso27001",
+      "gdpr",
+      "hipaa",
+      "pci",
+      "pci-dss",
+      "fedramp",
+      "nis2",
+      "dora"
+    ]
+  },
+  "python": {
+    "label": "Python",
+    "aliases": [
+      "python",
+      "python3"
+    ]
+  },
+  "go": {
+    "label": "Go",
+    "aliases": [
+      "golang",
+      "go lang",
+      "=Go"
+    ]
+  },
+  "java": {
+    "label": "Java / JVM",
+    "aliases": [
+      "java",
+      "kotlin",
+      "scala",
+      "spring boot"
+    ]
+  },
+  "bash": {
+    "label": "Bash / shell",
+    "aliases": [
+      "bash",
+      "shell scripting",
+      "shell scripts",
+      "powershell",
+      "zsh"
+    ]
+  },
+  "rust": {
+    "label": "Rust",
+    "aliases": [
+      "rust"
+    ]
+  },
+  "typescript": {
+    "label": "TypeScript / JavaScript",
+    "aliases": [
+      "typescript",
+      "javascript",
+      "node.js",
+      "nodejs",
+      "react"
+    ]
+  },
+  "sql": {
+    "label": "SQL",
+    "aliases": [
+      "sql",
+      "postgresql",
+      "postgres",
+      "mysql",
+      "sql server",
+      "oracle db",
+      "snowflake",
+      "redshift"
+    ]
+  },
+  "databases": {
+    "label": "Databases (NoSQL / caches)",
+    "aliases": [
+      "mongodb",
+      "redis",
+      "cassandra",
+      "dynamodb",
+      "cosmosdb",
+      "memcached",
+      "couchbase"
+    ]
+  },
+  "kafka": {
+    "label": "Kafka / streaming",
+    "aliases": [
+      "kafka",
+      "kinesis",
+      "pulsar",
+      "flink",
+      "event streaming"
+    ]
+  },
+  "spark": {
+    "label": "Spark / big data",
+    "aliases": [
+      "spark",
+      "pyspark",
+      "databricks",
+      "hadoop",
+      "hive",
+      "emr",
+      "dask"
+    ]
+  },
+  "airflow": {
+    "label": "Airflow / orchestration",
+    "aliases": [
+      "airflow",
+      "dagster",
+      "prefect",
+      "luigi"
+    ]
+  },
+  "data_pipelines": {
+    "label": "Data pipelines / ETL",
+    "aliases": [
+      "etl",
+      "elt",
+      "data pipeline",
+      "data pipelines",
+      "data engineering",
+      "dbt",
+      "data ingestion"
+    ]
+  },
+  "ml": {
+    "label": "Machine learning",
+    "aliases": [
+      "machine learning",
+      "ml models",
+      "ml model",
+      "predictive models",
+      "supervised learning",
+      "classification models",
+      "regression models"
+    ]
+  },
+  "deep_learning": {
+    "label": "Deep learning",
+    "aliases": [
+      "deep learning",
+      "neural network",
+      "neural networks",
+      "transformers",
+      "cnn",
+      "cnns",
+      "rnn",
+      "lstm"
+    ]
+  },
+  "pytorch": {
+    "label": "PyTorch",
+    "aliases": [
+      "pytorch",
+      "torch",
+      "pytorch lightning"
+    ]
+  },
+  "tensorflow": {
+    "label": "TensorFlow / Keras",
+    "aliases": [
+      "tensorflow",
+      "keras",
+      "tfx",
+      "jax"
+    ]
+  },
+  "sklearn": {
+    "label": "scikit-learn / boosting",
+    "aliases": [
+      "scikit-learn",
+      "sklearn",
+      "xgboost",
+      "lightgbm",
+      "catboost",
+      "pandas",
+      "numpy"
+    ]
+  },
+  "nlp": {
+    "label": "NLP",
+    "aliases": [
+      "nlp",
+      "natural language processing",
+      "text classification",
+      "named entity recognition",
+      "ner",
+      "hugging face",
+      "huggingface"
+    ]
+  },
+  "cv": {
+    "label": "Computer vision",
+    "aliases": [
+      "computer vision",
+      "image classification",
+      "object detection",
+      "opencv",
+      "yolo",
+      "segmentation"
+    ]
+  },
+  "model_training": {
+    "label": "Model training / tuning",
+    "aliases": [
+      "model training",
+      "trained models",
+      "training pipelines",
+      "hyperparameter tuning",
+      "hyperparameter optimization",
+      "feature engineering",
+      "optuna"
+    ]
+  },
+  "model_eval": {
+    "label": "Model evaluation / experimentation",
+    "aliases": [
+      "model evaluation",
+      "offline evaluation",
+      "a/b test",
+      "a/b tests",
+      "a/b testing",
+      "ab testing",
+      "auc",
+      "experimentation"
+    ]
+  },
+  "stats": {
+    "label": "Statistics",
+    "aliases": [
+      "statistics",
+      "statistical",
+      "probability",
+      "bayesian",
+      "hypothesis testing",
+      "time series"
+    ]
+  },
+  "ml_platforms": {
+    "label": "ML platforms (MLflow, Kubeflow, SageMaker ...)",
+    "aliases": [
+      "mlflow",
+      "kubeflow",
+      "sagemaker",
+      "vertex ai",
+      "azure ml",
+      "azure machine learning",
+      "databricks ml",
+      "zenml",
+      "metaflow",
+      "flyte",
+      "clearml",
+      "domino"
+    ]
+  },
+  "ml_pipelines": {
+    "label": "ML pipelines",
+    "aliases": [
+      "ml pipeline",
+      "ml pipelines",
+      "training pipeline",
+      "training pipelines",
+      "kubeflow pipelines",
+      "vertex pipelines",
+      "sagemaker pipelines",
+      "tfx",
+      "ml workflow",
+      "ml workflows",
+      "continuous training"
+    ]
+  },
+  "model_serving": {
+    "label": "Model serving / inference",
+    "aliases": [
+      "model serving",
+      "model deployment",
+      "inference",
+      "kserve",
+      "kfserving",
+      "seldon",
+      "bentoml",
+      "triton",
+      "torchserve",
+      "tf serving",
+      "tensorflow serving",
+      "ray serve",
+      "onnx",
+      "onnx runtime",
+      "real-time inference",
+      "batch inference"
+    ]
+  },
+  "model_registry": {
+    "label": "Model registry / versioning",
+    "aliases": [
+      "model registry",
+      "model versioning",
+      "model lineage",
+      "model governance"
+    ]
+  },
+  "model_monitoring": {
+    "label": "Model monitoring / drift",
+    "aliases": [
+      "model monitoring",
+      "data drift",
+      "model drift",
+      "concept drift",
+      "drift detection",
+      "evidently",
+      "arize",
+      "whylabs",
+      "fiddler"
+    ]
+  },
+  "experiment_tracking": {
+    "label": "Experiment tracking",
+    "aliases": [
+      "experiment tracking",
+      "weights & biases",
+      "weights and biases",
+      "wandb",
+      "comet ml",
+      "neptune"
+    ]
+  },
+  "feature_store": {
+    "label": "Feature store",
+    "aliases": [
+      "feature store",
+      "feast",
+      "tecton",
+      "hopsworks"
+    ]
+  },
+  "data_versioning": {
+    "label": "Data versioning",
+    "aliases": [
+      "dvc",
+      "data versioning",
+      "lakefs",
+      "delta lake",
+      "iceberg"
+    ]
+  },
+  "gpu": {
+    "label": "GPU / distributed training",
+    "aliases": [
+      "gpu",
+      "gpus",
+      "cuda",
+      "nvidia",
+      "distributed training",
+      "horovod",
+      "deepspeed",
+      "fsdp",
+      "multi-gpu",
+      "a100",
+      "h100",
+      "tpu",
+      "tpus",
+      "=Ray"
+    ]
+  },
+  "llm": {
+    "label": "LLMs",
+    "aliases": [
+      "llm",
+      "llms",
+      "large language model",
+      "large language models",
+      "gpt-4",
+      "gpt-4o",
+      "gpt",
+      "claude",
+      "llama",
+      "mistral",
+      "gemini",
+      "foundation model",
+      "foundation models"
+    ]
+  },
+  "genai": {
+    "label": "Generative AI",
+    "aliases": [
+      "generative ai",
+      "genai",
+      "gen ai"
+    ]
+  },
+  "rag": {
+    "label": "RAG",
+    "aliases": [
+      "rag",
+      "retrieval augmented generation",
+      "retrieval-augmented generation",
+      "retrieval augmented",
+      "hybrid search",
+      "reranking",
+      "re-ranking",
+      "semantic search"
+    ]
+  },
+  "vector_db": {
+    "label": "Vector databases",
+    "aliases": [
+      "vector database",
+      "vector databases",
+      "vector db",
+      "vector store",
+      "pinecone",
+      "weaviate",
+      "milvus",
+      "qdrant",
+      "pgvector",
+      "chroma",
+      "chromadb",
+      "faiss"
+    ]
+  },
+  "embeddings": {
+    "label": "Embeddings",
+    "aliases": [
+      "embeddings",
+      "embedding models",
+      "sentence transformers",
+      "sentence-transformers",
+      "text embeddings"
+    ]
+  },
+  "prompt_eng": {
+    "label": "Prompt engineering",
+    "aliases": [
+      "prompt engineering",
+      "prompt design",
+      "prompting",
+      "few-shot",
+      "chain of thought",
+      "system prompts"
+    ]
+  },
+  "agents": {
+    "label": "AI agents / tool use",
+    "aliases": [
+      "ai agents",
+      "ai agent",
+      "agentic",
+      "llm agents",
+      "tool use",
+      "function calling",
+      "tool calling",
+      "langgraph",
+      "autogen",
+      "crewai",
+      "model context protocol",
+      "mcp",
+      "multi-agent"
+    ]
+  },
+  "llm_frameworks": {
+    "label": "LLM frameworks",
+    "aliases": [
+      "langchain",
+      "llamaindex",
+      "llama index",
+      "semantic kernel",
+      "dspy",
+      "haystack"
+    ]
+  },
+  "llm_apis": {
+    "label": "LLM APIs",
+    "aliases": [
+      "openai api",
+      "openai",
+      "anthropic api",
+      "anthropic",
+      "azure openai",
+      "bedrock",
+      "amazon bedrock",
+      "vertex ai gemini"
+    ]
+  },
+  "llm_eval": {
+    "label": "LLM evaluation / guardrails",
+    "aliases": [
+      "llm evaluation",
+      "evals",
+      "eval harness",
+      "evaluation harness",
+      "guardrails",
+      "hallucination",
+      "hallucinations",
+      "red teaming",
+      "red-teaming",
+      "llm-as-a-judge",
+      "llm as a judge",
+      "ragas"
+    ]
+  },
+  "llm_serving": {
+    "label": "LLM serving / optimisation",
+    "aliases": [
+      "vllm",
+      "tgi",
+      "text generation inference",
+      "ollama",
+      "llama.cpp",
+      "tensorrt-llm",
+      "tensorrt",
+      "quantization",
+      "quantisation",
+      "gguf",
+      "kv cache",
+      "speculative decoding"
+    ]
+  },
+  "fine_tuning": {
+    "label": "Fine-tuning",
+    "aliases": [
+      "fine-tuning",
+      "fine tuning",
+      "finetuning",
+      "fine-tuned",
+      "lora",
+      "qlora",
+      "peft",
+      "rlhf",
+      "sft",
+      "dpo",
+      "instruction tuning"
+    ]
+  },
+  "llmops": {
+    "label": "LLMOps",
+    "aliases": [
+      "llmops",
+      "llm ops",
+      "langsmith",
+      "langfuse",
+      "helicone",
+      "prompt management",
+      "llm observability",
+      "prompt versioning"
+    ]
+  },
+  "api": {
+    "label": "APIs / services",
+    "aliases": [
+      "rest api",
+      "rest apis",
+      "restful",
+      "graphql",
+      "grpc",
+      "fastapi",
+      "flask",
+      "django",
+      "microservice",
+      "api design",
+      "apis"
+    ]
+  },
+  "aiops": {
+    "label": "AIOps",
+    "aliases": [
+      "aiops",
+      "ai ops",
+      "ai for it operations",
+      "ai-driven operations"
+    ]
+  },
+  "anomaly_detection": {
+    "label": "Anomaly detection",
+    "aliases": [
+      "anomaly detection",
+      "anomalies",
+      "outlier detection",
+      "isolation forest"
+    ]
+  },
+  "event_correlation": {
+    "label": "Event / alert correlation",
+    "aliases": [
+      "event correlation",
+      "alert correlation",
+      "alert noise",
+      "noise reduction",
+      "alert fatigue",
+      "alert deduplication",
+      "event management"
+    ]
+  },
+  "itsm": {
+    "label": "ITSM / ITIL",
+    "aliases": [
+      "itsm",
+      "servicenow",
+      "itil",
+      "jira service management",
+      "remedy",
+      "change management",
+      "problem management"
+    ]
+  },
+  "aiops_tools": {
+    "label": "AIOps platforms",
+    "aliases": [
+      "moogsoft",
+      "bigpanda",
+      "splunk itsi",
+      "dynatrace davis",
+      "pagerduty aiops",
+      "bmc helix",
+      "servicenow itom",
+      "elastic aiops"
+    ]
+  },
+  "log_analytics": {
+    "label": "Log analytics",
+    "aliases": [
+      "log analytics",
+      "log analysis",
+      "log mining",
+      "log parsing",
+      "log clustering"
+    ]
+  },
+  "auto_remediation": {
+    "label": "Auto-remediation / runbook automation",
+    "aliases": [
+      "auto-remediation",
+      "auto remediation",
+      "automated remediation",
+      "self-healing",
+      "self healing",
+      "runbook automation",
+      "rundeck",
+      "stackstorm",
+      "closed-loop automation"
+    ]
+  },
+  "predictive": {
+    "label": "Forecasting / predictive ops",
+    "aliases": [
+      "forecasting",
+      "predictive analytics",
+      "predictive maintenance",
+      "prophet",
+      "arima",
+      "time-series forecasting"
+    ]
+  },
+  "test_automation": {
+    "label": "Test automation",
+    "aliases": [
+      "test automation",
+      "automated testing",
+      "automation testing",
+      "selenium",
+      "playwright",
+      "cypress",
+      "pytest",
+      "robot framework",
+      "appium",
+      "testng",
+      "junit",
+      "webdriver"
+    ]
+  },
+  "rpa": {
+    "label": "RPA",
+    "aliases": [
+      "rpa",
+      "robotic process automation",
+      "uipath",
+      "automation anywhere",
+      "blue prism",
+      "power automate"
+    ]
+  },
+  "workflow": {
+    "label": "Workflow automation",
+    "aliases": [
+      "workflow automation",
+      "process automation",
+      "n8n",
+      "zapier",
+      "temporal",
+      "camunda",
+      "business process automation"
+    ]
+  },
+  "scripting": {
+    "label": "Scripting / tooling",
+    "aliases": [
+      "scripting",
+      "automation scripts",
+      "internal tooling",
+      "cli tools",
+      "tooling"
+    ]
+  },
+  "bdd": {
+    "label": "BDD",
+    "aliases": [
+      "bdd",
+      "cucumber",
+      "gherkin",
+      "behave"
+    ]
+  },
+  "qa": {
+    "label": "QA / test strategy",
+    "aliases": [
+      "quality assurance",
+      "qa",
+      "test strategy",
+      "test plans",
+      "test cases",
+      "regression testing",
+      "sdet"
+    ]
+  },
+  "system_design": {
+    "label": "System design / distributed systems",
+    "aliases": [
+      "system design",
+      "distributed systems",
+      "scalability",
+      "scalable systems",
+      "high-throughput",
+      "low-latency",
+      "solution design",
+      "technical design"
+    ]
+  },
+  "microservices": {
+    "label": "Microservices",
+    "aliases": [
+      "microservices",
+      "micro-services",
+      "service-oriented",
+      "soa",
+      "domain-driven design",
+      "ddd"
+    ]
+  },
+  "event_driven": {
+    "label": "Event-driven / messaging",
+    "aliases": [
+      "event-driven",
+      "event driven",
+      "pub/sub",
+      "message queue",
+      "message queues",
+      "rabbitmq",
+      "sqs",
+      "sns",
+      "nats",
+      "event bus"
+    ]
+  },
+  "cloud_arch": {
+    "label": "Cloud architecture",
+    "aliases": [
+      "cloud architecture",
+      "well-architected",
+      "landing zone",
+      "landing zones",
+      "reference architecture",
+      "reference architectures",
+      "hybrid cloud",
+      "multi-cloud",
+      "multicloud",
+      "cloud strategy"
+    ]
+  },
+  "cost": {
+    "label": "FinOps / cost optimisation",
+    "aliases": [
+      "finops",
+      "cost optimization",
+      "cost optimisation",
+      "cloud cost",
+      "cost reduction",
+      "reserved instances",
+      "savings plans",
+      "spot instances"
+    ]
+  },
+  "migration": {
+    "label": "Cloud migration / modernisation",
+    "aliases": [
+      "cloud migration",
+      "migration to aws",
+      "migration to azure",
+      "migration to gcp",
+      "modernization",
+      "modernisation",
+      "re-platform",
+      "replatform",
+      "lift and shift",
+      "legacy migration"
+    ]
+  },
+  "governance": {
+    "label": "Architecture governance / standards",
+    "aliases": [
+      "architecture governance",
+      "governance",
+      "technical standards",
+      "engineering standards",
+      "adr",
+      "adrs",
+      "architecture decision record",
+      "architecture decision records",
+      "architecture review",
+      "design review",
+      "togaf",
+      "technical strategy"
+    ]
+  },
+  "serverless": {
+    "label": "Serverless",
+    "aliases": [
+      "serverless",
+      "aws lambda",
+      "cloud functions",
+      "azure functions",
+      "step functions"
+    ]
+  },
+  "cert_k8s": {
+    "label": "Kubernetes certification (CKA/CKAD/CKS)",
+    "aliases": [
+      "cka",
+      "ckad",
+      "cks",
+      "certified kubernetes administrator",
+      "certified kubernetes application developer",
+      "certified kubernetes security"
+    ]
+  },
+  "cert_aws": {
+    "label": "AWS certification",
+    "aliases": [
+      "aws certified",
+      "aws solutions architect",
+      "aws devops engineer",
+      "aws certified machine learning",
+      "aws machine learning specialty"
+    ]
+  },
+  "cert_azure": {
+    "label": "Azure certification",
+    "aliases": [
+      "az-104",
+      "az-400",
+      "az-305",
+      "ai-102",
+      "dp-100",
+      "azure administrator associate",
+      "azure solutions architect expert",
+      "azure devops engineer expert",
+      "azure ai engineer"
+    ]
+  },
+  "cert_gcp": {
+    "label": "Google Cloud certification",
+    "aliases": [
+      "professional cloud architect",
+      "professional cloud devops engineer",
+      "professional machine learning engineer",
+      "associate cloud engineer"
+    ]
+  },
+  "cert_terraform": {
+    "label": "Terraform certification",
+    "aliases": [
+      "terraform associate",
+      "hashicorp certified"
+    ]
+  },
+  "cert_itil": {
+    "label": "ITIL certification",
+    "aliases": [
+      "itil v4",
+      "itil 4",
+      "itil foundation",
+      "itil certified"
+    ]
+  },
+  "cert_arch": {
+    "label": "Architecture certification (TOGAF ...)",
+    "aliases": [
+      "togaf",
+      "togaf certified",
+      "aws solutions architect professional",
+      "azure solutions architect expert",
+      "professional cloud architect"
+    ]
+  }
+}

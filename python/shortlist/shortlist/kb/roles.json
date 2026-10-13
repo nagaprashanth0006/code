@@ -1,0 +1,232 @@
+{
+  "_doc": "Role templates. family groups roles in the UI (IT / Infrastructure & AI, later Engineering, ...). skills: each entry is a group of skill ids (any one satisfies it) with a weight: 3 = core, 2 = important, 1 = nice to have. titles: phrases that identify the role in job titles, with how strongly they indicate it (0-1).",
+
+  "platform": {
+    "label": "Platform Engineering", "family": "IT / Infrastructure & AI",
+    "description": "Platform engineer building an internal developer platform on Kubernetes and public cloud: infrastructure as code with Terraform, GitOps delivery with Argo CD, golden paths and self-service templates, Kubernetes operators, service mesh, observability, policy as code and developer experience for product teams.",
+    "titles": {"platform engineer": 1, "platform engineering": 1, "developer platform": 1, "infrastructure engineer": 0.8, "cloud engineer": 0.7, "cloud platform": 0.9, "kubernetes engineer": 0.8, "devops engineer": 0.6, "site reliability": 0.5, "sre": 0.5, "cloud infrastructure": 0.8},
+    "skills": [
+      {"ids": ["kubernetes"], "w": 3},
+      {"ids": ["terraform", "pulumi", "cloudformation", "crossplane", "iac"], "w": 3},
+      {"ids": ["aws", "azure", "gcp"], "w": 3},
+      {"ids": ["idp"], "w": 3},
+      {"ids": ["golden_paths"], "w": 2},
+      {"ids": ["argocd", "gitops"], "w": 2},
+      {"ids": ["cicd", "github_actions", "gitlab_ci", "jenkins", "tekton"], "w": 2},
+      {"ids": ["helm"], "w": 2},
+      {"ids": ["operators"], "w": 2},
+      {"ids": ["go"], "w": 2},
+      {"ids": ["observability", "prometheus", "grafana", "opentelemetry"], "w": 2},
+      {"ids": ["python", "bash"], "w": 1},
+      {"ids": ["service_mesh"], "w": 1},
+      {"ids": ["policy", "devsecops", "vault"], "w": 1},
+      {"ids": ["multi_tenancy"], "w": 1},
+      {"ids": ["networking"], "w": 1},
+      {"ids": ["cost"], "w": 1},
+      {"ids": ["cert_k8s", "cert_terraform", "cert_aws", "cert_azure", "cert_gcp"], "w": 1}
+    ]
+  },
+
+  "devops": {
+    "label": "DevOps", "family": "IT / Infrastructure & AI",
+    "description": "DevOps engineer automating build, test and release: CI/CD pipelines with Jenkins, GitHub Actions or GitLab CI, Docker and Kubernetes deployments, infrastructure as code with Terraform and Ansible, cloud operations on AWS, Azure or GCP, Linux administration, scripting in Bash and Python, monitoring and DevSecOps scanning.",
+    "titles": {"devops engineer": 1, "devops": 1, "build engineer": 0.8, "release engineer": 0.8, "cloud engineer": 0.7, "infrastructure engineer": 0.7, "systems engineer": 0.5, "platform engineer": 0.6, "site reliability": 0.5, "sre": 0.5, "devsecops": 0.9},
+    "skills": [
+      {"ids": ["cicd"], "w": 3},
+      {"ids": ["jenkins", "github_actions", "gitlab_ci", "tekton", "argocd"], "w": 2},
+      {"ids": ["docker"], "w": 3},
+      {"ids": ["kubernetes"], "w": 3},
+      {"ids": ["aws", "azure", "gcp"], "w": 3},
+      {"ids": ["terraform", "pulumi", "cloudformation", "iac"], "w": 2},
+      {"ids": ["ansible", "config_mgmt"], "w": 2},
+      {"ids": ["linux"], "w": 2},
+      {"ids": ["bash"], "w": 2},
+      {"ids": ["python", "go"], "w": 2},
+      {"ids": ["observability", "prometheus", "grafana", "datadog", "elk"], "w": 2},
+      {"ids": ["helm"], "w": 1},
+      {"ids": ["gitops"], "w": 1},
+      {"ids": ["devsecops", "vault"], "w": 1},
+      {"ids": ["networking"], "w": 1},
+      {"ids": ["cert_aws", "cert_azure", "cert_gcp", "cert_k8s", "cert_terraform"], "w": 1}
+    ]
+  },
+
+  "sre": {
+    "label": "Site Reliability Engineering", "family": "IT / Infrastructure & AI",
+    "description": "Site reliability engineer owning production reliability: SLOs, SLIs and error budgets, incident response and on-call, blameless postmortems, observability with Prometheus, Grafana and OpenTelemetry, capacity planning, performance and load testing, chaos engineering, Linux and networking depth, automation in Go or Python, Kubernetes and cloud infrastructure.",
+    "titles": {"site reliability": 1, "sre": 1, "reliability engineer": 1, "production engineer": 0.9, "systems engineer": 0.5, "devops engineer": 0.5, "infrastructure engineer": 0.6, "operations engineer": 0.6, "platform engineer": 0.5},
+    "skills": [
+      {"ids": ["slo"], "w": 3},
+      {"ids": ["incident"], "w": 3},
+      {"ids": ["observability"], "w": 3},
+      {"ids": ["reliability"], "w": 3},
+      {"ids": ["linux"], "w": 3},
+      {"ids": ["postmortem"], "w": 2},
+      {"ids": ["prometheus", "grafana", "datadog", "elk", "splunk"], "w": 2},
+      {"ids": ["opentelemetry"], "w": 1},
+      {"ids": ["capacity"], "w": 2},
+      {"ids": ["performance"], "w": 2},
+      {"ids": ["networking"], "w": 2},
+      {"ids": ["go", "python"], "w": 2},
+      {"ids": ["kubernetes"], "w": 2},
+      {"ids": ["aws", "azure", "gcp"], "w": 2},
+      {"ids": ["chaos"], "w": 1},
+      {"ids": ["terraform", "ansible", "iac"], "w": 1},
+      {"ids": ["databases", "sql"], "w": 1},
+      {"ids": ["cert_k8s", "cert_aws", "cert_gcp", "cert_azure"], "w": 1}
+    ]
+  },
+
+  "ai_eng": {
+    "label": "AI Engineering", "family": "IT / Infrastructure & AI",
+    "description": "AI engineer building LLM-powered products: retrieval augmented generation with embeddings and vector databases, AI agents with tool use and function calling, prompt engineering, LLM evaluation and guardrails, frameworks like LangChain or LlamaIndex, OpenAI, Anthropic or Bedrock APIs, Python backend services and APIs, fine-tuning and model serving.",
+    "titles": {"ai engineer": 1, "generative ai engineer": 1, "genai engineer": 1, "llm engineer": 1, "applied ai": 0.9, "ai developer": 0.9, "applied scientist": 0.6, "machine learning engineer": 0.6, "ml engineer": 0.6, "nlp engineer": 0.8, "software engineer": 0.3},
+    "skills": [
+      {"ids": ["llm"], "w": 3},
+      {"ids": ["rag"], "w": 3},
+      {"ids": ["llm_eval"], "w": 3},
+      {"ids": ["python"], "w": 3},
+      {"ids": ["vector_db"], "w": 2},
+      {"ids": ["embeddings"], "w": 2},
+      {"ids": ["agents"], "w": 2},
+      {"ids": ["llm_frameworks"], "w": 2},
+      {"ids": ["llm_apis"], "w": 2},
+      {"ids": ["prompt_eng"], "w": 2},
+      {"ids": ["api"], "w": 2},
+      {"ids": ["fine_tuning"], "w": 1},
+      {"ids": ["llm_serving"], "w": 1},
+      {"ids": ["llmops"], "w": 1},
+      {"ids": ["genai"], "w": 1},
+      {"ids": ["nlp", "deep_learning", "pytorch"], "w": 1},
+      {"ids": ["typescript"], "w": 1},
+      {"ids": ["docker", "aws", "azure", "gcp"], "w": 1}
+    ]
+  },
+
+  "ml_eng": {
+    "label": "ML Engineering", "family": "IT / Infrastructure & AI",
+    "description": "Machine learning engineer developing and productionising models: feature engineering, model training and hyperparameter tuning with PyTorch, TensorFlow, scikit-learn or XGBoost, model evaluation and A/B testing, deep learning for NLP or computer vision, data pipelines with Spark and SQL, model deployment and serving, experiment tracking and GPU training.",
+    "titles": {"machine learning engineer": 1, "ml engineer": 1, "applied scientist": 0.8, "data scientist": 0.7, "research engineer": 0.8, "deep learning engineer": 1, "computer vision engineer": 0.9, "nlp engineer": 0.9, "ai engineer": 0.6, "software engineer": 0.3},
+    "skills": [
+      {"ids": ["ml"], "w": 3},
+      {"ids": ["python"], "w": 3},
+      {"ids": ["pytorch", "tensorflow"], "w": 3},
+      {"ids": ["model_training"], "w": 3},
+      {"ids": ["sklearn"], "w": 2},
+      {"ids": ["model_eval"], "w": 2},
+      {"ids": ["deep_learning"], "w": 2},
+      {"ids": ["data_pipelines", "spark", "airflow"], "w": 2},
+      {"ids": ["sql"], "w": 2},
+      {"ids": ["model_serving"], "w": 2},
+      {"ids": ["nlp", "cv"], "w": 1},
+      {"ids": ["ml_pipelines", "ml_platforms"], "w": 1},
+      {"ids": ["experiment_tracking"], "w": 1},
+      {"ids": ["gpu"], "w": 1},
+      {"ids": ["feature_store"], "w": 1},
+      {"ids": ["stats"], "w": 1},
+      {"ids": ["llm", "fine_tuning"], "w": 1},
+      {"ids": ["docker", "aws", "azure", "gcp"], "w": 1}
+    ]
+  },
+
+  "aiops": {
+    "label": "AIOps", "family": "IT / Infrastructure & AI",
+    "description": "AIOps engineer applying machine learning to IT operations: anomaly detection on metrics and logs, event and alert correlation to reduce noise, automated root cause analysis, auto-remediation and runbook automation, observability platforms, ITSM integration with ServiceNow, forecasting and predictive operations, Python automation and incident management.",
+    "titles": {"aiops": 1, "ai ops": 1, "observability engineer": 0.7, "monitoring engineer": 0.7, "operations engineer": 0.5, "site reliability": 0.5, "sre": 0.5, "automation engineer": 0.5, "itom": 0.7, "data scientist": 0.4},
+    "skills": [
+      {"ids": ["aiops"], "w": 3},
+      {"ids": ["anomaly_detection"], "w": 3},
+      {"ids": ["event_correlation"], "w": 3},
+      {"ids": ["observability"], "w": 3},
+      {"ids": ["auto_remediation"], "w": 3},
+      {"ids": ["itsm"], "w": 2},
+      {"ids": ["aiops_tools", "datadog", "splunk"], "w": 2},
+      {"ids": ["log_analytics", "elk"], "w": 2},
+      {"ids": ["ml"], "w": 2},
+      {"ids": ["python"], "w": 2},
+      {"ids": ["incident", "postmortem"], "w": 2},
+      {"ids": ["prometheus", "grafana", "opentelemetry"], "w": 1},
+      {"ids": ["predictive", "stats"], "w": 1},
+      {"ids": ["kafka"], "w": 1},
+      {"ids": ["llm", "genai"], "w": 1},
+      {"ids": ["cert_itil"], "w": 1}
+    ]
+  },
+
+  "mlops": {
+    "label": "MLOps", "family": "IT / Infrastructure & AI",
+    "description": "MLOps engineer running the machine learning lifecycle in production: ML pipelines and continuous training, ML platforms such as MLflow, Kubeflow, SageMaker or Vertex AI, model serving with KServe, Seldon or Triton, model registry and versioning, model monitoring and drift detection, experiment tracking, feature stores, CI/CD for models, Docker, Kubernetes and Terraform on cloud, GPU infrastructure.",
+    "titles": {"mlops": 1, "ml ops": 1, "ml platform": 1, "machine learning platform": 1, "ml infrastructure": 1, "machine learning engineer": 0.6, "ml engineer": 0.6, "devops engineer": 0.4, "platform engineer": 0.5, "data engineer": 0.4},
+    "skills": [
+      {"ids": ["ml_pipelines"], "w": 3},
+      {"ids": ["ml_platforms"], "w": 3},
+      {"ids": ["model_serving"], "w": 3},
+      {"ids": ["model_monitoring"], "w": 3},
+      {"ids": ["python"], "w": 3},
+      {"ids": ["model_registry"], "w": 2},
+      {"ids": ["experiment_tracking"], "w": 2},
+      {"ids": ["kubernetes"], "w": 2},
+      {"ids": ["docker"], "w": 2},
+      {"ids": ["cicd", "github_actions", "gitlab_ci", "jenkins", "argocd"], "w": 2},
+      {"ids": ["aws", "azure", "gcp"], "w": 2},
+      {"ids": ["ml"], "w": 2},
+      {"ids": ["terraform", "iac"], "w": 1},
+      {"ids": ["feature_store"], "w": 1},
+      {"ids": ["data_versioning"], "w": 1},
+      {"ids": ["airflow", "data_pipelines", "spark"], "w": 1},
+      {"ids": ["gpu"], "w": 1},
+      {"ids": ["observability", "prometheus", "grafana"], "w": 1}
+    ]
+  },
+
+  "ml_ai_ops_eng": {
+    "label": "ML/AI Ops & Engineering", "family": "IT / Infrastructure & AI",
+    "description": "Hybrid ML and AI engineer who both builds and operates models and LLM systems: model training and fine-tuning, RAG and LLM applications, ML pipelines and ML platforms, model and LLM serving with vLLM, Triton or KServe, LLMOps, evaluation and monitoring for drift and quality, GPU infrastructure on Kubernetes, CI/CD and infrastructure as code on cloud.",
+    "titles": {"mlops": 0.9, "ml ops": 0.9, "llmops": 1, "ai engineer": 0.8, "machine learning engineer": 0.8, "ml engineer": 0.8, "ml platform": 0.9, "ai platform": 1, "ai infrastructure": 1, "ml infrastructure": 0.9, "applied ai": 0.7},
+    "skills": [
+      {"ids": ["python"], "w": 3},
+      {"ids": ["model_serving", "llm_serving"], "w": 3},
+      {"ids": ["ml_pipelines", "ml_platforms"], "w": 3},
+      {"ids": ["model_monitoring", "llmops"], "w": 3},
+      {"ids": ["llm", "genai"], "w": 2},
+      {"ids": ["rag", "agents"], "w": 2},
+      {"ids": ["ml", "deep_learning"], "w": 2},
+      {"ids": ["model_training", "fine_tuning"], "w": 2},
+      {"ids": ["pytorch", "tensorflow"], "w": 2},
+      {"ids": ["llm_eval", "model_eval"], "w": 2},
+      {"ids": ["gpu"], "w": 2},
+      {"ids": ["kubernetes"], "w": 2},
+      {"ids": ["cicd", "github_actions", "gitlab_ci", "argocd"], "w": 2},
+      {"ids": ["aws", "azure", "gcp"], "w": 2},
+      {"ids": ["terraform", "iac"], "w": 1},
+      {"ids": ["docker"], "w": 1},
+      {"ids": ["experiment_tracking", "model_registry"], "w": 1},
+      {"ids": ["vector_db", "embeddings"], "w": 1},
+      {"ids": ["observability", "prometheus", "grafana"], "w": 1}
+    ]
+  },
+
+  "automation": {
+    "label": "Automation", "family": "IT / Infrastructure & AI",
+    "description": "Automation engineer eliminating manual work: scripting and tooling in Python and Bash, test automation with Selenium, Playwright, Cypress or pytest, CI/CD pipeline integration, infrastructure and configuration automation with Ansible and Terraform, workflow and process automation, RPA, API integration, runbook automation and quality engineering.",
+    "titles": {"automation engineer": 1, "test automation": 1, "sdet": 0.9, "software development engineer in test": 1, "test engineer": 0.8, "quality engineer": 0.8, "automation test engineer": 1, "qa engineer": 0.6, "qa automation": 1, "rpa developer": 0.9, "rpa engineer": 0.9, "infrastructure automation": 1, "devops engineer": 0.6, "build engineer": 0.5, "software engineer": 0.3},
+    "skills": [
+      {"ids": ["python"], "w": 3},
+      {"ids": ["test_automation"], "w": 3},
+      {"ids": ["cicd"], "w": 3},
+      {"ids": ["scripting", "bash"], "w": 2},
+      {"ids": ["ansible", "config_mgmt"], "w": 2},
+      {"ids": ["jenkins", "github_actions", "gitlab_ci"], "w": 2},
+      {"ids": ["workflow"], "w": 2},
+      {"ids": ["api"], "w": 2},
+      {"ids": ["terraform", "iac"], "w": 1},
+      {"ids": ["rpa"], "w": 1},
+      {"ids": ["auto_remediation"], "w": 1},
+      {"ids": ["qa", "bdd"], "w": 1},
+      {"ids": ["docker"], "w": 1},
+      {"ids": ["performance"], "w": 1},
+      {"ids": ["java", "typescript", "go"], "w": 1},
+      {"ids": ["linux"], "w": 1}
+    ]
+  }
+}

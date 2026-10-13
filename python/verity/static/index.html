@@ -24,7 +24,7 @@
 html,body{margin:0}
 body{background:var(--bg);color:var(--text);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,Inter,sans-serif;-webkit-font-smoothing:antialiased;min-height:100vh}
 button{font:inherit;color:inherit;cursor:pointer}
-.wrap{max-width:1180px;margin:0 auto;padding:0 20px 64px}
+.wrap{width:min(100% - 32px,max(80vw,1040px));max-width:2560px;margin:0 auto;padding:0 0 64px}
 header{display:flex;align-items:center;gap:12px;padding:22px 0 26px}
 .logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:19px;letter-spacing:-.01em}
 .logo svg{width:30px;height:30px}
@@ -67,7 +67,7 @@ kbd{font:11px var(--mono);color:inherit;opacity:.7;border:1px solid currentColor
 .error{display:none;margin:14px 0 0;padding:12px 16px;border-radius:12px;background:color-mix(in srgb,var(--ai) 12%,transparent);color:var(--ai);font-weight:550}
 .error.show{display:block}
 /* results */
-#results{display:none;margin-top:22px;gap:18px;grid-template-columns:330px minmax(0,1fr);align-items:start}
+#results{display:none;margin-top:22px;gap:18px;grid-template-columns:clamp(300px,24%,400px) minmax(0,1fr);align-items:start}
 #results.show{display:grid;animation:fade .35s ease}
 @keyframes fade{from{opacity:0;transform:translateY(6px)}}
 .side{display:flex;flex-direction:column;gap:18px;position:sticky;top:16px}
@@ -124,9 +124,8 @@ kbd{font:11px var(--mono);color:inherit;opacity:.7;border:1px solid currentColor
 .how .body{padding:0 22px 20px;color:var(--muted);font-size:14px;columns:2 320px;column-gap:32px}
 .how .body p{margin:0 0 12px;break-inside:avoid}
 .how b{color:var(--text)}
-footer{color:var(--muted);font-size:12.5px;text-align:center;margin-top:28px}
 @media (max-width:900px){#results.show{grid-template-columns:1fr}.side{position:static}}
-@media (max-width:560px){.wrap{padding:0 16px 48px}.pill{display:none}.text{padding:16px;font-size:15.5px}textarea{padding:14px 16px}.bar{padding:12px 14px}.kbd-hint{display:none}}
+@media (max-width:560px){.wrap{width:calc(100% - 32px);padding:0 0 48px}.pill{display:none}.text{padding:16px;font-size:15.5px}textarea{padding:14px 16px}.bar{padding:12px 14px}.kbd-hint{display:none}}
 </style>
 </head>
 <body>
@@ -225,7 +224,6 @@ footer{color:var(--muted);font-size:12.5px;text-align:center;margin-top:28px}
       <p><b>Private by design.</b> Everything runs on this machine. Your text is never sent to a third party or stored.</p>
     </div>
   </details>
-  <footer>Verity · runs locally · results are probabilistic, not proof</footer>
 </div>
 <div id="tip" role="tooltip"></div>
 

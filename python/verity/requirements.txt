@@ -1,5 +1,7 @@
 flask>=3.0
-pypdf>=4.0
+pymupdf>=1.24      # PDF text (keeps word spacing); AGPL-3.0
+pypdf>=4.0         # PDF fallback
+olefile>=0.46      # legacy .doc reader
 numpy>=1.24
 # Language-model engine (strongly recommended; without these the app falls back to stylometry only)
 torch>=2.1

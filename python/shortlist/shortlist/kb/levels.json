@@ -1,0 +1,37 @@
+{
+  "_doc": "Seniority levels. years: [min, max] of the typical band. signals: phrases showing scope at this level (weight 1-3); target is the signal weight a strong resume at this level usually shows. skills: architecture-type skill ids that count as evidence. title_words: words in job titles that indicate the level (higher rank = more senior).",
+
+  "engineer": {
+    "label": "Engineer", "rank": 0, "years": [3, 8], "target": 3,
+    "signals": {"built": 1, "implemented": 1, "developed": 1, "automated": 1, "deployed": 1, "migrated": 1, "maintained": 1, "improved": 1, "reduced": 1, "on-call": 1},
+    "skills": []
+  },
+  "senior": {
+    "label": "Senior", "rank": 1, "years": [5, 12], "target": 6,
+    "signals": {"designed": 2, "owned": 2, "ownership": 2, "led the": 1, "mentored": 2, "mentoring": 2, "code review": 1, "code reviews": 1, "end-to-end": 1, "drove": 1, "spearheaded": 1, "improved": 1, "reduced": 1, "introduced": 1, "on-call": 1, "incident commander": 2},
+    "skills": ["system_design"]
+  },
+  "lead": {
+    "label": "Lead / Principal", "rank": 2, "years": [8, 18], "target": 9,
+    "signals": {"tech lead": 3, "technical lead": 3, "team lead": 3, "led a team": 3, "led team": 3, "managed a team": 2, "team of": 2, "mentored": 2, "mentoring": 2, "coached": 2, "hiring": 2, "hired": 2, "interviewing": 1, "roadmap": 2, "cross-functional": 2, "cross-team": 2, "stakeholders": 2, "stakeholder": 2, "org-wide": 2, "company-wide": 2, "strategy": 2, "standards": 1, "rfc": 1, "rfcs": 1, "design docs": 1, "principal": 2, "staff engineer": 2},
+    "skills": ["system_design", "governance"]
+  },
+  "architect": {
+    "label": "Architect", "rank": 3, "years": [10, 22], "target": 10,
+    "signals": {"architected": 3, "architecture": 2, "solution architecture": 3, "reference architecture": 2, "target architecture": 2, "designed": 1, "trade-offs": 2, "tradeoffs": 2, "non-functional requirements": 2, "nfr": 1, "stakeholders": 2, "governance": 2, "standards": 2, "blueprint": 2, "blueprints": 2, "migration strategy": 2, "technical strategy": 2, "adr": 2, "adrs": 2, "design authority": 2, "pre-sales": 1, "presales": 1, "customer workshops": 1, "roadmap": 1},
+    "skills": ["system_design", "cloud_arch", "governance", "microservices", "event_driven", "migration", "cost", "cert_arch"]
+  },
+  "sr_architect": {
+    "label": "Sr. Architect", "rank": 4, "years": [14, 30], "target": 12,
+    "signals": {"enterprise architecture": 3, "chief architect": 3, "principal architect": 3, "lead architect": 3, "head of": 2, "director": 2, "vp": 1, "cto": 2, "technical vision": 3, "technology strategy": 3, "technical strategy": 2, "org-wide": 2, "company-wide": 2, "multi-year": 2, "portfolio": 2, "architecture board": 3, "design authority": 2, "governance": 2, "executive": 2, "c-level": 2, "budget": 2, "vendor selection": 2, "build vs buy": 2, "transformation": 2, "architects": 2, "togaf": 1, "standards": 1},
+    "skills": ["cloud_arch", "governance", "system_design", "migration", "cost", "cert_arch"]
+  },
+
+  "title_words": [
+    {"words": ["chief architect", "enterprise architect", "principal architect", "lead architect", "head of architecture", "senior architect", "sr. architect", "sr architect", "distinguished"], "rank": 4},
+    {"words": ["architect"], "rank": 3},
+    {"words": ["principal", "staff", "lead", "head of", "manager", "director"], "rank": 2},
+    {"words": ["senior", "sr.", "sr ", "snr"], "rank": 1},
+    {"words": ["junior", "jr.", "graduate", "intern", "trainee", "associate"], "rank": -1}
+  ]
+}

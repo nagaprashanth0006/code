@@ -24,13 +24,15 @@ class ExtractError(Exception):
     pass
 
 
-def extract(filename: str, data: bytes) -> str:
+def extract(filename: str, data: bytes, keep_lines: bool = False) -> str:
+    """keep_lines=True preserves line breaks (needed for resumes, where headings and job
+    headers are separate lines); otherwise wrapped PDF lines are re-joined into prose."""
     ext = os.path.splitext(filename.lower())[1]
     if ext not in SUPPORTED:
         raise ExtractError(f"Unsupported file type “{ext or filename}”.")
     try:
         if ext == ".pdf":
-            text = _pdf(data)
+            text = _pdf(data, keep_lines)
         elif ext in (".docx", ".docm", ".dotx"):
             text = _docx(data)
         elif ext in (".odt", ".ott"):
@@ -66,16 +68,28 @@ def _decode(data: bytes) -> str:
         return data.decode("cp1252", errors="replace")
 
 
-def _pdf(data: bytes) -> str:
-    from pypdf import PdfReader
-    reader = PdfReader(io.BytesIO(data))
-    if reader.is_encrypted:
-        try:
-            reader.decrypt("")
-        except Exception:
+def _pdf(data: bytes, keep_lines: bool = False) -> str:
+    # PyMuPDF keeps word spacing on PDFs that pypdf reads as "E x p e r i e n c e"; pypdf is the fallback.
+    try:
+        import fitz
+        pdf = fitz.open(stream=data, filetype="pdf")
+        if pdf.needs_pass and not pdf.authenticate(""):
             raise ExtractError("This PDF is password-protected.")
-    pages = [p.extract_text() or "" for p in reader.pages]
+        pages = [page.get_text("text", sort=True) for page in pdf]
+    except ExtractError:
+        raise
+    except Exception:
+        from pypdf import PdfReader
+        reader = PdfReader(io.BytesIO(data))
+        if reader.is_encrypted:
+            try:
+                reader.decrypt("")
+            except Exception:
+                raise ExtractError("This PDF is password-protected.")
+        pages = [p.extract_text() or "" for p in reader.pages]
     text = "\n\n".join(pages)
+    if keep_lines:
+        return text
     # Re-join words hyphenated across line breaks, and lines wrapped mid-sentence.
     text = re.sub(r"(\w)-\n(\w)", r"\1\2", text)
     text = re.sub(r"(?<![.!?:\n])\n(?!\n|[-•*\d])", " ", text)
@@ -184,9 +198,16 @@ def _doc(data: bytes) -> str:
     if data[:200].lstrip().lower().startswith((b"<html", b"<!doctype")):
         return _html(_decode(data))
 
+    git_bin = [os.path.join(os.environ.get(v, ""), "Git", "mingw64", "bin", "antiword.exe")
+               for v in ("ProgramFiles", "ProgramFiles(x86)")]
     with tempfile.TemporaryDirectory() as tmp:
         src = os.path.join(tmp, "in.doc")
         open(src, "wb").write(data)
+        antiword = shutil.which("antiword") or next((p for p in git_bin if os.path.exists(p)), None)
+        if antiword:
+            r = subprocess.run([antiword, "-w", "0", src], capture_output=True, timeout=30)
+            if r.returncode == 0 and r.stdout.strip():
+                return _decode(r.stdout)
         soffice = shutil.which("soffice") or shutil.which("libreoffice") or next(
             (p for p in (r"C:\Program Files\LibreOffice\program\soffice.exe",
                          "/Applications/LibreOffice.app/Contents/MacOS/soffice") if os.path.exists(p)), None)
@@ -196,11 +217,52 @@ def _doc(data: bytes) -> str:
             out = os.path.join(tmp, "in.txt")
             if os.path.exists(out):
                 return _decode(open(out, "rb").read())
-        if shutil.which("antiword"):
-            r = subprocess.run(["antiword", src], capture_output=True, timeout=30)
-            if r.returncode == 0:
-                return _decode(r.stdout)
+    try:
+        text = _doc_word97(data)
+        if len(text.split()) >= 20:
+            return text
+    except Exception:
+        pass
     return _doc_scan(data)
+
+
+def _doc_word97(data: bytes) -> str:
+    """Word 97-2003 binary: read the piece table (CLX) from the table stream and decode each piece."""
+    import struct
+
+    import olefile
+    ole = olefile.OleFileIO(io.BytesIO(data))
+    wd = ole.openstream("WordDocument").read()
+    if struct.unpack_from("<H", wd, 0)[0] != 0xA5EC:
+        raise ValueError("not a Word document")
+    flags = struct.unpack_from("<H", wd, 0x0A)[0]
+    table = ole.openstream("1Table" if flags & 0x0200 else "0Table").read()
+    ccp_text = struct.unpack_from("<I", wd, 0x4C)[0]
+    fc_clx, lcb_clx = struct.unpack_from("<II", wd, 0x01A2)
+    clx = table[fc_clx:fc_clx + lcb_clx]
+    i = 0
+    while i < len(clx) and clx[i] == 0x01:
+        i += 3 + struct.unpack_from("<H", clx, i + 1)[0]
+    if i >= len(clx) or clx[i] != 0x02:
+        raise ValueError("no piece table")
+    lcb = struct.unpack_from("<I", clx, i + 1)[0]
+    plc = clx[i + 5:i + 5 + lcb]
+    n = (lcb - 4) // 12
+    cps = struct.unpack_from(f"<{n + 1}I", plc, 0)
+    out = []
+    for k in range(n):
+        start, end = cps[k], min(cps[k + 1], ccp_text)
+        if start >= ccp_text:
+            break
+        fc = struct.unpack_from("<I", plc, 4 * (n + 1) + 8 * k + 2)[0]
+        if fc & 0x40000000:
+            off = (fc & 0x3FFFFFFF) // 2
+            out.append(wd[off:off + (end - start)].decode("cp1252", "replace"))
+        else:
+            out.append(wd[fc:fc + 2 * (end - start)].decode("utf-16-le", "replace"))
+    text = re.sub("\x13[^\x14\x15]*\x14?", "", "".join(out)).replace("\x15", "")
+    text = text.replace("\x07", "\t").replace("\r", "\n").replace("\x0b", "\n").replace("\x0c", "\n")
+    return re.sub(r"[\x00-\x08\x0e-\x1f]", "", text)
 
 
 def _doc_scan(data: bytes) -> str:

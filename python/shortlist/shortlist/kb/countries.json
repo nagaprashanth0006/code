@@ -1,0 +1,805 @@
+{
+  "_doc": "Country/region profiles. english_work: how common English-only tech roles are (high/medium/low) - decides how much the local language adds. immigration_language: languages an immigration route for skilled tech workers requires (any one); empty if none. personal_data: whether photo / date of birth / marital status on a CV is common, neutral or discouraged. Notes are general guidance, not legal advice: rules change, so check official sources.",
+  "canada": {
+    "label": "Canada",
+    "region": "north_america",
+    "eu": false,
+    "places": [
+      "canada",
+      "toronto",
+      "vancouver",
+      "montreal",
+      "montréal",
+      "ottawa",
+      "calgary",
+      "waterloo",
+      "edmonton",
+      "mississauga",
+      "kitchener",
+      "halifax",
+      "winnipeg",
+      "quebec",
+      "ontario",
+      "british columbia",
+      "alberta"
+    ],
+    "local_languages": [
+      "English",
+      "French"
+    ],
+    "english_work": "high",
+    "immigration_language": [
+      "English",
+      "French"
+    ],
+    "auth": [
+      "canadian citizen",
+      "canadian citizenship",
+      "permanent resident of canada",
+      "canadian pr",
+      "canada pr",
+      "open work permit",
+      "express entry",
+      "lmia",
+      "pgwp",
+      "canadian permanent resident",
+      "canadian work permit",
+      "canada work permit"
+    ],
+    "personal_data": "discouraged",
+    "pages": [
+      1,
+      2
+    ],
+    "notes": [
+      "Express Entry and most permanent-residence routes require an approved English or French language test.",
+      "Leave out photo, date of birth and marital status; Canadian employers expect a 1–2 page resume.",
+      "Bilingual English/French is a plus, and often required in Quebec and federal roles."
+    ]
+  },
+  "eu": {
+    "label": "EU (general)",
+    "region": "eu",
+    "eu": true,
+    "places": [
+      "european union",
+      "europe",
+      "germany",
+      "deutschland",
+      "finland",
+      "netherlands",
+      "denmark",
+      "portugal",
+      "france",
+      "spain",
+      "austria",
+      "belgium",
+      "ireland",
+      "italy",
+      "sweden",
+      "poland",
+      "czech",
+      "czechia",
+      "luxembourg",
+      "estonia",
+      "latvia",
+      "lithuania",
+      "greece",
+      "romania",
+      "bulgaria",
+      "croatia",
+      "slovenia",
+      "slovakia",
+      "hungary",
+      "cyprus",
+      "malta",
+      "berlin",
+      "munich",
+      "amsterdam",
+      "paris",
+      "madrid",
+      "barcelona",
+      "lisbon",
+      "dublin",
+      "vienna",
+      "copenhagen",
+      "helsinki",
+      "stockholm",
+      "warsaw",
+      "prague",
+      "brussels",
+      "milan",
+      "tallinn"
+    ],
+    "local_languages": [],
+    "english_work": "high",
+    "immigration_language": [],
+    "auth": [
+      "eu citizen",
+      "eu citizenship",
+      "eu passport",
+      "eu national",
+      "eea citizen",
+      "eu blue card",
+      "blue card",
+      "right to work in the eu",
+      "eu work permit",
+      "eu long-term resident"
+    ],
+    "personal_data": "neutral",
+    "pages": [
+      1,
+      3
+    ],
+    "notes": [
+      "EU citizens can work in any member state without a permit; others usually need a national permit or the EU Blue Card (degree + salary threshold).",
+      "A languages section with CEFR levels (A1–C2) is standard on European CVs.",
+      "Europass format is accepted but not required; 2 pages is the norm."
+    ]
+  },
+  "germany": {
+    "label": "Germany",
+    "region": "eu",
+    "eu": true,
+    "places": [
+      "germany",
+      "deutschland",
+      "berlin",
+      "munich",
+      "münchen",
+      "muenchen",
+      "hamburg",
+      "frankfurt",
+      "cologne",
+      "köln",
+      "koeln",
+      "stuttgart",
+      "düsseldorf",
+      "dusseldorf",
+      "karlsruhe",
+      "dresden",
+      "leipzig",
+      "nuremberg",
+      "nürnberg",
+      "bonn",
+      "hanover",
+      "hannover"
+    ],
+    "local_languages": [
+      "German"
+    ],
+    "english_work": "medium",
+    "immigration_language": [],
+    "auth": [
+      "eu blue card",
+      "blue card",
+      "german citizen",
+      "german citizenship",
+      "aufenthaltstitel",
+      "niederlassungserlaubnis",
+      "eu citizen",
+      "eu citizenship",
+      "eu passport",
+      "chancenkarte",
+      "opportunity card"
+    ],
+    "personal_data": "common",
+    "pages": [
+      1,
+      3
+    ],
+    "notes": [
+      "The EU Blue Card has no German-language requirement; German helps with faster permanent residence and with many non-Berlin employers.",
+      "A photo and date of birth are traditional but optional; anti-discrimination law means employers can't require them.",
+      "German CVs (Lebenslauf) are usually reverse-chronological with exact month/year dates."
+    ]
+  },
+  "finland": {
+    "label": "Finland",
+    "region": "eu",
+    "eu": true,
+    "places": [
+      "finland",
+      "suomi",
+      "helsinki",
+      "espoo",
+      "tampere",
+      "oulu",
+      "turku",
+      "vantaa",
+      "jyväskylä"
+    ],
+    "local_languages": [
+      "Finnish",
+      "Swedish"
+    ],
+    "english_work": "high",
+    "immigration_language": [],
+    "auth": [
+      "finnish citizen",
+      "specialist permit",
+      "eu blue card",
+      "blue card",
+      "eu citizen",
+      "eu citizenship",
+      "eu passport",
+      "finnish residence permit",
+      "finland residence permit"
+    ],
+    "personal_data": "neutral",
+    "pages": [
+      1,
+      2
+    ],
+    "notes": [
+      "Specialist and EU Blue Card permits have no language requirement; most tech teams in Helsinki work in English.",
+      "Finnish is a plus for public sector and customer-facing roles.",
+      "Keep it concise: 1–2 pages."
+    ]
+  },
+  "netherlands": {
+    "label": "Netherlands",
+    "region": "eu",
+    "eu": true,
+    "places": [
+      "netherlands",
+      "nederland",
+      "holland",
+      "amsterdam",
+      "rotterdam",
+      "the hague",
+      "den haag",
+      "utrecht",
+      "eindhoven",
+      "delft",
+      "leiden",
+      "groningen"
+    ],
+    "local_languages": [
+      "Dutch"
+    ],
+    "english_work": "high",
+    "immigration_language": [],
+    "auth": [
+      "highly skilled migrant",
+      "kennismigrant",
+      "30% ruling",
+      "dutch citizen",
+      "eu blue card",
+      "blue card",
+      "eu citizen",
+      "eu citizenship",
+      "eu passport",
+      "bsn"
+    ],
+    "personal_data": "neutral",
+    "pages": [
+      1,
+      2
+    ],
+    "notes": [
+      "The highly-skilled-migrant route needs an IND-recognised sponsor and a salary threshold, but no Dutch.",
+      "English is the working language at most tech companies; Dutch is a plus.",
+      "Dutch employers prefer short, direct CVs (1–2 pages)."
+    ]
+  },
+  "denmark": {
+    "label": "Denmark",
+    "region": "eu",
+    "eu": true,
+    "places": [
+      "denmark",
+      "danmark",
+      "copenhagen",
+      "københavn",
+      "kobenhavn",
+      "aarhus",
+      "odense",
+      "aalborg"
+    ],
+    "local_languages": [
+      "Danish"
+    ],
+    "english_work": "high",
+    "immigration_language": [],
+    "auth": [
+      "pay limit scheme",
+      "positive list",
+      "fast-track scheme",
+      "danish citizen",
+      "eu blue card",
+      "blue card",
+      "eu citizen",
+      "eu citizenship",
+      "eu passport",
+      "cpr number"
+    ],
+    "personal_data": "neutral",
+    "pages": [
+      1,
+      2
+    ],
+    "notes": [
+      "Pay Limit and Fast-track schemes have no Danish-language requirement.",
+      "Many tech teams work in English; Danish helps for long-term and public roles.",
+      "A photo is common but optional; 2 pages is typical."
+    ]
+  },
+  "portugal": {
+    "label": "Portugal",
+    "region": "eu",
+    "eu": true,
+    "places": [
+      "portugal",
+      "lisbon",
+      "lisboa",
+      "porto",
+      "braga",
+      "coimbra",
+      "aveiro",
+      "faro"
+    ],
+    "local_languages": [
+      "Portuguese"
+    ],
+    "english_work": "medium",
+    "immigration_language": [],
+    "auth": [
+      "tech visa",
+      "highly qualified activity visa",
+      "portuguese citizen",
+      "nif",
+      "eu blue card",
+      "blue card",
+      "eu citizen",
+      "eu citizenship",
+      "eu passport"
+    ],
+    "personal_data": "neutral",
+    "pages": [
+      1,
+      2
+    ],
+    "notes": [
+      "Tech Visa and highly-qualified routes have no Portuguese requirement; Lisbon and Porto tech hubs often work in English.",
+      "Portuguese is a plus for local companies.",
+      "Europass format is common."
+    ]
+  },
+  "france": {
+    "label": "France",
+    "region": "eu",
+    "eu": true,
+    "places": [
+      "france",
+      "paris",
+      "lyon",
+      "toulouse",
+      "nantes",
+      "grenoble",
+      "sophia antipolis",
+      "bordeaux",
+      "lille",
+      "marseille",
+      "rennes",
+      "montpellier",
+      "nice"
+    ],
+    "local_languages": [
+      "French"
+    ],
+    "english_work": "low",
+    "immigration_language": [],
+    "auth": [
+      "passeport talent",
+      "talent passport",
+      "french citizen",
+      "titre de séjour",
+      "titre de sejour",
+      "eu blue card",
+      "blue card",
+      "eu citizen",
+      "eu citizenship",
+      "eu passport"
+    ],
+    "personal_data": "common",
+    "pages": [
+      1,
+      2
+    ],
+    "notes": [
+      "The Talent Passport has no French requirement, but most employers outside international teams expect working French.",
+      "French CVs are traditionally 1–2 pages; a photo is common but optional.",
+      "Show French level (CEFR) explicitly."
+    ]
+  },
+  "spain": {
+    "label": "Spain",
+    "region": "eu",
+    "eu": true,
+    "places": [
+      "spain",
+      "españa",
+      "espana",
+      "madrid",
+      "barcelona",
+      "valencia",
+      "málaga",
+      "malaga",
+      "seville",
+      "sevilla",
+      "bilbao",
+      "zaragoza"
+    ],
+    "local_languages": [
+      "Spanish"
+    ],
+    "english_work": "medium",
+    "immigration_language": [],
+    "auth": [
+      "highly qualified professional",
+      "digital nomad visa",
+      "nie",
+      "spanish citizen",
+      "eu blue card",
+      "blue card",
+      "eu citizen",
+      "eu citizenship",
+      "eu passport"
+    ],
+    "personal_data": "common",
+    "pages": [
+      1,
+      2
+    ],
+    "notes": [
+      "Highly-qualified and digital-nomad routes have no Spanish requirement.",
+      "Madrid/Barcelona tech hubs often work in English; Spanish is a strong plus elsewhere.",
+      "A photo is common but optional."
+    ]
+  },
+  "austria": {
+    "label": "Austria",
+    "region": "eu",
+    "eu": true,
+    "places": [
+      "austria",
+      "österreich",
+      "osterreich",
+      "vienna",
+      "wien",
+      "graz",
+      "linz",
+      "salzburg",
+      "innsbruck",
+      "klagenfurt"
+    ],
+    "local_languages": [
+      "German"
+    ],
+    "english_work": "medium",
+    "immigration_language": [
+      "German",
+      "English"
+    ],
+    "auth": [
+      "red-white-red card",
+      "rot-weiss-rot",
+      "rot-weiß-rot",
+      "austrian citizen",
+      "eu blue card",
+      "blue card",
+      "eu citizen",
+      "eu citizenship",
+      "eu passport"
+    ],
+    "personal_data": "common",
+    "pages": [
+      1,
+      3
+    ],
+    "notes": [
+      "The Red-White-Red Card awards points for German or English language skills, so English counts.",
+      "German is expected by many employers outside Vienna's international teams.",
+      "A photo and date of birth are traditional but optional."
+    ]
+  },
+  "russia": {
+    "label": "Russia",
+    "region": "russia",
+    "eu": false,
+    "places": [
+      "russia",
+      "russian federation",
+      "moscow",
+      "saint petersburg",
+      "st. petersburg",
+      "st petersburg",
+      "novosibirsk",
+      "kazan",
+      "yekaterinburg",
+      "innopolis",
+      "nizhny novgorod"
+    ],
+    "local_languages": [
+      "Russian"
+    ],
+    "english_work": "low",
+    "immigration_language": [],
+    "auth": [
+      "russian citizen",
+      "russian citizenship",
+      "highly qualified specialist",
+      "work patent",
+      "russian residence permit",
+      "russian work permit"
+    ],
+    "personal_data": "common",
+    "pages": [
+      1,
+      2
+    ],
+    "notes": [
+      "The highly-qualified-specialist route has no language exam; standard work permits require a Russian test.",
+      "Most local employers expect Russian; a Russian-language CV (резюме) is usual.",
+      "Cross-border hiring may be restricted by sanctions in some countries; check before applying."
+    ]
+  },
+  "japan": {
+    "label": "Japan",
+    "region": "asia",
+    "eu": false,
+    "places": [
+      "japan",
+      "tokyo",
+      "osaka",
+      "yokohama",
+      "kyoto",
+      "fukuoka",
+      "nagoya",
+      "sapporo",
+      "kobe"
+    ],
+    "local_languages": [
+      "Japanese"
+    ],
+    "english_work": "low",
+    "immigration_language": [],
+    "auth": [
+      "japanese citizen",
+      "highly skilled professional",
+      "hsp visa",
+      "engineer/specialist in humanities",
+      "engineer visa",
+      "permanent resident of japan",
+      "japan work visa",
+      "residence card"
+    ],
+    "personal_data": "common",
+    "pages": [
+      1,
+      3
+    ],
+    "notes": [
+      "Work visas don't require Japanese; JLPT N1/N2 earns points on the Highly Skilled Professional visa.",
+      "Japanese companies expect a rirekisho (with photo) and shokumu keirekisho; international companies accept an English CV.",
+      "State JLPT level explicitly if you have one."
+    ]
+  },
+  "india": {
+    "label": "India",
+    "region": "asia",
+    "eu": false,
+    "places": [
+      "india",
+      "bangalore",
+      "bengaluru",
+      "hyderabad",
+      "pune",
+      "chennai",
+      "mumbai",
+      "delhi",
+      "new delhi",
+      "gurgaon",
+      "gurugram",
+      "noida",
+      "kolkata",
+      "ahmedabad",
+      "kochi",
+      "trivandrum",
+      "coimbatore",
+      "jaipur",
+      "chandigarh",
+      "indore"
+    ],
+    "local_languages": [
+      "Hindi",
+      "English"
+    ],
+    "english_work": "high",
+    "immigration_language": [],
+    "auth": [
+      "indian citizen",
+      "indian citizenship",
+      "oci",
+      "overseas citizen of india",
+      "indian employment visa",
+      "india employment visa"
+    ],
+    "personal_data": "neutral",
+    "pages": [
+      1,
+      3
+    ],
+    "notes": [
+      "English is the working language in tech; regional languages are rarely required.",
+      "Foreign nationals need an Employment Visa (salary threshold applies); OCI holders can work freely.",
+      "Date of birth and marital status are traditional on Indian CVs but not required."
+    ]
+  },
+  "malaysia": {
+    "label": "Malaysia",
+    "region": "asia",
+    "eu": false,
+    "places": [
+      "malaysia",
+      "kuala lumpur",
+      "penang",
+      "cyberjaya",
+      "johor bahru",
+      "petaling jaya",
+      "putrajaya",
+      "selangor"
+    ],
+    "local_languages": [
+      "Malay",
+      "English"
+    ],
+    "english_work": "high",
+    "immigration_language": [],
+    "auth": [
+      "malaysian citizen",
+      "malaysia pr",
+      "residence pass-talent",
+      "rp-t",
+      "malaysia employment pass",
+      "malaysian employment pass"
+    ],
+    "personal_data": "neutral",
+    "pages": [
+      1,
+      3
+    ],
+    "notes": [
+      "English is widely used in tech; Malay or Mandarin is a plus for some employers.",
+      "Foreign hires need an Employment Pass sponsored by the employer.",
+      "Nationality and photo are commonly included on local CVs."
+    ]
+  },
+  "singapore": {
+    "label": "Singapore",
+    "region": "asia",
+    "eu": false,
+    "places": [
+      "singapore"
+    ],
+    "local_languages": [
+      "English"
+    ],
+    "english_work": "high",
+    "immigration_language": [],
+    "auth": [
+      "singapore citizen",
+      "singapore pr",
+      "singapore permanent resident",
+      "ep holder",
+      "s pass",
+      "one pass",
+      "tech.pass",
+      "singapore employment pass"
+    ],
+    "personal_data": "neutral",
+    "pages": [
+      1,
+      2
+    ],
+    "notes": [
+      "English is the business language; no language requirement for work passes.",
+      "The Employment Pass uses the COMPASS points framework (salary, qualifications, employer factors).",
+      "State citizenship/PR or pass status clearly: local employers screen on it."
+    ]
+  },
+  "australia": {
+    "label": "Australia",
+    "region": "oceania",
+    "eu": false,
+    "places": [
+      "australia",
+      "sydney",
+      "melbourne",
+      "brisbane",
+      "perth",
+      "adelaide",
+      "canberra",
+      "gold coast",
+      "hobart",
+      "nsw",
+      "victoria",
+      "queensland"
+    ],
+    "local_languages": [
+      "English"
+    ],
+    "english_work": "high",
+    "immigration_language": [
+      "English"
+    ],
+    "auth": [
+      "australian citizen",
+      "australian pr",
+      "australian permanent resident",
+      "full working rights",
+      "full work rights",
+      "482 visa",
+      "subclass 482",
+      "subclass 189",
+      "subclass 190",
+      "skills in demand visa",
+      "working holiday visa"
+    ],
+    "personal_data": "discouraged",
+    "pages": [
+      2,
+      3
+    ],
+    "notes": [
+      "Skilled visas require proof of English proficiency (unless exempt by passport).",
+      "Leave out photo, date of birth and marital status.",
+      "State working rights at the top: Australian recruiters filter on it."
+    ]
+  },
+  "new_zealand": {
+    "label": "New Zealand",
+    "region": "oceania",
+    "eu": false,
+    "places": [
+      "new zealand",
+      "auckland",
+      "wellington",
+      "christchurch",
+      "hamilton",
+      "dunedin",
+      "tauranga"
+    ],
+    "local_languages": [
+      "English"
+    ],
+    "english_work": "high",
+    "immigration_language": [
+      "English"
+    ],
+    "auth": [
+      "new zealand citizen",
+      "nz citizen",
+      "nz resident",
+      "resident visa",
+      "accredited employer work visa",
+      "aewv",
+      "full working rights",
+      "skilled migrant category",
+      "nz skilled migrant",
+      "nz green list",
+      "new zealand resident"
+    ],
+    "personal_data": "discouraged",
+    "pages": [
+      2,
+      3
+    ],
+    "notes": [
+      "Skilled Migrant residence requires English proficiency (unless exempt).",
+      "Roles on the Green List have faster residence pathways.",
+      "Leave out photo and date of birth; state your visa status."
+    ]
+  }
+}

@@ -4,6 +4,9 @@ Verity is a small local web app. It estimates how likely a text is to be AI-gene
 probability, and highlights each sentence as human-like or AI-like. You can paste text or upload TXT, MD,
 PDF, DOC, DOCX, ODT, RTF or HTML files.
 
+The resume / ATS checker that used to live here is now its own project:
+[`../shortlist`](../shortlist).
+
 ```
 pip install -r requirements.txt
 python app.py          # → http://127.0.0.1:8000
@@ -107,6 +110,6 @@ static/index.html    the whole UI: vanilla JS/CSS, no build step, no external re
 detector/lm.py       per-token LM statistics (Fast-DetectGPT / Binoculars ingredients)
 detector/style.py    stylometric features and UI explanations
 detector/model.py    ensemble, sentence highlighting, verdicts
-detector/extract.py  TXT/PDF/DOC/DOCX/ODT/RTF/HTML → text
+detector/extract.py  TXT/PDF/DOC/DOCX/ODT/RTF/HTML → text (PyMuPDF for PDF, pypdf fallback)
 calibrate.py         fits detector/calibration.json from labelled data
 ```

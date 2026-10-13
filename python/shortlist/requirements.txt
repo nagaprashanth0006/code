@@ -1,0 +1,8 @@
+flask>=3.0
+pymupdf>=1.24      # PDF text with layout (columns, fonts); AGPL-3.0
+pypdf>=4.0         # PDF fallback + letter-spacing check
+olefile>=0.46      # legacy Word .doc reader
+numpy>=1.24
+torch>=2.1         # meaning-based similarity (all-MiniLM-L6-v2, ~90 MB, CPU is fine)
+transformers>=4.45
+pytest>=7          # tests
