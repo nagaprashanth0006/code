@@ -1,0 +1,19 @@
+{
+  "name": "@itinera/ingest",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Desktop batch jobs: city ingestion into a SQLite file, PMTiles extraction, map assets.",
+  "type": "module",
+  "scripts": {
+    "ingest": "tsx src/cli.ts",
+    "typecheck": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "@itinera/core": "*"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.3"
+  }
+}

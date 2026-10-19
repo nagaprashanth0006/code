@@ -244,12 +244,12 @@ P1.1 is the current phase; the riskiest unknowns (stack, maps, data pipeline) ar
 
 ### P1.1 — Core PoC / MVP
 
-- [ ] Tauri 2 shell + React + SQLite via the SQL plugin; schema with ULIDs
-- [ ] Pure TS core package with domain types and the constraint checker (hours, travel time, day length), unit-tested
-- [ ] Ingestion for one city: OSM/Overpass places, Wikidata/Wikivoyage descriptions, Open-Meteo climate normals
-- [ ] MapLibre with a local PMTiles extract for that city, served by the Rust protocol handler
-- [ ] Single-leg itinerary: add from catalog, drag to reorder, conflicts flagged
-- [ ] Responsive layout skeleton (panes collapse)
+- [x] Tauri 2 shell + React + SQLite via the SQL plugin; schema with ULIDs
+- [x] Pure TS core package with domain types and the constraint checker (hours, travel time, day length), unit-tested
+- [x] Ingestion for one city: OSM/Overpass places, Wikidata/Wikivoyage descriptions, Open-Meteo climate normals
+- [x] MapLibre with a local PMTiles extract for that city, served by the Rust protocol handler
+- [x] Single-leg itinerary: add from catalog, drag to reorder, conflicts flagged
+- [x] Responsive layout skeleton (panes collapse)
 
 **Done when:** you can browse one city's places on a live map, build a 3-day plan, reorder it and see a closed-on-Monday warning, all offline after the first fetch. No LLM.
 
@@ -330,7 +330,7 @@ The codebase should read as engineered: every layer explainable, the core tested
 
 ## Decision log and open questions
 
-Decisions made while scoping, newest first. Add new entries at the top.
+Decisions made while scoping, newest first. Decisions made during implementation are in [decisions.md](decisions.md), in the context / decision / alternatives / consequences format.
 
 | Date | Decision | Why | Alternatives considered |
 | --- | --- | --- | --- |
@@ -348,8 +348,8 @@ Decisions made while scoping, newest first. Add new entries at the top.
 
 ### Open questions
 
-- [ ] Starter city set for P1.1 and P1.3.
-- [ ] Minimum observations per month before a month-specific price band is shown.
+- [ ] Starter city set for P1.1 and P1.3. *(P1.1: Lisbon. P1.3 set still open.)*
+- [ ] Minimum observations per month before a month-specific price band is shown. *(Provisionally 8; see decisions.md.)*
 - [ ] Which local model and size for desktop drafting in P1.2.
 - [ ] Self-host OSRM/Valhalla on the Mac Mini, or rely on the public demo plus estimates.
 - [ ] Visa and entry-rule information: in scope, and from which free source.

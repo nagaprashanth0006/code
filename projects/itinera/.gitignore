@@ -1,0 +1,11 @@
+node_modules/
+dist/
+*.tsbuildinfo
+
+# Tauri / Rust build output
+app/src-tauri/target/
+app/src-tauri/gen/
+
+# Ingestion output and downloaded tools (large, reproducible)
+ingest/out/
+ingest/bin/

@@ -1,0 +1,19 @@
+{
+  "name": "itinera",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Offline-capable travel planner",
+  "type": "module",
+  "workspaces": [
+    "core",
+    "ingest",
+    "app"
+  ],
+  "scripts": {
+    "test": "npm run test -w core",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "dev": "npm run dev -w app",
+    "tauri": "npm run tauri -w app",
+    "ingest": "npm run ingest -w ingest --"
+  }
+}

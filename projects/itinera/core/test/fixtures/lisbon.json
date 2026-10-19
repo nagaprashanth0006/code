@@ -1,0 +1,6492 @@
+{
+ "note": "Real data from OSM, Wikidata, Wikivoyage and Open-Meteo, written by `npm run ingest -- fixtures`.",
+ "city": {
+  "id": "01M5AG0XX6ADZP859K1NAPRCGA",
+  "countryId": "01M5AG0XSZ2WTP83ZMCD9M24HE",
+  "name": "Lisbon",
+  "lat": 38.7077507,
+  "lon": -9.1365919,
+  "bbox": [
+   -9.2298356,
+   38.6913994,
+   -9.0863328,
+   38.7967584
+  ],
+  "themeTags": [
+   "culture",
+   "historical",
+   "solo",
+   "romantic"
+  ],
+  "osmRelationId": 5400890,
+  "wikidata": "Q597",
+  "source": "nominatim",
+  "fetchedAt": "2026-10-19T16:35:33.958Z"
+ },
+ "places": [
+  {
+   "id": "01M5AG6HJGF273ZXCR0V7RAKP0",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Tower of Belém",
+   "category": "castle",
+   "lat": 38.6916021,
+   "lon": -9.2159192,
+   "hoursRaw": "Oct-Apr: Tu-Su 10:00-17:30; May-Sep: Tu-Su 10:00-18:30",
+   "description": "A , the iconic fortified tower was built in the early 16th century in the late Gothic Manueline style as a fortress. It was said to be the last thing Portuguese explorers saw when departing, and the first thing they saw upon return. It was later used as a prison for political prisoners, and is today one of the most recognized symbols of Lisbon and Portugal.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Belém",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "historical",
+    "adventure"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Rehman Abubakr",
+    "url": "https://commons.wikimedia.org/wiki/File:Belem_Tower_-_April_2019_(2).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/24341353"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q215003"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Bel%C3%A9m_Tower"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m"
+    }
+   ],
+   "osmId": "way/24341353",
+   "wikidata": "Q215003",
+   "rank": 8.11,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGN08HHGCJD7KCSH22",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Jerónimos Monastery",
+   "category": "museum",
+   "lat": 38.6980047,
+   "lon": -9.205598,
+   "hoursRaw": "Oct-Apr 10:00-17:30; May-Sep 10:00-18:30; Mo off; Jan 1 off; May 1 off; Dec 25 off",
+   "description": "A , the monastery was built in the 16th century and is an outstanding example of the Portuguese late Gothic Manueline style.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Belém",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Holger Uwe Schmitt",
+    "url": "https://commons.wikimedia.org/wiki/File:1502_legte_K%C3%B6nig_Manuel_I._den_Grundstein_f%C3%BCr_das_Hieronymus_Kloster_in_Lissabon._06.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/relation/11318514"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q272781"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Jer%C3%B3nimos_Monastery"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m"
+    },
+    {
+     "label": "Website",
+     "url": "http://www.mosteirojeronimos.pt"
+    }
+   ],
+   "osmId": "relation/11318514",
+   "wikidata": "Q272781",
+   "rank": 8,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJG0DXS61NC217MWY7P",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Lisbon Cathedral",
+   "category": "religious",
+   "lat": 38.7098189,
+   "lon": -9.1325856,
+   "hoursRaw": "Mo-Sa 09:30-19:00",
+   "description": "Built in 1147, the cathedral has survived various earthquakes and has undergone restoration, renovation, and modification over the years. Its elements include Romanesque, Gothic, and Baroque styles. It has been a national monument since 1910.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Alfama",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FAlfama",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "historical",
+    "culture"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Alvesgaspar",
+    "url": "https://commons.wikimedia.org/wiki/File:Lisboa_May_2013-1.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/relation/19372558"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q432290"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Lisbon_Cathedral"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FAlfama"
+    }
+   ],
+   "osmId": "relation/19372558",
+   "wikidata": "Q432290",
+   "rank": 7.29,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGGPNRH9W74KRBNT4D",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "São Jorge Castle",
+   "category": "castle",
+   "lat": 38.713928,
+   "lon": -9.1334948,
+   "hoursRaw": "Mo-Su 09:00-21:00",
+   "description": "Humans settled on this hill as early as the 8th century BCE, and the first fortifications date from the 1st century BCE. Before the Portuguese conquest in the 1147 Siege of Lisbon, the site was successively occupied by the Phoenicians, Carthaginians, Romans, and Moors. Sights within the castle include the permanent exhibition of archaeological artefacts with an emphasis on the 11th- and 12th-century Moors, ruins of the former Royal Palace of Alcáçova, a garden with native forest species, and a camera obscura showing the city's sights. The castle offers great view over the city and the river. If you have the energy, get there by walking from downtown, going through the fantastic old neighbourhood of Alfama.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Alfama",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FAlfama",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "historical",
+    "adventure"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Unknown author",
+    "url": "https://commons.wikimedia.org/wiki/File:Castelo_Sao_Jorge_Lisboa_1.JPG",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/1382432568"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q636780"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/S%C3%A3o_Jorge_Castle"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FAlfama"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.castelodesaojorge.pt/"
+    }
+   ],
+   "osmId": "way/1382432568",
+   "wikidata": "Q636780",
+   "rank": 7.25,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGMPBBF94BJWA3FJM9",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "National Museum of Ancient Art",
+   "category": "museum",
+   "lat": 38.7047843,
+   "lon": -9.161447,
+   "hoursRaw": "Tu-Su 10:00-18:00",
+   "description": "Portugal's impressive national art collection, including 14-19th century European painting, artefacts of Portuguese contact with the East and Africa and a collection of ecclesiastical treasures. Highlights include Dürer's St Jerome, Hieronymus Bosch's Temptations of St Antony, Nuno Gonçalves' Adoration of St Vincent, and 16th century Japanese paintings of Portuguese traders.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Bairro Alto",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBairro_Alto",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Fulviusbsas",
+    "url": "https://commons.wikimedia.org/wiki/File:MNAA.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/98656587"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q212459"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/National_Museum_of_Ancient_Art"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBairro_Alto"
+    },
+    {
+     "label": "Website",
+     "url": "http://museudearteantiga.pt"
+    }
+   ],
+   "osmId": "way/98656587",
+   "wikidata": "Q212459",
+   "rank": 7,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGSJ5PAS52FJJH1MS0",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Calouste Gulbenkian Museum",
+   "category": "museum",
+   "lat": 38.7378097,
+   "lon": -9.1535052,
+   "hoursRaw": "We-Mo 10:00-18:00",
+   "description": "One of the best museums in Lisbon. Created from the personal collection of the art and artifact collector Calouste Gulbenkian. The collection include Egyptian artefacts; Islamic and oriental art; paintings by masters such as Rembrandt, Manet, Monet, Renoir, and Cassat; and a large collection of objects made by the Art Nouveau jeweler René Lalique. Gulbenkian was an Armenian born in the Ottoman Empire who, through his investments in Iraqi oil, became one of the wealthiest men of his time. During a journey he fell ill and had to seek medical attention in Lisbon. He fell in love with the city and decided live out his final days there. After his death his immense collections were organized into this museum. The Gulbenkian Gardens which surround the museums and foundation building are worth a visit in and of themselves, as a little oasis in the middle of downtown Lisbon. They're free and open sunrise to sunset.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/North",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FNorth",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Fundação Calouste Gulbenkian",
+    "url": "https://commons.wikimedia.org/wiki/File:Museu_Calouste_Gulbenkian_(Main_Entrance).jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/relation/17036063"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q211262"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Calouste_Gulbenkian_Museum"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FNorth"
+    },
+    {
+     "label": "Website",
+     "url": "https://gulbenkian.pt/museu/"
+    }
+   ],
+   "osmId": "relation/17036063",
+   "wikidata": "Q211262",
+   "rank": 7,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGQ49W0JHFVGZB6CQP",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Church of Santa Engrácia",
+   "category": "religious",
+   "lat": 38.714978,
+   "lon": -9.1246825,
+   "hoursRaw": "Tu-Su 10:00-18:00",
+   "description": "This is one of the most striking buildings in Lisbon. Its tall dome and white facade makes it a real landmark in Alfama/Eastern Lisbon. Excellent views from the rooftop terrace. Construction began in 1681, then halted until the dome was added in 1966 and then converted to the National Pantheon. Amália Rodrigues, queen of fado, is buried here, and fresh roses can be seen on the tomb. The church also has wide viewing platform on the rooftop all around its dome. Excellent panorama of the river and surroundings. No elevator.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Alfama",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FAlfama",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "historical",
+    "culture"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Kent Wang",
+    "url": "https://commons.wikimedia.org/wiki/File:Exterior_of_Igreja_de_Santa_Engr%C3%A1cia_70.jpg",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/9253917"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q1601019"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Church_of_Santa_Engr%C3%A1cia"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FAlfama"
+    },
+    {
+     "label": "Website",
+     "url": "https://panteaonacional.gov.pt/"
+    }
+   ],
+   "osmId": "way/9253917",
+   "wikidata": "Q1601019",
+   "rank": 6.83,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGD6W4MFQR9V4DEEZ1",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Águas Livres Aqueduct",
+   "category": "museum",
+   "lat": 38.7265653,
+   "lon": -9.1663029,
+   "hoursRaw": "Tu-Su 10:00-18:00; PH off",
+   "description": "This is a historic aqueduct in the city of Lisbon, Portugal. It is one of the most remarkable examples of 18th-century Portuguese engineering, including the largest stone arch in the world. The main course of the aqueduct covers 18 km, but the whole network of canals extends through nearly 58 km. The Mãe d'Água (Mother of the Water) reservoir of the Amoreiras, the largest of the water reservoirs, was finished in 1834. This reservoir, with a capacity of 5,500 m³ of water, was designed by Carlos Mardel. It is now deactivated and can be visited as part of the Museu da Água (Water Museum).",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Bairro Alto",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBairro_Alto",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "No machine-readable author provided. Juntas assumed (based on copyright claims).",
+    "url": "https://commons.wikimedia.org/wiki/File:Aqueduto_das_%C3%81guas_Livres_(1).jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/node/13950436040"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q623228"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/%C3%81guas_Livres_Aqueduct"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBairro_Alto"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.epal.pt/EPAL/menu/museu-da-%C3%A1gua/exposi%C3%A7%C3%A3o-permanente-patrim%C3%B3nio-associado/aqueduto-das-%C3%A1guas-livres"
+    }
+   ],
+   "osmId": "node/13950436040",
+   "wikidata": "Q623228",
+   "rank": 6.57,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGBYB24QX5EKVFMYDT",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Estrela Basilica of the Sacred Heart",
+   "category": "religious",
+   "lat": 38.7131744,
+   "lon": -9.1605532,
+   "hoursRaw": "Mo-Su 09:00-11:30, 15:00-16:00",
+   "description": "This Neoclassical and Baroque basilica, dedicated to the Sacred Heart of Jesus, was built in the late 1700s by Queen Maria I in fulfilment of a vow. The Queen is entombed in the right transept. Among the artworks is a nativity scene made up of over 500 cork and terracotta figures by Joaquim Machado de Castro.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Bairro Alto",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBairro_Alto",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "historical",
+    "culture"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Kent Wang",
+    "url": "https://commons.wikimedia.org/wiki/File:Main_facade_of_Bas%C3%ADlica_da_Estrela_57.jpg",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/96359439"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q2657972"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Estrela_Basilica"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBairro_Alto"
+    }
+   ],
+   "osmId": "way/96359439",
+   "wikidata": "Q2657972",
+   "rank": 6.5,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGRCR0B2Z3C5A6W31E",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "National Ceramic Tile Museum",
+   "category": "museum",
+   "lat": 38.7247634,
+   "lon": -9.1139528,
+   "hoursRaw": "closed",
+   "description": "One of the most important national museums, dedicated to Portuguese azulejo tiles since the late 1400s. It's in the former Madre de Deus Convent, founded in 1509 by Queen Leonor.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Alfama",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FAlfama",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Vitor Oliveira from Torres Vedras, PORTUGAL",
+    "url": "https://commons.wikimedia.org/wiki/File:Convento_da_Madre_de_Deus_-_Lisboa_-_Portugal_(46913633574).jpg",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/1451054092"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q2313815"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/National_Museum_of_the_Azulejo"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FAlfama"
+    },
+    {
+     "label": "Website",
+     "url": "https://museunacionaldoazulejo.gov.pt/"
+    }
+   ],
+   "osmId": "way/1451054092",
+   "wikidata": "Q2313815",
+   "rank": 6.42,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGDZTQ9QV58KDNKZQ6",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Lisbon Oceanarium",
+   "category": "zoo",
+   "lat": 38.7627689,
+   "lon": -9.0937167,
+   "hoursRaw": "Mo-Su 10:00-18:00",
+   "description": "One of the world's largest aquariums. Built by American architect Peter Chermayeff, it hosts thousands of marine species of the oceans, such as sea otters, penguins, and sharks. The main tank is huge, representing the Atlantic environment, with hundreds of small fishes, sharks, barracuda, snappers, and a huge sunfish. Ideal for children.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Parque das Nações",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FParque_das_Na%C3%A7%C3%B5es",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "nature"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Alvesgaspar",
+    "url": "https://commons.wikimedia.org/wiki/File:Lisboa_June_2014-8a.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/relation/3084517"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q652806"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Lisbon_Oceanarium"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FParque_das_Na%C3%A7%C3%B5es"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.oceanario.pt"
+    }
+   ],
+   "osmId": "relation/3084517",
+   "wikidata": "Q652806",
+   "rank": 6.42,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJG2CZZ0SG4AHCWZSRT",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Navy Museum",
+   "category": "museum",
+   "lat": 38.6971218,
+   "lon": -9.2080263,
+   "hoursRaw": "May 01-Sep 30 10:00-18:00; Oct 01-Apr 30 10:00-17:00; easter off; Jan 01,May 01,Dec 25 off",
+   "description": "One of the most important in Europe, evoking Portugal's domination of the seas. Its colossal 17,000 items are installed in the west wing of Jerónimos Monastery, and include model ships from the Age of Discovery onward. The oldest exhibit is a wooden figure representing the Archangel Raphael that accompanied Vasco da Gama on his voyage to India.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Belém",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Allie_Caulfield",
+    "url": "https://commons.wikimedia.org/wiki/File:2002-10-26_11-15_(Andalusien_%26_Lissabon_268)_Lissabon,_Bel%C3%A9m,_Mosteiro_dos_Jer%C3%B3nimos.jpg",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/node/6216727635"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q1540177"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Navy_Museum_(Portugal)"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m"
+    },
+    {
+     "label": "Website",
+     "url": "https://ccm.marinha.pt/pt/museu"
+    }
+   ],
+   "osmId": "node/6216727635",
+   "wikidata": "Q1540177",
+   "rank": 6.25,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGKF6YQR7DKMTAJH1P",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Lisbon Zoo",
+   "category": "zoo",
+   "lat": 38.7453582,
+   "lon": -9.1714811,
+   "hoursRaw": "10:00-20:00",
+   "description": "A zoo that is fairly pricey, but has a variety of exotic animals featuring sea-lions and dolphins.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/North",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FNorth",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "nature"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Unknown author",
+    "url": "https://commons.wikimedia.org/wiki/File:Jardim_Zoologico_Lisboa_1.JPG",
+    "license": "CC BY 2.5",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.5"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/30104081"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q220063"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Lisbon_Zoo"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FNorth"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.zoo.pt/"
+    }
+   ],
+   "osmId": "way/30104081",
+   "wikidata": "Q220063",
+   "rank": 6.06,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGJ519A89Z2A1KWCSQ",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Museum of Art, Architecture and Technology",
+   "category": "museum",
+   "lat": 38.6959366,
+   "lon": -9.1936178,
+   "hoursRaw": "Mo-Su 12:00-20:00; Tu off; Jan 01,May 01,Dec 25",
+   "description": "This museum of contemporary art is housed in a riverside building of contemporary design.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Belém",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Susanne Nilsson",
+    "url": "https://commons.wikimedia.org/wiki/File:The_MAAT_(34943440096).jpg",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/relation/11381632"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q27522479"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Museum_of_Art%2C_Architecture_and_Technology"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m"
+    },
+    {
+     "label": "Website",
+     "url": "www.maat.pt"
+    }
+   ],
+   "osmId": "relation/11381632",
+   "wikidata": "Q27522479",
+   "rank": 5.95,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGGHN58RDMFVMAMGK2",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "National Coach Museum",
+   "category": "museum",
+   "lat": 38.6972785,
+   "lon": -9.1987051,
+   "hoursRaw": "Tu-Su 10:00-18:00; Jan 01,May 01,Dec 25; easter off",
+   "description": "Housed in the former riding school of the palace, don't miss the world's largest collection of horse-drawn coaches and other royal vehicles. One of Lisbon's many unusual museums. In the \"Museum street\", Belem.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Belém",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Museu Nacional dos Coches",
+    "url": "https://commons.wikimedia.org/wiki/File:Museu_Nacional_dos_Coches_(Novo).tif",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/relation/5363219"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q1659559"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/National_Coach_Museum"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m"
+    },
+    {
+     "label": "Website",
+     "url": "www.museudoscoches.pt"
+    }
+   ],
+   "osmId": "relation/5363219",
+   "wikidata": "Q1659559",
+   "rank": 5.95,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGVT20CD8A8CXJ8DHA",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Berardo Collection Museum",
+   "category": "museum",
+   "lat": 38.6956474,
+   "lon": -9.20931,
+   "hoursRaw": "Mo-Su 10:00-19:00",
+   "description": "The permanent collection of the museum consists of the Berardo Collection, which is made up of modern and contemporary art, with major art movements like abstract expressionism, Abstraction-Création, action painting, body Art, constructivism, cubism, De Stijl, digital art, experimental art, geometric abstraction, kinetic art, minimal art, neo-expressionism, neo-plasticism, neo-Realism, op art, photography, photorealism, pop art, realism, suprematism, surrealism. Includes artists like Piet Mondrian, Andy Warhol, Roy Lichtenstein, Pablo Picasso and Jackson Pollock, and Francis Bacon.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Belém",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Dilum2444",
+    "url": "https://commons.wikimedia.org/wiki/File:Berardo_Collection_Museum.png",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/node/1204384734"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q2191491"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Berardo_Collection_Museum"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.ccb.pt/macccb/"
+    }
+   ],
+   "osmId": "node/1204384734",
+   "wikidata": "Q2191491",
+   "rank": 5.83,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGWDZHXGJV77KZHM5Z",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Jardim Botânico de Lisboa",
+   "category": "park",
+   "lat": 38.7185132,
+   "lon": -9.1488937,
+   "hoursRaw": "09:00-20:00; Oct 01-Mar 31: 09:00-17:00",
+   "description": "A hidden gem. It was created several hundred years ago, by a King of Portugal at the time of the Discoveries. The story goes that this King wanted one of every type of plant in the world, and although that's unlikely, there is a huge collection dating back by three or four centuries which is worth checking out. And there's something quite eerie about seeing plants or huge trees from completely different climates growing next to each other in apparent harmony. A great place to take a picnic: this green oasis is completely surrounded by city but even the city sounds filter out.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Bairro Alto",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBairro_Alto",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "nature",
+    "romantic"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Vitor Oliveira from Torres Vedras, PORTUGAL",
+    "url": "https://commons.wikimedia.org/wiki/File:Jardim_Bot%C3%A2nico_de_Lisboa_-_Portugal_%F0%9F%87%B5%F0%9F%87%B9_(54210262784).jpg",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/40705510"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q943407"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBairro_Alto"
+    },
+    {
+     "label": "Website",
+     "url": "https://museus.ulisboa.pt/"
+    }
+   ],
+   "osmId": "way/40705510",
+   "wikidata": "Q943407",
+   "rank": 5.57,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGBFMANZ3DC6HE6G0P",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Church of Nossa Senhora da Conceição Velha",
+   "category": "religious",
+   "lat": 38.7088899,
+   "lon": -9.1341962,
+   "hoursRaw": "Mo-Fr 09:15-17:00; Su 10:00-13:00",
+   "description": "18th-century Manueline-style church, a national monument.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Baixa",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBaixa",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "historical",
+    "culture"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Vitor Oliveira from Torres Vedras, PORTUGAL",
+    "url": "https://commons.wikimedia.org/wiki/File:Igreja_de_Nossa_Senhora_da_Concei%C3%A7%C3%A3o_Velha_-_Lisboa_-_Portugal_(50713742268).jpg",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/96319788"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q5116936"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Church_of_Nossa_Senhora_da_Concei%C3%A7%C3%A3o_Velha"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBaixa"
+    }
+   ],
+   "osmId": "way/96319788",
+   "wikidata": "Q5116936",
+   "rank": 5.25,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGCN4SY3HY059ASP4Z",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Jardim da Estrela",
+   "category": "park",
+   "lat": 38.7146327,
+   "lon": -9.1590513,
+   "hoursRaw": "Mo-Su 07:00-24:00",
+   "description": "A English-style garden with Romantic inspiration. You can find many plant and bird species here.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Bairro Alto",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBairro_Alto",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "nature",
+    "romantic"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Stefan Didam - Schmallenberg",
+    "url": "https://commons.wikimedia.org/wiki/File:Jardim_da_Estrela_-_Lissabon.JPG",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/23697561"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q10306236"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBairro_Alto"
+    }
+   ],
+   "osmId": "way/23697561",
+   "wikidata": "Q10306236",
+   "rank": 5.25,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJG28TZQJGDK0S5FRC3",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Centro de Arte Moderna Gulbenkian",
+   "category": "museum",
+   "lat": 38.7359407,
+   "lon": -9.1536701,
+   "hoursRaw": "Su-Mo, We-Fr 10:00-18:00; Sa 10:00-21:00",
+   "description": "A museum dedicated to art since the 1950s, focusing on Portuguese artists and including other nationalities, notably British and Armenian. Part of the Calouste Gulbenkian Foundation.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/North",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FNorth",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "João Carvalho",
+    "url": "https://commons.wikimedia.org/wiki/File:Centro_de_Arte_Moderna_7819.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/188143627"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q1054339"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Centro_de_Arte_Moderna_Gulbenkian"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FNorth"
+    },
+    {
+     "label": "Website",
+     "url": "https://gulbenkian.pt/cam/colecao-moderna/"
+    }
+   ],
+   "osmId": "way/188143627",
+   "wikidata": "Q1054339",
+   "rank": 5.06,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGEFJAYDBXWB98N5GH",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Carris Museum",
+   "category": "museum",
+   "lat": 38.7015556,
+   "lon": -9.1800016,
+   "hoursRaw": "Mo-Fr 10:00-18:00; Sa 10:00-13:00,14:00-18:00; PH off",
+   "description": "Transport museum with various old trams and buses on display.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Belém",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Museu ccfl",
+    "url": "https://commons.wikimedia.org/wiki/File:Museucarris002.png",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/relation/7554558"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q5046467"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Carris_Museum"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBel%C3%A9m"
+    },
+    {
+     "label": "Website",
+     "url": "http://museu.carris.pt"
+    }
+   ],
+   "osmId": "relation/7554558",
+   "wikidata": "Q5046467",
+   "rank": 5.06,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJG91ZEXY1A745BF3E9",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "National Archaeology Museum",
+   "category": "museum",
+   "lat": 38.6973662,
+   "lon": -9.2070794,
+   "hoursRaw": "Tu-Su 10:00-18:00; Jan 01,May 01,Jun 13,Dec 25 off;easter off",
+   "description": "Building in Lisbon, Lisbon District, Portugal.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q1954384",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Jose Luis Filpo Cabana",
+    "url": "https://commons.wikimedia.org/wiki/File:Museo_Nacional_de_Arqueolog%C3%ADa._Lisboa.jpg",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/node/2491785179"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q1954384"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/National_Museum_of_Archaeology%2C_Lisbon"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.mnarqueologia-ipmuseus.pt/"
+    }
+   ],
+   "osmId": "node/2491785179",
+   "wikidata": "Q1954384",
+   "rank": 5,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGSMGN1MBETADWFX1T",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Teleférico do Parque das Nações",
+   "category": "attraction",
+   "lat": 38.7623985,
+   "lon": -9.0923069,
+   "hoursRaw": "11:00-19:00",
+   "description": "An aerial tramway built for Expo '98. It operates between the Oceanarium and the Vasco da Gama Tower and offers excellent views of the fairgrounds, the river, the bridge, and beyond.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Parque das Nações",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FParque_das_Na%C3%A7%C3%B5es",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Filipe Rocha,user:sacavem (pt), Sacavem1 11:23, 16 November 2007 (UTC)",
+    "url": "https://commons.wikimedia.org/wiki/File:Telef%C3%A9rico_-_terminal.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/1270557595"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q2401546"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FParque_das_Na%C3%A7%C3%B5es"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.telecabinelisboa.pt/"
+    }
+   ],
+   "osmId": "way/1270557595",
+   "wikidata": "Q2401546",
+   "rank": 4.83,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJGYJ0HYQYFJP9M5B68",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Roman Theatre Museum",
+   "category": "museum",
+   "lat": 38.7105167,
+   "lon": -9.1323876,
+   "hoursRaw": "Tu-Su 10:00-18:00; Jan 01 off; May 01 off; Dec 25 off",
+   "description": "Along the way from downtown to Saint George's Castle.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Alfama",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FAlfama",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Concierge.2C",
+    "url": "https://commons.wikimedia.org/wiki/File:Lisboa_-_Ru%C3%ADnas_do_Teatro_Romano.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/relation/11699003"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q11780"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FAlfama"
+    },
+    {
+     "label": "Website",
+     "url": "https://museudelisboa.pt/pt/about/venues/teatro-romano/"
+    }
+   ],
+   "osmId": "relation/11699003",
+   "wikidata": "Q11780",
+   "rank": 4.83,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJH2STAN8XN0BZGZNTR",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Museu da Marioneta",
+   "category": "museum",
+   "lat": 38.7080039,
+   "lon": -9.1557935,
+   "hoursRaw": "Tu-Su 10:00-18:00",
+   "description": "The museum covers the history of puppetry around the world, with an emphasis on Portugal. Various types of puppets are on display.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Bairro Alto",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBairro_Alto",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Hipersyl",
+    "url": "https://commons.wikimedia.org/wiki/File:Museu_da_Marioneta.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/node/3128158245"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q10333706"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Museu_da_Marioneta"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBairro_Alto"
+    },
+    {
+     "label": "Website",
+     "url": "https://museudamarioneta.pt"
+    }
+   ],
+   "osmId": "node/3128158245",
+   "wikidata": "Q10333706",
+   "rank": 4.57,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJHX8FJRKPBKBBAYPKH",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Museu Militar de Lisboa",
+   "category": "museum",
+   "lat": 38.7130549,
+   "lon": -9.1242905,
+   "hoursRaw": "Tu-Su 10:00-17:00; easter off; Jan 01,May 01,Dec 25 off",
+   "description": "Housed in a 16th-century foundry, this museum holds its testaments to Portuguese military history, and contains many artifacts, including a sword used by Vasco da Gama.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Alfama",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FAlfama",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Carlos Luis M C da Cruz",
+    "url": "https://commons.wikimedia.org/wiki/File:M_militar_lisboa.jpg",
+    "license": "Public domain",
+    "licenseUrl": null
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/96497160"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q10333544"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FAlfama"
+    },
+    {
+     "label": "Website",
+     "url": "http://www.exercito.pt/pt/quem-somos/organizacao/ceme/vceme/dhcm/lisboa"
+    }
+   ],
+   "osmId": "way/96497160",
+   "wikidata": "Q10333544",
+   "rank": 4.57,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJHC7E8VPQ10BA0WQZQ",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Design Museum",
+   "category": "museum",
+   "lat": 38.7091403,
+   "lon": -9.1366529,
+   "hoursRaw": "Tu-Su 10:00-18:00; Dec 24, Dec 31 10:00-14:00; Jan 01,May 01,Dec 25 off",
+   "description": "The collection has about 1,000 items of furniture and accessories and over 1,200 pieces of haute couture clothing.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Baixa",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBaixa",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "DiogoBaptista",
+    "url": "https://commons.wikimedia.org/wiki/File:MUDE_03.jpg",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/relation/1396217"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q1954392"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FBaixa"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.mude.pt/"
+    }
+   ],
+   "osmId": "relation/1396217",
+   "wikidata": "Q1954392",
+   "rank": 4.57,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJHHE2EFDY9KWN6EYSQ",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Fronteira Palace",
+   "category": "palace",
+   "lat": 38.739969,
+   "lon": -9.1804531,
+   "hoursRaw": "Mo-Sa 11:00-12:00",
+   "description": "Building in Lisbon, Lisbon District, Portugal.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q1161724",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "historical",
+    "romantic",
+    "culture"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Kent Wang",
+    "url": "https://commons.wikimedia.org/wiki/File:Garden_of_Pal%C3%A1cio_dos_Marqueses_de_Fronteira_59.jpg",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/145116280"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q1161724"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Palace_of_the_Marquises_of_Fronteira"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.fronteira-alorna.pt/"
+    }
+   ],
+   "osmId": "way/145116280",
+   "wikidata": "Q1161724",
+   "rank": 4.45,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJHMS27MD5S6W5WCQ3T",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Saint Anthony's Church",
+   "category": "religious",
+   "lat": 38.7099745,
+   "lon": -9.1336632,
+   "hoursRaw": "Mo-Su 08:00-17:00",
+   "description": "Church building in Lisbon, Lisbon District, Portugal.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q2976487",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "historical",
+    "culture"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "SchiDD",
+    "url": "https://commons.wikimedia.org/wiki/File:Igreja-Antonio1.jpg",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/96319696"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q2976487"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Church_of_Saint_Anthony_of_Lisbon"
+    }
+   ],
+   "osmId": "way/96319696",
+   "wikidata": "Q2976487",
+   "rank": 4.45,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJHM40DDFK2WBX9N4WZ",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Pavilhão do Conhecimento - Ciência Viva Science Centre",
+   "category": "museum",
+   "lat": 38.7623028,
+   "lon": -9.0955801,
+   "hoursRaw": "Mo-Fr 10:00-18:00; PH,Sa,Su 11:00-19:00",
+   "description": "Ciência Viva is an interactive science and technology museum that aims to make science accessible to all, stimulating experimentation and exploration of the physical world.",
+   "descriptionAttribution": {
+    "text": "Wikivoyage: Lisbon/Parque das Nações",
+    "url": "https://en.wikivoyage.org/wiki/Lisbon%2FParque_das_Na%C3%A7%C3%B5es",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Filipe Rocha, sacavem (talk · contribs) - pt:Usuário:Sacavem",
+    "url": "https://commons.wikimedia.org/wiki/File:Pavilh%C3%A3o_da_Ci%C3%AAncia_e_Conhecimento.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/relation/3232954"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q10346955"
+    },
+    {
+     "label": "Wikivoyage",
+     "url": "https://en.wikivoyage.org/wiki/Lisbon%2FParque_das_Na%C3%A7%C3%B5es"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.pavconhecimento.pt/"
+    }
+   ],
+   "osmId": "relation/3232954",
+   "wikidata": "Q10346955",
+   "rank": 4.25,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJHQFPFG18H1EXQV5TD",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Estufa Fria de Lisboa",
+   "category": "garden",
+   "lat": 38.72932,
+   "lon": -9.1553585,
+   "hoursRaw": "Mo-Su 10:00-19:00",
+   "description": "Gardens in Lisbon, established in 1933.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q8843624",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "nature",
+    "romantic"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Bex Walton from London, England",
+    "url": "https://commons.wikimedia.org/wiki/File:Estufa_Fr%C3%ADa_(22181833839).jpg",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/relation/3327251"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q8843624"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Estufa_Fria"
+    },
+    {
+     "label": "Website",
+     "url": "https://informacoeseservicos.lisboa.pt/contactos/diretorio-da-cidade/estufa-fria-de-lisboa"
+    }
+   ],
+   "osmId": "relation/3327251",
+   "wikidata": "Q8843624",
+   "rank": 4.21,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJH8MYCT93Z0T38FM33",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Chiado Museum",
+   "category": "museum",
+   "lat": 38.7088705,
+   "lon": -9.1411074,
+   "hoursRaw": "Tu-Su 10:00-18:00; Jan 01,May 01,Jun 13,Dec 25 off; easter off",
+   "description": "Art museum in Lisbon.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q2745620",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Sergio Calleja (Life is a trip) from Barcelona, Spain",
+    "url": "https://commons.wikimedia.org/wiki/File:Lisbonne_Mus%C3%A9e_du_Chiado.jpg",
+    "license": "CC BY-SA 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/96321716"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q2745620"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/National_Museum_of_Contemporary_Art_of_Chiado"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.museuartecontemporanea.pt"
+    }
+   ],
+   "osmId": "way/96321716",
+   "wikidata": "Q2745620",
+   "rank": 4.07,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJH5780NKA22VW0G47B",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Fado Museum",
+   "category": "museum",
+   "lat": 38.7110374,
+   "lon": -9.1277093,
+   "hoursRaw": "Tu-Su 10:00-18:00; Jan 01,May 01,Dec 25 off",
+   "description": "Museum dedicated to Fado music.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q1954395",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "pt:Usuário:nemracc",
+    "url": "https://commons.wikimedia.org/wiki/File:Museu_do_Fado_Lisbon_Portugal_01.png",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/1101604733"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q1954395"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Fado_Museum"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.museudofado.pt/"
+    }
+   ],
+   "osmId": "way/1101604733",
+   "wikidata": "Q1954395",
+   "rank": 4.07,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJH6M9CEFVPR3N93F7E",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Cadeia do Aljube",
+   "category": "museum",
+   "lat": 38.7101798,
+   "lon": -9.1325527,
+   "hoursRaw": "Tu-Su 10:00-19:00; Jan 01,May 01,Dec 25 off",
+   "description": "Building in Lisbon, Lisbon District, Portugal.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q17389986",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Arquivo Fotográfico Municipal",
+    "url": "https://commons.wikimedia.org/wiki/File:AljubeSecXX.jpg",
+    "license": "Public domain",
+    "licenseUrl": null
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/node/4419041593"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q17389986"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Cadeia_do_Aljube"
+    },
+    {
+     "label": "Website",
+     "url": "http://www.museudoaljube.pt"
+    }
+   ],
+   "osmId": "node/4419041593",
+   "wikidata": "Q17389986",
+   "rank": 3.75,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJH0JGAM4DPSWZK9ZY8",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "National Museum of Ethnology",
+   "category": "museum",
+   "lat": 38.7048338,
+   "lon": -9.2084503,
+   "hoursRaw": "Tu 14:00-18:00; We-Su 10:00-18:00; Jan 01,May 01,Jun 13,Dec 25 off;easter off",
+   "description": "Ethnographic museum in Lisbon, Portugal.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q6974467",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Dguendel",
+    "url": "https://commons.wikimedia.org/wiki/File:Lisbon,_the_Museu_Nacional_de_Etnologia.JPG",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/141123677"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q6974467"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/National_Museum_of_Ethnology_(Portugal)"
+    },
+    {
+     "label": "Website",
+     "url": "https://mnetnologia.wordpress.com"
+    }
+   ],
+   "osmId": "way/141123677",
+   "wikidata": "Q6974467",
+   "rank": 3.75,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJHPFHEEWEYPJZX5RJ5",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Museu da Água",
+   "category": "museum",
+   "lat": 38.7200828,
+   "lon": -9.1196637,
+   "hoursRaw": "Tu-Su 10:00-18:00; PH off",
+   "description": "Building in Lisbon, Lisbon District, Portugal.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q6940623",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Unknown author",
+    "url": "https://commons.wikimedia.org/wiki/File:Museu_da_%C3%81gua.JPG",
+    "license": "CC BY-SA 2.5",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/237926937"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q6940623"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Museu_da_%C3%81gua"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.epal.pt/EPAL/menu/museu-da-%C3%A1gua"
+    }
+   ],
+   "osmId": "way/237926937",
+   "wikidata": "Q6940623",
+   "rank": 3.75,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJHFQXRABYS6HABMV24",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Carmo Archaeological Museum",
+   "category": "museum",
+   "lat": 38.712006,
+   "lon": -9.1405862,
+   "hoursRaw": "Oct-May: Tu-Su 10:00-18:00; Jun-Sep: Tu-Su 10:00-19:00; Jan 01,May 01,Dec 25 off",
+   "description": "Museum in Lisbon, Portugal.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q1146790",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Jean-Christophe BENOIST",
+    "url": "https://commons.wikimedia.org/wiki/File:Lisbonne_-_Couvent_des_Carles_-_Vue_g%C3%A9n%C3%A9rale.jpg",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/node/5068486965"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q1146790"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.museuarqueologicodocarmo.pt/"
+    }
+   ],
+   "osmId": "node/5068486965",
+   "wikidata": "Q1146790",
+   "rank": 3.56,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJHSXEZ3NJT4K71P01D",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Tropical Botanical Garden",
+   "category": "park",
+   "lat": 38.6997649,
+   "lon": -9.2021712,
+   "hoursRaw": "Apr-Sep Mo-Su 09:00-20:00; Oct-Mar Mo-Su 10:00-17:00; PH; Jan 01,Dec 25 off",
+   "description": "Botanical garden in Lisbon, Portugal.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q2249320",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "nature",
+    "romantic"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Paul Hermans",
+    "url": "https://commons.wikimedia.org/wiki/File:Lisboa_Jardim_Bot%C3%A2nico_Tropical_Washingtonia_filifera_19-10-2010_14-58-21.JPG",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/relation/8797676"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q2249320"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Lisbon_Tropical_Botanical_Garden"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.museus.ulisboa.pt/pt-pt/jardim-botanico-tropical"
+    }
+   ],
+   "osmId": "relation/8797676",
+   "wikidata": "Q2249320",
+   "rank": 3.56,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJHZT1E2EANS8TA02XF",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Museu da Farmácia",
+   "category": "museum",
+   "lat": 38.7100683,
+   "lon": -9.1472474,
+   "hoursRaw": "Mo-Fr 10:00-19:00; Sa 14:00-19:00",
+   "description": "Museum dedicated to the history of pharmaceutical activity in Lisbon, Portugal.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q9299839",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "culture",
+    "historical",
+    "solo"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "João Carvalho",
+    "url": "https://commons.wikimedia.org/wiki/File:ANF1975.jpg",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/node/5089643622"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q9299839"
+    },
+    {
+     "label": "Wikipedia",
+     "url": "https://en.wikipedia.org/wiki/Pharmacy_Museum%2C_Lisbon"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.museudafarmacia.pt"
+    }
+   ],
+   "osmId": "node/5089643622",
+   "wikidata": "Q9299839",
+   "rank": 3.33,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  },
+  {
+   "id": "01M5AG6HJHNE0A2SX4XBNRD6SP",
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "name": "Igreja de Nossa Senhora do Loreto",
+   "category": "religious",
+   "lat": 38.710871,
+   "lon": -9.1427635,
+   "hoursRaw": "Mo-Fr 10:00-20:00; Sa-Su 10:00-21:00",
+   "description": "Church building in Lisbon, Lisbon District, Portugal.",
+   "descriptionAttribution": {
+    "text": "Wikidata",
+    "url": "https://www.wikidata.org/wiki/Q1657876",
+    "license": "CC0",
+    "licenseUrl": "https://creativecommons.org/publicdomain/zero/1.0/"
+   },
+   "themeTags": [
+    "historical",
+    "culture"
+   ],
+   "photoPath": null,
+   "photoAttribution": {
+    "text": "Igreja do Loreto",
+    "url": "https://commons.wikimedia.org/wiki/File:Igreja_do_Loreto_no_Exterior.jpg",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0"
+   },
+   "sources": [
+    {
+     "label": "OpenStreetMap",
+     "url": "https://www.openstreetmap.org/way/96359446"
+    },
+    {
+     "label": "Wikidata",
+     "url": "https://www.wikidata.org/wiki/Q1657876"
+    },
+    {
+     "label": "Website",
+     "url": "https://www.igrejadoloreto.pt"
+    }
+   ],
+   "osmId": "way/96359446",
+   "wikidata": "Q1657876",
+   "rank": 3.33,
+   "source": "osm",
+   "fetchedAt": "2026-10-19T16:35:33.958Z"
+  }
+ ],
+ "normals": [
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 1,
+   "tminP10": 5.9,
+   "tminP50": 9.2,
+   "tminP90": 13.1,
+   "tmaxP10": 12.1,
+   "tmaxP50": 14.4,
+   "tmaxP90": 16.8,
+   "rainProb": 0.277,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 2,
+   "tminP10": 5.8,
+   "tminP50": 9.3,
+   "tminP90": 13.1,
+   "tmaxP10": 12,
+   "tmaxP50": 14.4,
+   "tmaxP90": 16.8,
+   "rainProb": 0.263,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 3,
+   "tminP10": 5.8,
+   "tminP50": 9.4,
+   "tminP90": 13.2,
+   "tmaxP10": 12,
+   "tmaxP50": 14.5,
+   "tmaxP90": 16.8,
+   "rainProb": 0.277,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 4,
+   "tminP10": 5.8,
+   "tminP50": 9.3,
+   "tminP90": 13.1,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.4,
+   "tmaxP90": 16.8,
+   "rainProb": 0.273,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 5,
+   "tminP10": 5.7,
+   "tminP50": 9.1,
+   "tminP90": 13,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.4,
+   "tmaxP90": 16.7,
+   "rainProb": 0.27,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 6,
+   "tminP10": 5.5,
+   "tminP50": 9.1,
+   "tminP90": 12.9,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.4,
+   "tmaxP90": 16.7,
+   "rainProb": 0.273,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 7,
+   "tminP10": 5.5,
+   "tminP50": 9.1,
+   "tminP90": 12.9,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.6,
+   "rainProb": 0.28,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 8,
+   "tminP10": 5.5,
+   "tminP50": 9.3,
+   "tminP90": 12.8,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.5,
+   "rainProb": 0.29,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 9,
+   "tminP10": 5.4,
+   "tminP50": 9.2,
+   "tminP90": 12.9,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.5,
+   "rainProb": 0.29,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 10,
+   "tminP10": 5.3,
+   "tminP50": 9.1,
+   "tminP90": 12.9,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.5,
+   "rainProb": 0.28,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 11,
+   "tminP10": 5.1,
+   "tminP50": 9.1,
+   "tminP90": 12.8,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.2,
+   "tmaxP90": 16.4,
+   "rainProb": 0.273,
+   "precipMm": 1.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 12,
+   "tminP10": 5.1,
+   "tminP50": 9.1,
+   "tminP90": 12.8,
+   "tmaxP10": 11.8,
+   "tmaxP50": 14.2,
+   "tmaxP90": 16.3,
+   "rainProb": 0.27,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 13,
+   "tminP10": 5.1,
+   "tminP50": 9.1,
+   "tminP90": 12.9,
+   "tmaxP10": 11.8,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.5,
+   "rainProb": 0.27,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 14,
+   "tminP10": 5.3,
+   "tminP50": 9.1,
+   "tminP90": 12.9,
+   "tmaxP10": 11.8,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.6,
+   "rainProb": 0.27,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 15,
+   "tminP10": 5.4,
+   "tminP50": 9.2,
+   "tminP90": 12.8,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.8,
+   "rainProb": 0.273,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 16,
+   "tminP10": 5.5,
+   "tminP50": 9.4,
+   "tminP90": 12.8,
+   "tmaxP10": 12,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.8,
+   "rainProb": 0.273,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 17,
+   "tminP10": 5.6,
+   "tminP50": 9.4,
+   "tminP90": 12.6,
+   "tmaxP10": 12,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.8,
+   "rainProb": 0.273,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 18,
+   "tminP10": 5.6,
+   "tminP50": 9.4,
+   "tminP90": 12.5,
+   "tmaxP10": 12,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.8,
+   "rainProb": 0.28,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 19,
+   "tminP10": 5.7,
+   "tminP50": 9.4,
+   "tminP90": 12.5,
+   "tmaxP10": 12,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.8,
+   "rainProb": 0.277,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 20,
+   "tminP10": 5.8,
+   "tminP50": 9.5,
+   "tminP90": 12.6,
+   "tmaxP10": 12,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.8,
+   "rainProb": 0.287,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 21,
+   "tminP10": 5.8,
+   "tminP50": 9.5,
+   "tminP90": 12.6,
+   "tmaxP10": 12,
+   "tmaxP50": 14.3,
+   "tmaxP90": 16.9,
+   "rainProb": 0.29,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 22,
+   "tminP10": 5.9,
+   "tminP50": 9.5,
+   "tminP90": 12.7,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 17,
+   "rainProb": 0.293,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 23,
+   "tminP10": 5.9,
+   "tminP50": 9.5,
+   "tminP90": 12.7,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 17,
+   "rainProb": 0.283,
+   "precipMm": 1.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 24,
+   "tminP10": 5.9,
+   "tminP50": 9.5,
+   "tminP90": 12.7,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 17,
+   "rainProb": 0.28,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 25,
+   "tminP10": 6,
+   "tminP50": 9.5,
+   "tminP90": 12.7,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 17,
+   "rainProb": 0.28,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 26,
+   "tminP10": 6.1,
+   "tminP50": 9.5,
+   "tminP90": 12.6,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 17.2,
+   "rainProb": 0.273,
+   "precipMm": 1.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 27,
+   "tminP10": 6.1,
+   "tminP50": 9.4,
+   "tminP90": 12.6,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.2,
+   "tmaxP90": 17.2,
+   "rainProb": 0.273,
+   "precipMm": 1.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 28,
+   "tminP10": 6,
+   "tminP50": 9.3,
+   "tminP90": 12.5,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.2,
+   "tmaxP90": 17.4,
+   "rainProb": 0.273,
+   "precipMm": 1.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 29,
+   "tminP10": 6.1,
+   "tminP50": 9.2,
+   "tminP90": 12.3,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 17.4,
+   "rainProb": 0.267,
+   "precipMm": 1.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 30,
+   "tminP10": 6.1,
+   "tminP50": 9.2,
+   "tminP90": 12.2,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 17.5,
+   "rainProb": 0.26,
+   "precipMm": 1.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 31,
+   "tminP10": 5.9,
+   "tminP50": 9.2,
+   "tminP90": 12.2,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 17.5,
+   "rainProb": 0.263,
+   "precipMm": 1.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 32,
+   "tminP10": 5.8,
+   "tminP50": 9.2,
+   "tminP90": 12.2,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 17.4,
+   "rainProb": 0.273,
+   "precipMm": 1.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 33,
+   "tminP10": 5.6,
+   "tminP50": 9.1,
+   "tminP90": 12.3,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.3,
+   "tmaxP90": 17.4,
+   "rainProb": 0.273,
+   "precipMm": 1.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 34,
+   "tminP10": 6.1,
+   "tminP50": 9.1,
+   "tminP90": 12.3,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.4,
+   "tmaxP90": 17.3,
+   "rainProb": 0.287,
+   "precipMm": 1.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 35,
+   "tminP10": 6.1,
+   "tminP50": 9.2,
+   "tminP90": 12.3,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.5,
+   "tmaxP90": 17.3,
+   "rainProb": 0.297,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 36,
+   "tminP10": 6.1,
+   "tminP50": 9.2,
+   "tminP90": 12.4,
+   "tmaxP10": 11.9,
+   "tmaxP50": 14.6,
+   "tmaxP90": 17.3,
+   "rainProb": 0.3,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 37,
+   "tminP10": 6.1,
+   "tminP50": 9.2,
+   "tminP90": 12.6,
+   "tmaxP10": 12,
+   "tmaxP50": 14.6,
+   "tmaxP90": 17.3,
+   "rainProb": 0.293,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 38,
+   "tminP10": 6.1,
+   "tminP50": 9.1,
+   "tminP90": 12.4,
+   "tmaxP10": 12.1,
+   "tmaxP50": 14.7,
+   "tmaxP90": 17.3,
+   "rainProb": 0.303,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 39,
+   "tminP10": 6.1,
+   "tminP50": 9.1,
+   "tminP90": 12.4,
+   "tmaxP10": 12.2,
+   "tmaxP50": 14.8,
+   "tmaxP90": 17.5,
+   "rainProb": 0.313,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 40,
+   "tminP10": 6.3,
+   "tminP50": 9.2,
+   "tminP90": 12.3,
+   "tmaxP10": 12.3,
+   "tmaxP50": 14.8,
+   "tmaxP90": 17.6,
+   "rainProb": 0.313,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 41,
+   "tminP10": 6.4,
+   "tminP50": 9.2,
+   "tminP90": 12.3,
+   "tmaxP10": 12.3,
+   "tmaxP50": 14.9,
+   "tmaxP90": 17.6,
+   "rainProb": 0.323,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 42,
+   "tminP10": 6.5,
+   "tminP50": 9.3,
+   "tminP90": 12.3,
+   "tmaxP10": 12.3,
+   "tmaxP50": 15,
+   "tmaxP90": 17.7,
+   "rainProb": 0.33,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 43,
+   "tminP10": 6.6,
+   "tminP50": 9.5,
+   "tminP90": 12.4,
+   "tmaxP10": 12.4,
+   "tmaxP50": 15,
+   "tmaxP90": 17.8,
+   "rainProb": 0.333,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 44,
+   "tminP10": 6.9,
+   "tminP50": 9.5,
+   "tminP90": 12.5,
+   "tmaxP10": 12.4,
+   "tmaxP50": 15.1,
+   "tmaxP90": 17.9,
+   "rainProb": 0.347,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 45,
+   "tminP10": 7,
+   "tminP50": 9.5,
+   "tminP90": 12.5,
+   "tmaxP10": 12.5,
+   "tmaxP50": 15.1,
+   "tmaxP90": 18,
+   "rainProb": 0.353,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 46,
+   "tminP10": 7.2,
+   "tminP50": 9.7,
+   "tminP90": 12.5,
+   "tmaxP10": 12.7,
+   "tmaxP50": 15.3,
+   "tmaxP90": 18.3,
+   "rainProb": 0.35,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 47,
+   "tminP10": 7.3,
+   "tminP50": 9.7,
+   "tminP90": 12.5,
+   "tmaxP10": 12.8,
+   "tmaxP50": 15.5,
+   "tmaxP90": 18.4,
+   "rainProb": 0.347,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 48,
+   "tminP10": 7.3,
+   "tminP50": 9.8,
+   "tminP90": 12.5,
+   "tmaxP10": 12.7,
+   "tmaxP50": 15.5,
+   "tmaxP90": 18.5,
+   "rainProb": 0.337,
+   "precipMm": 2.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 49,
+   "tminP10": 7.3,
+   "tminP50": 9.8,
+   "tminP90": 12.5,
+   "tmaxP10": 12.8,
+   "tmaxP50": 15.7,
+   "tmaxP90": 18.8,
+   "rainProb": 0.333,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 50,
+   "tminP10": 7.3,
+   "tminP50": 9.8,
+   "tminP90": 12.3,
+   "tmaxP10": 12.8,
+   "tmaxP50": 15.7,
+   "tmaxP90": 18.8,
+   "rainProb": 0.323,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 51,
+   "tminP10": 7.3,
+   "tminP50": 9.9,
+   "tminP90": 12.2,
+   "tmaxP10": 12.8,
+   "tmaxP50": 15.7,
+   "tmaxP90": 18.8,
+   "rainProb": 0.31,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 52,
+   "tminP10": 7.3,
+   "tminP50": 9.9,
+   "tminP90": 12.2,
+   "tmaxP10": 12.8,
+   "tmaxP50": 15.7,
+   "tmaxP90": 18.8,
+   "rainProb": 0.31,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 53,
+   "tminP10": 7.2,
+   "tminP50": 9.9,
+   "tminP90": 12.2,
+   "tmaxP10": 12.8,
+   "tmaxP50": 15.7,
+   "tmaxP90": 18.7,
+   "rainProb": 0.302,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 54,
+   "tminP10": 7.3,
+   "tminP50": 10,
+   "tminP90": 12,
+   "tmaxP10": 12.9,
+   "tmaxP50": 15.5,
+   "tmaxP90": 18.5,
+   "rainProb": 0.291,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 55,
+   "tminP10": 7.3,
+   "tminP50": 10,
+   "tminP90": 12,
+   "tmaxP10": 13,
+   "tmaxP50": 15.5,
+   "tmaxP90": 18.6,
+   "rainProb": 0.302,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 56,
+   "tminP10": 7.3,
+   "tminP50": 10.1,
+   "tminP90": 12,
+   "tmaxP10": 13.2,
+   "tmaxP50": 15.5,
+   "tmaxP90": 18.5,
+   "rainProb": 0.295,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 57,
+   "tminP10": 7.3,
+   "tminP50": 10.1,
+   "tminP90": 11.9,
+   "tmaxP10": 13.2,
+   "tmaxP50": 15.5,
+   "tmaxP90": 18.5,
+   "rainProb": 0.295,
+   "precipMm": 2.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 58,
+   "tminP10": 7.3,
+   "tminP50": 10.2,
+   "tminP90": 12,
+   "tmaxP10": 13.2,
+   "tmaxP50": 15.5,
+   "tmaxP90": 18.4,
+   "rainProb": 0.309,
+   "precipMm": 2.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 59,
+   "tminP10": 7.2,
+   "tminP50": 10.2,
+   "tminP90": 12,
+   "tmaxP10": 13.2,
+   "tmaxP50": 15.5,
+   "tmaxP90": 18.4,
+   "rainProb": 0.309,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 60,
+   "tminP10": 7.2,
+   "tminP50": 10.2,
+   "tminP90": 12.2,
+   "tmaxP10": 13.2,
+   "tmaxP50": 15.5,
+   "tmaxP90": 18.4,
+   "rainProb": 0.316,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 61,
+   "tminP10": 7.2,
+   "tminP50": 10.3,
+   "tminP90": 12.2,
+   "tmaxP10": 13.2,
+   "tmaxP50": 15.4,
+   "tmaxP90": 18.3,
+   "rainProb": 0.326,
+   "precipMm": 2.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 62,
+   "tminP10": 7.2,
+   "tminP50": 10.3,
+   "tminP90": 12.2,
+   "tmaxP10": 13.2,
+   "tmaxP50": 15.5,
+   "tmaxP90": 18.5,
+   "rainProb": 0.326,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 63,
+   "tminP10": 7.3,
+   "tminP50": 10.4,
+   "tminP90": 12.2,
+   "tmaxP10": 13.4,
+   "tmaxP50": 15.5,
+   "tmaxP90": 18.5,
+   "rainProb": 0.33,
+   "precipMm": 2.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 64,
+   "tminP10": 7.4,
+   "tminP50": 10.4,
+   "tminP90": 12.2,
+   "tmaxP10": 13.5,
+   "tmaxP50": 15.5,
+   "tmaxP90": 18.7,
+   "rainProb": 0.323,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 65,
+   "tminP10": 7.4,
+   "tminP50": 10.4,
+   "tminP90": 12.2,
+   "tmaxP10": 13.6,
+   "tmaxP50": 15.6,
+   "tmaxP90": 19.1,
+   "rainProb": 0.319,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 66,
+   "tminP10": 7.5,
+   "tminP50": 10.5,
+   "tminP90": 12.3,
+   "tmaxP10": 13.8,
+   "tmaxP50": 15.6,
+   "tmaxP90": 19.4,
+   "rainProb": 0.312,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 67,
+   "tminP10": 7.8,
+   "tminP50": 10.5,
+   "tminP90": 12.3,
+   "tmaxP10": 13.8,
+   "tmaxP50": 15.8,
+   "tmaxP90": 19.5,
+   "rainProb": 0.302,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 68,
+   "tminP10": 7.9,
+   "tminP50": 10.5,
+   "tminP90": 12.3,
+   "tmaxP10": 13.8,
+   "tmaxP50": 16,
+   "tmaxP90": 19.8,
+   "rainProb": 0.3,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 69,
+   "tminP10": 7.9,
+   "tminP50": 10.5,
+   "tminP90": 12.4,
+   "tmaxP10": 13.9,
+   "tmaxP50": 16.1,
+   "tmaxP90": 20.1,
+   "rainProb": 0.293,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 70,
+   "tminP10": 8.1,
+   "tminP50": 10.6,
+   "tminP90": 12.4,
+   "tmaxP10": 13.9,
+   "tmaxP50": 16.2,
+   "tmaxP90": 20.3,
+   "rainProb": 0.287,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 71,
+   "tminP10": 8.2,
+   "tminP50": 10.6,
+   "tminP90": 12.7,
+   "tmaxP10": 13.9,
+   "tmaxP50": 16.3,
+   "tmaxP90": 20.6,
+   "rainProb": 0.287,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 72,
+   "tminP10": 8.3,
+   "tminP50": 10.6,
+   "tminP90": 12.7,
+   "tmaxP10": 13.9,
+   "tmaxP50": 16.5,
+   "tmaxP90": 20.8,
+   "rainProb": 0.28,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 73,
+   "tminP10": 8.5,
+   "tminP50": 10.6,
+   "tminP90": 12.7,
+   "tmaxP10": 13.9,
+   "tmaxP50": 16.7,
+   "tmaxP90": 20.9,
+   "rainProb": 0.27,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 74,
+   "tminP10": 8.5,
+   "tminP50": 10.6,
+   "tminP90": 12.7,
+   "tmaxP10": 14,
+   "tmaxP50": 16.7,
+   "tmaxP90": 21,
+   "rainProb": 0.27,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 75,
+   "tminP10": 8.3,
+   "tminP50": 10.6,
+   "tminP90": 12.7,
+   "tmaxP10": 14,
+   "tmaxP50": 16.9,
+   "tmaxP90": 20.9,
+   "rainProb": 0.27,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 76,
+   "tminP10": 8.3,
+   "tminP50": 10.6,
+   "tminP90": 12.6,
+   "tmaxP10": 14,
+   "tmaxP50": 16.9,
+   "tmaxP90": 21.1,
+   "rainProb": 0.263,
+   "precipMm": 1.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 77,
+   "tminP10": 8.3,
+   "tminP50": 10.6,
+   "tminP90": 12.7,
+   "tmaxP10": 14,
+   "tmaxP50": 16.9,
+   "tmaxP90": 21.1,
+   "rainProb": 0.273,
+   "precipMm": 1.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 78,
+   "tminP10": 8.3,
+   "tminP50": 10.6,
+   "tminP90": 12.7,
+   "tmaxP10": 14.1,
+   "tmaxP50": 16.9,
+   "tmaxP90": 21.1,
+   "rainProb": 0.273,
+   "precipMm": 1.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 79,
+   "tminP10": 8.3,
+   "tminP50": 10.6,
+   "tminP90": 12.8,
+   "tmaxP10": 14,
+   "tmaxP50": 16.8,
+   "tmaxP90": 21.1,
+   "rainProb": 0.277,
+   "precipMm": 1.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 80,
+   "tminP10": 8.3,
+   "tminP50": 10.6,
+   "tminP90": 13,
+   "tmaxP10": 14.1,
+   "tmaxP50": 16.8,
+   "tmaxP90": 21.3,
+   "rainProb": 0.277,
+   "precipMm": 1.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 81,
+   "tminP10": 8.4,
+   "tminP50": 10.6,
+   "tminP90": 13,
+   "tmaxP10": 14.1,
+   "tmaxP50": 16.8,
+   "tmaxP90": 21.6,
+   "rainProb": 0.287,
+   "precipMm": 1.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 82,
+   "tminP10": 8.5,
+   "tminP50": 10.7,
+   "tminP90": 13,
+   "tmaxP10": 14.2,
+   "tmaxP50": 16.8,
+   "tmaxP90": 21.6,
+   "rainProb": 0.29,
+   "precipMm": 1.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 83,
+   "tminP10": 8.6,
+   "tminP50": 10.8,
+   "tminP90": 13,
+   "tmaxP10": 14.2,
+   "tmaxP50": 16.7,
+   "tmaxP90": 21.7,
+   "rainProb": 0.293,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 84,
+   "tminP10": 8.6,
+   "tminP50": 10.9,
+   "tminP90": 13.1,
+   "tmaxP10": 14.1,
+   "tmaxP50": 16.7,
+   "tmaxP90": 21.7,
+   "rainProb": 0.3,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 85,
+   "tminP10": 8.6,
+   "tminP50": 10.9,
+   "tminP90": 13.1,
+   "tmaxP10": 14.1,
+   "tmaxP50": 16.8,
+   "tmaxP90": 21.8,
+   "rainProb": 0.307,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 86,
+   "tminP10": 8.6,
+   "tminP50": 10.9,
+   "tminP90": 13.2,
+   "tmaxP10": 14.1,
+   "tmaxP50": 16.8,
+   "tmaxP90": 21.8,
+   "rainProb": 0.31,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 87,
+   "tminP10": 8.6,
+   "tminP50": 11,
+   "tminP90": 13.2,
+   "tmaxP10": 14.3,
+   "tmaxP50": 16.7,
+   "tmaxP90": 22.2,
+   "rainProb": 0.307,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 88,
+   "tminP10": 8.6,
+   "tminP50": 11.1,
+   "tminP90": 13.3,
+   "tmaxP10": 14.3,
+   "tmaxP50": 16.8,
+   "tmaxP90": 22.6,
+   "rainProb": 0.31,
+   "precipMm": 1.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 89,
+   "tminP10": 8.7,
+   "tminP50": 11.2,
+   "tminP90": 13.5,
+   "tmaxP10": 14.3,
+   "tmaxP50": 16.9,
+   "tmaxP90": 22.9,
+   "rainProb": 0.303,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 90,
+   "tminP10": 8.9,
+   "tminP50": 11.2,
+   "tminP90": 13.5,
+   "tmaxP10": 14.3,
+   "tmaxP50": 17,
+   "tmaxP90": 22.9,
+   "rainProb": 0.3,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 91,
+   "tminP10": 9.1,
+   "tminP50": 11.3,
+   "tminP90": 13.5,
+   "tmaxP10": 14.3,
+   "tmaxP50": 17.1,
+   "tmaxP90": 22.9,
+   "rainProb": 0.297,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 92,
+   "tminP10": 9.2,
+   "tminP50": 11.4,
+   "tminP90": 13.6,
+   "tmaxP10": 14.4,
+   "tmaxP50": 17.3,
+   "tmaxP90": 23,
+   "rainProb": 0.287,
+   "precipMm": 2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 93,
+   "tminP10": 9.3,
+   "tminP50": 11.6,
+   "tminP90": 13.7,
+   "tmaxP10": 14.5,
+   "tmaxP50": 17.3,
+   "tmaxP90": 23,
+   "rainProb": 0.287,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 94,
+   "tminP10": 9.4,
+   "tminP50": 11.6,
+   "tminP90": 13.7,
+   "tmaxP10": 14.5,
+   "tmaxP50": 17.3,
+   "tmaxP90": 23,
+   "rainProb": 0.29,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 95,
+   "tminP10": 9.4,
+   "tminP50": 11.7,
+   "tminP90": 13.8,
+   "tmaxP10": 14.4,
+   "tmaxP50": 17.4,
+   "tmaxP90": 23.3,
+   "rainProb": 0.297,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 96,
+   "tminP10": 9.4,
+   "tminP50": 11.7,
+   "tminP90": 13.9,
+   "tmaxP10": 14.5,
+   "tmaxP50": 17.5,
+   "tmaxP90": 23.3,
+   "rainProb": 0.297,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 97,
+   "tminP10": 9.5,
+   "tminP50": 11.7,
+   "tminP90": 13.9,
+   "tmaxP10": 14.5,
+   "tmaxP50": 17.6,
+   "tmaxP90": 23.6,
+   "rainProb": 0.303,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 98,
+   "tminP10": 9.5,
+   "tminP50": 11.8,
+   "tminP90": 14.2,
+   "tmaxP10": 14.6,
+   "tmaxP50": 17.8,
+   "tmaxP90": 23.7,
+   "rainProb": 0.313,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 99,
+   "tminP10": 9.5,
+   "tminP50": 11.9,
+   "tminP90": 14.3,
+   "tmaxP10": 14.6,
+   "tmaxP50": 17.9,
+   "tmaxP90": 23.9,
+   "rainProb": 0.323,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 100,
+   "tminP10": 9.6,
+   "tminP50": 12,
+   "tminP90": 14.5,
+   "tmaxP10": 14.8,
+   "tmaxP50": 18,
+   "tmaxP90": 24.1,
+   "rainProb": 0.32,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 101,
+   "tminP10": 9.6,
+   "tminP50": 12.1,
+   "tminP90": 14.6,
+   "tmaxP10": 14.9,
+   "tmaxP50": 18.1,
+   "tmaxP90": 24.3,
+   "rainProb": 0.32,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 102,
+   "tminP10": 9.7,
+   "tminP50": 12.2,
+   "tminP90": 14.7,
+   "tmaxP10": 15.1,
+   "tmaxP50": 18.2,
+   "tmaxP90": 24.3,
+   "rainProb": 0.323,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 103,
+   "tminP10": 9.9,
+   "tminP50": 12.3,
+   "tminP90": 14.7,
+   "tmaxP10": 15.1,
+   "tmaxP50": 18.3,
+   "tmaxP90": 24.3,
+   "rainProb": 0.31,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 104,
+   "tminP10": 10,
+   "tminP50": 12.3,
+   "tminP90": 14.7,
+   "tmaxP10": 15.2,
+   "tmaxP50": 18.3,
+   "tmaxP90": 24.3,
+   "rainProb": 0.32,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 105,
+   "tminP10": 10.1,
+   "tminP50": 12.3,
+   "tminP90": 14.7,
+   "tmaxP10": 15.4,
+   "tmaxP50": 18.3,
+   "tmaxP90": 24.3,
+   "rainProb": 0.33,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 106,
+   "tminP10": 10.1,
+   "tminP50": 12.5,
+   "tminP90": 14.7,
+   "tmaxP10": 15.4,
+   "tmaxP50": 18.3,
+   "tmaxP90": 24.3,
+   "rainProb": 0.333,
+   "precipMm": 2.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 107,
+   "tminP10": 10.5,
+   "tminP50": 12.6,
+   "tminP90": 14.8,
+   "tmaxP10": 15.6,
+   "tmaxP50": 18.5,
+   "tmaxP90": 24.3,
+   "rainProb": 0.327,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 108,
+   "tminP10": 10.6,
+   "tminP50": 12.6,
+   "tminP90": 14.8,
+   "tmaxP10": 15.6,
+   "tmaxP50": 18.6,
+   "tmaxP90": 24.5,
+   "rainProb": 0.323,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 109,
+   "tminP10": 10.7,
+   "tminP50": 12.8,
+   "tminP90": 14.9,
+   "tmaxP10": 15.7,
+   "tmaxP50": 18.7,
+   "tmaxP90": 24.7,
+   "rainProb": 0.317,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 110,
+   "tminP10": 10.8,
+   "tminP50": 12.9,
+   "tminP90": 14.9,
+   "tmaxP10": 15.7,
+   "tmaxP50": 18.7,
+   "tmaxP90": 24.7,
+   "rainProb": 0.313,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 111,
+   "tminP10": 10.8,
+   "tminP50": 12.9,
+   "tminP90": 15,
+   "tmaxP10": 15.7,
+   "tmaxP50": 18.7,
+   "tmaxP90": 24.8,
+   "rainProb": 0.303,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 112,
+   "tminP10": 10.8,
+   "tminP50": 13,
+   "tminP90": 15,
+   "tmaxP10": 15.7,
+   "tmaxP50": 18.6,
+   "tmaxP90": 24.9,
+   "rainProb": 0.293,
+   "precipMm": 2.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 113,
+   "tminP10": 10.9,
+   "tminP50": 13,
+   "tminP90": 15,
+   "tmaxP10": 15.7,
+   "tmaxP50": 18.6,
+   "tmaxP90": 24.8,
+   "rainProb": 0.277,
+   "precipMm": 1.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 114,
+   "tminP10": 10.9,
+   "tminP50": 13,
+   "tminP90": 15.1,
+   "tmaxP10": 15.7,
+   "tmaxP50": 18.6,
+   "tmaxP90": 24.7,
+   "rainProb": 0.267,
+   "precipMm": 1.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 115,
+   "tminP10": 10.9,
+   "tminP50": 12.9,
+   "tminP90": 15,
+   "tmaxP10": 15.7,
+   "tmaxP50": 18.7,
+   "tmaxP90": 24.5,
+   "rainProb": 0.257,
+   "precipMm": 1.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 116,
+   "tminP10": 10.8,
+   "tminP50": 13,
+   "tminP90": 15,
+   "tmaxP10": 15.7,
+   "tmaxP50": 18.8,
+   "tmaxP90": 24.6,
+   "rainProb": 0.25,
+   "precipMm": 1.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 117,
+   "tminP10": 10.9,
+   "tminP50": 13.1,
+   "tminP90": 14.9,
+   "tmaxP10": 15.7,
+   "tmaxP50": 19,
+   "tmaxP90": 24.9,
+   "rainProb": 0.237,
+   "precipMm": 1.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 118,
+   "tminP10": 10.9,
+   "tminP50": 13.2,
+   "tminP90": 15.1,
+   "tmaxP10": 15.8,
+   "tmaxP50": 19.1,
+   "tmaxP90": 25.1,
+   "rainProb": 0.237,
+   "precipMm": 1.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 119,
+   "tminP10": 10.9,
+   "tminP50": 13.3,
+   "tminP90": 15.1,
+   "tmaxP10": 16,
+   "tmaxP50": 19.3,
+   "tmaxP90": 25.1,
+   "rainProb": 0.223,
+   "precipMm": 1.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 120,
+   "tminP10": 10.9,
+   "tminP50": 13.3,
+   "tminP90": 15.2,
+   "tmaxP10": 16.3,
+   "tmaxP50": 19.4,
+   "tmaxP90": 25.3,
+   "rainProb": 0.197,
+   "precipMm": 1.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 121,
+   "tminP10": 10.9,
+   "tminP50": 13.5,
+   "tminP90": 15.2,
+   "tmaxP10": 16.3,
+   "tmaxP50": 19.6,
+   "tmaxP90": 25.4,
+   "rainProb": 0.19,
+   "precipMm": 1.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 122,
+   "tminP10": 11,
+   "tminP50": 13.6,
+   "tminP90": 15.3,
+   "tmaxP10": 16.3,
+   "tmaxP50": 19.8,
+   "tmaxP90": 25.4,
+   "rainProb": 0.19,
+   "precipMm": 1.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 123,
+   "tminP10": 11,
+   "tminP50": 13.6,
+   "tminP90": 15.4,
+   "tmaxP10": 16.3,
+   "tmaxP50": 19.8,
+   "tmaxP90": 25.4,
+   "rainProb": 0.197,
+   "precipMm": 1.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 124,
+   "tminP10": 11,
+   "tminP50": 13.6,
+   "tminP90": 15.4,
+   "tmaxP10": 16.4,
+   "tmaxP50": 19.8,
+   "tmaxP90": 25.7,
+   "rainProb": 0.197,
+   "precipMm": 1.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 125,
+   "tminP10": 11,
+   "tminP50": 13.6,
+   "tminP90": 15.6,
+   "tmaxP10": 16.6,
+   "tmaxP50": 19.8,
+   "tmaxP90": 25.9,
+   "rainProb": 0.193,
+   "precipMm": 1.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 126,
+   "tminP10": 11.2,
+   "tminP50": 13.7,
+   "tminP90": 15.6,
+   "tmaxP10": 16.6,
+   "tmaxP50": 19.9,
+   "tmaxP90": 25.9,
+   "rainProb": 0.2,
+   "precipMm": 1.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 127,
+   "tminP10": 11.4,
+   "tminP50": 13.8,
+   "tminP90": 15.6,
+   "tmaxP10": 16.6,
+   "tmaxP50": 19.9,
+   "tmaxP90": 25.9,
+   "rainProb": 0.2,
+   "precipMm": 1.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 128,
+   "tminP10": 11.7,
+   "tminP50": 13.9,
+   "tminP90": 15.8,
+   "tmaxP10": 16.7,
+   "tmaxP50": 20.1,
+   "tmaxP90": 26,
+   "rainProb": 0.193,
+   "precipMm": 1.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 129,
+   "tminP10": 11.8,
+   "tminP50": 13.9,
+   "tminP90": 15.9,
+   "tmaxP10": 16.9,
+   "tmaxP50": 20.4,
+   "tmaxP90": 26.6,
+   "rainProb": 0.187,
+   "precipMm": 1.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 130,
+   "tminP10": 12.2,
+   "tminP50": 14,
+   "tminP90": 16.4,
+   "tmaxP10": 17.1,
+   "tmaxP50": 20.9,
+   "tmaxP90": 26.8,
+   "rainProb": 0.183,
+   "precipMm": 1.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 131,
+   "tminP10": 12.4,
+   "tminP50": 14.1,
+   "tminP90": 16.7,
+   "tmaxP10": 17.3,
+   "tmaxP50": 21,
+   "tmaxP90": 26.9,
+   "rainProb": 0.173,
+   "precipMm": 1.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 132,
+   "tminP10": 12.3,
+   "tminP50": 14.1,
+   "tminP90": 16.8,
+   "tmaxP10": 17.3,
+   "tmaxP50": 21,
+   "tmaxP90": 26.7,
+   "rainProb": 0.167,
+   "precipMm": 1.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 133,
+   "tminP10": 12.3,
+   "tminP50": 14,
+   "tminP90": 16.9,
+   "tmaxP10": 17.2,
+   "tmaxP50": 21,
+   "tmaxP90": 26.8,
+   "rainProb": 0.157,
+   "precipMm": 1.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 134,
+   "tminP10": 12.3,
+   "tminP50": 14.1,
+   "tminP90": 16.9,
+   "tmaxP10": 17.1,
+   "tmaxP50": 21.2,
+   "tmaxP90": 27.1,
+   "rainProb": 0.153,
+   "precipMm": 1.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 135,
+   "tminP10": 12.4,
+   "tminP50": 14.2,
+   "tminP90": 16.9,
+   "tmaxP10": 17.1,
+   "tmaxP50": 21.2,
+   "tmaxP90": 27.2,
+   "rainProb": 0.153,
+   "precipMm": 1.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 136,
+   "tminP10": 12.4,
+   "tminP50": 14.2,
+   "tminP90": 17.1,
+   "tmaxP10": 17.3,
+   "tmaxP50": 21.2,
+   "tmaxP90": 27.1,
+   "rainProb": 0.147,
+   "precipMm": 1.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 137,
+   "tminP10": 12.4,
+   "tminP50": 14.2,
+   "tminP90": 17.1,
+   "tmaxP10": 17.5,
+   "tmaxP50": 21.8,
+   "tmaxP90": 27.1,
+   "rainProb": 0.143,
+   "precipMm": 1.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 138,
+   "tminP10": 12.4,
+   "tminP50": 14.3,
+   "tminP90": 17.1,
+   "tmaxP10": 17.5,
+   "tmaxP50": 21.9,
+   "tmaxP90": 27.2,
+   "rainProb": 0.13,
+   "precipMm": 1.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 139,
+   "tminP10": 12.4,
+   "tminP50": 14.3,
+   "tminP90": 17.3,
+   "tmaxP10": 17.5,
+   "tmaxP50": 21.9,
+   "tmaxP90": 27.3,
+   "rainProb": 0.12,
+   "precipMm": 1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 140,
+   "tminP10": 12.5,
+   "tminP50": 14.4,
+   "tminP90": 17.3,
+   "tmaxP10": 17.6,
+   "tmaxP50": 21.9,
+   "tmaxP90": 27.7,
+   "rainProb": 0.11,
+   "precipMm": 0.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 141,
+   "tminP10": 12.5,
+   "tminP50": 14.5,
+   "tminP90": 17.3,
+   "tmaxP10": 17.7,
+   "tmaxP50": 21.9,
+   "tmaxP90": 27.8,
+   "rainProb": 0.097,
+   "precipMm": 0.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 142,
+   "tminP10": 12.6,
+   "tminP50": 14.7,
+   "tminP90": 17.4,
+   "tmaxP10": 17.8,
+   "tmaxP50": 22.2,
+   "tmaxP90": 28.1,
+   "rainProb": 0.103,
+   "precipMm": 0.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 143,
+   "tminP10": 12.8,
+   "tminP50": 14.8,
+   "tminP90": 17.8,
+   "tmaxP10": 17.9,
+   "tmaxP50": 22.4,
+   "tmaxP90": 28.4,
+   "rainProb": 0.11,
+   "precipMm": 0.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 144,
+   "tminP10": 12.8,
+   "tminP50": 14.9,
+   "tminP90": 17.9,
+   "tmaxP10": 18.1,
+   "tmaxP50": 22.5,
+   "tmaxP90": 28.5,
+   "rainProb": 0.107,
+   "precipMm": 0.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 145,
+   "tminP10": 12.9,
+   "tminP50": 15,
+   "tminP90": 17.9,
+   "tmaxP10": 18.2,
+   "tmaxP50": 22.5,
+   "tmaxP90": 28.6,
+   "rainProb": 0.103,
+   "precipMm": 0.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 146,
+   "tminP10": 12.9,
+   "tminP50": 15.1,
+   "tminP90": 17.9,
+   "tmaxP10": 18.2,
+   "tmaxP50": 22.6,
+   "tmaxP90": 28.8,
+   "rainProb": 0.103,
+   "precipMm": 0.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 147,
+   "tminP10": 12.9,
+   "tminP50": 15.2,
+   "tminP90": 18,
+   "tmaxP10": 18.4,
+   "tmaxP50": 22.8,
+   "tmaxP90": 28.9,
+   "rainProb": 0.107,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 148,
+   "tminP10": 13.1,
+   "tminP50": 15.5,
+   "tminP90": 18.1,
+   "tmaxP10": 18.5,
+   "tmaxP50": 22.9,
+   "tmaxP90": 28.9,
+   "rainProb": 0.11,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 149,
+   "tminP10": 13.2,
+   "tminP50": 15.6,
+   "tminP90": 18.2,
+   "tmaxP10": 18.5,
+   "tmaxP50": 23,
+   "tmaxP90": 28.8,
+   "rainProb": 0.11,
+   "precipMm": 0.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 150,
+   "tminP10": 13.3,
+   "tminP50": 15.6,
+   "tminP90": 18.2,
+   "tmaxP10": 18.6,
+   "tmaxP50": 23.1,
+   "tmaxP90": 28.8,
+   "rainProb": 0.107,
+   "precipMm": 0.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 151,
+   "tminP10": 13.3,
+   "tminP50": 15.7,
+   "tminP90": 18.2,
+   "tmaxP10": 18.6,
+   "tmaxP50": 23.1,
+   "tmaxP90": 28.9,
+   "rainProb": 0.113,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 152,
+   "tminP10": 13.4,
+   "tminP50": 15.7,
+   "tminP90": 18.3,
+   "tmaxP10": 18.6,
+   "tmaxP50": 23.2,
+   "tmaxP90": 29,
+   "rainProb": 0.117,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 153,
+   "tminP10": 13.4,
+   "tminP50": 15.9,
+   "tminP90": 18.4,
+   "tmaxP10": 18.8,
+   "tmaxP50": 23.2,
+   "tmaxP90": 29,
+   "rainProb": 0.123,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 154,
+   "tminP10": 13.7,
+   "tminP50": 15.9,
+   "tminP90": 18.5,
+   "tmaxP10": 18.9,
+   "tmaxP50": 23,
+   "tmaxP90": 29.3,
+   "rainProb": 0.13,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 155,
+   "tminP10": 13.8,
+   "tminP50": 16,
+   "tminP90": 18.5,
+   "tmaxP10": 19.1,
+   "tmaxP50": 22.8,
+   "tmaxP90": 29.2,
+   "rainProb": 0.133,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 156,
+   "tminP10": 13.9,
+   "tminP50": 16,
+   "tminP90": 18.4,
+   "tmaxP10": 19.2,
+   "tmaxP50": 22.8,
+   "tmaxP90": 29,
+   "rainProb": 0.137,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 157,
+   "tminP10": 14,
+   "tminP50": 16.1,
+   "tminP90": 18.4,
+   "tmaxP10": 19.4,
+   "tmaxP50": 22.8,
+   "tmaxP90": 29.2,
+   "rainProb": 0.12,
+   "precipMm": 0.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 158,
+   "tminP10": 14,
+   "tminP50": 16.2,
+   "tminP90": 18.4,
+   "tmaxP10": 19.5,
+   "tmaxP50": 23.1,
+   "tmaxP90": 29.1,
+   "rainProb": 0.11,
+   "precipMm": 0.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 159,
+   "tminP10": 14,
+   "tminP50": 16.2,
+   "tminP90": 18.4,
+   "tmaxP10": 19.5,
+   "tmaxP50": 23.2,
+   "tmaxP90": 28.9,
+   "rainProb": 0.113,
+   "precipMm": 0.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 160,
+   "tminP10": 14,
+   "tminP50": 16.2,
+   "tminP90": 18.5,
+   "tmaxP10": 19.5,
+   "tmaxP50": 23.2,
+   "tmaxP90": 28.9,
+   "rainProb": 0.117,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 161,
+   "tminP10": 14,
+   "tminP50": 16.2,
+   "tminP90": 18.6,
+   "tmaxP10": 19.6,
+   "tmaxP50": 23.2,
+   "tmaxP90": 29,
+   "rainProb": 0.127,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 162,
+   "tminP10": 14.1,
+   "tminP50": 16.2,
+   "tminP90": 18.6,
+   "tmaxP10": 19.5,
+   "tmaxP50": 23.1,
+   "tmaxP90": 29.2,
+   "rainProb": 0.13,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 163,
+   "tminP10": 14.2,
+   "tminP50": 16.2,
+   "tminP90": 18.8,
+   "tmaxP10": 19.6,
+   "tmaxP50": 23.1,
+   "tmaxP90": 29.5,
+   "rainProb": 0.14,
+   "precipMm": 0.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 164,
+   "tminP10": 14.3,
+   "tminP50": 16.3,
+   "tminP90": 18.9,
+   "tmaxP10": 19.7,
+   "tmaxP50": 23.1,
+   "tmaxP90": 29.7,
+   "rainProb": 0.143,
+   "precipMm": 0.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 165,
+   "tminP10": 14.5,
+   "tminP50": 16.3,
+   "tminP90": 19.2,
+   "tmaxP10": 19.8,
+   "tmaxP50": 23.1,
+   "tmaxP90": 30.1,
+   "rainProb": 0.143,
+   "precipMm": 0.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 166,
+   "tminP10": 14.5,
+   "tminP50": 16.5,
+   "tminP90": 19.3,
+   "tmaxP10": 20,
+   "tmaxP50": 23.2,
+   "tmaxP90": 30.1,
+   "rainProb": 0.14,
+   "precipMm": 0.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 167,
+   "tminP10": 14.5,
+   "tminP50": 16.5,
+   "tminP90": 19.3,
+   "tmaxP10": 20.2,
+   "tmaxP50": 23.3,
+   "tmaxP90": 30.1,
+   "rainProb": 0.13,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 168,
+   "tminP10": 14.6,
+   "tminP50": 16.5,
+   "tminP90": 19.3,
+   "tmaxP10": 20.4,
+   "tmaxP50": 23.5,
+   "tmaxP90": 30.3,
+   "rainProb": 0.123,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 169,
+   "tminP10": 14.6,
+   "tminP50": 16.6,
+   "tminP90": 19.2,
+   "tmaxP10": 20.5,
+   "tmaxP50": 23.5,
+   "tmaxP90": 30.6,
+   "rainProb": 0.113,
+   "precipMm": 0.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 170,
+   "tminP10": 14.8,
+   "tminP50": 16.7,
+   "tminP90": 19.3,
+   "tmaxP10": 20.6,
+   "tmaxP50": 23.7,
+   "tmaxP90": 30.7,
+   "rainProb": 0.11,
+   "precipMm": 0.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 171,
+   "tminP10": 14.9,
+   "tminP50": 16.7,
+   "tminP90": 19.5,
+   "tmaxP10": 20.7,
+   "tmaxP50": 23.9,
+   "tmaxP90": 30.9,
+   "rainProb": 0.11,
+   "precipMm": 0.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 172,
+   "tminP10": 14.9,
+   "tminP50": 16.8,
+   "tminP90": 19.6,
+   "tmaxP10": 21,
+   "tmaxP50": 24,
+   "tmaxP90": 30.8,
+   "rainProb": 0.113,
+   "precipMm": 0.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 173,
+   "tminP10": 15,
+   "tminP50": 16.9,
+   "tminP90": 19.8,
+   "tmaxP10": 21.1,
+   "tmaxP50": 24.2,
+   "tmaxP90": 31,
+   "rainProb": 0.117,
+   "precipMm": 0.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 174,
+   "tminP10": 15,
+   "tminP50": 16.9,
+   "tminP90": 19.9,
+   "tmaxP10": 21.2,
+   "tmaxP50": 24.1,
+   "tmaxP90": 31,
+   "rainProb": 0.113,
+   "precipMm": 0.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 175,
+   "tminP10": 15.1,
+   "tminP50": 17,
+   "tminP90": 20,
+   "tmaxP10": 21.2,
+   "tmaxP50": 24.3,
+   "tmaxP90": 31,
+   "rainProb": 0.11,
+   "precipMm": 0.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 176,
+   "tminP10": 15.1,
+   "tminP50": 17.1,
+   "tminP90": 20.1,
+   "tmaxP10": 21.4,
+   "tmaxP50": 24.4,
+   "tmaxP90": 30.9,
+   "rainProb": 0.097,
+   "precipMm": 0.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 177,
+   "tminP10": 15.2,
+   "tminP50": 17.1,
+   "tminP90": 19.8,
+   "tmaxP10": 21.4,
+   "tmaxP50": 24.5,
+   "tmaxP90": 31,
+   "rainProb": 0.087,
+   "precipMm": 0.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 178,
+   "tminP10": 15.3,
+   "tminP50": 17.2,
+   "tminP90": 19.6,
+   "tmaxP10": 21.6,
+   "tmaxP50": 24.7,
+   "tmaxP90": 31,
+   "rainProb": 0.073,
+   "precipMm": 0.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 179,
+   "tminP10": 15.3,
+   "tminP50": 17.3,
+   "tminP90": 19.6,
+   "tmaxP10": 21.7,
+   "tmaxP50": 24.9,
+   "tmaxP90": 31.1,
+   "rainProb": 0.06,
+   "precipMm": 0.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 180,
+   "tminP10": 15.4,
+   "tminP50": 17.3,
+   "tminP90": 19.6,
+   "tmaxP10": 22,
+   "tmaxP50": 25,
+   "tmaxP90": 31.3,
+   "rainProb": 0.057,
+   "precipMm": 0.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 181,
+   "tminP10": 15.5,
+   "tminP50": 17.3,
+   "tminP90": 19.6,
+   "tmaxP10": 22.1,
+   "tmaxP50": 25,
+   "tmaxP90": 31.4,
+   "rainProb": 0.057,
+   "precipMm": 0.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 182,
+   "tminP10": 15.7,
+   "tminP50": 17.3,
+   "tminP90": 19.8,
+   "tmaxP10": 22.2,
+   "tmaxP50": 25,
+   "tmaxP90": 31.5,
+   "rainProb": 0.057,
+   "precipMm": 0.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 183,
+   "tminP10": 15.7,
+   "tminP50": 17.4,
+   "tminP90": 20,
+   "tmaxP10": 22.3,
+   "tmaxP50": 25,
+   "tmaxP90": 31.5,
+   "rainProb": 0.047,
+   "precipMm": 0.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 184,
+   "tminP10": 15.8,
+   "tminP50": 17.4,
+   "tminP90": 20,
+   "tmaxP10": 22.3,
+   "tmaxP50": 25.3,
+   "tmaxP90": 31.5,
+   "rainProb": 0.047,
+   "precipMm": 0.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 185,
+   "tminP10": 15.8,
+   "tminP50": 17.5,
+   "tminP90": 20,
+   "tmaxP10": 22.4,
+   "tmaxP50": 25.5,
+   "tmaxP90": 32,
+   "rainProb": 0.043,
+   "precipMm": 0.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 186,
+   "tminP10": 15.9,
+   "tminP50": 17.6,
+   "tminP90": 20,
+   "tmaxP10": 22.4,
+   "tmaxP50": 25.6,
+   "tmaxP90": 32.4,
+   "rainProb": 0.043,
+   "precipMm": 0.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 187,
+   "tminP10": 16,
+   "tminP50": 17.6,
+   "tminP90": 20,
+   "tmaxP10": 22.5,
+   "tmaxP50": 25.5,
+   "tmaxP90": 32.4,
+   "rainProb": 0.04,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 188,
+   "tminP10": 16,
+   "tminP50": 17.6,
+   "tminP90": 20.1,
+   "tmaxP10": 22.6,
+   "tmaxP50": 25.6,
+   "tmaxP90": 32.4,
+   "rainProb": 0.033,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 189,
+   "tminP10": 16.1,
+   "tminP50": 17.6,
+   "tminP90": 20.1,
+   "tmaxP10": 22.8,
+   "tmaxP50": 25.8,
+   "tmaxP90": 32.4,
+   "rainProb": 0.027,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 190,
+   "tminP10": 16.3,
+   "tminP50": 17.7,
+   "tminP90": 20,
+   "tmaxP10": 22.8,
+   "tmaxP50": 25.9,
+   "tmaxP90": 32.4,
+   "rainProb": 0.027,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 191,
+   "tminP10": 16.4,
+   "tminP50": 17.7,
+   "tminP90": 20.2,
+   "tmaxP10": 22.8,
+   "tmaxP50": 26,
+   "tmaxP90": 32.5,
+   "rainProb": 0.03,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 192,
+   "tminP10": 16.4,
+   "tminP50": 17.8,
+   "tminP90": 20.7,
+   "tmaxP10": 22.9,
+   "tmaxP50": 26.2,
+   "tmaxP90": 32.4,
+   "rainProb": 0.03,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 193,
+   "tminP10": 16.4,
+   "tminP50": 17.8,
+   "tminP90": 20.7,
+   "tmaxP10": 23,
+   "tmaxP50": 26.4,
+   "tmaxP90": 32.5,
+   "rainProb": 0.027,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 194,
+   "tminP10": 16.4,
+   "tminP50": 17.9,
+   "tminP90": 20.9,
+   "tmaxP10": 23,
+   "tmaxP50": 26.3,
+   "tmaxP90": 32.4,
+   "rainProb": 0.03,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 195,
+   "tminP10": 16.4,
+   "tminP50": 17.9,
+   "tminP90": 20.5,
+   "tmaxP10": 23,
+   "tmaxP50": 26.3,
+   "tmaxP90": 32.4,
+   "rainProb": 0.03,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 196,
+   "tminP10": 16.4,
+   "tminP50": 17.9,
+   "tminP90": 20.5,
+   "tmaxP10": 23.1,
+   "tmaxP50": 26.3,
+   "tmaxP90": 32.3,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 197,
+   "tminP10": 16.4,
+   "tminP50": 18,
+   "tminP90": 20.3,
+   "tmaxP10": 23.3,
+   "tmaxP50": 26.4,
+   "tmaxP90": 32.3,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 198,
+   "tminP10": 16.5,
+   "tminP50": 18,
+   "tminP90": 20.2,
+   "tmaxP10": 23.2,
+   "tmaxP50": 26.5,
+   "tmaxP90": 32.4,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 199,
+   "tminP10": 16.5,
+   "tminP50": 18,
+   "tminP90": 20.1,
+   "tmaxP10": 23.4,
+   "tmaxP50": 26.5,
+   "tmaxP90": 32.4,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 200,
+   "tminP10": 16.5,
+   "tminP50": 18,
+   "tminP90": 20.2,
+   "tmaxP10": 23.4,
+   "tmaxP50": 26.5,
+   "tmaxP90": 32.4,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 201,
+   "tminP10": 16.5,
+   "tminP50": 18.1,
+   "tminP90": 20.2,
+   "tmaxP10": 23.4,
+   "tmaxP50": 26.5,
+   "tmaxP90": 32.3,
+   "rainProb": 0.017,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 202,
+   "tminP10": 16.6,
+   "tminP50": 18.1,
+   "tminP90": 20.1,
+   "tmaxP10": 23.4,
+   "tmaxP50": 26.5,
+   "tmaxP90": 32.3,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 203,
+   "tminP10": 16.7,
+   "tminP50": 18.2,
+   "tminP90": 19.9,
+   "tmaxP10": 23.5,
+   "tmaxP50": 26.7,
+   "tmaxP90": 32.2,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 204,
+   "tminP10": 16.7,
+   "tminP50": 18.2,
+   "tminP90": 20.1,
+   "tmaxP10": 23.6,
+   "tmaxP50": 26.7,
+   "tmaxP90": 32.3,
+   "rainProb": 0.023,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 205,
+   "tminP10": 16.7,
+   "tminP50": 18.2,
+   "tminP90": 20.2,
+   "tmaxP10": 23.6,
+   "tmaxP50": 26.6,
+   "tmaxP90": 32.3,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 206,
+   "tminP10": 16.7,
+   "tminP50": 18.2,
+   "tminP90": 19.9,
+   "tmaxP10": 23.6,
+   "tmaxP50": 26.5,
+   "tmaxP90": 32.2,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 207,
+   "tminP10": 16.7,
+   "tminP50": 18.3,
+   "tminP90": 19.7,
+   "tmaxP10": 23.6,
+   "tmaxP50": 26.5,
+   "tmaxP90": 32.2,
+   "rainProb": 0.027,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 208,
+   "tminP10": 16.7,
+   "tminP50": 18.3,
+   "tminP90": 19.6,
+   "tmaxP10": 23.6,
+   "tmaxP50": 26.5,
+   "tmaxP90": 32.2,
+   "rainProb": 0.027,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 209,
+   "tminP10": 16.7,
+   "tminP50": 18.3,
+   "tminP90": 19.7,
+   "tmaxP10": 23.7,
+   "tmaxP50": 26.5,
+   "tmaxP90": 32.3,
+   "rainProb": 0.023,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 210,
+   "tminP10": 16.8,
+   "tminP50": 18.4,
+   "tminP90": 19.9,
+   "tmaxP10": 23.9,
+   "tmaxP50": 26.7,
+   "tmaxP90": 32.3,
+   "rainProb": 0.023,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 211,
+   "tminP10": 16.8,
+   "tminP50": 18.4,
+   "tminP90": 20.1,
+   "tmaxP10": 24.1,
+   "tmaxP50": 26.8,
+   "tmaxP90": 32.5,
+   "rainProb": 0.023,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 212,
+   "tminP10": 16.9,
+   "tminP50": 18.5,
+   "tminP90": 20.6,
+   "tmaxP10": 24.1,
+   "tmaxP50": 26.7,
+   "tmaxP90": 32.9,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 213,
+   "tminP10": 16.9,
+   "tminP50": 18.5,
+   "tminP90": 20.7,
+   "tmaxP10": 24.1,
+   "tmaxP50": 26.7,
+   "tmaxP90": 32.6,
+   "rainProb": 0.023,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 214,
+   "tminP10": 16.9,
+   "tminP50": 18.5,
+   "tminP90": 20.8,
+   "tmaxP10": 24.1,
+   "tmaxP50": 26.8,
+   "tmaxP90": 32.4,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 215,
+   "tminP10": 16.8,
+   "tminP50": 18.5,
+   "tminP90": 20.9,
+   "tmaxP10": 24.1,
+   "tmaxP50": 26.9,
+   "tmaxP90": 32.7,
+   "rainProb": 0.023,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 216,
+   "tminP10": 16.8,
+   "tminP50": 18.5,
+   "tminP90": 21.2,
+   "tmaxP10": 24.2,
+   "tmaxP50": 27,
+   "tmaxP90": 32.7,
+   "rainProb": 0.023,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 217,
+   "tminP10": 16.9,
+   "tminP50": 18.6,
+   "tminP90": 21.6,
+   "tmaxP10": 24.2,
+   "tmaxP50": 27.2,
+   "tmaxP90": 32.9,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 218,
+   "tminP10": 16.9,
+   "tminP50": 18.6,
+   "tminP90": 21.8,
+   "tmaxP10": 24.1,
+   "tmaxP50": 27.2,
+   "tmaxP90": 32.9,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 219,
+   "tminP10": 16.9,
+   "tminP50": 18.6,
+   "tminP90": 21.6,
+   "tmaxP10": 24,
+   "tmaxP50": 27.2,
+   "tmaxP90": 32.9,
+   "rainProb": 0.017,
+   "precipMm": 0
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 220,
+   "tminP10": 16.9,
+   "tminP50": 18.6,
+   "tminP90": 21.6,
+   "tmaxP10": 24,
+   "tmaxP50": 27.4,
+   "tmaxP90": 32.9,
+   "rainProb": 0.017,
+   "precipMm": 0
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 221,
+   "tminP10": 17,
+   "tminP50": 18.6,
+   "tminP90": 21.6,
+   "tmaxP10": 24,
+   "tmaxP50": 27.5,
+   "tmaxP90": 32.9,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 222,
+   "tminP10": 17,
+   "tminP50": 18.5,
+   "tminP90": 21.6,
+   "tmaxP10": 24,
+   "tmaxP50": 27.6,
+   "tmaxP90": 32.9,
+   "rainProb": 0.013,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 223,
+   "tminP10": 17,
+   "tminP50": 18.6,
+   "tminP90": 21.6,
+   "tmaxP10": 24,
+   "tmaxP50": 27.5,
+   "tmaxP90": 32.9,
+   "rainProb": 0.017,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 224,
+   "tminP10": 17,
+   "tminP50": 18.6,
+   "tminP90": 21.5,
+   "tmaxP10": 24,
+   "tmaxP50": 27.5,
+   "tmaxP90": 32.9,
+   "rainProb": 0.017,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 225,
+   "tminP10": 17,
+   "tminP50": 18.5,
+   "tminP90": 21.5,
+   "tmaxP10": 23.9,
+   "tmaxP50": 27.4,
+   "tmaxP90": 32.9,
+   "rainProb": 0.017,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 226,
+   "tminP10": 17,
+   "tminP50": 18.5,
+   "tminP90": 21.5,
+   "tmaxP10": 23.9,
+   "tmaxP50": 27.5,
+   "tmaxP90": 32.8,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 227,
+   "tminP10": 16.9,
+   "tminP50": 18.5,
+   "tminP90": 21.3,
+   "tmaxP10": 23.9,
+   "tmaxP50": 27.7,
+   "tmaxP90": 32.7,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 228,
+   "tminP10": 17,
+   "tminP50": 18.5,
+   "tminP90": 21.1,
+   "tmaxP10": 24,
+   "tmaxP50": 27.9,
+   "tmaxP90": 32.7,
+   "rainProb": 0.017,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 229,
+   "tminP10": 17.1,
+   "tminP50": 18.5,
+   "tminP90": 21,
+   "tmaxP10": 23.9,
+   "tmaxP50": 27.9,
+   "tmaxP90": 32.8,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 230,
+   "tminP10": 17.1,
+   "tminP50": 18.5,
+   "tminP90": 20.8,
+   "tmaxP10": 23.9,
+   "tmaxP50": 27.9,
+   "tmaxP90": 32.7,
+   "rainProb": 0.017,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 231,
+   "tminP10": 17,
+   "tminP50": 18.5,
+   "tminP90": 20.7,
+   "tmaxP10": 23.8,
+   "tmaxP50": 27.7,
+   "tmaxP90": 32.3,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 232,
+   "tminP10": 17,
+   "tminP50": 18.4,
+   "tminP90": 20.4,
+   "tmaxP10": 23.8,
+   "tmaxP50": 27.6,
+   "tmaxP90": 32.2,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 233,
+   "tminP10": 17,
+   "tminP50": 18.3,
+   "tminP90": 20.3,
+   "tmaxP10": 23.7,
+   "tmaxP50": 27.5,
+   "tmaxP90": 32,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 234,
+   "tminP10": 16.9,
+   "tminP50": 18.3,
+   "tminP90": 20.2,
+   "tmaxP10": 23.8,
+   "tmaxP50": 27.4,
+   "tmaxP90": 31.6,
+   "rainProb": 0.027,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 235,
+   "tminP10": 17,
+   "tminP50": 18.3,
+   "tminP90": 20.2,
+   "tmaxP10": 23.7,
+   "tmaxP50": 27.3,
+   "tmaxP90": 31.5,
+   "rainProb": 0.027,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 236,
+   "tminP10": 16.8,
+   "tminP50": 18.3,
+   "tminP90": 20.2,
+   "tmaxP10": 23.7,
+   "tmaxP50": 27.1,
+   "tmaxP90": 31.6,
+   "rainProb": 0.02,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 237,
+   "tminP10": 17,
+   "tminP50": 18.3,
+   "tminP90": 20.2,
+   "tmaxP10": 23.9,
+   "tmaxP50": 27.2,
+   "tmaxP90": 31.5,
+   "rainProb": 0.023,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 238,
+   "tminP10": 17,
+   "tminP50": 18.3,
+   "tminP90": 20.3,
+   "tmaxP10": 23.9,
+   "tmaxP50": 27.2,
+   "tmaxP90": 31.4,
+   "rainProb": 0.023,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 239,
+   "tminP10": 16.8,
+   "tminP50": 18.3,
+   "tminP90": 20.3,
+   "tmaxP10": 23.7,
+   "tmaxP50": 27.3,
+   "tmaxP90": 31.5,
+   "rainProb": 0.023,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 240,
+   "tminP10": 16.8,
+   "tminP50": 18.3,
+   "tminP90": 20.3,
+   "tmaxP10": 23.7,
+   "tmaxP50": 27.2,
+   "tmaxP90": 31.4,
+   "rainProb": 0.027,
+   "precipMm": 0.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 241,
+   "tminP10": 16.8,
+   "tminP50": 18.3,
+   "tminP90": 20.2,
+   "tmaxP10": 23.5,
+   "tmaxP50": 27,
+   "tmaxP90": 31.4,
+   "rainProb": 0.03,
+   "precipMm": 0.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 242,
+   "tminP10": 16.8,
+   "tminP50": 18.3,
+   "tminP90": 20.2,
+   "tmaxP10": 23.5,
+   "tmaxP50": 26.9,
+   "tmaxP90": 31.5,
+   "rainProb": 0.037,
+   "precipMm": 0.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 243,
+   "tminP10": 16.7,
+   "tminP50": 18.2,
+   "tminP90": 20.3,
+   "tmaxP10": 23.5,
+   "tmaxP50": 26.8,
+   "tmaxP90": 31.4,
+   "rainProb": 0.04,
+   "precipMm": 0.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 244,
+   "tminP10": 16.7,
+   "tminP50": 18.3,
+   "tminP90": 20.3,
+   "tmaxP10": 23.5,
+   "tmaxP50": 26.7,
+   "tmaxP90": 31.4,
+   "rainProb": 0.047,
+   "precipMm": 0.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 245,
+   "tminP10": 16.6,
+   "tminP50": 18.3,
+   "tminP90": 20.3,
+   "tmaxP10": 23.2,
+   "tmaxP50": 26.6,
+   "tmaxP90": 31.2,
+   "rainProb": 0.053,
+   "precipMm": 0.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 246,
+   "tminP10": 16.6,
+   "tminP50": 18.3,
+   "tminP90": 20.3,
+   "tmaxP10": 23.2,
+   "tmaxP50": 26.4,
+   "tmaxP90": 31.1,
+   "rainProb": 0.053,
+   "precipMm": 0.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 247,
+   "tminP10": 16.5,
+   "tminP50": 18.3,
+   "tminP90": 20.3,
+   "tmaxP10": 23,
+   "tmaxP50": 26.3,
+   "tmaxP90": 31,
+   "rainProb": 0.06,
+   "precipMm": 0.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 248,
+   "tminP10": 16.5,
+   "tminP50": 18.3,
+   "tminP90": 20.3,
+   "tmaxP10": 23,
+   "tmaxP50": 26.3,
+   "tmaxP90": 31.1,
+   "rainProb": 0.06,
+   "precipMm": 0.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 249,
+   "tminP10": 16.5,
+   "tminP50": 18.3,
+   "tminP90": 20.4,
+   "tmaxP10": 23,
+   "tmaxP50": 26.3,
+   "tmaxP90": 31.2,
+   "rainProb": 0.06,
+   "precipMm": 0.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 250,
+   "tminP10": 16.5,
+   "tminP50": 18.4,
+   "tminP90": 20.5,
+   "tmaxP10": 22.8,
+   "tmaxP50": 26.4,
+   "tmaxP90": 31.2,
+   "rainProb": 0.077,
+   "precipMm": 0.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 251,
+   "tminP10": 16.5,
+   "tminP50": 18.4,
+   "tminP90": 20.5,
+   "tmaxP10": 22.6,
+   "tmaxP50": 26.4,
+   "tmaxP90": 31,
+   "rainProb": 0.087,
+   "precipMm": 0.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 252,
+   "tminP10": 16.4,
+   "tminP50": 18.4,
+   "tminP90": 20.5,
+   "tmaxP10": 22.5,
+   "tmaxP50": 26.2,
+   "tmaxP90": 31,
+   "rainProb": 0.097,
+   "precipMm": 0.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 253,
+   "tminP10": 16.3,
+   "tminP50": 18.4,
+   "tminP90": 20.5,
+   "tmaxP10": 22.4,
+   "tmaxP50": 25.8,
+   "tmaxP90": 31.1,
+   "rainProb": 0.107,
+   "precipMm": 1.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 254,
+   "tminP10": 16.3,
+   "tminP50": 18.4,
+   "tminP90": 20.5,
+   "tmaxP10": 22.3,
+   "tmaxP50": 25.5,
+   "tmaxP90": 31.1,
+   "rainProb": 0.117,
+   "precipMm": 1.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 255,
+   "tminP10": 16.3,
+   "tminP50": 18.3,
+   "tminP90": 20.4,
+   "tmaxP10": 22.1,
+   "tmaxP50": 25.4,
+   "tmaxP90": 30.4,
+   "rainProb": 0.12,
+   "precipMm": 1.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 256,
+   "tminP10": 16.2,
+   "tminP50": 18.3,
+   "tminP90": 20.3,
+   "tmaxP10": 22.3,
+   "tmaxP50": 25.4,
+   "tmaxP90": 30,
+   "rainProb": 0.127,
+   "precipMm": 1.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 257,
+   "tminP10": 16.2,
+   "tminP50": 18.2,
+   "tminP90": 20.2,
+   "tmaxP10": 22.1,
+   "tmaxP50": 25.3,
+   "tmaxP90": 29.9,
+   "rainProb": 0.143,
+   "precipMm": 1.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 258,
+   "tminP10": 16.2,
+   "tminP50": 18.1,
+   "tminP90": 20.1,
+   "tmaxP10": 22.1,
+   "tmaxP50": 25.1,
+   "tmaxP90": 29.8,
+   "rainProb": 0.163,
+   "precipMm": 1.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 259,
+   "tminP10": 16.1,
+   "tminP50": 18,
+   "tminP90": 19.9,
+   "tmaxP10": 22,
+   "tmaxP50": 25,
+   "tmaxP90": 29.5,
+   "rainProb": 0.157,
+   "precipMm": 1.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 260,
+   "tminP10": 16,
+   "tminP50": 17.9,
+   "tminP90": 19.8,
+   "tmaxP10": 22,
+   "tmaxP50": 25,
+   "tmaxP90": 29.4,
+   "rainProb": 0.167,
+   "precipMm": 1.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 261,
+   "tminP10": 15.9,
+   "tminP50": 17.8,
+   "tminP90": 19.8,
+   "tmaxP10": 21.9,
+   "tmaxP50": 24.9,
+   "tmaxP90": 29.4,
+   "rainProb": 0.173,
+   "precipMm": 1.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 262,
+   "tminP10": 15.7,
+   "tminP50": 17.8,
+   "tminP90": 19.9,
+   "tmaxP10": 21.8,
+   "tmaxP50": 24.8,
+   "tmaxP90": 29.4,
+   "rainProb": 0.177,
+   "precipMm": 1.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 263,
+   "tminP10": 15.6,
+   "tminP50": 17.6,
+   "tminP90": 19.8,
+   "tmaxP10": 21.8,
+   "tmaxP50": 24.8,
+   "tmaxP90": 29.4,
+   "rainProb": 0.183,
+   "precipMm": 1.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 264,
+   "tminP10": 15.5,
+   "tminP50": 17.5,
+   "tminP90": 19.7,
+   "tmaxP10": 21.7,
+   "tmaxP50": 24.7,
+   "tmaxP90": 29.4,
+   "rainProb": 0.187,
+   "precipMm": 1.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 265,
+   "tminP10": 15.5,
+   "tminP50": 17.4,
+   "tminP90": 19.7,
+   "tmaxP10": 21.7,
+   "tmaxP50": 24.6,
+   "tmaxP90": 29.3,
+   "rainProb": 0.18,
+   "precipMm": 1.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 266,
+   "tminP10": 15.5,
+   "tminP50": 17.3,
+   "tminP90": 19.6,
+   "tmaxP10": 21.7,
+   "tmaxP50": 24.6,
+   "tmaxP90": 29.2,
+   "rainProb": 0.187,
+   "precipMm": 1.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 267,
+   "tminP10": 15.4,
+   "tminP50": 17.3,
+   "tminP90": 19.5,
+   "tmaxP10": 21.7,
+   "tmaxP50": 24.6,
+   "tmaxP90": 28.9,
+   "rainProb": 0.183,
+   "precipMm": 1.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 268,
+   "tminP10": 15.4,
+   "tminP50": 17.2,
+   "tminP90": 19.5,
+   "tmaxP10": 21.7,
+   "tmaxP50": 24.6,
+   "tmaxP90": 28.9,
+   "rainProb": 0.173,
+   "precipMm": 1.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 269,
+   "tminP10": 15.3,
+   "tminP50": 17.3,
+   "tminP90": 19.5,
+   "tmaxP10": 21.6,
+   "tmaxP50": 24.5,
+   "tmaxP90": 29.2,
+   "rainProb": 0.177,
+   "precipMm": 1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 270,
+   "tminP10": 15.2,
+   "tminP50": 17.2,
+   "tminP90": 19.5,
+   "tmaxP10": 21.6,
+   "tmaxP50": 24.5,
+   "tmaxP90": 29.3,
+   "rainProb": 0.177,
+   "precipMm": 1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 271,
+   "tminP10": 15,
+   "tminP50": 17.2,
+   "tminP90": 19.6,
+   "tmaxP10": 21.4,
+   "tmaxP50": 24.3,
+   "tmaxP90": 29.3,
+   "rainProb": 0.17,
+   "precipMm": 1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 272,
+   "tminP10": 14.9,
+   "tminP50": 17,
+   "tminP90": 19.6,
+   "tmaxP10": 21.3,
+   "tmaxP50": 24.1,
+   "tmaxP90": 29.4,
+   "rainProb": 0.153,
+   "precipMm": 1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 273,
+   "tminP10": 14.8,
+   "tminP50": 17,
+   "tminP90": 19.6,
+   "tmaxP10": 21.2,
+   "tmaxP50": 24.2,
+   "tmaxP90": 29.4,
+   "rainProb": 0.137,
+   "precipMm": 0.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 274,
+   "tminP10": 14.8,
+   "tminP50": 17,
+   "tminP90": 19.7,
+   "tmaxP10": 21,
+   "tmaxP50": 24.3,
+   "tmaxP90": 29.4,
+   "rainProb": 0.147,
+   "precipMm": 0.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 275,
+   "tminP10": 14.9,
+   "tminP50": 17,
+   "tminP90": 19.7,
+   "tmaxP10": 20.9,
+   "tmaxP50": 24.3,
+   "tmaxP90": 29.4,
+   "rainProb": 0.14,
+   "precipMm": 1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 276,
+   "tminP10": 14.9,
+   "tminP50": 17,
+   "tminP90": 19.5,
+   "tmaxP10": 20.8,
+   "tmaxP50": 24.4,
+   "tmaxP90": 29.4,
+   "rainProb": 0.143,
+   "precipMm": 1.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 277,
+   "tminP10": 14.8,
+   "tminP50": 16.9,
+   "tminP90": 19.5,
+   "tmaxP10": 20.8,
+   "tmaxP50": 24.4,
+   "tmaxP90": 29.3,
+   "rainProb": 0.15,
+   "precipMm": 1.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 278,
+   "tminP10": 14.8,
+   "tminP50": 16.9,
+   "tminP90": 19.4,
+   "tmaxP10": 20.7,
+   "tmaxP50": 24.3,
+   "tmaxP90": 29.3,
+   "rainProb": 0.167,
+   "precipMm": 1.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 279,
+   "tminP10": 14.9,
+   "tminP50": 17,
+   "tminP90": 19.4,
+   "tmaxP10": 20.6,
+   "tmaxP50": 24.1,
+   "tmaxP90": 29.3,
+   "rainProb": 0.173,
+   "precipMm": 1.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 280,
+   "tminP10": 14.9,
+   "tminP50": 16.9,
+   "tminP90": 19.4,
+   "tmaxP10": 20.6,
+   "tmaxP50": 24.1,
+   "tmaxP90": 29.3,
+   "rainProb": 0.173,
+   "precipMm": 1.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 281,
+   "tminP10": 14.8,
+   "tminP50": 16.8,
+   "tminP90": 19.3,
+   "tmaxP10": 20.4,
+   "tmaxP50": 23.9,
+   "tmaxP90": 29.3,
+   "rainProb": 0.167,
+   "precipMm": 1.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 282,
+   "tminP10": 14.7,
+   "tminP50": 16.7,
+   "tminP90": 19,
+   "tmaxP10": 20.2,
+   "tmaxP50": 23.7,
+   "tmaxP90": 29.3,
+   "rainProb": 0.177,
+   "precipMm": 1.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 283,
+   "tminP10": 14.6,
+   "tminP50": 16.6,
+   "tminP90": 19,
+   "tmaxP10": 20.1,
+   "tmaxP50": 23.5,
+   "tmaxP90": 28.8,
+   "rainProb": 0.2,
+   "precipMm": 1.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 284,
+   "tminP10": 14.5,
+   "tminP50": 16.6,
+   "tminP90": 18.9,
+   "tmaxP10": 20.1,
+   "tmaxP50": 23.3,
+   "tmaxP90": 28.7,
+   "rainProb": 0.217,
+   "precipMm": 1.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 285,
+   "tminP10": 14.4,
+   "tminP50": 16.5,
+   "tminP90": 18.8,
+   "tmaxP10": 19.9,
+   "tmaxP50": 23.1,
+   "tmaxP90": 28.6,
+   "rainProb": 0.24,
+   "precipMm": 2.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 286,
+   "tminP10": 14.4,
+   "tminP50": 16.5,
+   "tminP90": 18.7,
+   "tmaxP10": 19.7,
+   "tmaxP50": 23,
+   "tmaxP90": 28.5,
+   "rainProb": 0.257,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 287,
+   "tminP10": 14.3,
+   "tminP50": 16.6,
+   "tminP90": 18.4,
+   "tmaxP10": 19.7,
+   "tmaxP50": 22.8,
+   "tmaxP90": 27.7,
+   "rainProb": 0.27,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 288,
+   "tminP10": 14.1,
+   "tminP50": 16.4,
+   "tminP90": 18.3,
+   "tmaxP10": 19.5,
+   "tmaxP50": 22.5,
+   "tmaxP90": 27.5,
+   "rainProb": 0.3,
+   "precipMm": 2.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 289,
+   "tminP10": 13.9,
+   "tminP50": 16.4,
+   "tminP90": 18.3,
+   "tmaxP10": 19.3,
+   "tmaxP50": 22.3,
+   "tmaxP90": 27.3,
+   "rainProb": 0.31,
+   "precipMm": 2.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 290,
+   "tminP10": 13.7,
+   "tminP50": 16.3,
+   "tminP90": 18.3,
+   "tmaxP10": 19.3,
+   "tmaxP50": 22,
+   "tmaxP90": 27.1,
+   "rainProb": 0.327,
+   "precipMm": 2.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 291,
+   "tminP10": 13.5,
+   "tminP50": 16.3,
+   "tminP90": 18.3,
+   "tmaxP10": 19.1,
+   "tmaxP50": 21.7,
+   "tmaxP90": 27,
+   "rainProb": 0.34,
+   "precipMm": 3.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 292,
+   "tminP10": 13.4,
+   "tminP50": 16.3,
+   "tminP90": 18.3,
+   "tmaxP10": 19,
+   "tmaxP50": 21.7,
+   "tmaxP90": 26.9,
+   "rainProb": 0.353,
+   "precipMm": 3.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 293,
+   "tminP10": 13.3,
+   "tminP50": 16.1,
+   "tminP90": 18.2,
+   "tmaxP10": 18.9,
+   "tmaxP50": 21.5,
+   "tmaxP90": 26,
+   "rainProb": 0.357,
+   "precipMm": 3.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 294,
+   "tminP10": 13.2,
+   "tminP50": 16,
+   "tminP90": 18.2,
+   "tmaxP10": 18.8,
+   "tmaxP50": 21.4,
+   "tmaxP90": 25.9,
+   "rainProb": 0.353,
+   "precipMm": 3.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 295,
+   "tminP10": 13,
+   "tminP50": 16,
+   "tminP90": 18.2,
+   "tmaxP10": 18.6,
+   "tmaxP50": 21.2,
+   "tmaxP90": 25.5,
+   "rainProb": 0.36,
+   "precipMm": 3.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 296,
+   "tminP10": 12.6,
+   "tminP50": 15.9,
+   "tminP90": 18.3,
+   "tmaxP10": 18.5,
+   "tmaxP50": 21.1,
+   "tmaxP90": 24.6,
+   "rainProb": 0.377,
+   "precipMm": 3.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 297,
+   "tminP10": 12.6,
+   "tminP50": 15.9,
+   "tminP90": 18.2,
+   "tmaxP10": 18.3,
+   "tmaxP50": 21,
+   "tmaxP90": 24.4,
+   "rainProb": 0.377,
+   "precipMm": 3.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 298,
+   "tminP10": 12.5,
+   "tminP50": 15.8,
+   "tminP90": 18.2,
+   "tmaxP10": 18.1,
+   "tmaxP50": 20.9,
+   "tmaxP90": 24.4,
+   "rainProb": 0.38,
+   "precipMm": 3.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 299,
+   "tminP10": 12.4,
+   "tminP50": 15.7,
+   "tminP90": 18.2,
+   "tmaxP10": 18,
+   "tmaxP50": 20.8,
+   "tmaxP90": 24.2,
+   "rainProb": 0.38,
+   "precipMm": 3.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 300,
+   "tminP10": 12.3,
+   "tminP50": 15.6,
+   "tminP90": 18.1,
+   "tmaxP10": 17.9,
+   "tmaxP50": 20.5,
+   "tmaxP90": 24,
+   "rainProb": 0.373,
+   "precipMm": 3.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 301,
+   "tminP10": 12.1,
+   "tminP50": 15.4,
+   "tminP90": 18,
+   "tmaxP10": 17.8,
+   "tmaxP50": 20.4,
+   "tmaxP90": 23.8,
+   "rainProb": 0.377,
+   "precipMm": 3.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 302,
+   "tminP10": 12,
+   "tminP50": 15.2,
+   "tminP90": 18,
+   "tmaxP10": 17.5,
+   "tmaxP50": 20.3,
+   "tmaxP90": 23.5,
+   "rainProb": 0.393,
+   "precipMm": 3.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 303,
+   "tminP10": 11.9,
+   "tminP50": 15,
+   "tminP90": 18,
+   "tmaxP10": 17.3,
+   "tmaxP50": 20.2,
+   "tmaxP90": 23.5,
+   "rainProb": 0.377,
+   "precipMm": 3.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 304,
+   "tminP10": 11.8,
+   "tminP50": 14.9,
+   "tminP90": 17.7,
+   "tmaxP10": 17,
+   "tmaxP50": 19.9,
+   "tmaxP90": 23.4,
+   "rainProb": 0.37,
+   "precipMm": 3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 305,
+   "tminP10": 11.4,
+   "tminP50": 14.7,
+   "tminP90": 17.5,
+   "tmaxP10": 16.9,
+   "tmaxP50": 19.6,
+   "tmaxP90": 23.2,
+   "rainProb": 0.373,
+   "precipMm": 3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 306,
+   "tminP10": 11.2,
+   "tminP50": 14.4,
+   "tminP90": 17.4,
+   "tmaxP10": 16.6,
+   "tmaxP50": 19.5,
+   "tmaxP90": 22.8,
+   "rainProb": 0.38,
+   "precipMm": 2.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 307,
+   "tminP10": 11.1,
+   "tminP50": 14.3,
+   "tminP90": 17.4,
+   "tmaxP10": 16.5,
+   "tmaxP50": 19.4,
+   "tmaxP90": 22.7,
+   "rainProb": 0.373,
+   "precipMm": 2.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 308,
+   "tminP10": 11.1,
+   "tminP50": 14,
+   "tminP90": 17.4,
+   "tmaxP10": 16.4,
+   "tmaxP50": 19.3,
+   "tmaxP90": 22.3,
+   "rainProb": 0.357,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 309,
+   "tminP10": 11,
+   "tminP50": 13.8,
+   "tminP90": 17.3,
+   "tmaxP10": 16.4,
+   "tmaxP50": 19.2,
+   "tmaxP90": 22,
+   "rainProb": 0.36,
+   "precipMm": 2.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 310,
+   "tminP10": 11,
+   "tminP50": 13.7,
+   "tminP90": 17,
+   "tmaxP10": 16.4,
+   "tmaxP50": 19.1,
+   "tmaxP90": 21.8,
+   "rainProb": 0.357,
+   "precipMm": 2.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 311,
+   "tminP10": 10.9,
+   "tminP50": 13.6,
+   "tminP90": 16.7,
+   "tmaxP10": 16.4,
+   "tmaxP50": 19,
+   "tmaxP90": 21.6,
+   "rainProb": 0.347,
+   "precipMm": 2.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 312,
+   "tminP10": 10.7,
+   "tminP50": 13.5,
+   "tminP90": 16.4,
+   "tmaxP10": 16.3,
+   "tmaxP50": 18.8,
+   "tmaxP90": 21.3,
+   "rainProb": 0.357,
+   "precipMm": 2.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 313,
+   "tminP10": 10.6,
+   "tminP50": 13.4,
+   "tminP90": 16.3,
+   "tmaxP10": 16.3,
+   "tmaxP50": 18.7,
+   "tmaxP90": 21.2,
+   "rainProb": 0.347,
+   "precipMm": 3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 314,
+   "tminP10": 10.4,
+   "tminP50": 13.4,
+   "tminP90": 16,
+   "tmaxP10": 16.2,
+   "tmaxP50": 18.6,
+   "tmaxP90": 21,
+   "rainProb": 0.34,
+   "precipMm": 3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 315,
+   "tminP10": 10,
+   "tminP50": 13.3,
+   "tminP90": 15.9,
+   "tmaxP10": 16.2,
+   "tmaxP50": 18.5,
+   "tmaxP90": 20.8,
+   "rainProb": 0.343,
+   "precipMm": 3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 316,
+   "tminP10": 9.7,
+   "tminP50": 13.2,
+   "tminP90": 15.8,
+   "tmaxP10": 16.1,
+   "tmaxP50": 18.3,
+   "tmaxP90": 20.8,
+   "rainProb": 0.33,
+   "precipMm": 2.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 317,
+   "tminP10": 9.7,
+   "tminP50": 13.1,
+   "tminP90": 15.6,
+   "tmaxP10": 16.1,
+   "tmaxP50": 18.2,
+   "tmaxP90": 20.7,
+   "rainProb": 0.32,
+   "precipMm": 2.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 318,
+   "tminP10": 9.7,
+   "tminP50": 13,
+   "tminP90": 15.5,
+   "tmaxP10": 16,
+   "tmaxP50": 18.2,
+   "tmaxP90": 20.6,
+   "rainProb": 0.327,
+   "precipMm": 2.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 319,
+   "tminP10": 9.6,
+   "tminP50": 12.9,
+   "tminP90": 15.3,
+   "tmaxP10": 15.9,
+   "tmaxP50": 18.1,
+   "tmaxP90": 20.5,
+   "rainProb": 0.337,
+   "precipMm": 2.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 320,
+   "tminP10": 9.5,
+   "tminP50": 12.8,
+   "tminP90": 15.3,
+   "tmaxP10": 15.6,
+   "tmaxP50": 17.9,
+   "tmaxP90": 20.5,
+   "rainProb": 0.333,
+   "precipMm": 3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 321,
+   "tminP10": 9.5,
+   "tminP50": 12.7,
+   "tminP90": 15.3,
+   "tmaxP10": 15.4,
+   "tmaxP50": 17.8,
+   "tmaxP90": 20.3,
+   "rainProb": 0.317,
+   "precipMm": 3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 322,
+   "tminP10": 9.4,
+   "tminP50": 12.7,
+   "tminP90": 15.2,
+   "tmaxP10": 15.2,
+   "tmaxP50": 17.7,
+   "tmaxP90": 20.2,
+   "rainProb": 0.33,
+   "precipMm": 3.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 323,
+   "tminP10": 9.1,
+   "tminP50": 12.6,
+   "tminP90": 15.2,
+   "tmaxP10": 14.9,
+   "tmaxP50": 17.5,
+   "tmaxP90": 20.2,
+   "rainProb": 0.35,
+   "precipMm": 3.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 324,
+   "tminP10": 8.8,
+   "tminP50": 12.5,
+   "tminP90": 15.1,
+   "tmaxP10": 14.7,
+   "tmaxP50": 17.3,
+   "tmaxP90": 20,
+   "rainProb": 0.347,
+   "precipMm": 3.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 325,
+   "tminP10": 8.7,
+   "tminP50": 12.2,
+   "tminP90": 14.9,
+   "tmaxP10": 14.5,
+   "tmaxP50": 17.2,
+   "tmaxP90": 19.7,
+   "rainProb": 0.34,
+   "precipMm": 3.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 326,
+   "tminP10": 8.6,
+   "tminP50": 12,
+   "tminP90": 14.7,
+   "tmaxP10": 14.3,
+   "tmaxP50": 16.9,
+   "tmaxP90": 19.6,
+   "rainProb": 0.35,
+   "precipMm": 3.2
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 327,
+   "tminP10": 8.5,
+   "tminP50": 11.7,
+   "tminP90": 14.7,
+   "tmaxP10": 14.2,
+   "tmaxP50": 16.8,
+   "tmaxP90": 19.4,
+   "rainProb": 0.343,
+   "precipMm": 3.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 328,
+   "tminP10": 8.4,
+   "tminP50": 11.5,
+   "tminP90": 14.6,
+   "tmaxP10": 14,
+   "tmaxP50": 16.7,
+   "tmaxP90": 19.3,
+   "rainProb": 0.35,
+   "precipMm": 3.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 329,
+   "tminP10": 8.3,
+   "tminP50": 11.4,
+   "tminP90": 14.5,
+   "tmaxP10": 13.9,
+   "tmaxP50": 16.5,
+   "tmaxP90": 19,
+   "rainProb": 0.35,
+   "precipMm": 2.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 330,
+   "tminP10": 8,
+   "tminP50": 11,
+   "tminP90": 14.5,
+   "tmaxP10": 13.7,
+   "tmaxP50": 16.2,
+   "tmaxP90": 18.9,
+   "rainProb": 0.347,
+   "precipMm": 2.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 331,
+   "tminP10": 8,
+   "tminP50": 10.9,
+   "tminP90": 14.5,
+   "tmaxP10": 13.7,
+   "tmaxP50": 16.1,
+   "tmaxP90": 18.6,
+   "rainProb": 0.35,
+   "precipMm": 2.8
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 332,
+   "tminP10": 7.7,
+   "tminP50": 10.8,
+   "tminP90": 14.5,
+   "tmaxP10": 13.5,
+   "tmaxP50": 16,
+   "tmaxP90": 18.3,
+   "rainProb": 0.347,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 333,
+   "tminP10": 7.6,
+   "tminP50": 10.6,
+   "tminP90": 14.1,
+   "tmaxP10": 13.4,
+   "tmaxP50": 15.9,
+   "tmaxP90": 18.1,
+   "rainProb": 0.34,
+   "precipMm": 2.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 334,
+   "tminP10": 7.5,
+   "tminP50": 10.5,
+   "tminP90": 14,
+   "tmaxP10": 13.3,
+   "tmaxP50": 15.9,
+   "tmaxP90": 18,
+   "rainProb": 0.33,
+   "precipMm": 2.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 335,
+   "tminP10": 7.4,
+   "tminP50": 10.5,
+   "tminP90": 14,
+   "tmaxP10": 13.4,
+   "tmaxP50": 15.9,
+   "tmaxP90": 17.9,
+   "rainProb": 0.333,
+   "precipMm": 2.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 336,
+   "tminP10": 7.4,
+   "tminP50": 10.5,
+   "tminP90": 13.7,
+   "tmaxP10": 13.4,
+   "tmaxP50": 15.8,
+   "tmaxP90": 17.8,
+   "rainProb": 0.333,
+   "precipMm": 2.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 337,
+   "tminP10": 7.4,
+   "tminP50": 10.5,
+   "tminP90": 13.6,
+   "tmaxP10": 13.3,
+   "tmaxP50": 15.8,
+   "tmaxP90": 17.7,
+   "rainProb": 0.313,
+   "precipMm": 2.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 338,
+   "tminP10": 7.4,
+   "tminP50": 10.5,
+   "tminP90": 13.6,
+   "tmaxP10": 13.1,
+   "tmaxP50": 15.8,
+   "tmaxP90": 17.6,
+   "rainProb": 0.297,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 339,
+   "tminP10": 7.4,
+   "tminP50": 10.5,
+   "tminP90": 13.6,
+   "tmaxP10": 13.1,
+   "tmaxP50": 15.8,
+   "tmaxP90": 17.7,
+   "rainProb": 0.3,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 340,
+   "tminP10": 7.4,
+   "tminP50": 10.6,
+   "tminP90": 13.7,
+   "tmaxP10": 13.1,
+   "tmaxP50": 15.7,
+   "tmaxP90": 17.7,
+   "rainProb": 0.317,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 341,
+   "tminP10": 7.4,
+   "tminP50": 10.6,
+   "tminP90": 13.7,
+   "tmaxP10": 13.2,
+   "tmaxP50": 15.7,
+   "tmaxP90": 17.6,
+   "rainProb": 0.31,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 342,
+   "tminP10": 7.3,
+   "tminP50": 10.8,
+   "tminP90": 13.7,
+   "tmaxP10": 13.2,
+   "tmaxP50": 15.7,
+   "tmaxP90": 17.6,
+   "rainProb": 0.317,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 343,
+   "tminP10": 7.3,
+   "tminP50": 10.8,
+   "tminP90": 13.7,
+   "tmaxP10": 13.1,
+   "tmaxP50": 15.7,
+   "tmaxP90": 17.6,
+   "rainProb": 0.313,
+   "precipMm": 2.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 344,
+   "tminP10": 7.2,
+   "tminP50": 10.6,
+   "tminP90": 13.7,
+   "tmaxP10": 13.1,
+   "tmaxP50": 15.6,
+   "tmaxP90": 17.6,
+   "rainProb": 0.313,
+   "precipMm": 2.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 345,
+   "tminP10": 7.1,
+   "tminP50": 10.6,
+   "tminP90": 13.7,
+   "tmaxP10": 13.2,
+   "tmaxP50": 15.7,
+   "tmaxP90": 17.6,
+   "rainProb": 0.297,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 346,
+   "tminP10": 7.3,
+   "tminP50": 10.5,
+   "tminP90": 13.9,
+   "tmaxP10": 13,
+   "tmaxP50": 15.6,
+   "tmaxP90": 17.6,
+   "rainProb": 0.303,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 347,
+   "tminP10": 7.1,
+   "tminP50": 10.5,
+   "tminP90": 13.9,
+   "tmaxP10": 13,
+   "tmaxP50": 15.6,
+   "tmaxP90": 17.6,
+   "rainProb": 0.303,
+   "precipMm": 3.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 348,
+   "tminP10": 6.9,
+   "tminP50": 10.4,
+   "tminP90": 14,
+   "tmaxP10": 13,
+   "tmaxP50": 15.5,
+   "tmaxP90": 17.5,
+   "rainProb": 0.31,
+   "precipMm": 3.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 349,
+   "tminP10": 6.9,
+   "tminP50": 10.4,
+   "tminP90": 13.9,
+   "tmaxP10": 12.9,
+   "tmaxP50": 15.4,
+   "tmaxP90": 17.6,
+   "rainProb": 0.313,
+   "precipMm": 3.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 350,
+   "tminP10": 6.8,
+   "tminP50": 10.2,
+   "tminP90": 13.7,
+   "tmaxP10": 12.9,
+   "tmaxP50": 15.3,
+   "tmaxP90": 17.5,
+   "rainProb": 0.297,
+   "precipMm": 2.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 351,
+   "tminP10": 6.8,
+   "tminP50": 10.1,
+   "tminP90": 13.9,
+   "tmaxP10": 12.7,
+   "tmaxP50": 15.2,
+   "tmaxP90": 17.6,
+   "rainProb": 0.297,
+   "precipMm": 2.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 352,
+   "tminP10": 6.8,
+   "tminP50": 9.9,
+   "tminP90": 13.7,
+   "tmaxP10": 12.7,
+   "tmaxP50": 15.1,
+   "tmaxP90": 17.5,
+   "rainProb": 0.3,
+   "precipMm": 2.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 353,
+   "tminP10": 6.7,
+   "tminP50": 9.6,
+   "tminP90": 13.6,
+   "tmaxP10": 12.7,
+   "tmaxP50": 15.1,
+   "tmaxP90": 17.4,
+   "rainProb": 0.313,
+   "precipMm": 3.1
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 354,
+   "tminP10": 6.6,
+   "tminP50": 9.5,
+   "tminP90": 13.6,
+   "tmaxP10": 12.6,
+   "tmaxP50": 15,
+   "tmaxP90": 17.2,
+   "rainProb": 0.303,
+   "precipMm": 3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 355,
+   "tminP10": 6.5,
+   "tminP50": 9.5,
+   "tminP90": 13.4,
+   "tmaxP10": 12.6,
+   "tmaxP50": 14.9,
+   "tmaxP90": 17.1,
+   "rainProb": 0.3,
+   "precipMm": 2.9
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 356,
+   "tminP10": 6.5,
+   "tminP50": 9.4,
+   "tminP90": 13.4,
+   "tmaxP10": 12.6,
+   "tmaxP50": 14.8,
+   "tmaxP90": 17.1,
+   "rainProb": 0.29,
+   "precipMm": 2.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 357,
+   "tminP10": 6.6,
+   "tminP50": 9.4,
+   "tminP90": 13.5,
+   "tmaxP10": 12.6,
+   "tmaxP50": 14.7,
+   "tmaxP90": 17.2,
+   "rainProb": 0.277,
+   "precipMm": 2.5
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 358,
+   "tminP10": 6.5,
+   "tminP50": 9.3,
+   "tminP90": 13.5,
+   "tmaxP10": 12.6,
+   "tmaxP50": 14.7,
+   "tmaxP90": 17.2,
+   "rainProb": 0.27,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 359,
+   "tminP10": 6.5,
+   "tminP50": 9.3,
+   "tminP90": 13.3,
+   "tmaxP10": 12.6,
+   "tmaxP50": 14.6,
+   "tmaxP90": 17.2,
+   "rainProb": 0.263,
+   "precipMm": 2.6
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 360,
+   "tminP10": 6.5,
+   "tminP50": 9.3,
+   "tminP90": 13.3,
+   "tmaxP10": 12.7,
+   "tmaxP50": 14.6,
+   "tmaxP90": 17.2,
+   "rainProb": 0.277,
+   "precipMm": 2.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 361,
+   "tminP10": 6.5,
+   "tminP50": 9.4,
+   "tminP90": 13.2,
+   "tmaxP10": 12.7,
+   "tmaxP50": 14.6,
+   "tmaxP90": 17.2,
+   "rainProb": 0.277,
+   "precipMm": 2.7
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 362,
+   "tminP10": 6.5,
+   "tminP50": 9.3,
+   "tminP90": 13.1,
+   "tmaxP10": 12.6,
+   "tmaxP50": 14.6,
+   "tmaxP90": 17.1,
+   "rainProb": 0.28,
+   "precipMm": 2.4
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 363,
+   "tminP10": 6.3,
+   "tminP50": 9.4,
+   "tminP90": 13.1,
+   "tmaxP10": 12.5,
+   "tmaxP50": 14.6,
+   "tmaxP90": 17,
+   "rainProb": 0.28,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 364,
+   "tminP10": 6.3,
+   "tminP50": 9.4,
+   "tminP90": 13,
+   "tmaxP10": 12.5,
+   "tmaxP50": 14.5,
+   "tmaxP90": 17,
+   "rainProb": 0.277,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 365,
+   "tminP10": 6.3,
+   "tminP50": 9.4,
+   "tminP90": 13,
+   "tmaxP10": 12.3,
+   "tmaxP50": 14.5,
+   "tmaxP90": 16.8,
+   "rainProb": 0.28,
+   "precipMm": 2.3
+  },
+  {
+   "cityId": "01M5AG0XX6ADZP859K1NAPRCGA",
+   "dayOfYear": 366,
+   "tminP10": 6.2,
+   "tminP50": 9.2,
+   "tminP90": 13.1,
+   "tmaxP10": 12.3,
+   "tmaxP50": 14.4,
+   "tmaxP90": 16.8,
+   "rainProb": 0.28,
+   "precipMm": 2.3
+  }
+ ]
+}

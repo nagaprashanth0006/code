@@ -1,0 +1,32 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Permissions for the main window: local SQLite, HTTP to the free data sources only, files inside the app data directory, opening links in the system browser.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "sql:default",
+    "sql:allow-execute",
+    "opener:default",
+    {
+      "identifier": "http:default",
+      "allow": [
+        { "url": "https://nominatim.openstreetmap.org/*" },
+        { "url": "https://overpass-api.de/*" },
+        { "url": "https://www.wikidata.org/*" },
+        { "url": "https://query.wikidata.org/*" },
+        { "url": "https://en.wikivoyage.org/*" },
+        { "url": "https://commons.wikimedia.org/*" },
+        { "url": "https://upload.wikimedia.org/*" },
+        { "url": "https://thumb.wikimedia.org/*" },
+        { "url": "https://archive-api.open-meteo.com/*" }
+      ]
+    },
+    "fs:default",
+    "fs:scope-appdata-recursive",
+    "fs:allow-mkdir",
+    "fs:allow-write-file",
+    "fs:allow-read-dir",
+    "fs:allow-stat"
+  ]
+}
