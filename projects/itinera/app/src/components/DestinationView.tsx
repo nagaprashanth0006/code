@@ -233,7 +233,14 @@ export function DestinationView({
           </form>
           <div className="plan-card__alt">
             {c.cityId ? (
-              <button onClick={onBrowse}>Browse places</button>
+              <>
+                <button onClick={onBrowse}>Browse places</button>
+                {canFetch && (
+                  <button onClick={() => void fetchOnly()} disabled={!!adding} title="Fetch this place's sights again (about a minute)">
+                    Refresh places
+                  </button>
+                )}
+              </>
             ) : (
               canFetch && (
                 <button onClick={() => void fetchOnly()} disabled={!!adding}>

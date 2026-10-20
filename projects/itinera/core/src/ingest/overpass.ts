@@ -3,7 +3,15 @@ import { z } from "zod";
 import type { BBox, PlaceCategory } from "../schemas.js";
 import { query, type HttpFetch } from "./http.js";
 
-export const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
+/**
+ * The main Overpass instance, then public mirrors. The main one is often at
+ * capacity (502/504) for minutes at a time; a mirror usually isn't.
+ */
+export const OVERPASS_URLS = [
+  "https://overpass-api.de/api/interpreter",
+  "https://overpass.private.coffee/api/interpreter",
+  "https://overpass.kumi.systems/api/interpreter",
+] as const;
 
 const OverpassElement = z.object({
   type: z.enum(["node", "way", "relation"]),
@@ -31,7 +39,11 @@ export interface OsmPlace {
 /** OSM area ids for relations are offset by 3.6 billion. */
 export const areaIdForRelation = (relationId: number) => 3_600_000_000 + relationId;
 
-/** Where to look: inside a city's boundary, or a box around a place mapped only as a point. */
+/**
+ * Where to look: inside a city's boundary, or a box (around a town whose
+ * sights are spread over the hills and valleys around it). A box is much
+ * cheaper for Overpass than an `around:` radius; callers trim to the radius.
+ */
 export type PlacesScope = { relationId: number } | { bbox: BBox };
 
 export function buildPlacesQuery(scope: PlacesScope): string {
@@ -41,12 +53,19 @@ export function buildPlacesQuery(scope: PlacesScope): string {
     head = `area(id:${areaIdForRelation(scope.relationId)})->.city;\n`;
     a = "(area.city)";
   } else {
-    const [w, s, e, n] = scope.bbox;
+    const [w, s, e, n] = scope.bbox.map((v) => Math.round(v * 1e5) / 1e5) as BBox;
     a = `(${s},${w},${n},${e})`;
   }
   return `[out:json][timeout:180];
 ${head}(
   nwr["tourism"~"^(museum|gallery|attraction|viewpoint|zoo|aquarium|theme_park)$"]["name"]${a};
+  nwr["natural"~"^(waterfall|beach|cave_entrance)$"]["name"]${a};
+  nwr["waterway"="waterfall"]["name"]${a};
+  nwr["natural"="peak"]["name"]["wikidata"]${a};
+  nwr["water"~"^(lake|reservoir)$"]["name"]["wikidata"]${a};
+  nwr["waterway"="dam"]["name"]["wikidata"]${a};
+  nwr["boundary"~"^(national_park|protected_area)$"]["name"]["wikidata"]${a};
+  nwr["leisure"="nature_reserve"]["name"]["wikidata"]${a};
   nwr["historic"~"^(castle|fort|palace|monastery|church|cathedral|monument|memorial|city_gate|tower|archaeological_site|ruins|building|aqueduct)$"]["name"]["wikidata"]${a};
   nwr["amenity"="place_of_worship"]["name"]["wikidata"]${a};
   nwr["leisure"~"^(park|garden)$"]["name"]["wikidata"]${a};
@@ -63,6 +82,14 @@ export function categorize(tags: Record<string, string>): PlaceCategory {
   if (tourism === "gallery") return "gallery";
   if (tourism === "zoo" || tourism === "aquarium") return "zoo";
   if (tourism === "viewpoint") return "viewpoint";
+  if (tags.natural === "waterfall" || tags.waterway === "waterfall") return "waterfall";
+  if (tags.boundary === "national_park" || tags.boundary === "protected_area" || tags.leisure === "nature_reserve") {
+    return "nature_reserve";
+  }
+  if (tags.natural === "peak") return "peak";
+  if (tags.natural === "beach") return "beach";
+  if (tags.natural === "cave_entrance") return "attraction";
+  if (tags.water === "lake" || tags.water === "reservoir" || tags.waterway === "dam") return "lake";
   if (historic === "castle" && tags.castle_type === "palace") return "palace";
   if (historic === "palace") return "palace";
   if (historic === "castle" || historic === "fort") return "castle";
@@ -127,10 +154,20 @@ export function normalizeElements(elements: readonly OverpassElement[]): OsmPlac
 }
 
 export async function fetchOsmPlaces(fetch: HttpFetch, scope: PlacesScope): Promise<OsmPlace[]> {
-  const res = await fetch(OVERPASS_URL, {
-    method: "POST",
-    headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: query({ data: buildPlacesQuery(scope) }),
-  });
-  return normalizeElements(OverpassResponse.parse(await res.json()).elements);
+  const body = query({ data: buildPlacesQuery(scope) });
+  const errors: string[] = [];
+  for (const url of OVERPASS_URLS) {
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body,
+      });
+      return normalizeElements(OverpassResponse.parse(await res.json()).elements);
+    } catch (e) {
+      // Busy, timed out or unreachable: try the next instance.
+      errors.push(e instanceof Error ? e.message : String(e));
+    }
+  }
+  throw new Error(`OpenStreetMap (Overpass) is busy on every server; try again in a few minutes. ${errors.join("; ")}`);
 }

@@ -46,6 +46,15 @@ export const DEFAULT_HOST_INTERVALS: Record<string, number> = {
   "upload.wikimedia.org": 100,
   "thumb.wikimedia.org": 100,
   "archive-api.open-meteo.com": 500,
+  "overpass.private.coffee": 1000,
+  "overpass.kumi.systems": 1000,
+};
+
+/** Hosts whose requests legitimately run long: Overpass queries may take up to their 180 s server timeout. */
+export const SLOW_HOST_TIMEOUTS_MS: Record<string, number> = {
+  "overpass-api.de": 200_000,
+  "overpass.private.coffee": 200_000,
+  "overpass.kumi.systems": 200_000,
 };
 
 export class HttpError extends Error {
@@ -90,12 +99,13 @@ export function politeFetch(fetch: HttpFetch, options: PoliteOptions): HttpFetch
       await waitTurn(host);
       let res: HttpResponse;
       const abort = new AbortController();
-      const timer = setTimeout(() => abort.abort(), timeoutMs);
+      const hostTimeoutMs = Math.max(timeoutMs, SLOW_HOST_TIMEOUTS_MS[host] ?? 0);
+      const timer = setTimeout(() => abort.abort(), hostTimeoutMs);
       try {
         res = await fetch(url, { ...init, headers, signal: abort.signal });
       } catch (e) {
         if (attempt >= retries) {
-          if (abort.signal.aborted) throw new HttpError(url, 0, `Timed out after ${timeoutMs / 1000} s: ${host}`);
+          if (abort.signal.aborted) throw new HttpError(url, 0, `Timed out after ${hostTimeoutMs / 1000} s: ${host}`);
           // The raw error ("error sending request for url …") hides the usual causes.
           throw new HttpError(
             url,

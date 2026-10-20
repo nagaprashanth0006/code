@@ -218,6 +218,26 @@ export class Repo {
     );
   }
 
+  /**
+   * After a re-fetch: removes a city's places that weren't selected this time,
+   * except those a trip or the wishlist still uses. Returns how many went.
+   */
+  async prunePlaces(cityId: string, keepIds: readonly string[]): Promise<number> {
+    const keep = new Set(keepIds);
+    const rows = await this.db.select<{ id: string }>(
+      `SELECT id FROM place WHERE city_id = ?
+         AND id NOT IN (SELECT place_id FROM item WHERE place_id IS NOT NULL)
+         AND id NOT IN (SELECT place_id FROM wishlist_entry)`,
+      [cityId],
+    );
+    const stale = rows.map((r) => r.id).filter((id) => !keep.has(id));
+    for (let i = 0; i < stale.length; i += 500) {
+      const chunk = stale.slice(i, i + 500);
+      await this.db.execute(`DELETE FROM place WHERE id IN (${chunk.map(() => "?").join(",")})`, chunk);
+    }
+    return stale.length;
+  }
+
   async placesByCity(cityId: string): Promise<Place[]> {
     return (await this.db.select<Row>("SELECT * FROM place WHERE city_id = ? ORDER BY rank DESC", [cityId])).map(
       toPlace,

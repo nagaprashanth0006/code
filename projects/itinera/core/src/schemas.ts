@@ -28,6 +28,11 @@ export const PLACE_CATEGORIES = [
   "zoo",
   "theatre",
   "square",
+  "waterfall",
+  "lake",
+  "nature_reserve",
+  "peak",
+  "beach",
   "other",
 ] as const;
 export const PlaceCategorySchema = z.enum(PLACE_CATEGORIES);

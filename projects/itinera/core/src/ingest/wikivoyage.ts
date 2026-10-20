@@ -11,7 +11,17 @@ export interface Listing {
   wikidata: string | null;
   content: string;
   page: string;
+  /** "see" (a sight) or "do" (an activity); other listing types are skipped. */
+  kind: "see" | "do";
+  /** Coordinates when the listing gives them; such listings can stand as places on their own. */
+  lat: number | null;
+  lon: number | null;
 }
+
+const coord = (raw: string | undefined, limit: number): number | null => {
+  const v = Number.parseFloat(raw ?? "");
+  return Number.isFinite(v) && Math.abs(v) <= limit && v !== 0 ? v : null;
+};
 
 const LISTING_TEMPLATES = new Set(["see", "do", "listing"]);
 
@@ -93,12 +103,23 @@ export function parseListings(wikitext: string, page: string): Listing[] {
       if (eq < 0) continue;
       params.set(part.slice(0, eq).trim().toLowerCase(), part.slice(eq + 1).trim());
     }
-    if (name === "listing" && !["see", "do"].includes((params.get("type") ?? "").toLowerCase())) continue;
+    const kind = name === "listing" ? (params.get("type") ?? "").toLowerCase() : name;
+    if (kind !== "see" && kind !== "do") continue;
     const listingName = cleanWikitext(params.get("name") ?? "");
     const content = cleanWikitext(params.get("content") ?? params.get("description") ?? "");
     if (!listingName || content.length < 20) continue;
     const wikidata = params.get("wikidata")?.trim();
-    out.push({ name: listingName, wikidata: wikidata && /^Q\d+$/.test(wikidata) ? wikidata : null, content, page });
+    const lat = coord(params.get("lat"), 90);
+    const lon = coord(params.get("long") ?? params.get("lon"), 180);
+    out.push({
+      name: listingName,
+      wikidata: wikidata && /^Q\d+$/.test(wikidata) ? wikidata : null,
+      content,
+      page,
+      kind,
+      lat: lat !== null && lon !== null ? lat : null,
+      lon: lat !== null && lon !== null ? lon : null,
+    });
   }
   return out;
 }

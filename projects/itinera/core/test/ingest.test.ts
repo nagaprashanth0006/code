@@ -10,6 +10,10 @@ describe("OSM normalization", () => {
     expect(categorize({ historic: "monastery" })).toBe("religious");
     expect(categorize({ tourism: "viewpoint" })).toBe("viewpoint");
     expect(categorize({ tourism: "attraction" })).toBe("attraction");
+    expect(categorize({ waterway: "waterfall" })).toBe("waterfall");
+    expect(categorize({ boundary: "protected_area" })).toBe("nature_reserve");
+    expect(categorize({ water: "reservoir" })).toBe("lake");
+    expect(categorize({ natural: "peak" })).toBe("peak");
   });
 
   it("dedupes elements sharing a Wikidata id, preferring the one with hours", () => {
@@ -36,6 +40,7 @@ describe("Wikivoyage listings", () => {
 | content=A '''masterpiece''' of the [[Manueline|Manueline style]], begun in 1501.{{ref|x}} Closed Mondays.
 }}
 * {{do | name=Tiny | content=short }}
+* {{listing | type=do | name=Atukkad Waterfalls | lat=10.0498 | long=77.0435 | content=A cascade on the way from Munnar to Pallivasal. }}
 * {{listing | type=eat | name=Cafe | content=Not a sight, should be skipped entirely.}}`;
 
   it("extracts see/do listings with Wikidata ids and clean text", () => {
@@ -46,6 +51,18 @@ describe("Wikivoyage listings", () => {
         wikidata: "Q193547",
         content: "A masterpiece of the Manueline style, begun in 1501. Closed Mondays.",
         page: "Lisbon/Belém",
+        kind: "see",
+        lat: null,
+        lon: null,
+      },
+      {
+        name: "Atukkad Waterfalls",
+        wikidata: null,
+        content: "A cascade on the way from Munnar to Pallivasal.",
+        page: "Lisbon/Belém",
+        kind: "do",
+        lat: 10.0498,
+        lon: 77.0435,
       },
     ]);
   });

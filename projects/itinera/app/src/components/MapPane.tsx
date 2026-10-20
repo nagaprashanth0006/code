@@ -67,7 +67,9 @@ const GROUP_COLOURS: Record<string, string> = {
 
 function placeColour(category: keyof typeof CATEGORY_INFO): string {
   const t = CATEGORY_INFO[category].themes;
-  if (category === "park" || category === "garden" || category === "zoo") return GROUP_COLOURS.nature!;
+  if (["park", "garden", "zoo", "waterfall", "lake", "nature_reserve", "peak", "beach"].includes(category)) {
+    return GROUP_COLOURS.nature!;
+  }
   if (t.includes("historical")) return GROUP_COLOURS.historical!;
   if (t.includes("culture")) return GROUP_COLOURS.culture!;
   if (t.includes("romantic")) return GROUP_COLOURS.romantic!;

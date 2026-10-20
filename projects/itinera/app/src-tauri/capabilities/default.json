@@ -13,6 +13,8 @@
       "allow": [
         { "url": "https://nominatim.openstreetmap.org/*" },
         { "url": "https://overpass-api.de/*" },
+        { "url": "https://overpass.private.coffee/*" },
+        { "url": "https://overpass.kumi.systems/*" },
         { "url": "https://www.wikidata.org/*" },
         { "url": "https://query.wikidata.org/*" },
         { "url": "https://en.wikivoyage.org/*" },

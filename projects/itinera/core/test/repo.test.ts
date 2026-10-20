@@ -78,6 +78,21 @@ describe("repository", () => {
     expect(await repo.getCity("c1")).toEqual(city);
   });
 
+  it("prunes places a re-fetch dropped, keeping those a trip or the wishlist uses", async () => {
+    const db = memoryDb();
+    await migrate(db);
+    const repo = new Repo(db);
+    await repo.upsertCountry({ id: "pt", name: "Portugal", isoCode: "PT", currency: "EUR" });
+    await repo.upsertCity(city);
+    await repo.upsertPlaces(["p1", "p2", "p3", "p4"].map((id, i) => place(`node/${i + 1}`, id)));
+    await repo.addToWishlist({ id: "w1", placeId: "p2", savedAt: "2026-10-21T00:00:00Z", note: null });
+    const tree = createSingleLegTrip({ name: "T", cityId: "c1", startDate: "2026-10-18", endDate: "2026-10-18" });
+    await repo.saveTripTree(addItem(tree, tree.legs[0]!.days[0]!.slots[0]!.slot.id, { placeId: "p3" }).tree);
+
+    expect(await repo.prunePlaces("c1", ["p1"])).toBe(1);
+    expect((await repo.placesByCity("c1")).map((p) => p.id).sort()).toEqual(["p1", "p2", "p3"]);
+  });
+
   it("saves and reloads a trip tree, then persists an edit diff", async () => {
     const db = memoryDb();
     await migrate(db);

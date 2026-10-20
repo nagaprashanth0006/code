@@ -2,6 +2,20 @@
 
 One entry per significant choice: context, decision, alternatives, consequences. Newest first. Scoping decisions made before implementation are in the PRD's decision table; these were made while building P1.1 and P1.2.
 
+## 2026-10-21 · Great places outside Europe: region search, nature, the guide as a source
+
+- **Context:** Fetching Coorg kept one place and Munnar two (plus three "Photo Point"s) while Lisbon kept 150. Four causes: towns were searched in a ~5 km box, but their sights lie 10–45 km out; waterfalls, lakes, dams, national parks and peaks weren't queried at all; only ~9% of OSM features around Munnar and Coorg link to Wikidata, so the fixed floor (rank ≥ 1.5) dropped nearly everything; and Wikivoyage listings only decorated OSM matches, by exact name.
+- **Decision:** (1) A large city (boundary half-diagonal ≥ 6 km) is searched within its boundary; anything smaller is searched in a radius of 25–60 km sized by how far its Wikivoyage listings reach. (2) The query adds waterfalls, beaches, caves, national parks, protected areas and nature reserves, and Wikidata-linked peaks, lakes, reservoirs and dams, with five new categories. (3) Listings match OSM by Wikidata id or by a spelling-tolerant name within 3 km (10 km for parks and lakes), folding transliteration variants ("Attukad"/"Atukkad", "Abbi"/"Abbey"). Listings the guide pins with coordinates become places even with no OSM feature. (4) Rank = 3 for a guide listing + log₂(1 + sitelinks) + a weight per kind of feature + photo/hours bonuses − 2 for an unlisted generic name ("Photo Point", "Check Dam") − up to 0.5 for distance from the centre. Keep everything ≥ 2 (up to 150), then top up to 30 from the rest ≥ 0.75. (5) Same-named features within 2 km collapse to the best one. For a region, the city's map box grows to frame its places.
+- **Alternatives:** OpenTripMap (needs a key, mixed quality); a larger fixed box; lowering the floor (floods Lisbon with minor sights).
+- **Consequences:** Lisbon's selection is close to before, since its places are notable anyway. Small towns depend on their Wikivoyage article: a thin guide still means a thin list. Guide-only places have no opening hours, so the checker reports "unknown" for them.
+
+## 2026-10-21 · Overpass: a box instead of a radius, and mirrors when busy
+
+- **Context:** The main Overpass instance answers "at capacity" (502/504) for long stretches, and an `around:` radius query over 40 km with protected-area relations ran past its limits.
+- **Decision:** Regions are queried as the box enclosing the radius and trimmed to the radius afterwards; parks, sanctuaries and reserves must link to Wikidata. When an instance is busy, times out or is unreachable, the fetch moves on to the private.coffee and Kumi mirrors. Overpass requests get a 200 s client timeout to match the 180 s server timeout.
+- **Alternatives:** Retrying the main instance only; bundling OSM extracts.
+- **Consequences:** Fetching a city survives most busy periods. When every instance is down, the error says so and asks to try again later.
+
 ## 2026-10-20 · Planner is map-first with floating panels
 
 - **Context:** The three-pane split (catalog | plan | map) read as dated and gave the map a third of the screen.
@@ -118,7 +132,7 @@ One entry per significant choice: context, decision, alternatives, consequences.
 - **Context:** Overpass returns ~800 candidate sights for Lisbon, many minor.
 - **Decision:** Rank = log₂(1 + Wikidata sitelinks) + 1.5 if Wikivoyage lists it + 0.5 with a photo + 0.25 with opening hours (−1 for uncategorised). Keep the top 150 with rank ≥ 1.5. Descriptions come from the Wikivoyage listing (CC BY-SA, attributed with a page link), else the Wikidata description (CC0).
 - **Alternatives:** OpenTripMap ratings; hand-curated lists.
-- **Consequences:** Ranking is explainable and source-backed. OpenTripMap stays available as an extra source later.
+- **Consequences:** Ranking is explainable and source-backed. OpenTripMap stays available as an extra source later. *Superseded on 2026-10-21: it only worked where OSM is densely linked to Wikidata (see "Great places outside Europe").*
 
 ## 2026-10-19 · Starter city: Lisbon
 

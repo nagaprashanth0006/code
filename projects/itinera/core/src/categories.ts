@@ -24,6 +24,11 @@ export const CATEGORY_INFO: Record<PlaceCategory, CategoryInfo> = {
   zoo: { label: "Zoo / aquarium", visitMinutes: 150, themes: ["nature"] },
   theatre: { label: "Theatre / venue", visitMinutes: 120, themes: ["culture", "romantic"] },
   square: { label: "Square / street", visitMinutes: 30, themes: ["culture", "solo"] },
+  waterfall: { label: "Waterfall", visitMinutes: 60, themes: ["nature", "romantic", "adventure"] },
+  lake: { label: "Lake / dam", visitMinutes: 60, themes: ["nature", "romantic"] },
+  nature_reserve: { label: "National park / sanctuary", visitMinutes: 180, themes: ["nature", "adventure"] },
+  peak: { label: "Peak / hill", visitMinutes: 180, themes: ["adventure", "nature"] },
+  beach: { label: "Beach", visitMinutes: 120, themes: ["nature", "romantic"] },
   other: { label: "Other", visitMinutes: 45, themes: [] },
 };
 
