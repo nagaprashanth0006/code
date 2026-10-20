@@ -7,8 +7,14 @@ import {
   addItem,
   checkTrip,
   createSingleLegTrip,
+  destinationIndex,
   diffItems,
+  geocodeCity,
+  HOME_CITY_SETTING,
+  homeCityFrom,
   ingestCity,
+  LANDING_CONFIG_SETTING,
+  landingConfigFrom,
   migrate,
   moveItem,
   removeItem,
@@ -21,8 +27,11 @@ import {
   type City,
   type ClimateNormal,
   type Country,
+  type Destination,
+  type HomeCity,
   type IngestProgress,
   type Item,
+  type LandingConfig,
   type Place,
   type Trip,
   type TripCheckResult,
@@ -31,16 +40,13 @@ import {
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { createPlatform, type LocalTilePack, type Platform } from "../platform";
 
-export type Status =
-  | { kind: "loading" }
-  | { kind: "needs-data" }
-  | { kind: "ingesting"; progress: IngestProgress }
-  | { kind: "ready" }
-  | { kind: "error"; message: string };
+export type Status = { kind: "loading" } | { kind: "ready" } | { kind: "error"; message: string };
 
 export interface Store {
   status: Status;
   platform: Platform | null;
+  /** The curated destination index bundled with the app. */
+  destinations: Destination[];
   countries: Country[];
   cities: City[];
   places: Map<string, Place>;
@@ -49,14 +55,23 @@ export interface Store {
   tilePacks: LocalTilePack[];
   wishlist: Set<string>;
   trips: Trip[];
+  /** City ids of each trip's legs, in order. */
+  tripCities: Map<string, string[]>;
   tree: TripTree | null;
   check: TripCheckResult | null;
   selectedPlaceId: string | null;
   selectedDayId: string | null;
   targetSlotId: string | null;
   lastError: string | null;
+  /** Asked once; ranks landing destinations by travel time from here. */
+  home: HomeCity | null;
+  landingConfig: LandingConfig;
+  /** A city being added from the hub while the rest of the app stays usable. */
+  adding: { city: string; progress: IngestProgress } | null;
 
-  ingest(city: string): Promise<void>;
+  /** Fetches a city's places, photos and weather; resolves to the city, or null on failure. */
+  addCity(name: string): Promise<City | null>;
+  setHome(name: string): Promise<void>;
   createTrip(input: { name: string; cityId: string; startDate: string; endDate: string }): Promise<void>;
   openTrip(id: string): Promise<void>;
   deleteTrip(id: string): Promise<void>;
@@ -79,8 +94,6 @@ export function useStore(): Store {
   if (!s) throw new Error("useStore outside StoreProvider");
   return s;
 }
-
-export const DEFAULT_CITY = "Lisbon";
 
 /**
  * Opens the platform and migrates once per page load. React's StrictMode runs
@@ -108,12 +121,16 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [tilePacks, setTilePacks] = useState<LocalTilePack[]>([]);
   const [wishlist, setWishlist] = useState<Set<string>>(new Set());
   const [trips, setTrips] = useState<Trip[]>([]);
+  const [tripCities, setTripCities] = useState<Map<string, string[]>>(new Map());
   const [tree, setTree] = useState<TripTree | null>(null);
   const treeRef = useRef<TripTree | null>(null);
   const [selectedPlaceId, selectPlace] = useState<string | null>(null);
   const [selectedDayId, selectDay] = useState<string | null>(null);
   const [targetSlotId, setTargetSlot] = useState<string | null>(null);
   const [lastError, setLastError] = useState<string | null>(null);
+  const [home, setHomeState] = useState<HomeCity | null>(null);
+  const [landingConfig, setLandingConfig] = useState<LandingConfig>(() => landingConfigFrom(null));
+  const [adding, setAdding] = useState<Store["adding"]>(null);
 
   const repo = () => {
     if (!repoRef.current) throw new Error("Database not ready");
@@ -127,12 +144,15 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
   const loadCatalog = useCallback(async () => {
     const r = repo();
-    const [cs, cts, wl, ts, ce] = await Promise.all([
+    const [cs, cts, wl, ts, tc, ce, homeRaw, landingRaw] = await Promise.all([
       r.listCountries(),
       r.listCities(),
       r.listWishlist(),
       r.listTrips(),
+      r.tripCities(),
       r.listCacheEntries(),
+      r.getSetting(HOME_CITY_SETTING),
+      r.getSetting(LANDING_CONFIG_SETTING),
     ]);
     const placeMap = new Map<string, Place>();
     const normalMap = new Map<string, ClimateNormal[]>();
@@ -146,7 +166,10 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     setNormals(normalMap);
     setWishlist(new Set(wl.map((w) => w.placeId)));
     setTrips(ts);
+    setTripCities(tc);
     setCacheEntries(ce);
+    setHomeState(homeCityFrom(homeRaw));
+    setLandingConfig(landingConfigFrom(landingRaw));
     return { cities: cts, trips: ts };
   }, []);
 
@@ -171,11 +194,8 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         repoRef.current = new Repo(p.db);
         setPlatform(p);
         setTilePacks(await p.tilePacks().catch(() => []));
-        const { cities: cts, trips: ts } = await loadCatalog();
-        if (cts.length === 0) {
-          setStatus({ kind: "needs-data" });
-          return;
-        }
+        // The hub works from the bundled destination index, so no city has to be fetched first.
+        const { trips: ts } = await loadCatalog();
         const last = await repo().getSetting("lastTripId");
         const tripId = ts.find((t) => t.id === last)?.id ?? ts[0]?.id;
         if (tripId) await openTrip(tripId);
@@ -226,6 +246,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const store: Store = {
     status,
     platform,
+    destinations: destinationIndex(),
     countries,
     cities,
     places,
@@ -234,32 +255,64 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     tilePacks,
     wishlist,
     trips,
+    tripCities,
     tree,
     check,
     selectedPlaceId,
     selectedDayId,
     targetSlotId,
     lastError,
+    home,
+    landingConfig,
+    adding,
 
-    async ingest(city) {
-      if (!platform) return;
-      setStatus({ kind: "ingesting", progress: { step: "Starting" } });
+    async addCity(name) {
+      if (!platform || adding) return null;
+      setAdding({ city: name, progress: { step: "Starting" } });
       try {
-        await ingestCity(
+        const result = await ingestCity(
           {
             fetch: platform.fetch,
             repo: repo(),
             files: platform.files,
-            onProgress: (progress) => setStatus({ kind: "ingesting", progress }),
+            onProgress: (progress) => setAdding({ city: name, progress }),
             onWarning: (message) => console.warn(message),
           },
-          city,
+          name,
         );
         await loadCatalog();
-        setStatus({ kind: "ready" });
+        return result.city;
       } catch (e) {
         console.error(e);
-        setStatus({ kind: "error", message: `Fetching ${city} failed: ${e instanceof Error ? e.message : String(e)}` });
+        setLastError(`Fetching ${name} failed: ${e instanceof Error ? e.message : String(e)}`);
+        return null;
+      } finally {
+        setAdding(null);
+      }
+    },
+
+    async setHome(name) {
+      const wanted = name.trim().toLowerCase();
+      if (!wanted) return;
+      try {
+        // A fetched city or an indexed destination needs no lookup, so this also works offline.
+        const known = cities.find((c) => c.name.toLowerCase() === wanted);
+        const country = known && countries.find((c) => c.id === known.countryId);
+        const indexed = destinationIndex().find((d) => d.name.toLowerCase() === wanted);
+        let next: HomeCity;
+        if (known && country) {
+          next = { name: known.name, countryCode: country.isoCode, lat: known.lat, lon: known.lon };
+        } else if (indexed) {
+          next = { name: indexed.name, countryCode: indexed.countryCode, lat: indexed.lat, lon: indexed.lon };
+        } else {
+          if (!platform) return;
+          const geo = await geocodeCity(platform.fetch, name.trim());
+          next = { name: geo.name, countryCode: geo.countryCode, lat: geo.lat, lon: geo.lon };
+        }
+        await repo().setSetting(HOME_CITY_SETTING, JSON.stringify(next));
+        setHomeState(next);
+      } catch (e) {
+        setLastError(`Couldn't find ${name.trim()}: ${e instanceof Error ? e.message : String(e)}`);
       }
     },
 
@@ -267,6 +320,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       const t = createSingleLegTrip(input);
       await repo().saveTripTree(t);
       setTrips(await repo().listTrips());
+      setTripCities(await repo().tripCities());
       await openTrip(t.trip.id);
     },
 

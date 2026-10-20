@@ -14,7 +14,17 @@ import {
   priceRangeFor,
 } from "../src/prices.js";
 import type { City, PriceObservation, Trip } from "../src/schemas.js";
-import { buildLanding, DEFAULT_LANDING_CONFIG, rankDestinations, reachability, seasonFit } from "../src/scoring.js";
+import {
+  buildLanding,
+  DEFAULT_LANDING_CONFIG,
+  homeAnchor,
+  homeCityFrom,
+  landingConfigFrom,
+  rankDestinations,
+  reachability,
+  seasonFit,
+  suggestTripDates,
+} from "../src/scoring.js";
 
 describe("ULIDs", () => {
   it("are 26 chars, time-sortable and decodable", () => {
@@ -127,7 +137,7 @@ describe("destination scoring", () => {
       normalsByCity: new Map(),
       routes: [],
     });
-    expect(ranked.map((r) => r.cityId)).toEqual(["goa", "lisbon"]); // closer wins with equal theme fit
+    expect(ranked.map((r) => r.destinationId)).toEqual(["goa", "lisbon"]); // closer wins with equal theme fit
     for (const f of Object.values(ranked[0]!.factors)) expect(f).toBeGreaterThan(0);
   });
 
@@ -137,8 +147,47 @@ describe("destination scoring", () => {
       normalsByCity: new Map(),
       routes: [],
     });
-    expect(rows.map((r) => r.row.id)).toEqual(["romantic", "solo", "adventure", "nature", "historical", "culture"]);
-    expect(rows.find((r) => r.row.id === "historical")!.destinations[0]!.cityId).toBe("lisbon");
+    expect(rows.map((r) => r.row.id)).toEqual([
+      "season",
+      "short-hops",
+      "romantic",
+      "solo",
+      "adventure",
+      "nature",
+      "historical",
+      "culture",
+    ]);
+    const ids = (id: string) => rows.find((r) => r.row.id === id)!.destinations.map((d) => d.destinationId);
+    expect(ids("historical")).toEqual(["lisbon"]); // theme rows keep tagged candidates only
+    expect(ids("solo")).toEqual([]);
+    expect(ids("season").sort()).toEqual(["goa", "lisbon"]); // all-theme rows rank everything
+    expect(ids("short-hops")).toEqual(["goa"]); // Lisbon is more than 7 h from Mumbai
+  });
+
+  it("reads the landing config and home city from settings, falling back safely", () => {
+    expect(landingConfigFrom(null)).toBe(DEFAULT_LANDING_CONFIG);
+    expect(landingConfigFrom("{not json")).toBe(DEFAULT_LANDING_CONFIG);
+    expect(landingConfigFrom(JSON.stringify({ rows: [{ id: "x", title: "X", theme: "beach" }] }))).toBe(DEFAULT_LANDING_CONFIG);
+    const custom = landingConfigFrom(JSON.stringify({ rows: [{ id: "solo", title: "Just me", theme: "solo" }] }));
+    expect(custom.rows).toEqual([{ id: "solo", title: "Just me", theme: "solo", limit: 10, order: "score", filters: {} }]);
+    expect(custom.windowMonths).toBe(4);
+
+    const mumbai = { name: "Mumbai", countryCode: "IN", lat: 19.07, lon: 72.88 };
+    expect(homeCityFrom(JSON.stringify(mumbai))).toEqual(mumbai);
+    expect(homeCityFrom(JSON.stringify({ name: "Mumbai" }))).toBeNull();
+    expect(homeCityFrom(null)).toBeNull();
+  });
+
+  it("anchors home to a nearby catalog city so it isn't ranked", () => {
+    expect(homeAnchor({ name: "Bombay", countryCode: "IN", lat: 19.1, lon: 72.9 }, [home, lisbon]).id).toBe("mumbai");
+    expect(homeAnchor({ name: "Pune", countryCode: "IN", lat: 18.52, lon: 73.86 }, [home, lisbon]).id).toBe("home");
+  });
+
+  it("suggests a Friday-to-Monday long weekend at least a week out", () => {
+    // 2026-10-20 is a Tuesday; the first Friday a week or more away is Oct 30.
+    expect(suggestTripDates(2026, 10, "2026-10-20")).toEqual({ startDate: "2026-10-30", endDate: "2026-11-02" });
+    // A later month starts at its first Friday: Dec 1 2026 is a Tuesday.
+    expect(suggestTripDates(2026, 12, "2026-10-20")).toEqual({ startDate: "2026-12-04", endDate: "2026-12-07" });
   });
 });
 

@@ -131,7 +131,7 @@ Each area below lists what the app must do; the phase that delivers it is in the
 One React UI and one TypeScript core run unchanged on desktop and mobile; Rust is limited to a thin native shell built on Tauri 2.
 
 ```
-┌─ React UI · responsive, three panes to one ────────────────────┐
+┌─ React UI · responsive, map-first with floating panels ────────┐
 │  Landing hub │ Catalog tree │ Itinerary tree │ Map (MapLibre)  │
 └───────────────────────────────┬────────────────────────────────┘
 ┌─ TypeScript core · pure package, tested ───────────────────────┐
@@ -204,7 +204,8 @@ All data comes from free sources, cached locally with a refresh interval set per
 | Photos | Wikimedia Commons (thumbnails cached as files) | 4–8 weeks |
 | Extra POIs | OpenTripMap | 4–8 weeks |
 | Geocoding | Nominatim (max 1 request/second) | Permanent |
-| Climate normals | Open-Meteo historical archive | Yearly |
+| Climate normals | Open-Meteo historical archive (fetched cities); NASA POWER, elevation-corrected (destination index) | Yearly |
+| Destination index | Curated seed list + Nominatim, Wikipedia, Wikidata/Commons, NASA POWER, Open-Meteo elevation | On release |
 | Travel times | OSRM or Valhalla (public demo, or self-hosted) | Permanent per pair |
 | Inter-city routes | Static open routes dataset + road/rail estimates | Yearly |
 | Accommodation prices | Inside Airbnb snapshots + logged observations | On each new snapshot |
@@ -257,7 +258,7 @@ P1.1 is the current phase; the riskiest unknowns (stack, maps, data pipeline) ar
 
 - [ ] Catalog tree and itinerary tree, both expandable
 - [ ] Multi-city: leg ordering, nights allocation, transfers as time-consuming items
-- [ ] Landing hub (Plan / Explore / My trips) with the score over current month + 3, config-driven layout
+- [x] Landing hub (Plan / Explore / My trips) with the score over current month + 3, config-driven layout, recommending from a bundled destination index; a destination page shows typical weather by month and for chosen dates before planning *(price signal stays neutral until price observations exist)*
 - [ ] Typical-weather bands per leg
 - [ ] Price bands with provenance; deep links for flights and hotels
 - [ ] TTL cache per category with a background refresher
@@ -278,7 +279,7 @@ P1.1 is the current phase; the riskiest unknowns (stack, maps, data pipeline) ar
 
 ### P2.1 — Android
 
-- [ ] Phone layout (tabs or bottom sheet over the map) and tablet layout (three panes, S Pen drag)
+- [ ] Phone layout (bottom sheet over the map, started in P1.2) and tablet layout (floating panels, S Pen drag)
 - [ ] On-device LLM plugin (llama.cpp or MediaPipe/LiteRT)
 - [ ] Storage, permissions, background refresh and battery policy (designed before this phase starts)
 - [ ] Seed import from desktop
@@ -313,7 +314,7 @@ The codebase should read as engineered: every layer explainable, the core tested
 - **Self-contained:** one installable app per platform, no external services to run (no database server, no separate backend).
 - **Offline-first:** a city with cached data and tiles works with no network.
 - **Parity:** desktop, Android and iOS offer near-identical functionality from one codebase.
-- **Responsive UI:** layouts collapse from three panes (desktop, tablet) to one (phone); built responsive from P1.1.
+- **Responsive UI:** the planner is map-first: the map fills the window and the plan floats over it as a side panel (desktop, tablet) or a bottom sheet (phone); built responsive from P1.1.
 - **Map feel:** smooth pan and zoom on target hardware, with no visible tile blur during zoom.
 - **Targets:** macOS (M-series) and Windows 11 in P1; Samsung S23 Ultra and Tab S11 Ultra in P2.1; iOS in P2.2.
 - **Licensing:** every displayed place, photo and map carries the attribution its source requires.

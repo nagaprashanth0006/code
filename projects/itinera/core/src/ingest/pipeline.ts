@@ -7,6 +7,7 @@
 import { newCacheEntry } from "../cache.js";
 import { CATEGORY_INFO, deriveCityThemes } from "../categories.js";
 import { computeClimateNormals } from "../climate.js";
+import { haversineKm } from "../geo.js";
 import type { Repo } from "../db/repo.js";
 import { ulid } from "../ids.js";
 import type { Attribution, City, Place, SourceLink } from "../schemas.js";
@@ -96,11 +97,17 @@ export async function ingestCity(deps: IngestDeps, cityQuery: string, options: I
     await repo.upsertCountry(country);
     country = (await repo.countryByIso(geo.countryCode)) ?? country;
   }
-  const existingCity = await repo.cityByOsmRelation(geo.osmRelationId);
+  // Re-fetching a city updates it in place: by boundary, or by name and position for point-only places.
+  const existingCity =
+    geo.osmRelationId !== null
+      ? await repo.cityByOsmRelation(geo.osmRelationId)
+      : ((await repo.listCities()).find(
+          (c) => c.osmRelationId === null && normalizeName(c.name) === normalizeName(geo.name) && haversineKm(c, geo) < 10,
+        ) ?? null);
   const cityId = existingCity?.id ?? ulid();
 
   progress({ step: "Fetching places from OpenStreetMap" });
-  const osm = await fetchOsmPlaces(fetch, geo.osmRelationId);
+  const osm = await fetchOsmPlaces(fetch, geo.osmRelationId !== null ? { relationId: geo.osmRelationId } : { bbox: geo.bbox });
 
   progress({ step: "Fetching Wikidata", done: 0, total: osm.length });
   const wikidataIds = osm.flatMap((p) => (p.wikidata ? [p.wikidata] : []));

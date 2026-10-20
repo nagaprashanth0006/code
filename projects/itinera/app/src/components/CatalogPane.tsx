@@ -2,7 +2,6 @@ import { CATEGORY_INFO, describeDayHours, hoursOnRaw, PLACE_CATEGORIES, type Pla
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useStore } from "../state/store";
 import { useSelectedDate } from "./hooks";
-import { PlaceDetail } from "./PlaceDetail";
 
 /** Catalog tree: Country → City → great places. */
 export function CatalogPane() {
@@ -40,12 +39,9 @@ export function CatalogPane() {
     selectedRef.current?.scrollIntoView({ block: "nearest" });
   }, [selectedPlaceId]);
 
-  const selected = selectedPlaceId ? places.get(selectedPlaceId) : undefined;
-
   return (
     <div className="catalog">
       <div className="pane__header">
-        <h2>Places</h2>
         <input
           type="search"
           placeholder="Search places"
@@ -64,7 +60,7 @@ export function CatalogPane() {
         </select>
       </div>
 
-      {selected && <PlaceDetail place={selected} />}
+      {countries.length === 0 && <p className="muted pad">No places yet. Pick a destination on the hub and fetch its places.</p>}
 
       <ul className="tree" role="tree" aria-label="Catalog">
         {countries.map((country) => {

@@ -6,13 +6,35 @@
  *   npm run ingest -- tools                  download the pmtiles CLI into bin/
  *   npm run ingest -- tiles Lisbon --install extract a PMTiles pack and copy it to the app data dir
  *   npm run ingest -- map-assets             download fonts and sprites for offline map labels
+ *   npm run ingest -- destinations           refresh the curated destination index and its photos
  */
 import { execFileSync } from "node:child_process";
-import { copyFileSync, existsSync, mkdirSync, statSync, writeFileSync } from "node:fs";
+import { copyFileSync, existsSync, mkdirSync, readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { homedir, platform } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
-import { ingestCity, migrate, politeFetch, Repo, type HttpFetch } from "@itinera/core";
+import {
+  computeClimateNormals,
+  DestinationIndexSchema,
+  fetchEntities,
+  fetchImageInfo,
+  fetchElevation,
+  fetchPowerDailyHistory,
+  fetchWikipediaSummary,
+  geocodeCity,
+  historyWindow,
+  ingestCity,
+  lapseCorrect,
+  migrate,
+  monthClimate,
+  politeFetch,
+  POWER_ATTRIBUTION,
+  Repo,
+  shortSummary,
+  type Destination,
+  type HttpFetch,
+} from "@itinera/core";
+import { DESTINATION_SEEDS } from "./destination-seeds.js";
 import { openSqlite } from "./sqlite.js";
 
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "..");
@@ -21,7 +43,11 @@ const BIN = join(ROOT, "bin");
 const APP_ID = "com.itinera.app";
 export const USER_AGENT = "Itinera/0.1 (personal offline trip planner; https://github.com/nagaprashanth0006/code)";
 
-const http = politeFetch(fetch as unknown as HttpFetch, { userAgent: USER_AGENT });
+const http = politeFetch(fetch as unknown as HttpFetch, {
+  userAgent: USER_AGENT,
+  minIntervalMs: { "en.wikipedia.org": 200, "power.larc.nasa.gov": 1000, "api.open-meteo.com": 300 },
+  timeoutMs: 120_000,
+});
 
 function arg(name: string, fallback?: string): string | undefined {
   const i = process.argv.indexOf(`--${name}`);
@@ -175,6 +201,131 @@ async function cmdMapAssets() {
   console.log(`Map assets in ${dest}`);
 }
 
+/**
+ * The curated destination index: Nominatim (coordinates; whether the city can
+ * be fetched), Wikipedia (summary), Wikidata + Commons (photo, attribution),
+ * NASA POWER (20 years of daily weather → typical weather per month).
+ * Writes core/src/data/destinations.json and app/public/destinations/*.
+ * Resumable: entries already in the file are kept and the file is saved after
+ * each destination, so a failed run continues where it stopped. `--refresh`
+ * redoes every entry; `--only goa,jaipur` redoes just those.
+ */
+async function cmdDestinations() {
+  const dataFile = resolve(ROOT, "..", "core", "src", "data", "destinations.json");
+  const photoDir = resolve(ROOT, "..", "app", "public", "destinations");
+  mkdirSync(dirname(dataFile), { recursive: true });
+  mkdirSync(photoDir, { recursive: true });
+  const previous = existsSync(dataFile)
+    ? DestinationIndexSchema.parse(JSON.parse(readFileSync(dataFile, "utf8"))).destinations
+    : [];
+  const only = arg("only")?.split(",");
+  const refresh = process.argv.includes("--refresh");
+  const window = historyWindow(new Date());
+  // Entries by id in seed order; not-yet-refreshed ones keep their previous data, so an interrupted run leaves a whole index.
+  const ids = DESTINATION_SEEDS.map((seed) => slug(seed.name).replace(/^-|-$/g, ""));
+  const byId = new Map(previous.filter((d) => ids.includes(d.id)).map((d) => [d.id, d]));
+  const failed: string[] = [];
+  const save = () =>
+    writeFileSync(
+      dataFile,
+      JSON.stringify(
+        DestinationIndexSchema.parse({
+          generatedAt: new Date().toISOString(),
+          note: "Written by `npm run ingest -- destinations` from ingest/src/destination-seeds.ts. Do not edit by hand.",
+          destinations: ids.flatMap((id) => byId.get(id) ?? []),
+        }),
+        null,
+        1,
+      ) + "\n",
+    );
+
+  for (const [i, seed] of DESTINATION_SEEDS.entries()) {
+    const id = ids[i]!;
+    const redo = only ? only.includes(id) : refresh || !byId.has(id);
+    if (!redo) continue;
+    process.stdout.write(`[${i + 1}/${DESTINATION_SEEDS.length}] ${seed.name}… `);
+    try {
+      byId.set(id, await buildDestination(id, seed));
+      save();
+    } catch (e) {
+      console.log(`failed: ${e instanceof Error ? e.message : String(e)}`);
+      failed.push(seed.name);
+    }
+  }
+  save();
+  optimizePhotos(photoDir);
+  console.log(`${byId.size} destinations → ${dataFile}`);
+  if (failed.length) console.log(`Failed (run again to retry): ${failed.join(", ")}`);
+
+  async function buildDestination(id: string, seed: (typeof DESTINATION_SEEDS)[number]): Promise<Destination> {
+    const query = seed.query ?? seed.name;
+    const geo = await geocodeCity(http, query).catch(() => null);
+
+    const summary = await fetchWikipediaSummary(http, seed.wiki ?? seed.name);
+    const lat = summary.lat ?? geo?.lat;
+    const lon = summary.lon ?? geo?.lon;
+    if (lat === undefined || lon === undefined) throw new Error("no coordinates");
+
+    let photo: Destination["photo"] = null;
+    const entity = summary.wikidata ? (await fetchEntities(http, [summary.wikidata])).get(summary.wikidata) : undefined;
+    // A pinned photo, else Wikidata's image, else the article's lead image (skipping maps and flags).
+    const isPhoto = (f: string | null | undefined): f is string => !!f && !/\.(svg|gif|tiff?)$/i.test(f);
+    const image =
+      seed.photo ?? (isPhoto(entity?.image) ? entity.image : isPhoto(summary.image) ? summary.image : null);
+    if (image) {
+      const info = (await fetchImageInfo(http, [image])).get(image);
+      if (info) {
+        // Saved as .jpg; optimizePhotos converts whatever Commons sent (sometimes PNG) to JPEG.
+        const file = `${id}.jpg`;
+        const res = await http(info.thumbUrl);
+        writeFileSync(join(photoDir, file), new Uint8Array(await res.arrayBuffer()));
+        photo = { path: `destinations/${file}`, attribution: info.attribution };
+      }
+    }
+
+    const elevationM = await fetchElevation(http, lat, lon);
+    const power = await fetchPowerDailyHistory(http, lat, lon, window);
+    const history =
+      elevationM !== null && power.gridElevationM !== null ? lapseCorrect(power, power.gridElevationM, elevationM) : power;
+    const normals = computeClimateNormals(id, history);
+    const months = Array.from({ length: 12 }, (_, m) => monthClimate(normals, m + 1));
+
+    const d: Destination = {
+      id,
+      name: seed.name,
+      countryCode: seed.cc,
+      lat: Math.round(lat * 1e4) / 1e4,
+      lon: Math.round(lon * 1e4) / 1e4,
+      elevationM: elevationM === null ? null : Math.round(elevationM),
+      themeTags: seed.themes,
+      ingestQuery: geo ? query : null,
+      summary: summary.extract ? shortSummary(summary.extract) : null,
+      wikipediaUrl: summary.url,
+      photo,
+      months,
+      climateSource: `${POWER_ATTRIBUTION}, daily ${window.start.slice(0, 4)}–${window.end.slice(0, 4)}${
+        history !== power ? `, corrected from the ${Math.round(power.gridElevationM!)} m grid cell to ${Math.round(elevationM!)} m` : ""
+      }`,
+    };
+    console.log(`${geo ? "fetchable" : "no city found"}, ${photo ? "photo" : "no photo"}`);
+    return d;
+  }
+}
+
+/**
+ * Converts photos to JPEG at most 640 px on the long side, quality 70, with
+ * macOS `sips` (about 60 KB each). Skipped on other platforms.
+ */
+function optimizePhotos(dir: string) {
+  if (platform() !== "darwin") return;
+  for (const f of readdirSync(dir)) {
+    if (!f.endsWith(".jpg")) continue;
+    const file = join(dir, f);
+    if (statSync(file).size < 90_000) continue;
+    execFileSync("sips", ["-s", "format", "jpeg", "-s", "formatOptions", "70", "-Z", "640", file, "--out", file], { stdio: "ignore" });
+  }
+}
+
 const [command, name] = process.argv.slice(2);
 const commands: Record<string, () => Promise<void>> = {
   city: () => cmdCity(name ?? "Lisbon"),
@@ -182,6 +333,7 @@ const commands: Record<string, () => Promise<void>> = {
   tools: cmdTools,
   tiles: () => cmdTiles(name ?? "Lisbon"),
   "map-assets": cmdMapAssets,
+  destinations: cmdDestinations,
 };
 const run = command ? commands[command] : undefined;
 if (!run) {

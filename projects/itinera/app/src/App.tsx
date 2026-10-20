@@ -1,84 +1,90 @@
-import { useEffect, useState } from "react";
-import { CatalogPane } from "./components/CatalogPane";
-import { ItineraryPane } from "./components/ItineraryPane";
-import { MapPane } from "./components/MapPane";
+import { useState } from "react";
+import { DestinationView } from "./components/DestinationView";
+import { Explore, Hub, type HubNav } from "./components/Hub";
 import { Onboarding } from "./components/Onboarding";
-import { TripBar } from "./components/TripBar";
+import { Planner, type PlannerTab } from "./components/Planner";
 import { useStore } from "./state/store";
 
-export type Layout = "desktop" | "tablet" | "phone";
-type Pane = "catalog" | "plan" | "map";
+type View =
+  | { name: "hub" }
+  | { name: "explore" }
+  | { name: "destination"; id: string }
+  | { name: "planner"; tab: PlannerTab };
 
-/** Three panes on desktop, two on tablet (lists share a column), one on phone. */
-const DESKTOP = window.matchMedia("(min-width: 1100px)");
-const TABLET = window.matchMedia("(min-width: 700px)");
-
-function useLayout(): Layout {
-  const query = (): Layout => (DESKTOP.matches ? "desktop" : TABLET.matches ? "tablet" : "phone");
-  const [layout, setLayout] = useState<Layout>(query);
-  useEffect(() => {
-    const onChange = () => setLayout(query());
-    DESKTOP.addEventListener("change", onChange);
-    TABLET.addEventListener("change", onChange);
-    return () => {
-      DESKTOP.removeEventListener("change", onChange);
-      TABLET.removeEventListener("change", onChange);
-    };
-  }, []);
-  return layout;
-}
-
+/** The app opens on the hub; views stack so Back returns to where you came from. */
 export function App() {
   const store = useStore();
-  const layout = useLayout();
-  const [pane, setPane] = useState<Pane>("plan");
+  const [stack, setStack] = useState<View[]>([{ name: "hub" }]);
+  const view = stack[stack.length - 1]!;
+  const push = (v: View) => {
+    setStack((s) => [...s, v]);
+    window.scrollTo(0, 0);
+  };
+  const back = () => setStack((s) => (s.length > 1 ? s.slice(0, -1) : s));
+  const home = () => setStack([{ name: "hub" }]);
 
   if (store.status.kind !== "ready") return <Onboarding />;
 
-  // On phone one pane is visible; on tablet the map is always visible beside one list.
-  const visible = (p: Pane) => {
-    if (layout === "desktop") return true;
-    if (layout === "tablet") return p === "map" || p === (pane === "map" ? "plan" : pane);
-    return p === pane;
+  const nav: HubNav = {
+    openDestination: (id) => push({ name: "destination", id }),
+    openExplore: () => push({ name: "explore" }),
+    openTrip: async (tripId) => {
+      await store.openTrip(tripId);
+      push({ name: "planner", tab: "plan" });
+    },
   };
 
   return (
-    <div className={`app app--${layout}`}>
-      <TripBar />
-      {layout !== "desktop" && (
-        <nav className="tabs" role="tablist" aria-label="Panes">
-          {(layout === "phone" ? (["catalog", "plan", "map"] as const) : (["catalog", "plan"] as const)).map((p) => (
-            <button
-              key={p}
-              role="tab"
-              aria-selected={visible(p) && (layout === "phone" || p !== "map")}
-              className="tab"
-              onClick={() => setPane(p)}
-            >
-              {p === "catalog" ? "Places" : p === "plan" ? "Plan" : "Map"}
-            </button>
-          ))}
-        </nav>
+    <>
+      {view.name === "hub" && <Hub nav={nav} />}
+      {view.name === "explore" && <Explore nav={nav} onBack={back} />}
+      {view.name === "destination" && (
+        <DestinationView
+          key={view.id}
+          id={view.id}
+          onBack={back}
+          onPlanned={() => push({ name: "planner", tab: "plan" })}
+          onBrowse={() => push({ name: "planner", tab: "places" })}
+        />
       )}
-      <main className="panes">
-        <section className="pane pane--catalog" hidden={!visible("catalog")} aria-label="Places">
-          <CatalogPane />
-        </section>
-        <section className="pane pane--plan" hidden={!visible("plan")} aria-label="Itinerary">
-          <ItineraryPane />
-        </section>
-        <section className="pane pane--map" hidden={!visible("map")} aria-label="Map">
-          <MapPane />
-        </section>
-      </main>
-      {store.lastError && (
-        <div className="toast" role="alert">
-          {store.lastError}
-          <button className="link" onClick={store.dismissError}>
-            Dismiss
-          </button>
-        </div>
+      {view.name === "planner" && (
+        <Planner
+          tab={view.tab}
+          onTab={(tab) => setStack((s) => [...s.slice(0, -1), { name: "planner", tab }])}
+          onHome={home}
+        />
       )}
+      <FetchProgress />
+      <Toast />
+    </>
+  );
+}
+
+/** A city fetch keeps running while you move around the app. */
+function FetchProgress() {
+  const { adding } = useStore();
+  if (!adding) return null;
+  const { step, done, total } = adding.progress;
+  return (
+    <div className="fetch-pill" role="status" aria-live="polite">
+      <span className="spinner" aria-hidden />
+      <span>
+        Fetching <strong>{adding.city}</strong>: {step}
+        {total ? ` ${done ?? 0}/${total}` : ""}
+      </span>
+    </div>
+  );
+}
+
+function Toast() {
+  const { lastError, dismissError } = useStore();
+  if (!lastError) return null;
+  return (
+    <div className="toast" role="alert">
+      {lastError}
+      <button className="link" onClick={dismissError}>
+        Dismiss
+      </button>
     </div>
   );
 }

@@ -289,6 +289,14 @@ export class Repo {
     return (await this.db.select<Row>("SELECT * FROM trip ORDER BY created_at DESC")).map(toTrip);
   }
 
+  /** City ids of each trip's legs, in order, for trip lists that show where a trip goes. */
+  async tripCities(): Promise<Map<string, string[]>> {
+    const rows = await this.db.select<{ trip_id: string; city_id: string }>("SELECT trip_id, city_id FROM leg ORDER BY trip_id, ord");
+    const out = new Map<string, string[]>();
+    for (const r of rows) out.set(r.trip_id, [...(out.get(r.trip_id) ?? []), r.city_id]);
+    return out;
+  }
+
   async saveTrip(trip: Trip): Promise<void> {
     await this.db.execute(
       `INSERT INTO trip (id, name, origin_city_id, state, start_date, end_date, created_at) VALUES (?,?,?,?,?,?,?)

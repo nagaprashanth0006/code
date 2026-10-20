@@ -27,7 +27,7 @@ import {
 import { useState } from "react";
 import { itemLabel, useStore } from "../state/store";
 import { shortDate } from "./hooks";
-import { NewTripForm } from "./TripBar";
+import { NewTripForm } from "./NewTripForm";
 
 const DURATIONS = [30, 45, 60, 90, 120, 150, 180, 240];
 const PART_LABEL = { morning: "Morning", afternoon: "Afternoon", evening: "Evening" } as const;
@@ -244,7 +244,7 @@ function DayView({ day, index }: { day: DayTree; index: number }) {
 }
 
 export function ItineraryPane() {
-  const { tree, move, places, cities } = useStore();
+  const { tree, move, places, cities: fetched } = useStore();
   const [dragging, setDragging] = useState<string | null>(null);
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 5 } }),
@@ -254,11 +254,14 @@ export function ItineraryPane() {
   if (!tree) {
     return (
       <div className="plan plan--empty">
-        <div className="pane__header">
-          <h2>Plan</h2>
-        </div>
-        <p>Start a trip: pick dates and the city, then add places from the list.</p>
-        <NewTripForm />
+        {fetched.length > 0 ? (
+          <>
+            <p>Start a trip: pick a city and dates, then add places from the Places tab.</p>
+            <NewTripForm />
+          </>
+        ) : (
+          <p className="muted">No trips yet. Pick a destination on the hub to plan one.</p>
+        )}
       </div>
     );
   }
@@ -284,13 +287,6 @@ export function ItineraryPane() {
 
   return (
     <div className="plan">
-      <div className="pane__header">
-        <h2>{tree.trip.name}</h2>
-        <span className="muted small">
-          {tree.legs.map((l) => cities.find((c) => c.id === l.leg.cityId)?.name).join(" → ")} ·{" "}
-          {tree.trip.startDate && shortDate(tree.trip.startDate)} – {tree.trip.endDate && shortDate(tree.trip.endDate)}
-        </span>
-      </div>
       <DndContext
         sensors={sensors}
         collisionDetection={closestCorners}

@@ -6,8 +6,8 @@
  */
 import { z } from "zod";
 import { monthClimate, type WeatherSummary } from "./climate.js";
-import { monthWindow, type IsoDate } from "./dates.js";
-import { estimateInterCityTravel } from "./geo.js";
+import { addDays, monthWindow, weekdayIndex, type IsoDate } from "./dates.js";
+import { estimateInterCityTravel, haversineKm } from "./geo.js";
 import type { City, ClimateNormal, RouteEdge, Theme } from "./schemas.js";
 import { ThemeSchema } from "./schemas.js";
 import { clamp } from "./stats.js";
@@ -20,8 +20,10 @@ export interface ScoreFactors {
 }
 
 export interface DestinationScore {
-  cityId: string;
-  theme: Theme;
+  /** A landing candidate's id: a destination slug or a fetched city's id. */
+  destinationId: string;
+  /** Null for rows that rank across all themes. */
+  theme: Theme | null;
   year: number;
   month: number;
   score: number;
@@ -29,16 +31,33 @@ export interface DestinationScore {
   travelMinutes: number;
 }
 
+/** Anything rankable: a fetched city or a curated destination (see destinations.ts). */
+export interface RankCandidate {
+  id: string;
+  lat: number;
+  lon: number;
+  themeTags: readonly Theme[];
+  /** ISO 3166-1 alpha-2, for the landing config's country filter. */
+  countryCode?: string;
+}
+
 export interface ScoringContext {
   home: Pick<City, "id" | "lat" | "lon">;
+  /** Daily normals by candidate id: precise, preferred when present. */
   normalsByCity: ReadonlyMap<string, readonly ClimateNormal[]>;
+  /** Typical weather per month (January first) by candidate id, for candidates without daily normals. */
+  monthlyClimate?: ReadonlyMap<string, ReadonlyArray<WeatherSummary | null>>;
   routes: readonly RouteEdge[];
   /** Typical stay price (p50 per night, any single currency) by city; missing = neutral. */
   stayPriceByCity?: ReadonlyMap<string, number>;
 }
 
-/** A tagged theme fits fully; an untagged one still scores a little so rows aren't empty. */
-export function themeFit(city: Pick<City, "themeTags">, theme: Theme): number {
+/**
+ * A tagged theme fits fully; an untagged one still scores a little so rows
+ * aren't empty. A null theme (a row across all themes) fits everything.
+ */
+export function themeFit(city: { themeTags: readonly Theme[] }, theme: Theme | null): number {
+  if (theme === null) return 1;
   const i = city.themeTags.indexOf(theme);
   if (i < 0) return 0.25;
   // Earlier tags are stronger (deriveCityThemes sorts by weight).
@@ -71,7 +90,14 @@ export function priceSignal(price: number | undefined, median: number | undefine
   return clamp(0.75 * (median / price), 0.5, 1);
 }
 
-function travelTo(ctx: ScoringContext, city: Pick<City, "id" | "lat" | "lon">): { minutes: number; direct: boolean } {
+/** Daily normals when the candidate has them, else the index's monthly figures. */
+export function climateFor(ctx: ScoringContext, id: string, month: number): WeatherSummary | null {
+  const normals = ctx.normalsByCity.get(id);
+  if (normals && normals.length > 0) return monthClimate(normals, month);
+  return ctx.monthlyClimate?.get(id)?.[month - 1] ?? null;
+}
+
+function travelTo(ctx: ScoringContext, city: Pick<RankCandidate, "id" | "lat" | "lon">): { minutes: number; direct: boolean } {
   const edges = ctx.routes.filter((r) => r.fromCityId === ctx.home.id && r.toCityId === city.id);
   if (edges.length > 0) {
     const best = edges.reduce((a, b) => (b.typicalMinutes < a.typicalMinutes ? b : a));
@@ -93,8 +119,8 @@ function median(values: number[]): number | undefined {
  * best month in the window.
  */
 export function rankDestinations(
-  cities: readonly City[],
-  theme: Theme,
+  cities: readonly RankCandidate[],
+  theme: Theme | null,
   today: IsoDate,
   ctx: ScoringContext,
   windowMonths = 4,
@@ -112,11 +138,10 @@ export function rankDestinations(
     };
     let best: DestinationScore | null = null;
     for (const { year, month } of months) {
-      const normals = ctx.normalsByCity.get(city.id) ?? [];
-      const factors: ScoreFactors = { ...factorsBase, seasonFit: seasonFit(monthClimate(normals, month)) };
+      const factors: ScoreFactors = { ...factorsBase, seasonFit: seasonFit(climateFor(ctx, city.id, month)) };
       const score = factors.themeFit * factors.seasonFit * factors.reachability * factors.priceSignal;
       if (!best || score > best.score) {
-        best = { cityId: city.id, theme, year, month, score: Math.round(score * 1000) / 1000, factors, travelMinutes: travel.minutes };
+        best = { destinationId: city.id, theme, year, month, score: Math.round(score * 1000) / 1000, factors, travelMinutes: travel.minutes };
       }
     }
     if (best) out.push(best);
@@ -130,13 +155,15 @@ export function rankDestinations(
 export const LandingRowSchema = z.object({
   id: z.string(),
   title: z.string(),
-  theme: ThemeSchema,
-  limit: z.number().int().positive().default(8),
+  /** Omitted: rank across all themes (e.g. "Great this season"). */
+  theme: ThemeSchema.optional(),
+  limit: z.number().int().positive().default(10),
   order: z.enum(["score", "travel-time"]).default("score"),
   filters: z
     .object({
       maxTravelHours: z.number().positive().optional(),
-      countries: z.array(z.string()).optional(),
+      /** ISO 3166-1 alpha-2 codes. */
+      countries: z.array(z.string().length(2)).optional(),
     })
     .default({}),
 });
@@ -151,6 +178,8 @@ export type LandingConfig = z.infer<typeof LandingConfigSchema>;
 export const DEFAULT_LANDING_CONFIG: LandingConfig = LandingConfigSchema.parse({
   windowMonths: 4,
   rows: [
+    { id: "season", title: "Great this season" },
+    { id: "short-hops", title: "Short hops from home", filters: { maxTravelHours: 7 } },
     { id: "romantic", title: "Romantic", theme: "romantic" },
     { id: "solo", title: "Solo", theme: "solo" },
     { id: "adventure", title: "Adventure", theme: "adventure" },
@@ -165,18 +194,89 @@ export interface LandingRowResult {
   destinations: DestinationScore[];
 }
 
+/** Setting keys the landing hub reads. Both hold JSON. */
+export const LANDING_CONFIG_SETTING = "landingConfig";
+export const HOME_CITY_SETTING = "homeCity";
+
+/**
+ * The stored landing layout if it parses, else the default. A bad edit to the
+ * setting falls back rather than leaving the hub empty.
+ */
+export function landingConfigFrom(raw: string | null): LandingConfig {
+  if (!raw) return DEFAULT_LANDING_CONFIG;
+  try {
+    const parsed = LandingConfigSchema.safeParse(JSON.parse(raw));
+    return parsed.success ? parsed.data : DEFAULT_LANDING_CONFIG;
+  } catch {
+    return DEFAULT_LANDING_CONFIG;
+  }
+}
+
+// ---------------------------------------------------------- home city
+
+/** Asked once and stored as a setting. Home need not be in the catalog. */
+export const HomeCitySchema = z.object({
+  name: z.string().min(1),
+  countryCode: z.string().length(2),
+  lat: z.number().min(-90).max(90),
+  lon: z.number().min(-180).max(180),
+});
+export type HomeCity = z.infer<typeof HomeCitySchema>;
+
+export function homeCityFrom(raw: string | null): HomeCity | null {
+  if (!raw) return null;
+  try {
+    const parsed = HomeCitySchema.safeParse(JSON.parse(raw));
+    return parsed.success ? parsed.data : null;
+  } catch {
+    return null;
+  }
+}
+
+/** A catalog city this close to home is home, and isn't ranked as a destination. */
+export const HOME_MATCH_KM = 25;
+
+/** The scoring anchor for home: the id of the candidate (fetched city or destination) that is home, if any. */
+export function homeAnchor(
+  home: HomeCity,
+  cities: ReadonlyArray<Pick<City, "id" | "lat" | "lon">>,
+): Pick<City, "id" | "lat" | "lon"> {
+  const match = cities.find((c) => haversineKm(c, home) <= HOME_MATCH_KM);
+  return { id: match?.id ?? "home", lat: home.lat, lon: home.lon };
+}
+
+/**
+ * Dates to prefill when planning a ranked destination: a long weekend
+ * (Friday to Monday) starting on the first Friday of the month that is at
+ * least a week away.
+ */
+export function suggestTripDates(year: number, month: number, today: IsoDate): { startDate: IsoDate; endDate: IsoDate } {
+  const first = `${year}-${String(month).padStart(2, "0")}-01`;
+  const earliest = addDays(today, 7) > first ? addDays(today, 7) : first;
+  const startDate = addDays(earliest, (4 - weekdayIndex(earliest) + 7) % 7);
+  return { startDate, endDate: addDays(startDate, 3) };
+}
+
+/**
+ * One ranked list per configured row. Theme rows keep only candidates tagged
+ * with the theme; the untagged fallback score is for direct ranking.
+ */
 export function buildLanding(
   config: LandingConfig,
-  cities: readonly City[],
+  candidates: readonly RankCandidate[],
   today: IsoDate,
   ctx: ScoringContext,
 ): LandingRowResult[] {
-  const byId = new Map(cities.map((c) => [c.id, c]));
+  const byId = new Map(candidates.map((c) => [c.id, c]));
   return config.rows.map((row) => {
-    let ranked = rankDestinations(cities, row.theme, today, ctx, config.windowMonths);
+    const theme = row.theme ?? null;
+    let ranked = rankDestinations(candidates, theme, today, ctx, config.windowMonths);
+    if (theme) ranked = ranked.filter((d) => byId.get(d.destinationId)?.themeTags.includes(theme));
     const { maxTravelHours, countries } = row.filters;
     if (maxTravelHours) ranked = ranked.filter((d) => d.travelMinutes <= maxTravelHours * 60);
-    if (countries?.length) ranked = ranked.filter((d) => countries.includes(byId.get(d.cityId)?.countryId ?? ""));
+    if (countries?.length) {
+      ranked = ranked.filter((d) => countries.includes(byId.get(d.destinationId)?.countryCode ?? ""));
+    }
     if (row.order === "travel-time") ranked = [...ranked].sort((a, b) => a.travelMinutes - b.travelMinutes);
     return { row, destinations: ranked.slice(0, row.limit) };
   });

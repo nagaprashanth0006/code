@@ -1,6 +1,6 @@
 /** Candidate "great places" from OpenStreetMap via the Overpass API. */
 import { z } from "zod";
-import type { PlaceCategory } from "../schemas.js";
+import type { BBox, PlaceCategory } from "../schemas.js";
 import { query, type HttpFetch } from "./http.js";
 
 export const OVERPASS_URL = "https://overpass-api.de/api/interpreter";
@@ -31,11 +31,21 @@ export interface OsmPlace {
 /** OSM area ids for relations are offset by 3.6 billion. */
 export const areaIdForRelation = (relationId: number) => 3_600_000_000 + relationId;
 
-export function buildPlacesQuery(relationId: number): string {
-  const a = "(area.city)";
+/** Where to look: inside a city's boundary, or a box around a place mapped only as a point. */
+export type PlacesScope = { relationId: number } | { bbox: BBox };
+
+export function buildPlacesQuery(scope: PlacesScope): string {
+  let head = "";
+  let a: string;
+  if ("relationId" in scope) {
+    head = `area(id:${areaIdForRelation(scope.relationId)})->.city;\n`;
+    a = "(area.city)";
+  } else {
+    const [w, s, e, n] = scope.bbox;
+    a = `(${s},${w},${n},${e})`;
+  }
   return `[out:json][timeout:180];
-area(id:${areaIdForRelation(relationId)})->.city;
-(
+${head}(
   nwr["tourism"~"^(museum|gallery|attraction|viewpoint|zoo|aquarium|theme_park)$"]["name"]${a};
   nwr["historic"~"^(castle|fort|palace|monastery|church|cathedral|monument|memorial|city_gate|tower|archaeological_site|ruins|building|aqueduct)$"]["name"]["wikidata"]${a};
   nwr["amenity"="place_of_worship"]["name"]["wikidata"]${a};
@@ -116,11 +126,11 @@ export function normalizeElements(elements: readonly OverpassElement[]): OsmPlac
   return [...result, ...byWikidata.values()];
 }
 
-export async function fetchOsmPlaces(fetch: HttpFetch, relationId: number): Promise<OsmPlace[]> {
+export async function fetchOsmPlaces(fetch: HttpFetch, scope: PlacesScope): Promise<OsmPlace[]> {
   const res = await fetch(OVERPASS_URL, {
     method: "POST",
     headers: { "Content-Type": "application/x-www-form-urlencoded" },
-    body: query({ data: buildPlacesQuery(relationId) }),
+    body: query({ data: buildPlacesQuery(scope) }),
   });
   return normalizeElements(OverpassResponse.parse(await res.json()).elements);
 }

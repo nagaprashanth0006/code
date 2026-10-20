@@ -89,6 +89,7 @@ describe("repository", () => {
     tree = b.tree;
     await repo.saveTripTree(tree);
     expect(await repo.loadTripTree(tree.trip.id)).toEqual(tree);
+    expect(await repo.tripCities()).toEqual(new Map([[tree.trip.id, ["c1"]]]));
 
     const moved = moveItem(tree, b.item.id, tree.legs[0]!.days[2]!.slots[2]!.slot.id, 0);
     const diff = diffItems(tree, moved);

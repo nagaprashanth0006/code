@@ -1,6 +1,54 @@
 # Decision log
 
-One entry per significant choice: context, decision, alternatives, consequences. Newest first. Scoping decisions made before implementation are in the PRD's decision table; these were made while building P1.1.
+One entry per significant choice: context, decision, alternatives, consequences. Newest first. Scoping decisions made before implementation are in the PRD's decision table; these were made while building P1.1 and P1.2.
+
+## 2026-10-20 · Planner is map-first with floating panels
+
+- **Context:** The three-pane split (catalog | plan | map) read as dated and gave the map a third of the screen.
+- **Decision:** The map fills the window. The plan floats over it in a translucent side panel with Itinerary / Places tabs; the selected place opens as a card on the right. On phones the panel is a bottom sheet with three heights. The map's padding follows the panels, so fitting and centring keep content in the visible area.
+- **Alternatives:** Keep three panes and restyle; tabs only.
+- **Consequences:** One layout model for every width. Place details moved out of the catalog list into the floating card (or the top of the sheet on phones).
+
+## 2026-10-20 · A curated destination index ships with the app
+
+- **Context:** The hub could only rank cities already fetched (3 minutes each), so a new install showed nothing to recommend. The PRD asks for curated destinations before any theme, date or place is chosen.
+- **Decision:** A hand-curated seed list (about 110 places, themes tagged by hand) is turned by `npm run ingest -- destinations` into `core/src/data/destinations.json` plus photos in `app/public/destinations` (about 7 MB: 640 px JPEGs, ~64 KB each), both committed. Each entry has coordinates, a Wikipedia summary (CC BY-SA), a Commons photo with attribution, whether Nominatim can find it for a full fetch, its elevation, and typical weather by month. Fetched cities merge into their destination (by distance, or by the name the seed fetches); other fetched cities are candidates on their own.
+- **Alternatives:** Ingest a starter set of full cities (hundreds of MB and hours); rank only fetched cities; a remote recommendations service (not self-contained).
+- **Consequences:** The hub works offline on first launch. Index weather is labelled approximate until a city is fetched; then its 20-year Open-Meteo normals take over. Theme tags are an editorial choice, visible in one file.
+
+## 2026-10-20 · Index weather from NASA POWER, corrected for elevation
+
+- **Context:** 20 years of daily history from Open-Meteo's archive is weighted as hundreds of calls per location; for 110 destinations that exceeds the free daily limit several times over.
+- **Decision:** NASA POWER's daily point API (MERRA-2, ~50 km grid): one request per destination, same normals computation as fetched cities. Its grid averages terrain, which made hill stations far too warm (Ooty read 17–27 °C in December against roughly 6–20 °C), so temperatures are moved from the grid cell's elevation to the place's (Open-Meteo elevation API) at 6.5 °C/km.
+- **Alternatives:** Open-Meteo spread over several days; the Open-Meteo climate-model API; no correction.
+- **Consequences:** Good enough to rank seasons and show typical ranges; coastal cells still flatten extremes a little. The source and the correction are written into each entry and shown on the destination page.
+
+## 2026-10-20 · Places mapped only as a point can be fetched
+
+- **Context:** The geocoder accepted only a boundary relation with Nominatim's `city` type, so Mumbai, Mysuru, Munnar and most towns failed with "No city boundary".
+- **Decision:** Try `city`, then `settlement`; take a boundary relation if either has one, else the place's point with a box around it (±0.12° for a city, ±0.05° for a town). Overpass then searches the box instead of the boundary area. Re-fetching such a place matches it by name and position.
+- **Alternatives:** Require boundaries; a fixed radius query.
+- **Consequences:** A box can include a neighbouring town's sights; ranking keeps the best 150 either way.
+
+## 2026-10-20 · Network errors name the likely cause
+
+- **Context:** In development, a shell with `https_proxy` set to an unreachable corporate proxy made every desktop fetch fail with the HTTP client's bare "error sending request for url".
+- **Decision:** After retries, a network failure says the host couldn't be reached and mentions the connection or an environment proxy; README has the fix.
+- **Consequences:** Installed apps don't inherit shell variables, so this is mostly a development aid.
+
+## 2026-10-20 · Landing hub is the opening view; home city and layout are settings
+
+- **Context:** P1.2 adds the three-door hub. The destination score needs a home city, which the PRD says is asked once, and the layout must be config, not code.
+- **Decision:** The app opens on the hub; the planner is one door away and the brand button returns to the hub. Home is stored as JSON in the `homeCity` setting (name, country, lat/lon). A name that matches a fetched city or an indexed destination is used without a lookup, so it works offline; otherwise it is geocoded once with Nominatim. A catalog city within 25 km of home is treated as home and isn't ranked. The layout is read from the `landingConfig` setting and validated with `LandingConfigSchema`; a missing or invalid value falls back to `DEFAULT_LANDING_CONFIG`. There is no editor for it yet.
+- **Alternatives:** Requiring home to be an ingested city (forces a 3-minute fetch of a city the user isn't visiting); hardcoding rows in the component.
+- **Consequences:** Superseded in part the same day: rows now rank the bundled destination index (see above), and fetching a city runs in the background with a progress pill instead of the full-screen first-run screen; a failure shows as a toast. Routes aren't stored yet, so reachability uses the inter-city estimate. The price signal stays neutral (0.75) until price observations exist, and each card says so.
+
+## 2026-10-20 · "Plan" on a destination prefills a long weekend
+
+- **Context:** A ranked destination comes with a best month, not dates.
+- **Decision:** `suggestTripDates` picks Friday to Monday, starting on the first Friday of that month that is at least a week away. The user can edit the dates before creating the trip.
+- **Alternatives:** The whole month; asking for dates first.
+- **Consequences:** A draft trip is one click from the hub. Revisit when multi-city trips set their length from the nights allocated per leg.
 
 ## 2026-10-19 · Content Security Policy left off for P1.1
 

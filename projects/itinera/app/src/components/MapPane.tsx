@@ -74,7 +74,14 @@ function placeColour(category: keyof typeof CATEGORY_INFO): string {
   return GROUP_COLOURS.other!;
 }
 
-export function MapPane() {
+/** Space covered by floating panels, so fitting and centring keep content visible. */
+export interface MapInset {
+  left: number;
+  bottom: number;
+  right?: number;
+}
+
+export function MapPane({ inset }: { inset: MapInset }) {
   const { places, cities, tilePacks, tree, selectedDayId, selectedPlaceId, selectPlace, wishlist } = useStore();
   const container = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MlMap | null>(null);
@@ -97,14 +104,16 @@ export function MapPane() {
     const map = new MlMap({
       container: container.current,
       style: mode === "offline" && pack ? offlineStyle(pack.url, dark) : onlineStyle(dark),
-      bounds: bbox ? [bbox[0], bbox[1], bbox[2], bbox[3]] : undefined,
-      center: bbox ? undefined : [0, 20],
-      zoom: bbox ? undefined : 1.5,
+      center: [0, 20],
+      zoom: 1.5,
       maxPitch: 70,
       attributionControl: { compact: true },
     });
     map.addControl(new NavigationControl({ visualizePitch: true }), "top-right");
-    map.addControl(new ScaleControl(), "bottom-left");
+    map.addControl(new ScaleControl(), "bottom-right");
+    // Padding first, so the city fits in the part of the map the panels don't cover.
+    map.setPadding({ top: 0, left: inset.left, right: inset.right ?? 0, bottom: inset.bottom });
+    if (bbox) map.fitBounds([bbox[0], bbox[1], bbox[2], bbox[3]], { padding: 24, animate: false });
     map.on("style.load", () => setStyleTick((t) => t + 1));
     map.on("click", "places", (e: MapLayerMouseEvent) => {
       const id = e.features?.[0]?.properties?.id;
@@ -124,6 +133,26 @@ export function MapPane() {
     // The map is created once; style changes go through setStyle below.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // Keep the visible centre clear of the floating panels as they open and resize.
+  useEffect(() => {
+    const map = mapRef.current;
+    const padding = { top: 0, left: inset.left, right: inset.right ?? 0, bottom: inset.bottom };
+    const p = map?.getPadding();
+    if (!map || !p || (p.left === padding.left && p.right === padding.right && p.bottom === padding.bottom)) return;
+    map.easeTo({ padding, duration: 300 });
+  }, [inset.left, inset.right, inset.bottom]);
+
+  // Fit the trip's city when it changes (opening a trip elsewhere).
+  const cityKey = city?.id;
+  const fitted = useRef(cityKey);
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map || !city || fitted.current === cityKey) return;
+    fitted.current = cityKey;
+    const [w, s, e, n] = city.bbox;
+    map.fitBounds([w, s, e, n], { padding: 24, duration: 800 });
+  }, [cityKey, city]);
 
   // Switch basemap source when the choice changes (not on the initial render).
   useEffect(() => {
@@ -235,17 +264,19 @@ export function MapPane() {
   return (
     <div className="map">
       <div ref={container} className="map__canvas" />
-      <div className="map__controls">
-        <label className="small">
-          Basemap{" "}
-          <select value={mode} onChange={(e) => setMode(e.target.value as "offline" | "online")}>
-            <option value="offline" disabled={!pack}>
-              Offline pack{pack ? ` (${pack.region})` : " — none installed"}
-            </option>
-            <option value="online">Online (OpenFreeMap)</option>
-          </select>
-        </label>
-        {!pack && <span className="small muted">Run the tiles job to install an offline pack.</span>}
+      <div className="map__controls" style={{ left: inset.left + 12, bottom: inset.bottom + 12 }}>
+        <select
+          className="pill-select"
+          value={mode}
+          onChange={(e) => setMode(e.target.value as "offline" | "online")}
+          aria-label="Basemap"
+          title={pack ? undefined : "No offline pack installed: run the tiles job (see README)."}
+        >
+          <option value="offline" disabled={!pack}>
+            Offline map{pack ? ` · ${pack.region}` : " · none installed"}
+          </option>
+          <option value="online">Online map · OpenFreeMap</option>
+        </select>
       </div>
     </div>
   );

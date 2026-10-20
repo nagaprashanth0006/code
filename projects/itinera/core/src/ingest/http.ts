@@ -95,7 +95,13 @@ export function politeFetch(fetch: HttpFetch, options: PoliteOptions): HttpFetch
         res = await fetch(url, { ...init, headers, signal: abort.signal });
       } catch (e) {
         if (attempt >= retries) {
-          throw abort.signal.aborted ? new HttpError(url, 0, `Timed out after ${timeoutMs / 1000} s: ${host}`) : e;
+          if (abort.signal.aborted) throw new HttpError(url, 0, `Timed out after ${timeoutMs / 1000} s: ${host}`);
+          // The raw error ("error sending request for url …") hides the usual causes.
+          throw new HttpError(
+            url,
+            0,
+            `Couldn't reach ${host}. Check the internet connection, or a proxy set in the environment (https_proxy) that isn't reachable. (${e instanceof Error ? e.message : String(e)})`,
+          );
         }
         await sleep(1000 * 2 ** attempt);
         continue;
