@@ -3,6 +3,7 @@
  * and transfer estimates between legs.
  */
 import { estimateInterCityTravel, haversineKm, type LatLon } from "./geo.js";
+import type { TransferEstimator, TripTree } from "./itinerary.js";
 import type { RouteEdge, TransportMode } from "./schemas.js";
 
 export interface CityPoint extends LatLon {
@@ -82,6 +83,8 @@ export function orderCities(
 
 export interface LegDemand {
   cityId: string;
+  /** Key for the result when a city appears in more than one leg (default: cityId). */
+  key?: string;
   /** Saved places for this city (wishlist or already planned). */
   savedPlaces: number;
   /** Total planned visit minutes, if known; otherwise estimated from savedPlaces. */
@@ -108,8 +111,9 @@ export interface NightsAllocation {
 export function allocateNights(legs: readonly LegDemand[], totalNights: number): NightsAllocation {
   const nights = new Map<string, number>();
   const minimum = (l: LegDemand) => (l.isStopover ? STOPOVER_NIGHTS : MIN_NIGHTS);
+  const key = (l: LegDemand) => l.key ?? l.cityId;
   const required = legs.reduce((a, l) => a + minimum(l), 0);
-  for (const l of legs) nights.set(l.cityId, minimum(l));
+  for (const l of legs) nights.set(key(l), minimum(l));
   if (totalNights < required) {
     return { nights, warning: `These ${legs.length} stops need at least ${required} nights; the trip has ${totalNights}.` };
   }
@@ -133,7 +137,7 @@ export function allocateNights(legs: readonly LegDemand[], totalNights: number):
     floors[i]!++;
     remaining--;
   }
-  flexible.forEach((l, i) => nights.set(l.cityId, minimum(l) + floors[i]!));
+  flexible.forEach((l, i) => nights.set(key(l), minimum(l) + floors[i]!));
   return { nights, warning: null };
 }
 
@@ -163,4 +167,57 @@ export function planTransfers(ordered: readonly CityPoint[], routes: readonly Ro
     }
   }
   return out;
+}
+
+/** A `TransferEstimator` over known city positions and routes, for the itinerary's leg edits. */
+export function transferEstimator(cities: readonly CityPoint[], routes: readonly RouteEdge[] = []): TransferEstimator {
+  const byId = new Map(cities.map((c) => [c.id, c]));
+  return (fromCityId, toCityId) => {
+    const a = byId.get(fromCityId);
+    const b = byId.get(toCityId);
+    if (!a || !b) throw new Error(`Unknown city ${a ? toCityId : fromCityId}`);
+    const [t] = planTransfers([a, b], routes);
+    return { mode: t!.mode, minutes: t!.minutes };
+  };
+}
+
+/**
+ * A leg order that avoids zig-zagging (see `orderCities`): from `origin` and
+ * back when given, otherwise an open path. Returns leg ids; legs whose city
+ * has no known position keep their place at the end.
+ */
+export function suggestLegOrder(
+  tree: TripTree,
+  positions: ReadonlyMap<string, LatLon>,
+  origin: LatLon | null,
+): string[] {
+  const known: CityPoint[] = [];
+  const unknown: string[] = [];
+  for (const { leg } of tree.legs) {
+    const p = positions.get(leg.cityId);
+    if (p) known.push({ id: leg.id, lat: p.lat, lon: p.lon });
+    else unknown.push(leg.id);
+  }
+  const { order } = orderCities(origin, known, { returnToOrigin: origin !== null });
+  return [...order.map((c) => c.id), ...unknown];
+}
+
+/**
+ * Nights per leg for a trip of `total` nights: `allocateNights` keyed by leg,
+ * with each leg's demand taken from how many places are saved or planned there.
+ */
+export function allocateTripNights(
+  tree: TripTree,
+  total: number,
+  savedPlaces: (legId: string, cityId: string) => number,
+): NightsAllocation {
+  return allocateNights(
+    tree.legs.map(({ leg }) => ({
+      cityId: leg.cityId,
+      key: leg.id,
+      savedPlaces: savedPlaces(leg.id, leg.cityId),
+      isStopover: leg.isStopover,
+    })),
+    total,
+  );
 }

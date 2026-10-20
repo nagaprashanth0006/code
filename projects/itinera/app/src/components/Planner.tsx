@@ -3,15 +3,15 @@
  * screens get a side panel (Itinerary / Places) and a place card on the
  * right; phones get the same panel as a bottom sheet with three heights.
  */
-import { cacheKey, fetchedLabel, summarizeWeather, TRIP_STATE_LABELS } from "@itinera/core";
-import { useEffect, useMemo, useState } from "react";
+import { cacheKey, fetchedLabel, TRIP_STATE_LABELS } from "@itinera/core";
+import { useEffect, useState } from "react";
 import { useStore } from "../state/store";
 import { CatalogPane } from "./CatalogPane";
 import { ItineraryPane } from "./ItineraryPane";
 import { MapPane, type MapInset } from "./MapPane";
 import { NewTripForm } from "./NewTripForm";
 import { PlaceDetail } from "./PlaceDetail";
-import { Sheet, weatherText } from "./ui";
+import { Sheet } from "./ui";
 import { shortDate } from "./hooks";
 
 export type PlannerTab = "plan" | "places";
@@ -34,18 +34,13 @@ function usePhone(): boolean {
 const SHEET_VH: Record<SheetSize, number> = { peek: 0.22, half: 0.55, full: 0.88 };
 
 export function Planner({ tab, onTab, onHome }: { tab: PlannerTab; onTab: (t: PlannerTab) => void; onHome: () => void }) {
-  const { tree, trips, openTrip, deleteTrip, cities, normals, cacheEntries, places, selectedPlaceId } = useStore();
+  const { tree, trips, openTrip, deleteTrip, cities, cacheEntries, places, selectedPlaceId, selectedLeg, cityName } = useStore();
   const phone = usePhone();
   const [sheet, setSheet] = useState<SheetSize>("half");
   const [creating, setCreating] = useState(false);
   const [menu, setMenu] = useState(false);
-  const city = tree ? cities.find((c) => c.id === tree.legs[0]?.leg.cityId) : undefined;
+  const city = selectedLeg ? cities.find((c) => c.id === selectedLeg.leg.cityId) : undefined;
   const selected = selectedPlaceId ? places.get(selectedPlaceId) : undefined;
-
-  const weather = useMemo(() => {
-    if (!tree?.trip.startDate || !tree.trip.endDate || !city) return null;
-    return summarizeWeather(normals.get(city.id) ?? [], tree.trip.startDate, tree.trip.endDate);
-  }, [tree, city, normals]);
   const placesEntry = city ? cacheEntries.find((e) => e.key === cacheKey("places", city.id)) : undefined;
 
   const inset: MapInset = phone
@@ -78,7 +73,7 @@ export function Planner({ tab, onTab, onHome }: { tab: PlannerTab; onTab: (t: Pl
             )}
             {tree && (
               <p className="panel__sub">
-                {city?.name}
+                {tree.legs.map((l) => cityName(l.leg.cityId)).join(" → ")}
                 {tree.trip.startDate && tree.trip.endDate && ` · ${shortDate(tree.trip.startDate)} – ${shortDate(tree.trip.endDate)}`}
               </p>
             )}
@@ -111,12 +106,12 @@ export function Planner({ tab, onTab, onHome }: { tab: PlannerTab; onTab: (t: Pl
         {tree && (
           <div className="panel__facts">
             <span className="chip">{TRIP_STATE_LABELS[tree.trip.state]}</span>
-            {weather && (
-              <span className="chip" title="Typical weather from 20 years of daily history, not a forecast">
-                {weatherText(weather)}
+            {placesEntry && city && (
+              <span className="muted small">
+                {tree.legs.length > 1 ? `${city.name}: ` : ""}
+                {fetchedLabel(placesEntry, new Date())}
               </span>
             )}
-            {placesEntry && <span className="muted small">{fetchedLabel(placesEntry, new Date())}</span>}
           </div>
         )}
 

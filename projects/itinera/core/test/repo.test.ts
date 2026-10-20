@@ -3,7 +3,8 @@ import { describe, expect, it } from "vitest";
 import type { SqlExecutor, SqlValue } from "../src/db/executor.js";
 import { migrate, SCHEMA_VERSION } from "../src/db/migrations.js";
 import { Repo } from "../src/db/repo.js";
-import { addItem, createSingleLegTrip, diffItems, moveItem } from "../src/itinerary.js";
+import { addItem, addLeg, createSingleLegTrip, diffItems, moveItem, removeLeg, setLegNights } from "../src/itinerary.js";
+import { transferEstimator } from "../src/multicity.js";
 import type { City, Place } from "../src/schemas.js";
 
 function memoryDb(): SqlExecutor {
@@ -114,5 +115,36 @@ describe("repository", () => {
 
     await repo.deleteTrip(tree.trip.id);
     expect(await repo.listTrips()).toEqual([]);
+  });
+
+  it("replaces a trip's structure after leg edits, deleting rows that went away", async () => {
+    const db = memoryDb();
+    await migrate(db);
+    const repo = new Repo(db);
+    const estimate = transferEstimator([
+      { id: "c1", lat: 38.72, lon: -9.14 },
+      { id: "c2", lat: 41.15, lon: -8.61 },
+      { id: "c3", lat: 40.21, lon: -8.43 },
+    ]);
+    let tree = createSingleLegTrip({ name: "Portugal", cityId: "c1", startDate: "2026-11-02", endDate: "2026-11-04" });
+    await repo.saveTripTree(tree);
+    tree = addLeg(tree, { cityId: "c3", nights: 1, isStopover: true }, estimate).tree;
+    tree = addLeg(tree, { cityId: "c2", nights: 2 }, estimate).tree;
+    tree = addItem(tree, tree.legs[2]!.days[1]!.slots[0]!.slot.id, { placeId: "p1" }).tree;
+    tree = addItem(tree, tree.legs[1]!.days[0]!.slots[1]!.slot.id, { placeId: "p2" }).tree;
+    await repo.replaceTripTree(tree);
+    expect(await repo.loadTripTree(tree.trip.id)).toEqual(tree);
+    expect(await repo.tripCities()).toEqual(new Map([[tree.trip.id, ["c1", "c3", "c2"]]]));
+
+    tree = removeLeg(tree, tree.legs[1]!.leg.id, estimate).tree;
+    tree = setLegNights(tree, new Map([[tree.legs[1]!.leg.id, 1]]), estimate).tree;
+    await repo.replaceTripTree(tree);
+    expect(await repo.loadTripTree(tree.trip.id)).toEqual(tree);
+    const count = async (table: string) => Number((await db.select<{ n: number }>(`SELECT COUNT(*) AS n FROM ${table}`))[0]!.n);
+    expect(await count("leg")).toBe(2);
+    expect(await count("day")).toBe(4);
+    expect(await count("slot")).toBe(12);
+    expect(await count("item")).toBe(1);
+    expect(await count("transfer")).toBe(1);
   });
 });

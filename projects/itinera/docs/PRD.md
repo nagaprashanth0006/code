@@ -256,10 +256,10 @@ P1.1 is the current phase; the riskiest unknowns (stack, maps, data pipeline) ar
 
 ### P1.2 — Usable, near-demoable
 
-- [ ] Catalog tree and itinerary tree, both expandable
-- [ ] Multi-city: leg ordering, nights allocation, transfers as time-consuming items
+- [x] Catalog tree and itinerary tree, both expandable
+- [x] Multi-city: leg ordering, nights allocation, transfers as time-consuming items
 - [x] Landing hub (Plan / Explore / My trips) with the score over current month + 3, config-driven layout, recommending from a bundled destination index; a destination page shows typical weather by month and for chosen dates before planning *(price signal stays neutral until price observations exist)*
-- [ ] Typical-weather bands per leg
+- [x] Typical-weather bands per leg
 - [ ] Price bands with provenance; deep links for flights and hotels
 - [ ] TTL cache per category with a background refresher
 - [ ] LLM drafting via the llama.cpp sidecar, validated by the checker, with a non-LLM fallback

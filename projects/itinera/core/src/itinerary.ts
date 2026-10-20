@@ -12,6 +12,7 @@ import {
   type Leg,
   type Slot,
   type Transfer,
+  type TransportMode,
   type Trip,
   type TripState,
 } from "./schemas.js";
@@ -242,4 +243,234 @@ export function shiftDates(tree: TripTree, startDate: IsoDate): TripTree {
   }));
   const endDate = addDays(startDate, Math.max(index - 1, 0));
   return { ...tree, trip: { ...tree.trip, startDate, endDate }, legs };
+}
+
+// -------------------------------------------------------------------- legs
+//
+// Legs are laid out back to back from the trip's start date. A leg with n
+// nights owns n days: the day you arrive (which begins with the transfer from
+// the previous leg) and the full days after it. The last leg also owns the
+// departure day, so a trip of N nights has N + 1 days, as a single-leg trip
+// always had. Every structural edit below re-runs `layoutLegs`, which keeps
+// existing days (and their items) by position within each leg.
+
+/** Mode and duration of travel between two legs' cities. */
+export type TransferEstimator = (fromCityId: string, toCityId: string) => { mode: TransportMode; minutes: number };
+
+export interface LegInput {
+  cityId: string;
+  nights: number;
+  isStopover?: boolean;
+}
+
+export interface LayoutResult {
+  tree: TripTree;
+  /** Items moved to an earlier day because the day they were on went away. */
+  moved: number;
+}
+
+/** Days each leg gets, in order (see the layout note above). */
+export function legDayCounts(legs: ReadonlyArray<Pick<Leg, "nights">>): number[] {
+  return legs.map((l, i) => (i === legs.length - 1 ? l.nights + 1 : l.nights));
+}
+
+/** Smallest allowed nights: a one-leg trip may be a day trip; otherwise every leg needs a night. */
+export function minLegNights(legCount: number): number {
+  return legCount > 1 ? 1 : 0;
+}
+
+export function totalNights(tree: TripTree): number {
+  return tree.legs.reduce((a, l) => a + l.leg.nights, 0);
+}
+
+export function findLeg(tree: TripTree, legId: string): LegTree | undefined {
+  return tree.legs.find((l) => l.leg.id === legId);
+}
+
+export function legOfDay(tree: TripTree, dayId: string): LegTree | undefined {
+  return tree.legs.find((l) => l.days.some((d) => d.day.id === dayId));
+}
+
+/** The transfer that starts this day (arriving at the day's leg), if any. */
+export function transferOnDay(tree: TripTree, dayId: string): Transfer | undefined {
+  return tree.transfers.find((t) => t.departDayId === dayId);
+}
+
+/**
+ * Re-dates and re-sizes every leg's days from `startDate` (default: the
+ * trip's), and rebuilds transfers between consecutive legs. Days a leg keeps
+ * keep their ids, slots and items; when a leg shrinks, the items on its
+ * removed days move to the same part of the day on its last remaining day.
+ * A transfer between the same two legs keeps its mode and duration (which
+ * may have been edited); new pairs are estimated.
+ */
+export function layoutLegs(tree: TripTree, estimate: TransferEstimator, startDate?: IsoDate): LayoutResult {
+  const start = startDate ?? tree.trip.startDate;
+  if (!start) throw new Error("The trip needs a start date");
+  const counts = legDayCounts(tree.legs.map((l) => l.leg));
+  let index = 0;
+  let moved = 0;
+  const legs: LegTree[] = tree.legs.map((l, i) => {
+    const count = counts[i]!;
+    const leg: Leg = { ...l.leg, order: i };
+    const kept = l.days.slice(0, count).map((d) => {
+      const at = index++;
+      return { ...d, day: { ...d.day, date: addDays(start, at), index: at } };
+    });
+    const missing = count - kept.length;
+    const added = missing > 0 ? buildDays(leg.id, dateRange(addDays(start, index), addDays(start, index + missing - 1)), index) : [];
+    index += Math.max(missing, 0);
+    let days = [...kept, ...added];
+    const dropped = l.days.slice(count);
+    const last = days[days.length - 1];
+    if (last) {
+      const spill = new Map<string, Item[]>();
+      for (const d of dropped) for (const s of d.slots) spill.set(s.slot.part, [...(spill.get(s.slot.part) ?? []), ...s.items]);
+      moved = [...spill.values()].reduce((a, items) => a + items.length, moved);
+      if (spill.size > 0) {
+        const merged: DayTree = {
+          ...last,
+          slots: last.slots.map((s) => {
+            const extra = spill.get(s.slot.part);
+            if (!extra?.length) return s;
+            return { ...s, items: [...s.items, ...extra].map((it, order) => ({ ...it, slotId: s.slot.id, order })) };
+          }),
+        };
+        days = [...days.slice(0, -1), merged];
+      }
+    }
+    return { leg, days };
+  });
+
+  const transfers: Transfer[] = [];
+  for (let i = 0; i + 1 < legs.length; i++) {
+    const from = legs[i]!.leg;
+    const to = legs[i + 1]!;
+    const prev = tree.transfers.find((t) => t.fromLegId === from.id && t.toLegId === to.leg.id);
+    const est = prev ? null : estimate(from.cityId, to.leg.cityId);
+    transfers.push({
+      id: prev?.id ?? ulid(),
+      tripId: tree.trip.id,
+      fromLegId: from.id,
+      toLegId: to.leg.id,
+      mode: prev?.mode ?? est!.mode,
+      estMinutes: prev?.estMinutes ?? est!.minutes,
+      departDayId: to.days[0]?.day.id ?? null,
+    });
+  }
+
+  const endDate = addDays(start, Math.max(index - 1, 0));
+  return { tree: { trip: { ...tree.trip, startDate: start, endDate }, legs, transfers }, moved };
+}
+
+export interface NewMultiLegTripInput {
+  name: string;
+  startDate: IsoDate;
+  legs: readonly LegInput[];
+  originCityId?: string | null;
+  state?: TripState;
+  now?: Date;
+}
+
+/** A trip with legs in the given order, laid out from the start date. */
+export function createTrip(input: NewMultiLegTripInput, estimate: TransferEstimator): TripTree {
+  if (input.legs.length === 0) throw new Error("A trip needs at least one city");
+  const now = input.now ?? new Date();
+  const trip: Trip = {
+    id: ulid(now.getTime()),
+    name: input.name,
+    originCityId: input.originCityId ?? null,
+    state: input.state ?? "planning",
+    startDate: input.startDate,
+    endDate: input.startDate,
+    createdAt: now.toISOString(),
+  };
+  const min = minLegNights(input.legs.length);
+  const legs: LegTree[] = input.legs.map((l, order) => ({
+    leg: {
+      id: ulid(),
+      tripId: trip.id,
+      cityId: l.cityId,
+      order,
+      nights: Math.max(Math.round(l.nights), min),
+      isStopover: l.isStopover ?? false,
+    },
+    days: [],
+  }));
+  return layoutLegs({ trip, legs, transfers: [] }, estimate).tree;
+}
+
+/** Adds a leg at `index` (default: the end) and lays the trip out again. */
+export function addLeg(tree: TripTree, input: LegInput, estimate: TransferEstimator, index = tree.legs.length): LayoutResult {
+  const at = Math.max(0, Math.min(index, tree.legs.length));
+  const leg: LegTree = {
+    leg: {
+      id: ulid(),
+      tripId: tree.trip.id,
+      cityId: input.cityId,
+      order: at,
+      nights: Math.max(Math.round(input.nights), minLegNights(tree.legs.length + 1)),
+      isStopover: input.isStopover ?? false,
+    },
+    days: [],
+  };
+  // A day trip (no nights) that gains a second city needs a night there.
+  const legs = [...tree.legs.slice(0, at), leg, ...tree.legs.slice(at)].map((l) => ({
+    ...l,
+    leg: { ...l.leg, nights: Math.max(l.leg.nights, minLegNights(tree.legs.length + 1)) },
+  }));
+  return layoutLegs({ ...tree, legs }, estimate);
+}
+
+/** Removes a leg with its days and items. The last leg can't be removed. */
+export function removeLeg(tree: TripTree, legId: string, estimate: TransferEstimator): LayoutResult {
+  if (tree.legs.length <= 1) throw new Error("A trip needs at least one city");
+  if (!findLeg(tree, legId)) throw new Error(`No leg ${legId}`);
+  return layoutLegs({ ...tree, legs: tree.legs.filter((l) => l.leg.id !== legId) }, estimate);
+}
+
+/** Puts legs in the given order (every leg id exactly once). */
+export function reorderLegs(tree: TripTree, legIds: readonly string[], estimate: TransferEstimator): LayoutResult {
+  const byId = new Map(tree.legs.map((l) => [l.leg.id, l]));
+  if (legIds.length !== tree.legs.length || new Set(legIds).size !== legIds.length || !legIds.every((id) => byId.has(id))) {
+    throw new Error("The new order must list every leg once");
+  }
+  return layoutLegs({ ...tree, legs: legIds.map((id) => byId.get(id)!) }, estimate);
+}
+
+export function moveLeg(tree: TripTree, legId: string, toIndex: number, estimate: TransferEstimator): LayoutResult {
+  const ids = tree.legs.map((l) => l.leg.id).filter((id) => id !== legId);
+  if (ids.length === tree.legs.length) throw new Error(`No leg ${legId}`);
+  const at = Math.max(0, Math.min(toIndex, ids.length));
+  return reorderLegs(tree, [...ids.slice(0, at), legId, ...ids.slice(at)], estimate);
+}
+
+/** Sets nights for some legs (by leg id); the trip's end date follows. */
+export function setLegNights(
+  tree: TripTree,
+  nights: ReadonlyMap<string, number>,
+  estimate: TransferEstimator,
+): LayoutResult {
+  const min = minLegNights(tree.legs.length);
+  const legs = tree.legs.map((l) => {
+    const n = nights.get(l.leg.id);
+    return n === undefined ? l : { ...l, leg: { ...l.leg, nights: Math.max(Math.round(n), min) } };
+  });
+  return layoutLegs({ ...tree, legs }, estimate);
+}
+
+export function setLegStopover(tree: TripTree, legId: string, isStopover: boolean): TripTree {
+  if (!findLeg(tree, legId)) throw new Error(`No leg ${legId}`);
+  return { ...tree, legs: tree.legs.map((l) => (l.leg.id === legId ? { ...l, leg: { ...l.leg, isStopover } } : l)) };
+}
+
+/** Edits a transfer's mode or duration (an estimate the user knows better). */
+export function updateTransfer(
+  tree: TripTree,
+  transferId: string,
+  patch: Partial<Pick<Transfer, "mode" | "estMinutes">>,
+): TripTree {
+  if (!tree.transfers.some((t) => t.id === transferId)) throw new Error(`No transfer ${transferId}`);
+  if (patch.estMinutes !== undefined && !(patch.estMinutes >= 0)) throw new Error("Duration can't be negative");
+  return { ...tree, transfers: tree.transfers.map((t) => (t.id === transferId ? { ...t, ...patch } : t)) };
 }

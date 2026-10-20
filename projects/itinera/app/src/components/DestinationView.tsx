@@ -2,7 +2,8 @@
  * One destination before any planning: photo, summary, typical weather for
  * every month, why it is recommended now, and a plan card where dates can be
  * tried against the typical weather. "Plan this trip" fetches the city's
- * places first when they aren't on this device yet.
+ * places first when they aren't on this device yet; "Add to a trip" makes the
+ * city the next stop of an existing trip instead.
  */
 import {
   addDays,
@@ -34,7 +35,8 @@ export function DestinationView({
   onPlanned: () => void;
   onBrowse: () => void;
 }) {
-  const { home, normals, landingConfig, platform, createTrip, addCity, adding } = useStore();
+  const { home, normals, landingConfig, platform, createTrip, addCity, adding, trips, tripCities, tree, addLeg, cityName } =
+    useStore();
   const landing = useLanding();
   const c = landing.byId.get(id);
   const best = c ? landing.bestFor(c.id) : null;
@@ -43,6 +45,7 @@ export function DestinationView({
   const [endDate, setEndDate] = useState(firstDates.endDate);
   const [name, setName] = useState(c ? `${c.name} in ${monthName(monthOf(firstDates.startDate))}` : "Trip");
   const [busy, setBusy] = useState(false);
+  const [tripId, setTripId] = useState(tree?.trip.id ?? trips[0]?.id ?? "");
 
   const daily = c?.cityId ? normals.get(c.cityId) ?? [] : [];
   // Fetched cities have 20-year daily normals; otherwise the index's monthly figures.
@@ -85,6 +88,19 @@ export function DestinationView({
       if (!cityId && c.destination?.ingestQuery) cityId = (await addCity(c.destination.ingestQuery))?.id ?? null;
       if (!cityId) return;
       await createTrip({ name: name.trim() || c.name, cityId, startDate, endDate });
+      onPlanned();
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const addToTrip = async () => {
+    setBusy(true);
+    try {
+      let cityId = c.cityId;
+      if (!cityId && c.destination?.ingestQuery) cityId = (await addCity(c.destination.ingestQuery))?.id ?? null;
+      if (!cityId || !tripId) return;
+      await addLeg(tripId, cityId);
       onPlanned();
     } finally {
       setBusy(false);
@@ -231,6 +247,29 @@ export function DestinationView({
               <p className="small muted">This place has no city boundary on OpenStreetMap yet, so its places can't be fetched automatically.</p>
             )}
           </form>
+          {trips.length > 0 && (
+            <div className="plan-card__add">
+              <h3>Or add to a trip</h3>
+              <label className="field">
+                <span>Trip</span>
+                <select value={tripId} onChange={(e) => setTripId(e.target.value)}>
+                  {trips.map((t) => (
+                    <option key={t.id} value={t.id}>
+                      {t.name}
+                      {tripCities.get(t.id)?.length ? ` · ${tripCities.get(t.id)!.map(cityName).join(" → ")}` : ""}
+                    </option>
+                  ))}
+                </select>
+              </label>
+              <button
+                onClick={() => void addToTrip()}
+                disabled={busy || !tripId || (!c.cityId && !canFetch) || !!adding}
+                title="Adds this place as the trip's last stop, with two nights"
+              >
+                {c.cityId ? `Add ${c.name} as the next stop` : `Fetch places and add ${c.name}`}
+              </button>
+            </div>
+          )}
           <div className="plan-card__alt">
             {c.cityId ? (
               <>

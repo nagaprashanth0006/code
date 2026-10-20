@@ -405,6 +405,8 @@ export class Repo {
         departDayId: optStr(r.depart_day_id),
       }),
     );
+    const legOrder = new Map(legs.map((l) => [l.id, l.order]));
+    transfers.sort((a, b) => (legOrder.get(a.fromLegId) ?? 0) - (legOrder.get(b.fromLegId) ?? 0));
     return {
       trip,
       transfers,
@@ -420,6 +422,42 @@ export class Repo {
           })),
       })),
     };
+  }
+
+  /**
+   * Saves a trip after a structural edit (legs added, moved or resized): every
+   * row of the new tree is written, then the trip's rows that aren't in it any
+   * more are deleted. Writing first means a failure part-way leaves extra rows,
+   * never missing ones.
+   */
+  async replaceTripTree(tree: TripTree): Promise<void> {
+    await this.saveTripTree(tree);
+    const tripId = tree.trip.id;
+    const legScope = "SELECT id FROM leg WHERE trip_id = ?";
+    const dayScope = `SELECT id FROM day WHERE leg_id IN (${legScope})`;
+    const slotScope = `SELECT id FROM slot WHERE day_id IN (${dayScope})`;
+    const keep = {
+      item: new Set(tree.legs.flatMap((l) => l.days.flatMap((d) => d.slots.flatMap((s) => s.items.map((i) => i.id))))),
+      slot: new Set(tree.legs.flatMap((l) => l.days.flatMap((d) => d.slots.map((s) => s.slot.id)))),
+      day: new Set(tree.legs.flatMap((l) => l.days.map((d) => d.day.id))),
+      transfer: new Set(tree.transfers.map((t) => t.id)),
+      leg: new Set(tree.legs.map((l) => l.leg.id)),
+    };
+    // Children before parents, while the leg rows still scope them to this trip.
+    const scopes: Array<[keyof typeof keep, string]> = [
+      ["item", `SELECT id FROM item WHERE slot_id IN (${slotScope})`],
+      ["slot", slotScope],
+      ["day", dayScope],
+      ["transfer", "SELECT id FROM transfer WHERE trip_id = ?"],
+      ["leg", legScope],
+    ];
+    for (const [table, scope] of scopes) {
+      const stale = (await this.db.select<{ id: string }>(scope, [tripId])).map((r) => r.id).filter((id) => !keep[table].has(id));
+      for (let i = 0; i < stale.length; i += 500) {
+        const chunk = stale.slice(i, i + 500);
+        await this.db.execute(`DELETE FROM ${table} WHERE id IN (${chunk.map(() => "?").join(",")})`, chunk);
+      }
+    }
   }
 
   async upsertItems(items: readonly Item[]): Promise<void> {

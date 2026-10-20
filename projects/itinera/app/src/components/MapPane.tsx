@@ -1,8 +1,9 @@
 /**
  * Live vector map. Offline: the city's local PMTiles pack (served by the shell
  * with byte ranges) styled with Protomaps' basemap and bundled fonts/sprites.
- * Online fallback: OpenFreeMap. Shows catalog places, the selected day's items
- * in order, and the route between them.
+ * Online fallback: OpenFreeMap. With a trip open it shows the selected leg's
+ * city and places, the selected day's items in order with the route between
+ * them, and the trip's other stops as numbered markers joined by a line.
  */
 import { layers, namedFlavor } from "@protomaps/basemaps";
 import { allDays, CATEGORY_INFO, type BBox } from "@itinera/core";
@@ -84,13 +85,15 @@ export interface MapInset {
 }
 
 export function MapPane({ inset }: { inset: MapInset }) {
-  const { places, cities, tilePacks, tree, selectedDayId, selectedPlaceId, selectPlace, wishlist } = useStore();
+  const { places, cities, tilePacks, tree, selectedDayId, selectedPlaceId, selectPlace, wishlist, selectedLeg, selectLeg } =
+    useStore();
   const container = useRef<HTMLDivElement | null>(null);
   const mapRef = useRef<MlMap | null>(null);
   const markers = useRef<Marker[]>([]);
+  const legMarkers = useRef<Marker[]>([]);
   const popup = useRef<Popup | null>(null);
   const [styleTick, setStyleTick] = useState(0);
-  const city = tree ? cities.find((c) => c.id === tree.legs[0]?.leg.cityId) : cities[0];
+  const city = selectedLeg ? cities.find((c) => c.id === selectedLeg.leg.cityId) : cities[0];
   const pack = tilePacks.find((p) => city && p.region === city.name.toLowerCase()) ?? tilePacks[0];
   const [mode, setMode] = useState<"offline" | "online">(pack ? "offline" : "online");
   const dark = useMemo(prefersDark, []);
@@ -117,6 +120,10 @@ export function MapPane({ inset }: { inset: MapInset }) {
     map.setPadding({ top: 0, left: inset.left, right: inset.right ?? 0, bottom: inset.bottom });
     if (bbox) map.fitBounds([bbox[0], bbox[1], bbox[2], bbox[3]], { padding: 24, animate: false });
     map.on("style.load", () => setStyleTick((t) => t + 1));
+    // Zoomed into a city, its own stop marker would sit on top of its places.
+    const markZoom = () => container.current?.toggleAttribute("data-city-zoom", map.getZoom() >= 9);
+    map.on("zoomend", markZoom);
+    markZoom();
     map.on("click", "places", (e: MapLayerMouseEvent) => {
       const id = e.features?.[0]?.properties?.id;
       if (typeof id === "string") selectPlace(id);
@@ -166,14 +173,23 @@ export function MapPane({ inset }: { inset: MapInset }) {
   const placesGeoJson = useMemo(
     () => ({
       type: "FeatureCollection" as const,
-      features: [...places.values()].map((p) => ({
+      features: [...places.values()].filter((p) => !selectedLeg || p.cityId === selectedLeg.leg.cityId).map((p) => ({
         type: "Feature" as const,
         geometry: { type: "Point" as const, coordinates: [p.lon, p.lat] },
         properties: { id: p.id, name: p.name, colour: placeColour(p.category), saved: wishlist.has(p.id) },
       })),
     }),
-    [places, wishlist],
+    [places, wishlist, selectedLeg],
   );
+
+  // The trip's stops in order (a city can appear more than once).
+  const legStops = useMemo(() => {
+    if (!tree) return [];
+    return tree.legs.flatMap((l, i) => {
+      const c = cities.find((x) => x.id === l.leg.cityId);
+      return c ? [{ legId: l.leg.id, index: i, city: c }] : [];
+    });
+  }, [tree, cities]);
 
   // The selected day's primary items, in order.
   const dayStops = useMemo(() => {
@@ -195,6 +211,13 @@ export function MapPane({ inset }: { inset: MapInset }) {
     if (!map.getSource("places")) {
       map.addSource("places", { type: "geojson", data: placesGeoJson });
       map.addSource("route", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+      map.addSource("legs", { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+      map.addLayer({
+        id: "legs",
+        type: "line",
+        source: "legs",
+        paint: { "line-color": "#0e7c66", "line-width": 2, "line-dasharray": [1, 2], "line-opacity": 0.7 },
+      });
       map.addLayer({
         id: "route",
         type: "line",
@@ -262,6 +285,34 @@ export function MapPane({ inset }: { inset: MapInset }) {
       return new Marker({ element: el }).setLngLat([s.place.lon, s.place.lat]).addTo(map);
     });
   }, [dayStops, places, selectPlace, styleTick]);
+
+  // The trip's stops: a line between them and a numbered marker per stop (the selected one stands out).
+  useEffect(() => {
+    const map = mapRef.current;
+    if (!map) return;
+    (map.getSource("legs") as GeoJSONSource | undefined)?.setData({
+      type: "FeatureCollection",
+      features:
+        legStops.length > 1
+          ? [{ type: "Feature", properties: {}, geometry: { type: "LineString", coordinates: legStops.map((s) => [s.city.lon, s.city.lat]) } }]
+          : [],
+    });
+    for (const m of legMarkers.current) m.remove();
+    legMarkers.current =
+      legStops.length > 1
+        ? legStops.map((s) => {
+            const el = document.createElement("button");
+            el.className = `leg-marker${s.legId === selectedLeg?.leg.id ? " is-selected" : ""}`;
+            el.textContent = `${s.index + 1} · ${s.city.name}`;
+            el.title = `Stop ${s.index + 1}: ${s.city.name}`;
+            el.addEventListener("click", (e) => {
+              e.stopPropagation();
+              selectLeg(s.legId);
+            });
+            return new Marker({ element: el, anchor: "bottom" }).setLngLat([s.city.lon, s.city.lat]).addTo(map);
+          })
+        : [];
+  }, [legStops, selectedLeg, selectLeg, styleTick]);
 
   return (
     <div className="map">

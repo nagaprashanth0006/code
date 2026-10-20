@@ -12,7 +12,7 @@ import { formatDuration, formatMinutes, weekdayName, type IsoDate } from "./date
 import { estimateInCityTravel, type LatLon } from "./geo.js";
 import { describeDayHours, hoursOnRaw, type Interval } from "./hours.js";
 import { allDays, type TripTree } from "./itinerary.js";
-import type { Item, PlaceCategory, SlotPart, TransportMode } from "./schemas.js";
+import type { Item, PlaceCategory, SlotPart, Transfer, TransportMode } from "./schemas.js";
 
 export type Severity = "error" | "warning" | "info";
 
@@ -87,6 +87,8 @@ export interface DayCheckInput {
 
 export interface DayCheckResult {
   schedule: ScheduleEntry[];
+  /** When the day's transfer runs (it starts the day), if it has one. */
+  transfer: { start: number; end: number } | null;
   conflicts: Conflict[];
   /** Time the last planned activity ends. */
   endsAt: number;
@@ -108,7 +110,9 @@ export function checkDay(input: DayCheckInput): DayCheckResult {
   let cursor = opts.dayStart;
   let prev: CheckPlace | undefined;
 
-  if (input.transfer && input.transfer.minutes > 0) cursor += input.transfer.minutes;
+  const transferWindow =
+    input.transfer && input.transfer.minutes > 0 ? { start: cursor, end: cursor + input.transfer.minutes } : null;
+  if (transferWindow) cursor = transferWindow.end;
 
   for (const slot of input.slots) {
     const [windowStart, windowEnd] = opts.slotWindows[slot.part];
@@ -201,7 +205,14 @@ export function checkDay(input: DayCheckInput): DayCheckResult {
   if (cursor > opts.dayEnd) {
     const transfer = input.transfer && input.transfer.minutes > 0 ? input.transfer : null;
     conflicts.push(
-      transfer
+      transfer && schedule.length === 0
+        ? {
+            kind: "transfer-overfull",
+            severity: "warning",
+            dayId,
+            message: `${transfer.label} takes ${formatDuration(transfer.minutes)} and arrives around ${formatMinutes(cursor)}; nothing else fits this day.`,
+          }
+        : transfer
         ? {
             kind: "transfer-overfull",
             severity: "error",
@@ -217,7 +228,7 @@ export function checkDay(input: DayCheckInput): DayCheckResult {
     );
   }
 
-  return { schedule, conflicts, endsAt: cursor };
+  return { schedule, transfer: transferWindow, conflicts, endsAt: cursor };
 }
 
 export interface TripCheckResult {
@@ -225,15 +236,39 @@ export interface TripCheckResult {
   conflicts: Conflict[];
 }
 
-/** Checks every day of a trip. Transfers consume the start of their departure day. */
+export const TRANSPORT_LABELS: Record<TransportMode, string> = {
+  walk: "Walk",
+  transit: "Transit",
+  road: "Road",
+  rail: "Train",
+  bus: "Bus",
+  ferry: "Ferry",
+  flight: "Flight",
+};
+
+/** "Train from Lisbon to Porto", or "Train" when the city names aren't known. */
+export function transferLabel(tree: TripTree, transfer: Transfer, cityName?: (cityId: string) => string | undefined): string {
+  const mode = TRANSPORT_LABELS[transfer.mode];
+  const from = tree.legs.find((l) => l.leg.id === transfer.fromLegId)?.leg.cityId;
+  const to = tree.legs.find((l) => l.leg.id === transfer.toLegId)?.leg.cityId;
+  const a = from && cityName?.(from);
+  const b = to && cityName?.(to);
+  return a && b ? `${mode} from ${a} to ${b}` : mode;
+}
+
+/**
+ * Checks every day of a trip. Transfers consume the start of the day they
+ * arrive on (the first day of the leg they go to).
+ */
 export function checkTrip(
   tree: TripTree,
   places: ReadonlyMap<string, CheckPlace>,
   options?: Partial<CheckOptions>,
+  cityName?: (cityId: string) => string | undefined,
 ): TripCheckResult {
   const transferByDay = new Map<string, { minutes: number; label: string }>();
   for (const t of tree.transfers) {
-    if (t.departDayId) transferByDay.set(t.departDayId, { minutes: t.estMinutes, label: `Transfer by ${t.mode}` });
+    if (t.departDayId) transferByDay.set(t.departDayId, { minutes: t.estMinutes, label: transferLabel(tree, t, cityName) });
   }
   const byDay = new Map<string, DayCheckResult>();
   const conflicts: Conflict[] = [];

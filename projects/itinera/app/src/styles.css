@@ -1592,3 +1592,193 @@ button.icon.is-on {
     animation: none !important;
   }
 }
+
+/* ======================================================= multi-city */
+
+.leg-marker {
+  min-height: 0;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 2px solid #fff;
+  background: #17171a;
+  color: #fff;
+  font-weight: 650;
+  font-size: 12px;
+  white-space: nowrap;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.35);
+}
+.leg-marker.is-selected {
+  background: #0e7c66;
+}
+[data-city-zoom] .leg-marker.is-selected {
+  display: none;
+}
+
+.tripbar {
+  display: grid;
+  gap: 8px;
+  padding: 4px 0 10px;
+}
+.tripbar__row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.tripbar__start {
+  flex: 0 1 160px;
+}
+.tripbar__length {
+  line-height: 1.35;
+}
+.tripbar__add {
+  flex: 1 1 120px;
+  min-width: 0;
+}
+.tripbar__row > button,
+.tripbar__add {
+  min-height: 32px;
+  font-size: 12px;
+}
+.tripbar__row > button {
+  padding: 4px 10px;
+}
+.tripbar__hint {
+  margin: 0;
+}
+
+.leg {
+  margin-bottom: 12px;
+  padding: 8px 8px 2px;
+  border-radius: 18px;
+  background: color-mix(in srgb, var(--surface-2) 70%, transparent);
+  border: 1px solid var(--border);
+}
+.leg.is-selected {
+  border-color: color-mix(in srgb, var(--accent) 50%, var(--border));
+}
+.leg__header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.leg__header .tree__toggle {
+  width: auto;
+}
+.leg__num {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--text);
+  color: var(--bg);
+  font-size: 12px;
+  font-weight: 700;
+}
+.leg.is-selected .leg__num {
+  background: var(--accent);
+  color: var(--on-accent);
+}
+.leg__title {
+  display: grid;
+  min-width: 0;
+  flex: 1;
+  line-height: 1.25;
+}
+.leg__name {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-weight: 700 !important;
+  font-size: 15px;
+  text-align: left;
+}
+.leg__weather {
+  margin: 2px 4px 8px 36px;
+}
+.tree ul.leg__days[role="group"] {
+  padding-left: 0;
+}
+.stepper {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  flex: none;
+}
+.stepper button.icon {
+  width: 26px;
+  height: 26px;
+}
+.stepper__value {
+  font-size: 12px;
+  font-weight: 600;
+  min-width: 56px;
+  text-align: center;
+}
+
+.transfer {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 12px;
+  border: 1px dashed color-mix(in srgb, var(--accent) 55%, var(--border));
+  background: var(--accent-soft);
+}
+.transfer__icon {
+  font-size: 18px;
+  width: 26px;
+  text-align: center;
+}
+.transfer__body {
+  flex: 1;
+  min-width: 0;
+}
+.transfer__name {
+  font-weight: 650;
+}
+.transfer__controls {
+  display: flex;
+  gap: 6px;
+  margin-top: 6px;
+}
+.transfer select {
+  font-size: 12px;
+  min-height: 28px;
+}
+
+.nights-form {
+  display: grid;
+  gap: 12px;
+}
+.nights-form__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 4px;
+}
+.nights-form__list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.plan-card__add {
+  display: grid;
+  gap: 8px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+.plan-card__add h3 {
+  margin: 0;
+  font-size: 14px;
+}

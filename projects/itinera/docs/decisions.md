@@ -2,6 +2,27 @@
 
 One entry per significant choice: context, decision, alternatives, consequences. Newest first. Scoping decisions made before implementation are in the PRD's decision table; these were made while building P1.1 and P1.2.
 
+## 2026-10-21 · Multi-city trips: how legs own days
+
+- **Context:** Trips had one leg. Multi-city needs a rule for which leg a travel day belongs to, what happens to planned places when nights change or legs move, and where a transfer's time goes.
+- **Decision:** Legs are laid out back to back from the trip's start date. A leg with n nights owns n days: the day you arrive, which begins with the transfer from the previous leg, and the full days after it. The last leg also owns the departure day, so N nights still give N + 1 days, as a single-leg trip always had. Every structural edit (add, remove, move, reorder, nights, start date) re-runs one layout (`layoutLegs`) that keeps each leg's existing days by position, with their ids, slots and items. When a leg loses days, their places move to the same part of the day on the leg's last remaining day and the planner says how many moved. Once a trip has two or more legs, each leg keeps at least one night. Removing a leg removes its days and places, after a confirmation if any are planned.
+- **Alternatives:** Give the travel day to the leg being left (the morning in one city, the evening in the next); a separate "travel day" outside any leg; dropping places from removed days, or turning them into alternates.
+- **Consequences:** Reordering legs can move the departure day from one leg to another, so the old last leg's final-day places shift a day earlier. Moved places can make a day overfull; the checker then says so instead of anything disappearing silently.
+
+## 2026-10-21 · Transfers stay their own rows, shown first on their day
+
+- **Context:** The PRD asks for transfers as first-class items with mode and duration that consume time. The schema already had a `transfer` table pointing at the day it departs on.
+- **Decision:** A transfer stays a `transfer` row, not an `item`: one per pair of consecutive legs, rebuilt by the layout, with `depart_day_id` = the first day of the leg it arrives at. The planner shows it as the first entry of that day ("Train from Lisbon to Porto, 09:00–13:15") with editable mode and duration. Mode and minutes come from a known route edge, else the distance estimate (road ≤ 150 km, rail ≤ 650 km, flight beyond, with airport overhead). An edit is kept while the same two legs stay adjacent; a new pair is estimated afresh. The checker starts the day after the transfer; a transfer that alone runs past the day's end is a warning ("nothing else fits"), and with visits planned it is an error.
+- **Alternatives:** Transfers as items with a `kind` (they'd move with drag and drop and need guarding against landing mid-day); transfers on the departure leg's last day.
+- **Consequences:** Transfers can't be dragged; changing the order of legs is how they move. Routes aren't ingested yet, so every transfer is labelled as an estimate.
+
+## 2026-10-21 · Adding stops, sharing nights and suggesting an order
+
+- **Context:** The P1.2 "done when" is someone planning a 3-city trip without help.
+- **Decision:** A city is added as the last stop with two nights, from the destination page ("Add to a trip", which fetches the city first if needed) or from the planner's "Add a stop" (cities already on this device); the trip gets longer. Nights per stop are changed with a stepper; "Share nights" takes a total and splits it with `allocateNights` (two nights per stop, one for a stopover, the rest by places saved to the wishlist in that city or planned in that leg), shown as a preview before it applies. "Suggest order" runs `orderCities` on the legs, as a round trip from the home city when one is set, otherwise as an open path. The itinerary panel is a tree Trip → Legs → Days; each leg shows its dates and typical weather for those dates. The map follows the selected day's leg and shows only that city's places, with the other stops as numbered markers joined by a line when zoomed out. Structural edits save the whole trip and then delete the trip's rows that are no longer in it (`Repo.replaceTripTree`); item edits still save only the changed items.
+- **Alternatives:** Keeping the trip length fixed when a stop is added (silently takes nights from other stops); allocating automatically on every change (overrides the user's own numbers).
+- **Consequences:** A trip's length is the sum of its legs' nights; the destination page's "Plan this trip" still creates a one-leg trip from its dates. Allocation by saved places only distinguishes stops once a city has more saved places than its minimum nights can cover; before that, extra nights are shared evenly.
+
 ## 2026-10-21 · Great places outside Europe: region search, nature, the guide as a source
 
 - **Context:** Fetching Coorg kept one place and Munnar two (plus three "Photo Point"s) while Lisbon kept 150. Four causes: towns were searched in a ~5 km box, but their sights lie 10–45 km out; waterfalls, lakes, dams, national parks and peaks weren't queried at all; only ~9% of OSM features around Munnar and Coorg link to Wikidata, so the fixed floor (rank ≥ 1.5) dropped nearly everything; and Wikivoyage listings only decorated OSM matches, by exact name.

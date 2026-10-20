@@ -5,6 +5,8 @@
  */
 import {
   addItem,
+  addLeg as addLegOp,
+  allocateTripNights,
   checkTrip,
   createSingleLegTrip,
   destinationIndex,
@@ -15,13 +17,24 @@ import {
   ingestCity,
   LANDING_CONFIG_SETTING,
   landingConfigFrom,
+  layoutLegs,
+  legOfDay,
+  MIN_NIGHTS,
   migrate,
   moveItem,
+  moveLeg as moveLegOp,
   removeItem,
+  removeLeg as removeLegOp,
+  reorderLegs,
   Repo,
+  setLegNights,
+  setLegStopover,
+  suggestLegOrder,
   swapAlternate,
+  transferEstimator,
   ulid,
   updateItem,
+  updateTransfer,
   type CacheEntry,
   type CheckPlace,
   type City,
@@ -32,7 +45,10 @@ import {
   type IngestProgress,
   type Item,
   type LandingConfig,
+  type LayoutResult,
+  type LegTree,
   type Place,
+  type Transfer,
   type Trip,
   type TripCheckResult,
   type TripTree,
@@ -61,6 +77,8 @@ export interface Store {
   check: TripCheckResult | null;
   selectedPlaceId: string | null;
   selectedDayId: string | null;
+  /** The leg of the selected day (the first leg when none is selected). */
+  selectedLeg: LegTree | null;
   targetSlotId: string | null;
   lastError: string | null;
   /** Asked once; ranks landing destinations by travel time from here. */
@@ -74,6 +92,20 @@ export interface Store {
   setHome(name: string): Promise<void>;
   createTrip(input: { name: string; cityId: string; startDate: string; endDate: string }): Promise<void>;
   openTrip(id: string): Promise<void>;
+  /** Adds a city as the last stop of a trip (opening that trip). */
+  addLeg(tripId: string, cityId: string): Promise<void>;
+  removeLeg(legId: string): Promise<void>;
+  moveLeg(legId: string, toIndex: number): Promise<void>;
+  /** Reorders legs to avoid zig-zagging; resolves to false when the order was already best. */
+  suggestOrder(): Promise<boolean>;
+  setNights(nights: ReadonlyMap<string, number>): Promise<void>;
+  setStopover(legId: string, isStopover: boolean): Promise<void>;
+  /** Nights per leg for a trip of `total` nights, from saved and planned places. */
+  proposeNights(total: number): { nights: Map<string, number>; warning: string | null } | null;
+  setTransfer(transferId: string, patch: Partial<Pick<Transfer, "mode" | "estMinutes">>): Promise<void>;
+  setStartDate(date: string): Promise<void>;
+  selectLeg(legId: string): void;
+  cityName(cityId: string): string;
   deleteTrip(id: string): Promise<void>;
   addPlace(placeId: string, slotId?: string, asAlternate?: boolean): Promise<void>;
   move(itemId: string, toSlotId: string, toIndex: number): Promise<void>;
@@ -84,6 +116,8 @@ export interface Store {
   selectPlace(id: string | null): void;
   selectDay(id: string | null): void;
   setTargetSlot(id: string | null): void;
+  /** Shows a message in the toast. */
+  notify(message: string): void;
   dismissError(): void;
 }
 
@@ -241,7 +275,76 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     return m;
   }, [places]);
 
-  const check = useMemo(() => (tree ? checkTrip(tree, checkPlaces) : null), [tree, checkPlaces]);
+  const cityNames = useMemo(() => new Map(cities.map((c) => [c.id, c.name])), [cities]);
+  const cityName = useCallback((id: string) => cityNames.get(id) ?? "Unknown city", [cityNames]);
+  const estimate = useMemo(() => transferEstimator(cities.map((c) => ({ id: c.id, lat: c.lat, lon: c.lon }))), [cities]);
+
+  const check = useMemo(
+    () => (tree ? checkTrip(tree, checkPlaces, undefined, (id) => cityNames.get(id)) : null),
+    [tree, checkPlaces, cityNames],
+  );
+
+  const selectedLeg = useMemo(
+    () => (tree ? (selectedDayId ? legOfDay(tree, selectedDayId) : undefined) ?? tree.legs[0] ?? null : null),
+    [tree, selectedDayId],
+  );
+
+  const refreshTrips = useCallback(async () => {
+    setTrips(await repo().listTrips());
+    setTripCities(await repo().tripCities());
+  }, []);
+
+  const selectLeg = useCallback((legId: string) => {
+    const leg = treeRef.current?.legs.find((l) => l.leg.id === legId);
+    const day = leg?.days[0];
+    if (!day) return;
+    selectDay(day.day.id);
+    setTargetSlot(day.slots[0]?.slot.id ?? null);
+  }, []);
+
+  const movedNote = (moved: number) =>
+    moved > 0 ? `${moved} planned place${moved === 1 ? "" : "s"} moved to the last remaining day of ${moved === 1 ? "its" : "their"} stop.` : null;
+
+  /**
+   * Applies a structural edit (legs, nights, transfers, dates): the whole trip
+   * is saved, days that went away are deleted, and the selection stays valid.
+   */
+  const restructure = useCallback(
+    async (fn: (t: TripTree) => LayoutResult | TripTree) => {
+      const before = treeRef.current;
+      if (!before) return;
+      let after: TripTree;
+      let moved = 0;
+      try {
+        const r = fn(before);
+        if ("moved" in r) {
+          after = r.tree;
+          moved = r.moved;
+        } else after = r;
+      } catch (e) {
+        setLastError(e instanceof Error ? e.message : String(e));
+        return;
+      }
+      showTree(after);
+      const days = after.legs.flatMap((l) => l.days);
+      if (!days.some((d) => d.day.id === selectedDayId)) {
+        selectDay(days[0]?.day.id ?? null);
+        setTargetSlot(days[0]?.slots[0]?.slot.id ?? null);
+      } else if (targetSlotId && !days.some((d) => d.slots.some((s) => s.slot.id === targetSlotId))) {
+        setTargetSlot(days.find((d) => d.day.id === selectedDayId)?.slots[0]?.slot.id ?? null);
+      }
+      try {
+        await repo().replaceTripTree(after);
+        await refreshTrips();
+        const note = movedNote(moved);
+        if (note) setLastError(note);
+      } catch (e) {
+        showTree(before);
+        setLastError(`Couldn't save: ${e instanceof Error ? e.message : String(e)}`);
+      }
+    },
+    [showTree, refreshTrips, selectedDayId, targetSlotId],
+  );
 
   const store: Store = {
     status,
@@ -260,6 +363,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     check,
     selectedPlaceId,
     selectedDayId,
+    selectedLeg,
     targetSlotId,
     lastError,
     home,
@@ -319,12 +423,60 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     async createTrip(input) {
       const t = createSingleLegTrip(input);
       await repo().saveTripTree(t);
-      setTrips(await repo().listTrips());
-      setTripCities(await repo().tripCities());
+      await refreshTrips();
       await openTrip(t.trip.id);
     },
 
     openTrip,
+
+    async addLeg(tripId, cityId) {
+      try {
+        const base = treeRef.current?.trip.id === tripId ? treeRef.current : await repo().loadTripTree(tripId);
+        if (!base) throw new Error("That trip no longer exists");
+        const { tree: after } = addLegOp(base, { cityId, nights: MIN_NIGHTS }, estimate);
+        await repo().replaceTripTree(after);
+        await refreshTrips();
+        await openTrip(tripId);
+        const added = after.legs[after.legs.length - 1]!;
+        selectDay(added.days[0]?.day.id ?? null);
+        setTargetSlot(added.days[0]?.slots[0]?.slot.id ?? null);
+      } catch (e) {
+        setLastError(`Couldn't add the stop: ${e instanceof Error ? e.message : String(e)}`);
+      }
+    },
+
+    removeLeg: (legId) => restructure((t) => removeLegOp(t, legId, estimate)),
+    moveLeg: (legId, toIndex) => restructure((t) => moveLegOp(t, legId, toIndex, estimate)),
+
+    async suggestOrder() {
+      const t = treeRef.current;
+      if (!t || t.legs.length < 2) return false;
+      const positions = new Map(cities.map((c) => [c.id, { lat: c.lat, lon: c.lon }]));
+      const order = suggestLegOrder(t, positions, home ? { lat: home.lat, lon: home.lon } : null);
+      if (order.every((id, i) => t.legs[i]?.leg.id === id)) return false;
+      await restructure((x) => reorderLegs(x, order, estimate));
+      return true;
+    },
+
+    setNights: (nights) => restructure((t) => setLegNights(t, nights, estimate)),
+    setStopover: (legId, isStopover) => restructure((t) => setLegStopover(t, legId, isStopover)),
+
+    proposeNights(total) {
+      const t = tree;
+      if (!t) return null;
+      return allocateTripNights(t, total, (legId, cityId) => {
+        const ids = new Set<string>();
+        for (const id of wishlist) if (places.get(id)?.cityId === cityId) ids.add(id);
+        const leg = t.legs.find((l) => l.leg.id === legId);
+        for (const d of leg?.days ?? []) for (const s of d.slots) for (const i of s.items) if (i.placeId) ids.add(i.placeId);
+        return ids.size;
+      });
+    },
+
+    setTransfer: (transferId, patch) => restructure((t) => updateTransfer(t, transferId, patch)),
+    setStartDate: (date) => restructure((t) => layoutLegs(t, estimate, date)),
+    selectLeg,
+    cityName,
 
     async deleteTrip(id) {
       await repo().deleteTrip(id);
@@ -358,7 +510,13 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
     selectPlace,
     selectDay,
-    setTargetSlot,
+    // Picking a slot also selects its day, so the map follows to that day's stop.
+    setTargetSlot(id) {
+      setTargetSlot(id);
+      const day = id ? treeRef.current?.legs.flatMap((l) => l.days).find((d) => d.slots.some((s) => s.slot.id === id)) : undefined;
+      if (day) selectDay(day.day.id);
+    },
+    notify: setLastError,
     dismissError: () => setLastError(null),
   };
 
