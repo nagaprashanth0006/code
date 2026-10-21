@@ -21,7 +21,8 @@ import { useMemo, useState, type FormEvent } from "react";
 import { useStore } from "../state/store";
 import { countryLabel, TopBar } from "./Hub";
 import { destinationPhoto, useLanding } from "./landing";
-import { monthName, Photo, PhotoCredit, rainText, THEME_LABELS, today } from "./ui";
+import { ThemeToggle } from "./theme";
+import { distanceText, monthName, Photo, PhotoCredit, rainText, THEME_LABELS, today } from "./ui";
 import { WeatherChart } from "./WeatherChart";
 
 export function DestinationView({
@@ -35,8 +36,22 @@ export function DestinationView({
   onPlanned: () => void;
   onBrowse: () => void;
 }) {
-  const { home, normals, landingConfig, platform, createTrip, addCity, adding, trips, tripCities, tree, addLeg, cityName } =
-    useStore();
+  const {
+    home,
+    normals,
+    landingConfig,
+    platform,
+    createTrip,
+    addCity,
+    adding,
+    cancelFetch,
+    fetchQueue,
+    trips,
+    tripCities,
+    tree,
+    addLeg,
+    cityName,
+  } = useStore();
   const landing = useLanding();
   const c = landing.byId.get(id);
   const best = c ? landing.bestFor(c.id) : null;
@@ -79,6 +94,10 @@ export function DestinationView({
   const open = (url: string) => platform?.openExternal(url);
   const canFetch = !!c.destination?.ingestQuery;
   const fetchingThis = adding && c.destination?.ingestQuery === adding.city;
+  // A background download doesn't block this page: fetching here takes priority.
+  const blocked = !!adding && !adding.queued && !fetchingThis;
+  const queuedAt = c.destination?.ingestQuery && !fetchingThis ? fetchQueue.indexOf(c.destination.ingestQuery) : -1;
+  const away = best && home ? `~${formatDuration(best.travelMinutes)} · ${distanceText(best.distanceKm)} from ${home.name}` : null;
 
   const plan = async (e: FormEvent) => {
     e.preventDefault();
@@ -117,9 +136,12 @@ export function DestinationView({
     <div className="dest-page">
       <section className="dest-hero">
         <Photo src={destinationPhoto(c)} alt={c.name} className="dest-hero__photo" />
-        <button className="icon-btn dest-hero__back" onClick={onBack} aria-label="Back">
-          ←
-        </button>
+        <div className="dest-hero__bar">
+          <button className="icon-btn dest-hero__btn" onClick={onBack} aria-label="Back">
+            ←
+          </button>
+          <ThemeToggle className="icon-btn dest-hero__btn" />
+        </div>
         <div className="dest-hero__text">
           <p className="dest-hero__country">{countryLabel(c)}</p>
           <h1>{c.name}</h1>
@@ -130,6 +152,7 @@ export function DestinationView({
               </span>
             ))}
             {c.cityId && <span className="chip chip--glass">Offline ready</span>}
+            {away && <span className="chip chip--glass">{away}</span>}
           </div>
         </div>
         {c.destination?.photo && (
@@ -176,7 +199,7 @@ export function DestinationView({
               </div>
               <ul className="factors">
                 <Factor label="Season" value={best.factors.seasonFit} note={months[best.month - 1] ? `${Math.round(months[best.month - 1]!.highC)} °C highs, ${rainText(months[best.month - 1]!.rainDays)}` : "no weather data"} />
-                <Factor label="Getting there" value={best.factors.reachability} note={`~${formatDuration(best.travelMinutes)} from ${home.name}`} />
+                <Factor label="Getting there" value={best.factors.reachability} note={away ?? ""} />
                 <Factor label="Price" value={best.factors.priceSignal} note="no price data yet" />
               </ul>
             </section>
@@ -221,27 +244,40 @@ export function DestinationView({
               )}
             </div>
 
-            {best && home && (
-              <p className="small muted">
-                ~{formatDuration(best.travelMinutes)} from {home.name} · {nights} night{nights === 1 ? "" : "s"}
-              </p>
-            )}
+            <p className="small muted">
+              {nights} night{nights === 1 ? "" : "s"}
+              {away && ` · ${away}`}
+            </p>
 
             {fetchingThis ? (
               <div className="progress" aria-live="polite">
-                <span className="small">
-                  {adding!.progress.step}
-                  {adding!.progress.total ? ` (${adding!.progress.done ?? 0}/${adding!.progress.total})` : ""}…
-                </span>
+                <div className="progress__head">
+                  <span className="small">
+                    {adding!.progress.step}
+                    {adding!.progress.total ? ` (${adding!.progress.done ?? 0}/${adding!.progress.total})` : ""}…
+                  </span>
+                  <button type="button" className="link danger" onClick={cancelFetch}>
+                    Cancel
+                  </button>
+                </div>
                 {adding!.progress.total ? <progress max={adding!.progress.total} value={adding!.progress.done ?? 0} /> : <progress />}
+                <span className="small muted">
+                  {adding!.queued
+                    ? "Fetching as part of the background download."
+                    : "You can keep browsing; nothing is saved if you cancel."}
+                </span>
               </div>
             ) : (
-              <button className="primary primary--block" type="submit" disabled={busy || !validDates || (!c.cityId && !canFetch) || !!adding}>
+              <button className="primary primary--block" type="submit" disabled={busy || !validDates || (!c.cityId && !canFetch) || blocked}>
                 {c.cityId ? "Plan this trip" : "Fetch places and plan"}
               </button>
             )}
+            {blocked && <p className="small muted">Waiting for {adding!.city} to finish fetching.</p>}
             {!c.cityId && canFetch && !fetchingThis && (
-              <p className="small muted">Places, opening hours and photos are fetched once (about 3 minutes), then work offline.</p>
+              <p className="small muted">
+                Places, opening hours and photos are fetched once (about 3 minutes), then work offline.
+                {queuedAt >= 0 && ` It's #${queuedAt + 1} in the background download.`}
+              </p>
             )}
             {!c.cityId && !canFetch && (
               <p className="small muted">This place has no city boundary on OpenStreetMap yet, so its places can't be fetched automatically.</p>
@@ -263,7 +299,7 @@ export function DestinationView({
               </label>
               <button
                 onClick={() => void addToTrip()}
-                disabled={busy || !tripId || (!c.cityId && !canFetch) || !!adding}
+                disabled={busy || !tripId || (!c.cityId && !canFetch) || blocked || !!fetchingThis}
                 title="Adds this place as the trip's last stop, with two nights"
               >
                 {c.cityId ? `Add ${c.name} as the next stop` : `Fetch places and add ${c.name}`}
@@ -275,14 +311,14 @@ export function DestinationView({
               <>
                 <button onClick={onBrowse}>Browse places</button>
                 {canFetch && (
-                  <button onClick={() => void fetchOnly()} disabled={!!adding} title="Fetch this place's sights again (about a minute)">
+                  <button onClick={() => void fetchOnly()} disabled={blocked || !!fetchingThis} title="Fetch this place's sights again (about a minute)">
                     Refresh places
                   </button>
                 )}
               </>
             ) : (
               canFetch && (
-                <button onClick={() => void fetchOnly()} disabled={!!adding}>
+                <button onClick={() => void fetchOnly()} disabled={blocked || !!fetchingThis}>
                   Just fetch places
                 </button>
               )

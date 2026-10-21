@@ -1,7 +1,7 @@
 /** Candidate "great places" from OpenStreetMap via the Overpass API. */
 import { z } from "zod";
 import type { BBox, PlaceCategory } from "../schemas.js";
-import { query, type HttpFetch } from "./http.js";
+import { isAbortError, query, type HttpFetch } from "./http.js";
 
 /**
  * The main Overpass instance, then public mirrors. The main one is often at
@@ -165,6 +165,7 @@ export async function fetchOsmPlaces(fetch: HttpFetch, scope: PlacesScope): Prom
       });
       return normalizeElements(OverpassResponse.parse(await res.json()).elements);
     } catch (e) {
+      if (isAbortError(e)) throw e;
       // Busy, timed out or unreachable: try the next instance.
       errors.push(e instanceof Error ? e.message : String(e));
     }

@@ -23,6 +23,13 @@ export function rainText(rainDays: number, period = ""): string {
   return `~${n} rainy day${n === 1 ? "" : "s"}${period}`;
 }
 
+/** "350 m", "4.2 km", "1,240 km" */
+export function distanceText(km: number): string {
+  if (km < 1) return `${Math.max(50, Math.round((km * 1000) / 50) * 50)} m`;
+  if (km < 10) return `${km.toFixed(1)} km`;
+  return `${Math.round(km).toLocaleString("en")} km`;
+}
+
 export function weatherText(w: WeatherSummary): string {
   return `${Math.round(w.lowC)}–${Math.round(w.highC)} °C · ${rainText(w.rainDays)}`;
 }

@@ -67,6 +67,17 @@ export class HttpError extends Error {
   }
 }
 
+/** The error a cancelled request (or ingestion) rejects with. */
+export function abortError(): Error {
+  const e = new Error("Cancelled");
+  e.name = "AbortError";
+  return e;
+}
+
+export function isAbortError(e: unknown): boolean {
+  return e instanceof Error && e.name === "AbortError";
+}
+
 const defaultSleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
 
 export function politeFetch(fetch: HttpFetch, options: PoliteOptions): HttpFetch {

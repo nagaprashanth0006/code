@@ -15,6 +15,7 @@ import {
   HOME_CITY_SETTING,
   homeCityFrom,
   ingestCity,
+  isAbortError,
   LANDING_CONFIG_SETTING,
   landingConfigFrom,
   layoutLegs,
@@ -84,11 +85,25 @@ export interface Store {
   /** Asked once; ranks landing destinations by travel time from here. */
   home: HomeCity | null;
   landingConfig: LandingConfig;
-  /** A city being added from the hub while the rest of the app stays usable. */
-  adding: { city: string; progress: IngestProgress } | null;
+  /** A city being fetched while the rest of the app stays usable; `queued` when the background download runs it. */
+  adding: { city: string; progress: IngestProgress; queued: boolean } | null;
+  /** Cities (ingest queries) waiting for the background download, next first. Kept across restarts. */
+  fetchQueue: string[];
+  /** The background download stopped after repeated failures (usually no connection). */
+  queuePaused: boolean;
 
-  /** Fetches a city's places, photos and weather; resolves to the city, or null on failure. */
+  /**
+   * Fetches a city's places, photos and weather; resolves to the city, or null
+   * on failure or cancel. Takes priority over a background download.
+   */
   addCity(name: string): Promise<City | null>;
+  /** Stops the current fetch; nothing of that city is saved. */
+  cancelFetch(): void;
+  /** Adds cities to the background download, fetched one at a time. */
+  queueFetches(names: string[]): void;
+  /** Empties the background download (and stops a fetch it started). */
+  stopQueue(): void;
+  resumeQueue(): void;
   setHome(name: string): Promise<void>;
   createTrip(input: { name: string; cityId: string; startDate: string; endDate: string }): Promise<void>;
   openTrip(id: string): Promise<void>;
@@ -165,6 +180,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   const [home, setHomeState] = useState<HomeCity | null>(null);
   const [landingConfig, setLandingConfig] = useState<LandingConfig>(() => landingConfigFrom(null));
   const [adding, setAdding] = useState<Store["adding"]>(null);
+  const [fetchQueue, setFetchQueue] = useState<string[]>([]);
+  const queueRef = useRef<string[]>([]);
+  const [queuePaused, setQueuePaused] = useState(false);
+  const queueFailures = useRef(0);
+  /** The running fetch, so it can be cancelled or make way for one the user asked for. */
+  const running = useRef<{ abort: AbortController; queued: boolean; done: Promise<unknown> } | null>(null);
 
   const repo = () => {
     if (!repoRef.current) throw new Error("Database not ready");
@@ -207,6 +228,12 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     return { cities: cts, trips: ts };
   }, []);
 
+  const saveQueue = useCallback((q: string[]) => {
+    queueRef.current = q;
+    setFetchQueue(q);
+    void repoRef.current?.setSetting(FETCH_QUEUE_SETTING, JSON.stringify(q)).catch(() => {});
+  }, []);
+
   const openTrip = useCallback(
     async (id: string) => {
       const t = await repo().loadTripTree(id);
@@ -230,6 +257,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
         setTilePacks(await p.tilePacks().catch(() => []));
         // The hub works from the bundled destination index, so no city has to be fetched first.
         const { trips: ts } = await loadCatalog();
+        saveQueue(parseQueue(await repo().getSetting(FETCH_QUEUE_SETTING)));
         const last = await repo().getSetting("lastTripId");
         const tripId = ts.find((t) => t.id === last)?.id ?? ts[0]?.id;
         if (tripId) await openTrip(tripId);
@@ -242,7 +270,59 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     return () => {
       cancelled = true;
     };
-  }, [loadCatalog, openTrip]);
+  }, [loadCatalog, openTrip, saveQueue]);
+
+  /**
+   * Runs one city fetch. A queued fetch leaves the queue when it finishes,
+   * fails or is cancelled, but stays first in line when it only made way for
+   * a fetch the user asked for.
+   */
+  const runFetch = useCallback(
+    async (name: string, queued: boolean): Promise<City | null> => {
+      if (!platform) return null;
+      const abort = new AbortController();
+      setAdding({ city: name, progress: { step: "Starting" }, queued });
+      const done = ingestCity(
+        {
+          fetch: platform.fetch,
+          repo: repo(),
+          files: platform.files,
+          signal: abort.signal,
+          onProgress: (progress) => setAdding({ city: name, progress, queued }),
+          onWarning: (message) => console.warn(message),
+        },
+        name,
+      );
+      running.current = { abort, queued, done };
+      let city: City | null = null;
+      try {
+        city = (await done).city;
+        if (queued) queueFailures.current = 0;
+        await loadCatalog();
+      } catch (e) {
+        if (!isAbortError(e)) {
+          console.error(e);
+          if (queued && ++queueFailures.current >= 3) setQueuePaused(true);
+          setLastError(`Fetching ${name} failed: ${e instanceof Error ? e.message : String(e)}`);
+        }
+      } finally {
+        running.current = null;
+        // A queued city leaves the queue unless it only made way; any city leaves it once fetched.
+        const leaves = queued ? abort.signal.reason !== "make-way" : city !== null;
+        if (leaves && queueRef.current.includes(name)) saveQueue(queueRef.current.filter((q) => q !== name));
+        setAdding(null);
+      }
+      return city;
+    },
+    [platform, loadCatalog, saveQueue],
+  );
+
+  // The background download: one city at a time, whenever nothing else is being fetched.
+  useEffect(() => {
+    const next = fetchQueue[0];
+    if (status.kind !== "ready" || adding || running.current || queuePaused || !next) return;
+    void runFetch(next, true);
+  }, [status, adding, fetchQueue, queuePaused, runFetch]);
 
   /** Applies a pure tree edit, persists the changed rows, and rolls back on failure. */
   const edit = useCallback(
@@ -369,30 +449,40 @@ export function StoreProvider({ children }: { children: ReactNode }) {
     home,
     landingConfig,
     adding,
+    fetchQueue,
+    queuePaused,
 
     async addCity(name) {
-      if (!platform || adding) return null;
-      setAdding({ city: name, progress: { step: "Starting" } });
-      try {
-        const result = await ingestCity(
-          {
-            fetch: platform.fetch,
-            repo: repo(),
-            files: platform.files,
-            onProgress: (progress) => setAdding({ city: name, progress }),
-            onWarning: (message) => console.warn(message),
-          },
-          name,
-        );
-        await loadCatalog();
-        return result.city;
-      } catch (e) {
-        console.error(e);
-        setLastError(`Fetching ${name} failed: ${e instanceof Error ? e.message : String(e)}`);
-        return null;
-      } finally {
-        setAdding(null);
+      const current = running.current;
+      if (current) {
+        if (!current.queued) return null;
+        // The background download waits: its city stays first in line.
+        current.abort.abort("make-way");
+        await current.done.catch(() => {});
       }
+      return runFetch(name, false);
+    },
+
+    cancelFetch() {
+      running.current?.abort.abort("cancel");
+    },
+
+    queueFetches(names) {
+      const known = new Set(queueRef.current);
+      saveQueue([...queueRef.current, ...names.filter((n) => !known.has(n))]);
+      queueFailures.current = 0;
+      setQueuePaused(false);
+    },
+
+    stopQueue() {
+      saveQueue([]);
+      setQueuePaused(false);
+      if (running.current?.queued) running.current.abort.abort("cancel");
+    },
+
+    resumeQueue() {
+      queueFailures.current = 0;
+      setQueuePaused(false);
     },
 
     async setHome(name) {
@@ -521,6 +611,17 @@ export function StoreProvider({ children }: { children: ReactNode }) {
   };
 
   return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
+}
+
+const FETCH_QUEUE_SETTING = "fetchQueue";
+
+function parseQueue(raw: string | null): string[] {
+  try {
+    const v: unknown = raw ? JSON.parse(raw) : [];
+    return Array.isArray(v) ? v.filter((x): x is string => typeof x === "string") : [];
+  } catch {
+    return [];
+  }
 }
 
 export function itemLabel(item: Item, places: Map<string, Place>): string {

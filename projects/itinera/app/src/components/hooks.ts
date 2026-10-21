@@ -1,4 +1,5 @@
 import { allDays, type IsoDate } from "@itinera/core";
+import { useEffect, useRef } from "react";
 import { useStore } from "../state/store";
 
 /** Date of the selected day in the plan (used to show that day's opening hours). */
@@ -17,4 +18,23 @@ export function shortDate(date: IsoDate): string {
     month: "short",
     timeZone: "UTC",
   });
+}
+
+/** Closes a popover menu on a click outside it or Escape. */
+export function useDismiss(open: boolean, close: () => void) {
+  const ref = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!open) return;
+    const onDown = (e: PointerEvent) => {
+      if (!ref.current?.contains(e.target as Node)) close();
+    };
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && close();
+    window.addEventListener("pointerdown", onDown);
+    window.addEventListener("keydown", onKey);
+    return () => {
+      window.removeEventListener("pointerdown", onDown);
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [open, close]);
+  return ref;
 }

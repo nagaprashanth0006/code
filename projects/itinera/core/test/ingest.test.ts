@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
-import { politeFetch, type HttpResponse } from "../src/ingest/http.js";
+import type { Repo } from "../src/db/repo.js";
+import { isAbortError, politeFetch, type HttpResponse } from "../src/ingest/http.js";
+import { ingestCity } from "../src/ingest/pipeline.js";
 import { categorize, normalizeElements } from "../src/ingest/overpass.js";
 import { cleanWikitext, parseListings } from "../src/ingest/wikivoyage.js";
 
@@ -104,5 +106,37 @@ describe("polite fetch", () => {
     await fetch("https://example.org/a");
     expect(calls).toEqual(["https://example.org/a test-agent", "https://example.org/a test-agent"]);
     expect(slept[0]).toBe(2000); // backoff after 429
+  });
+});
+
+describe("Cancelling an ingestion", () => {
+  it("rejects a request in flight with an abort error and saves nothing", async () => {
+    const abort = new AbortController();
+    let requests = 0;
+    const hanging = () => {
+      requests++;
+      return new Promise<HttpResponse>(() => {});
+    };
+    // Any repo call would throw: nothing should be written.
+    const repo = new Proxy({}, { get: () => () => Promise.reject(new Error("repo touched")) }) as unknown as Repo;
+    const run = ingestCity({ fetch: hanging, repo, signal: abort.signal }, "Lisbon");
+    await Promise.resolve();
+    abort.abort();
+    const err = await run.catch((e: unknown) => e);
+    expect(isAbortError(err)).toBe(true);
+    expect(requests).toBe(1);
+  });
+
+  it("doesn't start when already cancelled", async () => {
+    const abort = new AbortController();
+    abort.abort();
+    let requests = 0;
+    const fetch = () => {
+      requests++;
+      return new Promise<HttpResponse>(() => {});
+    };
+    const err = await ingestCity({ fetch, repo: {} as Repo, signal: abort.signal }, "Lisbon").catch((e: unknown) => e);
+    expect(isAbortError(err)).toBe(true);
+    expect(requests).toBe(0);
   });
 });

@@ -60,17 +60,51 @@ export function App() {
   );
 }
 
-/** A city fetch keeps running while you move around the app. */
+/** A city fetch (and the background download) keeps running while you move around the app. */
 function FetchProgress() {
-  const { adding } = useStore();
-  if (!adding) return null;
+  const { adding, fetchQueue, queuePaused, cancelFetch, stopQueue, resumeQueue } = useStore();
+  const waiting = fetchQueue.filter((q) => q !== adding?.city).length;
+  if (!adding && !(queuePaused && waiting > 0)) return null;
+  if (!adding) {
+    return (
+      <div className="fetch-pill" role="status">
+        <span className="fetch-pill__text">
+          Background download paused · <span className="muted">{waiting} left</span>
+        </span>
+        <span className="fetch-pill__actions">
+          <button className="link" onClick={resumeQueue}>
+            Resume
+          </button>
+          <button className="link danger" onClick={stopQueue}>
+            Stop
+          </button>
+        </span>
+      </div>
+    );
+  }
   const { step, done, total } = adding.progress;
   return (
     <div className="fetch-pill" role="status" aria-live="polite">
       <span className="spinner" aria-hidden />
-      <span>
-        Fetching <strong>{adding.city}</strong>: {step}
-        {total ? ` ${done ?? 0}/${total}` : ""}
+      <span className="fetch-pill__text">
+        <span>
+          Fetching <strong>{adding.city}</strong>: {step}
+          {total ? ` ${done ?? 0}/${total}` : ""}
+        </span>
+        {adding.queued && waiting > 0 && <span className="muted small">Background download · {waiting} more after this</span>}
+        <span className="fetch-pill__bar" aria-hidden>
+          <span style={total ? { width: `${Math.round(((done ?? 0) / total) * 100)}%` } : undefined} className={total ? "" : "is-indeterminate"} />
+        </span>
+      </span>
+      <span className="fetch-pill__actions">
+        <button className="link" onClick={cancelFetch} title={adding.queued ? "Skip this city" : "Stop fetching; nothing is saved"}>
+          {adding.queued ? "Skip" : "Cancel"}
+        </button>
+        {adding.queued && (
+          <button className="link danger" onClick={stopQueue} title="Stop the background download">
+            Stop all
+          </button>
+        )}
       </span>
     </div>
   );

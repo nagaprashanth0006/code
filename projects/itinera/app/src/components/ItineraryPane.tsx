@@ -17,6 +17,7 @@ import {
   findItem,
   formatDuration,
   formatMinutes,
+  haversineKm,
   itemDuration,
   MIN_NIGHTS,
   minLegNights,
@@ -36,11 +37,11 @@ import {
   type Transfer,
   type TransportMode,
 } from "@itinera/core";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { itemLabel, useStore } from "../state/store";
-import { shortDate } from "./hooks";
+import { shortDate, useDismiss } from "./hooks";
 import { NewTripForm } from "./NewTripForm";
-import { rainText, Sheet } from "./ui";
+import { distanceText, rainText, Sheet } from "./ui";
 
 const DURATIONS = [30, 45, 60, 90, 120, 150, 180, 240];
 const TRANSFER_DURATIONS = [30, 60, 90, 120, 150, 180, 240, 300, 360, 480, 600, 720];
@@ -104,7 +105,8 @@ function ItemRow({
         <div className="muted small">
           {entry && (
             <>
-              {entry.travelMinutes > 0 && `${entry.travelMode === "walk" ? "Walk" : "Transit"} ${formatDuration(entry.travelMinutes)} · `}
+              {entry.travelMinutes > 0 &&
+                `${entry.travelMode === "walk" ? "Walk" : "Transit"} ${formatDuration(entry.travelMinutes)} (${distanceText(entry.travelKm)}) · `}
               {formatMinutes(entry.start)}–{formatMinutes(entry.end)}
               {entry.waitMinutes > 0 && ` (opens ${formatMinutes(entry.start)})`}
             </>
@@ -224,9 +226,13 @@ function SlotView({
 
 /** A transfer between legs: the first thing on the day it arrives, with mode and duration. */
 function TransferRow({ transfer, window }: { transfer: Transfer; window: { start: number; end: number } | null }) {
-  const { tree, setTransfer, cityName } = useStore();
+  const { tree, setTransfer, cityName, cities } = useStore();
   if (!tree) return null;
   const durations = [...new Set([...TRANSFER_DURATIONS, transfer.estMinutes])].sort((a, b) => a - b);
+  const cityOf = (legId: string) => cities.find((c) => c.id === tree.legs.find((l) => l.leg.id === legId)?.leg.cityId);
+  const from = cityOf(transfer.fromLegId);
+  const to = cityOf(transfer.toLegId);
+  const km = from && to ? haversineKm(from, to) : null;
   return (
     <div className="transfer" role="group" aria-label={transferLabel(tree, transfer, cityName)}>
       <span className="transfer__icon" aria-hidden>
@@ -235,6 +241,7 @@ function TransferRow({ transfer, window }: { transfer: Transfer; window: { start
       <div className="transfer__body">
         <div className="transfer__name">{transferLabel(tree, transfer, cityName)}</div>
         <div className="muted small">
+          {km !== null && `${distanceText(km)} as the crow flies · `}
           {window ? `${formatMinutes(window.start)}–${formatMinutes(window.end)} · ` : ""}estimated, edit if you know better
         </div>
         <div className="transfer__controls">
@@ -318,6 +325,8 @@ function LegView({ leg, index, dayOffset }: { leg: LegTree; index: number; dayOf
   const { tree, normals, cityName, selectedLeg, selectLeg, setNights, setStopover, moveLeg, removeLeg } = useStore();
   const [open, setOpen] = useState(true);
   const [menu, setMenu] = useState(false);
+  const closeMenu = useCallback(() => setMenu(false), []);
+  const menuRef = useDismiss(menu, closeMenu);
   const first = leg.days[0]?.day.date;
   const last = leg.days[leg.days.length - 1]?.day.date;
   const weather = useMemo(
@@ -378,7 +387,7 @@ function LegView({ leg, index, dayOffset }: { leg: LegTree; index: number; dayOf
             +
           </button>
         </div>
-        <div className="menu">
+        <div className="menu" ref={menuRef}>
           <button className="icon" aria-label={`Actions for ${name}`} aria-expanded={menu} onClick={() => setMenu((m) => !m)}>
             ⋯
           </button>

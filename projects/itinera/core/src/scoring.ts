@@ -29,6 +29,8 @@ export interface DestinationScore {
   score: number;
   factors: ScoreFactors;
   travelMinutes: number;
+  /** Straight-line distance from home. */
+  distanceKm: number;
 }
 
 /** Anything rankable: a fetched city or a curated destination (see destinations.ts). */
@@ -141,7 +143,16 @@ export function rankDestinations(
       const factors: ScoreFactors = { ...factorsBase, seasonFit: seasonFit(climateFor(ctx, city.id, month)) };
       const score = factors.themeFit * factors.seasonFit * factors.reachability * factors.priceSignal;
       if (!best || score > best.score) {
-        best = { destinationId: city.id, theme, year, month, score: Math.round(score * 1000) / 1000, factors, travelMinutes: travel.minutes };
+        best = {
+          destinationId: city.id,
+          theme,
+          year,
+          month,
+          score: Math.round(score * 1000) / 1000,
+          factors,
+          travelMinutes: travel.minutes,
+          distanceKm: Math.round(haversineKm(ctx.home, city)),
+        };
       }
     }
     if (best) out.push(best);

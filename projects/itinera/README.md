@@ -24,7 +24,7 @@ npm test                      # core unit tests
 npm run tauri dev             # the desktop app
 ```
 
-The app opens on the hub, which recommends destinations from a curated index bundled with the app (photos, summaries and typical weather by month for about 110 places), so nothing has to be fetched first. Planning a destination fetches that city's places, opening hours, photos and 20-year daily weather once (about 3 minutes); after that it works offline once the city's tile pack is installed:
+The app opens on the hub, which recommends destinations from a curated index bundled with the app (photos, summaries and typical weather by month for about 110 places), so nothing has to be fetched first. Planning a destination fetches that city's places, opening hours, photos and 20-year daily weather once (about 3 minutes); a fetch can be cancelled from its progress box, and nothing of the city is saved until it completes. The hub's "Take it all offline" card queues every destination for a background download, one city at a time and best matches first; the queue is kept across restarts and makes way for any city you fetch yourself. After that it works offline once the city's tile pack is installed:
 
 ```bash
 npm run ingest -- tools               # downloads the pmtiles CLI into ingest/bin

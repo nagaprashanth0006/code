@@ -6,7 +6,7 @@
  * them, and the trip's other stops as numbered markers joined by a line.
  */
 import { layers, namedFlavor } from "@protomaps/basemaps";
-import { allDays, CATEGORY_INFO, type BBox } from "@itinera/core";
+import { allDays, CATEGORY_INFO, formatDuration, haversineKm, TRANSPORT_LABELS, type BBox } from "@itinera/core";
 import {
   addProtocol,
   Map as MlMap,
@@ -25,6 +25,8 @@ import maplibreWorkerUrl from "maplibre-gl/dist/maplibre-gl-worker.mjs?worker&ur
 import { Protocol } from "pmtiles";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { itemLabel, useStore } from "../state/store";
+import { useDark } from "./theme";
+import { distanceText } from "./ui";
 
 let protocolRegistered = false;
 function registerPmtiles() {
@@ -33,8 +35,6 @@ function registerPmtiles() {
   addProtocol("pmtiles", new Protocol().tile);
   protocolRegistered = true;
 }
-
-const prefersDark = () => window.matchMedia("(prefers-color-scheme: dark)").matches;
 
 function offlineStyle(url: string, dark: boolean): StyleSpecification {
   const flavor = dark ? "dark" : "light";
@@ -77,6 +77,8 @@ function placeColour(category: keyof typeof CATEGORY_INFO): string {
   return GROUP_COLOURS.other!;
 }
 
+const escapeHtml = (s: string) => s.replace(/[&<>"']/g, (ch) => `&#${ch.charCodeAt(0)};`);
+
 /** Space covered by floating panels, so fitting and centring keep content visible. */
 export interface MapInset {
   left: number;
@@ -96,7 +98,7 @@ export function MapPane({ inset }: { inset: MapInset }) {
   const city = selectedLeg ? cities.find((c) => c.id === selectedLeg.leg.cityId) : cities[0];
   const pack = tilePacks.find((p) => city && p.region === city.name.toLowerCase()) ?? tilePacks[0];
   const [mode, setMode] = useState<"offline" | "online">(pack ? "offline" : "online");
-  const dark = useMemo(prefersDark, []);
+  const dark = useDark();
   const currentStyleKey = `${mode === "offline" && pack ? pack.url : "online"}|${dark}`;
   const styleKey = useRef<string | null>(null);
 
@@ -182,13 +184,21 @@ export function MapPane({ inset }: { inset: MapInset }) {
     [places, wishlist, selectedLeg],
   );
 
-  // The trip's stops in order (a city can appear more than once).
+  // The trip's stops in order (a city can appear more than once), each with how far it is from the stop before.
   const legStops = useMemo(() => {
     if (!tree) return [];
-    return tree.legs.flatMap((l, i) => {
+    const stops = tree.legs.flatMap((l, i) => {
       const c = cities.find((x) => x.id === l.leg.cityId);
-      return c ? [{ legId: l.leg.id, index: i, city: c }] : [];
+      return c ? [{ legId: l.leg.id, index: i, city: c, from: "" }] : [];
     });
+    for (let i = 1; i < stops.length; i++) {
+      const prev = stops[i - 1]!;
+      const s = stops[i]!;
+      const t = tree.transfers.find((x) => x.toLegId === s.legId);
+      const travel = t ? ` · ~${formatDuration(t.estMinutes)} by ${TRANSPORT_LABELS[t.mode].toLowerCase()}` : "";
+      s.from = `${distanceText(haversineKm(prev.city, s.city))}${travel} from ${prev.city.name}`;
+    }
+    return stops;
   }, [tree, cities]);
 
   // The selected day's primary items, in order.
@@ -304,10 +314,17 @@ export function MapPane({ inset }: { inset: MapInset }) {
             const el = document.createElement("button");
             el.className = `leg-marker${s.legId === selectedLeg?.leg.id ? " is-selected" : ""}`;
             el.textContent = `${s.index + 1} · ${s.city.name}`;
-            el.title = `Stop ${s.index + 1}: ${s.city.name}`;
+            el.title = `Stop ${s.index + 1}: ${s.city.name}${s.from ? `, ${s.from}` : ""}`;
             el.addEventListener("click", (e) => {
               e.stopPropagation();
               selectLeg(s.legId);
+              popup.current?.remove();
+              popup.current = new Popup({ closeButton: false, offset: 30, className: "leg-popup" })
+                .setLngLat([s.city.lon, s.city.lat])
+                .setHTML(
+                  `<strong>${escapeHtml(s.city.name)}</strong><br><span>${escapeHtml(s.from || "First stop")}</span>`,
+                )
+                .addTo(map);
             });
             return new Marker({ element: el, anchor: "bottom" }).setLngLat([s.city.lon, s.city.lat]).addTo(map);
           })

@@ -13,7 +13,7 @@ import type { Repo } from "../db/repo.js";
 import { ulid } from "../ids.js";
 import type { Attribution, BBox, City, Place, PlaceCategory, SourceLink } from "../schemas.js";
 import { fetchImageInfo } from "./commons.js";
-import type { HttpFetch } from "./http.js";
+import { abortError, type HttpFetch } from "./http.js";
 import { geocodeCity } from "./nominatim.js";
 import { fetchDailyHistory, historyWindow } from "./openmeteo.js";
 import { dedupeByName, isGenericName, keysMatch, matchKeys, nameKey } from "./matching.js";
@@ -51,6 +51,8 @@ export interface IngestDeps {
   /** Non-fatal problems, e.g. a photo that couldn't be downloaded. */
   onWarning?: (message: string) => void;
   now?: () => Date;
+  /** Cancels the fetch. Nothing about the city is saved unless it gets to the final save step. */
+  signal?: AbortSignal;
 }
 
 export interface IngestOptions {
@@ -92,10 +94,27 @@ const WIKIVOYAGE_LICENSE = {
   licenseUrl: "https://creativecommons.org/licenses/by-sa/4.0/",
 };
 
+/** Makes every request and progress report fail fast once the signal aborts. */
+function cancellable(fetch: HttpFetch, signal: AbortSignal): HttpFetch {
+  return (url, init) => {
+    if (signal.aborted) return Promise.reject(abortError());
+    return new Promise((resolve, reject) => {
+      const onAbort = () => reject(abortError());
+      signal.addEventListener("abort", onAbort, { once: true });
+      fetch(url, init).then(resolve, reject).finally(() => signal.removeEventListener("abort", onAbort));
+    });
+  };
+}
+
 export async function ingestCity(deps: IngestDeps, cityQuery: string, options: IngestOptions = {}): Promise<IngestResult> {
-  const { fetch, repo } = deps;
+  const { repo, signal } = deps;
+  const fetch = signal ? cancellable(deps.fetch, signal) : deps.fetch;
   const now = deps.now ?? (() => new Date());
-  const progress = deps.onProgress ?? (() => {});
+  const report = deps.onProgress ?? (() => {});
+  const progress = (p: IngestProgress) => {
+    if (signal?.aborted) throw abortError();
+    report(p);
+  };
   const warn = deps.onWarning ?? (() => {});
   const select: SelectOptions = { ...DEFAULT_SELECT, ...(options.maxPlaces ? { max: options.maxPlaces } : {}), ...options.select };
 
@@ -307,16 +326,21 @@ export async function ingestCity(deps: IngestDeps, cityQuery: string, options: I
     source: "nominatim",
     fetchedAt,
   };
+  // Weather before saving anything, so a cancelled or failed fetch leaves no half-fetched city.
+  let normals: ReturnType<typeof computeClimateNormals> | null = null;
+  if (options.climate !== false) {
+    progress({ step: "Computing typical weather (20 years of history)" });
+    const history = await fetchDailyHistory(fetch, geo.lat, geo.lon, historyWindow(now()));
+    normals = computeClimateNormals(cityId, history);
+  }
+
   progress({ step: "Saving places" });
   await repo.upsertCity(city);
   await repo.upsertPlaces(places);
   await repo.prunePlaces(cityId, places.map((p) => p.id));
 
   let climateDays = 0;
-  if (options.climate !== false) {
-    progress({ step: "Computing typical weather (20 years of history)" });
-    const history = await fetchDailyHistory(fetch, geo.lat, geo.lon, historyWindow(now()));
-    const normals = computeClimateNormals(cityId, history);
+  if (normals) {
     await repo.replaceClimateNormals(cityId, normals);
     climateDays = normals.length;
     await repo.upsertCacheEntry(newCacheEntry("climate", cityId, now()));
@@ -325,7 +349,7 @@ export async function ingestCity(deps: IngestDeps, cityQuery: string, options: I
   for (const category of ["geocode", "places", "hours", "descriptions", "photos"] as const) {
     await repo.upsertCacheEntry(newCacheEntry(category, cityId, now()));
   }
-  progress({ step: "Done" });
+  report({ step: "Done" });
 
   return {
     city,

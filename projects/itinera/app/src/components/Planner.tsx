@@ -4,48 +4,57 @@
  * right; phones get the same panel as a bottom sheet with three heights.
  */
 import { cacheKey, fetchedLabel, TRIP_STATE_LABELS } from "@itinera/core";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useStore } from "../state/store";
 import { CatalogPane } from "./CatalogPane";
 import { ItineraryPane } from "./ItineraryPane";
 import { MapPane, type MapInset } from "./MapPane";
 import { NewTripForm } from "./NewTripForm";
 import { PlaceDetail } from "./PlaceDetail";
+import { ThemeToggle } from "./theme";
 import { Sheet } from "./ui";
-import { shortDate } from "./hooks";
+import { shortDate, useDismiss } from "./hooks";
 
 export type PlannerTab = "plan" | "places";
 type SheetSize = "peek" | "half" | "full";
 
 const PHONE = window.matchMedia("(max-width: 699px)");
-const PANEL_WIDTH = 400;
+const NARROW = window.matchMedia("(max-width: 860px)");
+const WIDE = window.matchMedia("(min-width: 1600px)");
 const GAP = 16;
 
-function usePhone(): boolean {
-  const [phone, setPhone] = useState(PHONE.matches);
+function useMedia(query: MediaQueryList): boolean {
+  const [matches, setMatches] = useState(query.matches);
   useEffect(() => {
-    const on = () => setPhone(PHONE.matches);
-    PHONE.addEventListener("change", on);
-    return () => PHONE.removeEventListener("change", on);
-  }, []);
-  return phone;
+    const on = () => setMatches(query.matches);
+    query.addEventListener("change", on);
+    return () => query.removeEventListener("change", on);
+  }, [query]);
+  return matches;
 }
 
 const SHEET_VH: Record<SheetSize, number> = { peek: 0.22, half: 0.55, full: 0.88 };
 
 export function Planner({ tab, onTab, onHome }: { tab: PlannerTab; onTab: (t: PlannerTab) => void; onHome: () => void }) {
   const { tree, trips, openTrip, deleteTrip, cities, cacheEntries, places, selectedPlaceId, selectedLeg, cityName } = useStore();
-  const phone = usePhone();
+  const phone = useMedia(PHONE);
+  const narrow = useMedia(NARROW);
+  const wide = useMedia(WIDE);
+  // Must match the panel and place-card widths in styles.css.
+  const panelWidth = wide ? 460 : narrow ? 360 : 400;
+  const cardWidth = wide ? 400 : narrow ? 320 : 360;
   const [sheet, setSheet] = useState<SheetSize>("half");
   const [creating, setCreating] = useState(false);
   const [menu, setMenu] = useState(false);
+  const closeMenu = useCallback(() => setMenu(false), []);
+  const menuRef = useDismiss(menu, closeMenu);
   const city = selectedLeg ? cities.find((c) => c.id === selectedLeg.leg.cityId) : undefined;
   const selected = selectedPlaceId ? places.get(selectedPlaceId) : undefined;
   const placesEntry = city ? cacheEntries.find((e) => e.key === cacheKey("places", city.id)) : undefined;
 
   const inset: MapInset = phone
     ? { left: 0, bottom: Math.round(window.innerHeight * SHEET_VH[sheet]) }
-    : { left: PANEL_WIDTH + GAP * 2, bottom: 0, right: selected ? 360 + GAP * 2 : 0 };
+    : { left: panelWidth + GAP * 2, bottom: 0, right: selected ? cardWidth + GAP * 2 : 0 };
 
   const cycleSheet = () => setSheet((s) => (s === "peek" ? "half" : s === "half" ? "full" : "peek"));
 
@@ -78,7 +87,8 @@ export function Planner({ tab, onTab, onHome }: { tab: PlannerTab; onTab: (t: Pl
               </p>
             )}
           </div>
-          <div className="menu">
+          <ThemeToggle />
+          <div className="menu" ref={menuRef}>
             <button className="icon-btn" aria-label="Trip actions" aria-expanded={menu} onClick={() => setMenu((m) => !m)}>
               ⋯
             </button>

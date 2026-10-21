@@ -48,6 +48,8 @@ export interface ScheduleEntry {
   start: number;
   end: number;
   travelMinutes: number;
+  /** Straight-line distance from the previous stop. */
+  travelKm: number;
   travelMode: TransportMode | null;
   /** Minutes spent waiting for the place to open. */
   waitMinutes: number;
@@ -123,10 +125,12 @@ export function checkDay(input: DayCheckInput): DayCheckResult {
       const duration = itemDuration(item, place);
 
       let travelMinutes = 0;
+      let travelKm = 0;
       let travelMode: TransportMode | null = null;
       if (prev && place) {
         const t = estimateInCityTravel(prev, place);
         travelMinutes = t.minutes;
+        travelKm = t.km;
         travelMode = t.mode;
         if (t.minutes > opts.maxTravelMinutes) {
           conflicts.push({
@@ -183,7 +187,7 @@ export function checkDay(input: DayCheckInput): DayCheckResult {
           message: `${name} runs to ${formatMinutes(end)}, past the ${slot.part} (ends ${formatMinutes(windowEnd)}).`,
         });
       }
-      schedule.push({ itemId: item.id, slotPart: slot.part, start, end, travelMinutes, travelMode, waitMinutes: wait });
+      schedule.push({ itemId: item.id, slotPart: slot.part, start, end, travelMinutes, travelKm, travelMode, waitMinutes: wait });
       cursor = end;
       if (place) prev = place;
     }

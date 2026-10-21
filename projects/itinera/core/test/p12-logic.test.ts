@@ -138,6 +138,8 @@ describe("destination scoring", () => {
       routes: [],
     });
     expect(ranked.map((r) => r.destinationId)).toEqual(["goa", "lisbon"]); // closer wins with equal theme fit
+    expect(ranked[0]!.distanceKm).toBeGreaterThan(400); // Mumbai to Goa, straight line
+    expect(ranked[0]!.distanceKm).toBeLessThan(480);
     for (const f of Object.values(ranked[0]!.factors)) expect(f).toBeGreaterThan(0);
   });
 

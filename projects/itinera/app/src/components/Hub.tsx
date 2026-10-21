@@ -14,10 +14,11 @@ import {
   type Theme,
   type Trip,
 } from "@itinera/core";
-import { useMemo, useRef, useState, type FormEvent } from "react";
+import { useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { useStore } from "../state/store";
 import { destinationPhoto, useLanding, type Landing } from "./landing";
-import { ALL_THEMES, monthName, Photo, THEME_LABELS, today, weatherText } from "./ui";
+import { ThemeToggle } from "./theme";
+import { ALL_THEMES, distanceText, monthName, Photo, THEME_LABELS, today, weatherText } from "./ui";
 
 export interface HubNav {
   openDestination(id: string): void;
@@ -116,6 +117,8 @@ export function Hub({ nav }: { nav: HubNav }) {
             ),
           )}
 
+        {home && <OfflineCard landing={landing} />}
+
         <p className="muted small hub__note">
           Typical weather is from 20 years of daily history, not a forecast: approximate (NASA POWER, ~50 km grid) until a
           city's places are fetched, then from Open-Meteo. Photos from Wikimedia Commons; credits on each destination.
@@ -131,14 +134,17 @@ export function TopBar({ onBack, title }: { onBack?: () => void; title?: string 
   const { home } = useStore();
   return (
     <header className="topbar">
-      {onBack ? (
-        <button className="icon-btn" onClick={onBack} aria-label="Back">
-          ←
-        </button>
-      ) : null}
-      <span className="wordmark">{title ?? "Itinera"}</span>
-      <span className="topbar__spacer" />
-      {home && <HomePill />}
+      <div className="topbar__inner">
+        {onBack ? (
+          <button className="icon-btn" onClick={onBack} aria-label="Back">
+            ←
+          </button>
+        ) : null}
+        <span className="wordmark">{title ?? "Itinera"}</span>
+        <span className="topbar__spacer" />
+        {home && <HomePill />}
+        <ThemeToggle />
+      </div>
     </header>
   );
 }
@@ -170,7 +176,9 @@ export function DestinationCard({
       </button>
       <div className="card__meta">
         {weather && <span>{weatherText(weather)}</span>}
-        <span className="muted">~{formatDuration(score.travelMinutes)} away</span>
+        <span className="muted">
+          ~{formatDuration(score.travelMinutes)} · {distanceText(score.distanceKm)} away
+        </span>
       </div>
     </li>
   );
@@ -215,6 +223,9 @@ function DestinationSearch({
 }) {
   const { addCity, adding } = useStore();
   const [q, setQ] = useState("");
+  const [open, setOpen] = useState(true);
+  const [active, setActive] = useState(0);
+  const formRef = useRef<HTMLFormElement>(null);
   const query = normalizeName(q);
   const matches = useMemo(
     () =>
@@ -226,9 +237,41 @@ function DestinationSearch({
     [query, landing.candidates],
   );
 
+  // "/" focuses the search from anywhere on the hub; a click elsewhere closes the results.
+  useEffect(() => {
+    const onKey = (e: globalThis.KeyboardEvent) => {
+      const typing = e.target instanceof HTMLElement && e.target.closest("input, textarea, select");
+      if (e.key === "/" && !typing) {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+    const onDown = (e: PointerEvent) => {
+      if (!formRef.current?.contains(e.target as Node)) setOpen(false);
+    };
+    window.addEventListener("keydown", onKey);
+    window.addEventListener("pointerdown", onDown);
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      window.removeEventListener("pointerdown", onDown);
+    };
+  }, [inputRef]);
+
+  const onKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Escape") {
+      if (open && q) setOpen(false);
+      else setQ("");
+    } else if ((e.key === "ArrowDown" || e.key === "ArrowUp") && matches.length > 0) {
+      e.preventDefault();
+      setOpen(true);
+      setActive((a) => (a + (e.key === "ArrowDown" ? 1 : matches.length - 1)) % matches.length);
+    }
+  };
+
   const fetchCity = async (e?: FormEvent) => {
     e?.preventDefault();
-    if (matches[0]) return onOpen(matches[0].id);
+    const pick = matches[active] ?? matches[0];
+    if (pick) return onOpen(pick.id);
     const name = q.trim();
     if (name.length < 2) return;
     const city = await addCity(name);
@@ -239,31 +282,53 @@ function DestinationSearch({
   };
 
   return (
-    <form className="search" onSubmit={fetchCity} role="search">
+    <form ref={formRef} className="search" onSubmit={fetchCity} role="search">
+      <span className="search__icon" aria-hidden>
+        ⌕
+      </span>
       <input
         ref={inputRef}
         type="search"
         placeholder="Search destinations, or any city to fetch"
         aria-label="Search destinations"
+        aria-expanded={open && query.length >= 2}
+        aria-controls="search-results"
         value={q}
-        onChange={(e) => setQ(e.target.value)}
+        onChange={(e) => {
+          setQ(e.target.value);
+          setOpen(true);
+          setActive(0);
+        }}
+        onFocus={() => setOpen(true)}
+        onKeyDown={onKeyDown}
       />
-      {query.length >= 2 && (
-        <ul className="search__results" role="listbox">
-          {matches.map((c) => (
+      <kbd className="search__kbd" aria-hidden>
+        /
+      </kbd>
+      {open && query.length >= 2 && (
+        <ul className="search__results" role="listbox" id="search-results">
+          {matches.map((c, i) => (
             <li key={c.id}>
-              <button type="button" className="search__item" onClick={() => onOpen(c.id)}>
+              <button
+                type="button"
+                className={`search__item${i === active ? " is-active" : ""}`}
+                role="option"
+                aria-selected={i === active}
+                onMouseEnter={() => setActive(i)}
+                onClick={() => onOpen(c.id)}
+              >
                 <Photo src={destinationPhoto(c)} alt="" className="search__thumb" />
                 <span>
                   <strong>{c.name}</strong>
                   <span className="muted small"> · {countryLabel(c)}</span>
                 </span>
+                {c.cityId && <span className="search__tag">Offline</span>}
               </button>
             </li>
           ))}
           {matches.length === 0 && (
             <li>
-              <button type="submit" className="search__item" disabled={!!adding}>
+              <button type="submit" className="search__item is-active" disabled={!!adding && !adding.queued}>
                 <span className="search__thumb search__thumb--icon" aria-hidden>
                   ⤓
                 </span>
@@ -335,21 +400,24 @@ export function Explore({ nav, onBack }: { nav: HubNav; onBack: () => void }) {
   const landing = useLanding();
   const [theme, setTheme] = useState<Theme | null>(null);
   const [sort, setSort] = useState<"score" | "travel">("score");
+  const [q, setQ] = useState("");
+  const query = normalizeName(q);
 
   const ranked = useMemo(() => {
     const scores = landing.candidates
       .filter((c) => !theme || c.themeTags.includes(theme))
+      .filter((c) => !query || normalizeName(c.name).includes(query) || normalizeName(countryLabel(c)).includes(query))
       .map((c) => landing.bestFor(c.id))
       .filter((s): s is DestinationScore => !!s);
     return sort === "travel" ? scores.sort((a, b) => a.travelMinutes - b.travelMinutes) : scores.sort((a, b) => b.score - a.score);
-  }, [landing, theme, sort]);
+  }, [landing, theme, sort, query]);
 
   return (
     <div className="hub">
       <TopBar onBack={onBack} title="Explore" />
-      <main className="hub__main">
-        <div className="explore__bar">
-          <div className="chips" role="radiogroup" aria-label="Theme">
+      <div className="explore__bar">
+        <div className="explore__bar-inner">
+          <div className="chips chips--scroll" role="radiogroup" aria-label="Theme">
             <button role="radio" aria-checked={theme === null} className="chip-btn" onClick={() => setTheme(null)}>
               All
             </button>
@@ -359,18 +427,45 @@ export function Explore({ nav, onBack }: { nav: HubNav; onBack: () => void }) {
               </button>
             ))}
           </div>
-          <select value={sort} onChange={(e) => setSort(e.target.value as "score" | "travel")} aria-label="Sort">
-            <option value="score">Best match</option>
-            <option value="travel">Closest first</option>
-          </select>
+          <div className="explore__tools">
+            <input
+              type="search"
+              className="explore__filter"
+              placeholder="Filter by name or country"
+              aria-label="Filter destinations"
+              value={q}
+              onChange={(e) => setQ(e.target.value)}
+            />
+            <select value={sort} onChange={(e) => setSort(e.target.value as "score" | "travel")} aria-label="Sort">
+              <option value="score">Best match</option>
+              <option value="travel">Closest first</option>
+            </select>
+          </div>
         </div>
+      </div>
+      <main className="hub__main hub__main--tight">
         {!home ? (
           <p className="muted">Set your home city on the hub to rank destinations.</p>
         ) : (
           <>
             <p className="muted small">
-              {ranked.length} destinations, each at its best month in the next {landingConfig.windowMonths}.
+              {ranked.length} destination{ranked.length === 1 ? "" : "s"}
+              {theme ? ` for ${THEME_LABELS[theme].toLowerCase()} trips` : ""}, each at its best month in the next{" "}
+              {landingConfig.windowMonths}.
             </p>
+            {ranked.length === 0 && (
+              <div className="empty-state">
+                <p>Nothing matches{q.trim() ? ` "${q.trim()}"` : ""}.</p>
+                <button
+                  onClick={() => {
+                    setQ("");
+                    setTheme(null);
+                  }}
+                >
+                  Clear filters
+                </button>
+              </div>
+            )}
             <ul className="grid">
               {ranked.map((d) => (
                 <DestinationCard key={d.destinationId} score={d} landing={landing} onOpen={() => nav.openDestination(d.destinationId)} />
@@ -380,5 +475,55 @@ export function Explore({ nav, onBack }: { nav: HubNav; onBack: () => void }) {
         )}
       </main>
     </div>
+  );
+}
+
+// ------------------------------------------------------------ offline
+
+/**
+ * Fetching every destination's places takes hours, so it runs in the
+ * background one city at a time, best matches first, and carries on after a
+ * restart.
+ */
+function OfflineCard({ landing }: { landing: Landing }) {
+  const { fetchQueue, queueFetches, stopQueue, adding } = useStore();
+  const { fetchable, ready, missing } = useMemo(() => {
+    const fetchable = landing.candidates.filter((c) => c.destination?.ingestQuery);
+    const missing = fetchable
+      .filter((c) => !c.cityId)
+      .map((c) => ({ query: c.destination!.ingestQuery!, score: landing.bestFor(c.id)?.score ?? 0 }))
+      .sort((a, b) => b.score - a.score)
+      .map((c) => c.query);
+    return { fetchable: fetchable.length, ready: fetchable.length - missing.length, missing };
+  }, [landing]);
+  const left = fetchQueue.length;
+  const hours = Math.max(1, Math.round((missing.length * 3) / 60));
+
+  return (
+    <section className="offline-card" aria-label="Offline downloads">
+      <div className="offline-card__text">
+        <h2>Take it all offline</h2>
+        <p className="muted">
+          {ready} of {fetchable} destinations have their places, hours and photos on this device.
+          {left > 0
+            ? ` Downloading the rest in the background: ${left} left${adding?.queued ? `, now ${adding.city}` : ""}.`
+            : missing.length > 0
+              ? ` Fetch the other ${missing.length} in the background, one at a time and best matches first (about ${hours} h in all). It carries on after a restart.`
+              : " Everything is offline-ready."}
+        </p>
+        <span className="meter" aria-hidden>
+          <span style={{ width: `${fetchable ? Math.round((ready / fetchable) * 100) : 0}%` }} />
+        </span>
+      </div>
+      {left > 0 ? (
+        <button onClick={stopQueue}>Stop downloading</button>
+      ) : (
+        missing.length > 0 && (
+          <button className="primary" onClick={() => queueFetches(missing)}>
+            Download all in the background
+          </button>
+        )
+      )}
+    </section>
   );
 }
