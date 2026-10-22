@@ -1,14 +1,17 @@
+import type { IsoDate } from "@itinera/core";
 import { useState } from "react";
 import { DestinationView } from "./components/DestinationView";
-import { Explore, Hub, type HubNav } from "./components/Hub";
+import { Explore } from "./components/Explore";
+import type { Filters } from "./components/filters";
+import { Hub, type HubNav } from "./components/Hub";
 import { Onboarding } from "./components/Onboarding";
 import { Planner, type PlannerTab } from "./components/Planner";
 import { useStore } from "./state/store";
 
 type View =
   | { name: "hub" }
-  | { name: "explore" }
-  | { name: "destination"; id: string }
+  | { name: "explore"; initial?: Partial<Filters> }
+  | { name: "destination"; id: string; dates?: { start: IsoDate; end: IsoDate } }
   | { name: "planner"; tab: PlannerTab };
 
 /** The app opens on the hub; views stack so Back returns to where you came from. */
@@ -26,8 +29,8 @@ export function App() {
   if (store.status.kind !== "ready") return <Onboarding />;
 
   const nav: HubNav = {
-    openDestination: (id) => push({ name: "destination", id }),
-    openExplore: () => push({ name: "explore" }),
+    openDestination: (id, dates) => push({ name: "destination", id, dates }),
+    openExplore: (initial) => push({ name: "explore", initial }),
     openTrip: async (tripId) => {
       await store.openTrip(tripId);
       push({ name: "planner", tab: "plan" });
@@ -37,11 +40,12 @@ export function App() {
   return (
     <>
       {view.name === "hub" && <Hub nav={nav} />}
-      {view.name === "explore" && <Explore nav={nav} onBack={back} />}
+      {view.name === "explore" && <Explore nav={nav} onBack={back} initial={view.initial} />}
       {view.name === "destination" && (
         <DestinationView
           key={view.id}
           id={view.id}
+          dates={view.dates}
           onBack={back}
           onPlanned={() => push({ name: "planner", tab: "plan" })}
           onBrowse={() => push({ name: "planner", tab: "places" })}

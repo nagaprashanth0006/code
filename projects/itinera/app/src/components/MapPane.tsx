@@ -29,7 +29,8 @@ import { useDark } from "./theme";
 import { distanceText } from "./ui";
 
 let protocolRegistered = false;
-function registerPmtiles() {
+/** Sets up MapLibre's worker and the PMTiles protocol once per page. */
+export function registerPmtiles() {
   if (protocolRegistered) return;
   setWorkerUrl(maplibreWorkerUrl);
   addProtocol("pmtiles", new Protocol().tile);
@@ -55,7 +56,7 @@ function offlineStyle(url: string, dark: boolean): StyleSpecification {
   } as StyleSpecification;
 }
 
-const onlineStyle = (dark: boolean) => `https://tiles.openfreemap.org/styles/${dark ? "dark" : "liberty"}`;
+export const onlineStyle = (dark: boolean) => `https://tiles.openfreemap.org/styles/${dark ? "dark" : "liberty"}`;
 
 /** Category → colour group for place dots. */
 const GROUP_COLOURS: Record<string, string> = {

@@ -11,6 +11,7 @@ export * from "./climate.js";
 export * from "./prices.js";
 export * from "./scoring.js";
 export * from "./destinations.js";
+export * from "./regions.js";
 export * from "./cache.js";
 export * from "./multicity.js";
 export * from "./lifecycle.js";

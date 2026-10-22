@@ -1,13 +1,15 @@
 import { CATEGORY_INFO, describeDayHours, hoursOnRaw, PLACE_CATEGORIES, type Place } from "@itinera/core";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useStore } from "../state/store";
+import { countryName, FilterBar, matchesLocation, useFilters } from "./filters";
 import { useSelectedDate } from "./hooks";
 
 /** Catalog tree: Country → City → great places. */
 export function CatalogPane() {
-  const { countries, cities, places, selectedPlaceId, selectPlace, wishlist, toggleWishlist, addPlace, targetSlotId } =
+  const { countries, cities, places, selectedPlaceId, selectPlace, wishlist, toggleWishlist, addPlace, targetSlotId, home } =
     useStore();
-  const [query, setQuery] = useState("");
+  const [f, set, clear] = useFilters("itinera.places");
+  const query = f.query;
   const [category, setCategory] = useState<string>("");
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
   const date = useSelectedDate();
@@ -21,10 +23,24 @@ export function CatalogPane() {
       return n;
     });
 
+  const isoOf = useMemo(() => new Map(countries.map((c) => [c.id, c.isoCode])), [countries]);
+  // Theme, region, country and distance pick the cities; the name search and kind pick places within them.
+  const shownCities = useMemo(
+    () =>
+      new Set(
+        cities
+          .filter((c) => matchesLocation({ ...c, countryCode: isoOf.get(c.countryId) ?? "" }, { ...f, query: "" }, home, countryName))
+          .map((c) => c.id),
+      ),
+    [cities, isoOf, f, home],
+  );
+
   const byCity = useMemo(() => {
     const q = query.trim().toLowerCase();
     const m = new Map<string, Place[]>();
     for (const p of places.values()) {
+      if (!shownCities.has(p.cityId)) continue;
+      if (f.theme && !CATEGORY_INFO[p.category].themes.includes(f.theme)) continue;
       if (category === "saved" ? !wishlist.has(p.id) : category && p.category !== category) continue;
       if (q && !p.name.toLowerCase().includes(q) && !(p.description ?? "").toLowerCase().includes(q)) continue;
       const list = m.get(p.cityId) ?? [];
@@ -33,7 +49,7 @@ export function CatalogPane() {
     }
     for (const list of m.values()) list.sort((a, b) => b.rank - a.rank);
     return m;
-  }, [places, query, category, wishlist]);
+  }, [places, query, category, wishlist, shownCities, f.theme]);
 
   useEffect(() => {
     selectedRef.current?.scrollIntoView({ block: "nearest" });
@@ -41,15 +57,17 @@ export function CatalogPane() {
 
   return (
     <div className="catalog">
-      <div className="pane__header">
-        <input
-          type="search"
-          placeholder="Search places"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          aria-label="Search places"
+      <div className="pane__header pane__header--filters">
+        <FilterBar
+          compact
+          filters={f}
+          set={set}
+          clear={clear}
+          countries={cities.map((c) => isoOf.get(c.countryId) ?? "")}
+          home={home}
+          queryLabel="Search places"
         />
-        <select value={category} onChange={(e) => setCategory(e.target.value)} aria-label="Filter">
+        <select className="pane__kind" value={category} onChange={(e) => setCategory(e.target.value)} aria-label="Filter">
           <option value="">All kinds</option>
           <option value="saved">Saved (wishlist)</option>
           {PLACE_CATEGORIES.map((c) => (
@@ -61,10 +79,19 @@ export function CatalogPane() {
       </div>
 
       {countries.length === 0 && <p className="muted pad">No places yet. Pick a destination on the hub and fetch its places.</p>}
+      {countries.length > 0 && shownCities.size === 0 && (
+        <p className="muted pad">
+          No downloaded cities match these filters.{" "}
+          <button className="link" onClick={clear}>
+            Clear filters
+          </button>
+        </p>
+      )}
 
       <ul className="tree" role="tree" aria-label="Catalog">
         {countries.map((country) => {
-          const countryCities = cities.filter((c) => c.countryId === country.id);
+          const countryCities = cities.filter((c) => c.countryId === country.id && shownCities.has(c.id));
+          if (countryCities.length === 0) return null;
           const open = !collapsed.has(country.id);
           return (
             <li key={country.id} role="treeitem" aria-expanded={open}>

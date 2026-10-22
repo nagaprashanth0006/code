@@ -1,29 +1,34 @@
 /**
- * The landing hub: a hero with search and the three doors (Plan, Explore,
- * My trips) over rows of destinations ranked for this month and the next
+ * The landing hub: Plan and Explore side by side as equal ways in, then
+ * your trips and rows of destinations ranked for this month and the next
  * three. Rows come from the landing config setting; candidates are the
  * curated destination index merged with fetched cities.
  */
 import {
   formatDuration,
+  haversineKm,
   monthWindow,
   normalizeName,
   TRIP_STATE_LABELS,
+  regionOf,
+  REGIONS,
   type DestinationScore,
+  type IsoDate,
   type LandingCandidate,
-  type Theme,
   type Trip,
 } from "@itinera/core";
 import { useEffect, useMemo, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
 import { useStore } from "../state/store";
 import { destinationPhoto, useLanding, type Landing } from "./landing";
+import type { Filters } from "./filters";
 import { ThemeToggle } from "./theme";
-import { ALL_THEMES, distanceText, monthName, Photo, THEME_LABELS, today, weatherText } from "./ui";
+import { ALL_THEMES, distanceText, monthName, Photo, THEME_LABELS, today, weatherText, weatherWord } from "./ui";
 
 export interface HubNav {
-  openDestination(id: string): void;
+  /** Dates chosen in Explore carry over to the destination's plan card. */
+  openDestination(id: string, dates?: { start: IsoDate; end: IsoDate }): void;
   openTrip(tripId: string): void;
-  openExplore(): void;
+  openExplore(initial?: Partial<Filters>): void;
 }
 
 export function Hub({ nav }: { nav: HubNav }) {
@@ -31,6 +36,13 @@ export function Hub({ nav }: { nav: HubNav }) {
   const landing = useLanding();
   const candidatesCount = landing.candidates.length;
   const searchRef = useRef<HTMLInputElement>(null);
+  // Quick starts for planning: places already on this device, else the nearest ones.
+  const picks = useMemo(() => {
+    const ready = landing.candidates.filter((c) => c.cityId);
+    if (ready.length >= 3 || !home) return { ready: true, list: ready.slice(0, 8) };
+    const near = [...landing.candidates].sort((a, b) => haversineKm(home, a) - haversineKm(home, b)).slice(0, 6);
+    return { ready: false, list: near };
+  }, [landing.candidates, home]);
   const months = monthWindow(today(), landingConfig.windowMonths);
   const first = months[0]!;
   const last = months[months.length - 1]!;
@@ -48,41 +60,73 @@ export function Hub({ nav }: { nav: HubNav }) {
               : "Tell Itinera where you usually start from, and it ranks destinations by travel time, season and theme."}
           </p>
           {!home && <HomeForm />}
-          <DestinationSearch inputRef={searchRef} landing={landing} onOpen={nav.openDestination} />
 
-          <nav className="doors" aria-label="Start">
-            <button className="door" onClick={() => searchRef.current?.focus()}>
-              <span className="door__icon" aria-hidden>
-                ✈︎
-              </span>
-              <span className="door__text">
-                <strong>Plan a trip</strong>
-                <span>Pick a place, check its weather, set dates</span>
-              </span>
-            </button>
-            <button className="door" onClick={nav.openExplore}>
-              <span className="door__icon" aria-hidden>
-                ◎
-              </span>
-              <span className="door__text">
-                <strong>Explore</strong>
-                <span>{candidatesCount} destinations by theme</span>
-              </span>
-            </button>
-            <button
-              className="door"
-              onClick={() => document.getElementById("my-trips")?.scrollIntoView({ behavior: "smooth" })}
-              disabled={trips.length === 0}
-            >
-              <span className="door__icon" aria-hidden>
-                ▤
-              </span>
-              <span className="door__text">
-                <strong>My trips</strong>
-                <span>{trips.length === 0 ? "None yet" : `${trips.length} trip${trips.length === 1 ? "" : "s"}`}</span>
-              </span>
-            </button>
-          </nav>
+          <div className="paths">
+            <section className="path" aria-labelledby="path-plan">
+              <div className="path__head">
+                <span className="path__icon" aria-hidden>
+                  ✈︎
+                </span>
+                <div>
+                  <h2 id="path-plan">Plan a trip</h2>
+                  <p className="muted small">You know where: check its weather, pick dates, build the days.</p>
+                </div>
+              </div>
+              <DestinationSearch inputRef={searchRef} landing={landing} onOpen={(id) => nav.openDestination(id)} />
+              {picks.list.length > 0 && (
+                <div className="path__links">
+                  <span className="muted small">{picks.ready ? "Ready offline" : "Closest"}</span>
+                  {picks.list.map((c) => (
+                    <button key={c.id} className="chip-btn chip-btn--quiet" onClick={() => nav.openDestination(c.id)}>
+                      {c.cityId && <span className="dot dot--ready" aria-label="Offline ready" />}
+                      {c.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+              {trips.length > 0 && (
+                <div className="path__links">
+                  <span className="muted small">Continue</span>
+                  {trips.slice(0, 3).map((t) => (
+                    <button key={t.id} className="chip-btn" onClick={() => nav.openTrip(t.id)}>
+                      {t.name}
+                    </button>
+                  ))}
+                </div>
+              )}
+            </section>
+
+            <section className="path" aria-labelledby="path-explore">
+              <div className="path__head">
+                <span className="path__icon" aria-hidden>
+                  ◎
+                </span>
+                <div>
+                  <h2 id="path-explore">Explore</h2>
+                  <p className="muted small">
+                    Not sure yet: {candidatesCount} destinations on a map, by theme, distance, region and dates.
+                  </p>
+                </div>
+              </div>
+              <div className="path__links">
+                {ALL_THEMES.map((t) => (
+                  <button key={t} className={`chip-btn chip-btn--${t}`} onClick={() => nav.openExplore({ theme: t, region: null, country: null })}>
+                    {THEME_LABELS[t]}
+                  </button>
+                ))}
+              </div>
+              <div className="path__links">
+                {regionsWithCounts(landing.candidates).map((r) => (
+                  <button key={r.id} className="chip-btn chip-btn--quiet" onClick={() => nav.openExplore({ region: r.id, country: null, theme: null })}>
+                    {r.label} <span className="muted">{r.count}</span>
+                  </button>
+                ))}
+              </div>
+              <button className="primary path__go" onClick={() => nav.openExplore()}>
+                Open Explore
+              </button>
+            </section>
+          </div>
         </div>
       </section>
 
@@ -155,27 +199,41 @@ export function DestinationCard({
   score,
   landing,
   onOpen,
+  dated = false,
+  highlighted = false,
+  onHover,
 }: {
   score: DestinationScore;
   landing: Landing;
   onOpen: () => void;
+  /** Scored for chosen dates rather than the best month. */
+  dated?: boolean;
+  highlighted?: boolean;
+  onHover?: (id: string | null) => void;
 }) {
   const c = landing.byId.get(score.destinationId);
   if (!c) return null;
-  const weather = landing.climate(c.id, score.month);
+  const weather = score.weather;
+  const period = dated ? " on your dates" : ` in ${monthName(score.month, "short")}`;
   return (
-    <li className="card">
-      <button className="card__hit" onClick={onOpen} aria-label={`${c.name}: best in ${monthName(score.month)}`}>
+    <li
+      className={`card${highlighted ? " is-highlighted" : ""}`}
+      onMouseEnter={onHover && (() => onHover(c.id))}
+      onMouseLeave={onHover && (() => onHover(null))}
+    >
+      <button className="card__hit" onClick={onOpen} aria-label={`${c.name}: ${dated ? weatherWord(score.factors.seasonFit) : `best in ${monthName(score.month)}`}`}>
         <Photo src={destinationPhoto(c)} alt={c.name} className="card__photo" />
-        <span className="card__badge">Best in {monthName(score.month, "short")}</span>
-        {c.cityId && <span className="card__badge card__badge--right" title="Places, hours and maps are on this device">Offline ready</span>}
+        <span className="card__badge">{dated ? weatherWord(score.factors.seasonFit) : `Best in ${monthName(score.month, "short")}`}</span>
+        {c.cityId && <span className="offline-dot" role="img" aria-label="Offline ready" data-tip="Offline ready" />}
         <span className="card__title">
           <strong>{c.name}</strong>
           <span>{countryLabel(c)}</span>
         </span>
       </button>
       <div className="card__meta">
-        {weather && <span>{weatherText(weather)}</span>}
+        {weather && (
+          <span title="Typical, not a forecast. A rainy day has at least 1 mm of rain (20 years of history).">{weatherText(weather, period)}</span>
+        )}
         <span className="muted">
           ~{formatDuration(score.travelMinutes)} · {distanceText(score.distanceKm)} away
         </span>
@@ -200,6 +258,10 @@ function TripCard({ trip, landing, onOpen }: { trip: Trip; landing: Landing; onO
       </button>
     </li>
   );
+}
+
+function regionsWithCounts(candidates: readonly LandingCandidate[]) {
+  return REGIONS.map((r) => ({ ...r, count: candidates.filter((c) => regionOf(c.countryCode) === r.id).length })).filter((r) => r.count > 0);
 }
 
 export const countryLabel = (c: LandingCandidate) => {
@@ -389,92 +451,6 @@ function HomeForm({ onDone, initial = "", compact = false }: { onDone?: () => vo
         {busy ? "Finding…" : "Save"}
       </button>
     </form>
-  );
-}
-
-// ------------------------------------------------------------ explore
-
-/** Every candidate as a grid, filtered by theme, ranked for the window. */
-export function Explore({ nav, onBack }: { nav: HubNav; onBack: () => void }) {
-  const { home, landingConfig } = useStore();
-  const landing = useLanding();
-  const [theme, setTheme] = useState<Theme | null>(null);
-  const [sort, setSort] = useState<"score" | "travel">("score");
-  const [q, setQ] = useState("");
-  const query = normalizeName(q);
-
-  const ranked = useMemo(() => {
-    const scores = landing.candidates
-      .filter((c) => !theme || c.themeTags.includes(theme))
-      .filter((c) => !query || normalizeName(c.name).includes(query) || normalizeName(countryLabel(c)).includes(query))
-      .map((c) => landing.bestFor(c.id))
-      .filter((s): s is DestinationScore => !!s);
-    return sort === "travel" ? scores.sort((a, b) => a.travelMinutes - b.travelMinutes) : scores.sort((a, b) => b.score - a.score);
-  }, [landing, theme, sort, query]);
-
-  return (
-    <div className="hub">
-      <TopBar onBack={onBack} title="Explore" />
-      <div className="explore__bar">
-        <div className="explore__bar-inner">
-          <div className="chips chips--scroll" role="radiogroup" aria-label="Theme">
-            <button role="radio" aria-checked={theme === null} className="chip-btn" onClick={() => setTheme(null)}>
-              All
-            </button>
-            {ALL_THEMES.map((t) => (
-              <button key={t} role="radio" aria-checked={theme === t} className="chip-btn" onClick={() => setTheme(t)}>
-                {THEME_LABELS[t]}
-              </button>
-            ))}
-          </div>
-          <div className="explore__tools">
-            <input
-              type="search"
-              className="explore__filter"
-              placeholder="Filter by name or country"
-              aria-label="Filter destinations"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-            />
-            <select value={sort} onChange={(e) => setSort(e.target.value as "score" | "travel")} aria-label="Sort">
-              <option value="score">Best match</option>
-              <option value="travel">Closest first</option>
-            </select>
-          </div>
-        </div>
-      </div>
-      <main className="hub__main hub__main--tight">
-        {!home ? (
-          <p className="muted">Set your home city on the hub to rank destinations.</p>
-        ) : (
-          <>
-            <p className="muted small">
-              {ranked.length} destination{ranked.length === 1 ? "" : "s"}
-              {theme ? ` for ${THEME_LABELS[theme].toLowerCase()} trips` : ""}, each at its best month in the next{" "}
-              {landingConfig.windowMonths}.
-            </p>
-            {ranked.length === 0 && (
-              <div className="empty-state">
-                <p>Nothing matches{q.trim() ? ` "${q.trim()}"` : ""}.</p>
-                <button
-                  onClick={() => {
-                    setQ("");
-                    setTheme(null);
-                  }}
-                >
-                  Clear filters
-                </button>
-              </div>
-            )}
-            <ul className="grid">
-              {ranked.map((d) => (
-                <DestinationCard key={d.destinationId} score={d} landing={landing} onOpen={() => nav.openDestination(d.destinationId)} />
-              ))}
-            </ul>
-          </>
-        )}
-      </main>
-    </div>
   );
 }
 

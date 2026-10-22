@@ -27,11 +27,14 @@ import { WeatherChart } from "./WeatherChart";
 
 export function DestinationView({
   id,
+  dates,
   onBack,
   onPlanned,
   onBrowse,
 }: {
   id: string;
+  /** Dates chosen in Explore; otherwise a few days in the best month. */
+  dates?: { start: string; end: string };
   onBack: () => void;
   onPlanned: () => void;
   onBrowse: () => void;
@@ -55,7 +58,7 @@ export function DestinationView({
   const landing = useLanding();
   const c = landing.byId.get(id);
   const best = c ? landing.bestFor(c.id) : null;
-  const firstDates = best ? suggestTripDates(best.year, best.month, today()) : suggestTripDates(...nextMonth());
+  const firstDates = dates ? { startDate: dates.start, endDate: dates.end } : best ? suggestTripDates(best.year, best.month, today()) : suggestTripDates(...nextMonth());
   const [startDate, setStartDate] = useState(firstDates.startDate);
   const [endDate, setEndDate] = useState(firstDates.endDate);
   const [name, setName] = useState(c ? `${c.name} in ${monthName(monthOf(firstDates.startDate))}` : "Trip");
@@ -133,7 +136,7 @@ export function DestinationView({
   const nights = validDates ? daysBetween(startDate, endDate) : 0;
 
   return (
-    <div className="dest-page">
+    <div className="dest-page" data-mood={c.themeTags[0]}>
       <section className="dest-hero">
         <Photo src={destinationPhoto(c)} alt={c.name} className="dest-hero__photo" />
         <div className="dest-hero__bar">

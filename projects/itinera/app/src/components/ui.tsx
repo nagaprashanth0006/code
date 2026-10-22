@@ -19,7 +19,7 @@ export const monthName = (month: number, style: "long" | "short" = "long") =>
 
 export function rainText(rainDays: number, period = ""): string {
   const n = Math.round(rainDays);
-  if (rainDays < 0.5) return "little rain";
+  if (rainDays < 0.5) return `little rain${period}`;
   return `~${n} rainy day${n === 1 ? "" : "s"}${period}`;
 }
 
@@ -30,8 +30,13 @@ export function distanceText(km: number): string {
   return `${Math.round(km).toLocaleString("en")} km`;
 }
 
-export function weatherText(w: WeatherSummary): string {
-  return `${Math.round(w.lowC)}–${Math.round(w.highC)} °C · ${rainText(w.rainDays)}`;
+export function weatherText(w: WeatherSummary, period = ""): string {
+  return `${Math.round(w.lowC)}–${Math.round(w.highC)} °C · ${rainText(w.rainDays, period)}`;
+}
+
+/** A word for how typical weather scores for chosen dates (from the season factor). */
+export function weatherWord(seasonFit: number): string {
+  return seasonFit >= 0.8 ? "Great weather" : seasonFit >= 0.55 ? "Fair weather" : "Iffy weather";
 }
 
 /** A modal sheet: centred dialog on wide screens, bottom sheet on phones. */

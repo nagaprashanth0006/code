@@ -5,8 +5,9 @@
  * can be explained. Rows cover the current month plus the next three.
  */
 import { z } from "zod";
-import { monthClimate, type WeatherSummary } from "./climate.js";
-import { addDays, monthWindow, weekdayIndex, type IsoDate } from "./dates.js";
+import { monthClimate, summarizeWeather, type WeatherSummary } from "./climate.js";
+import { addDays, monthOf, monthWindow, weekdayIndex, type IsoDate } from "./dates.js";
+import { summarizeMonthly } from "./destinations.js";
 import { estimateInterCityTravel, haversineKm } from "./geo.js";
 import type { City, ClimateNormal, RouteEdge, Theme } from "./schemas.js";
 import { ThemeSchema } from "./schemas.js";
@@ -31,6 +32,8 @@ export interface DestinationScore {
   travelMinutes: number;
   /** Straight-line distance from home. */
   distanceKm: number;
+  /** Typical weather for the scored month, or for the dates when ranked for dates. */
+  weather: WeatherSummary | null;
 }
 
 /** Anything rankable: a fetched city or a curated destination (see destinations.ts). */
@@ -109,6 +112,53 @@ function travelTo(ctx: ScoringContext, city: Pick<RankCandidate, "id" | "lat" | 
   return { minutes: est.minutes, direct: est.mode !== "flight" };
 }
 
+/** Typical weather for a date range: daily normals when the candidate has them, else the index's monthly figures. */
+export function climateForDates(ctx: ScoringContext, id: string, start: IsoDate, end: IsoDate): WeatherSummary | null {
+  const normals = ctx.normalsByCity.get(id);
+  if (normals && normals.length > 0) return summarizeWeather(normals, start, end);
+  const months = ctx.monthlyClimate?.get(id);
+  return months ? summarizeMonthly(months, start, end) : null;
+}
+
+/**
+ * Ranks candidates for fixed dates instead of each one's best month: the
+ * season factor comes from the typical weather on those dates.
+ */
+export function rankForDates(
+  cities: readonly RankCandidate[],
+  theme: Theme | null,
+  start: IsoDate,
+  end: IsoDate,
+  ctx: ScoringContext,
+): DestinationScore[] {
+  const priceMedian = median([...(ctx.stayPriceByCity?.values() ?? [])]);
+  const out: DestinationScore[] = [];
+  for (const city of cities) {
+    if (city.id === ctx.home.id) continue;
+    const travel = travelTo(ctx, city);
+    const weather = climateForDates(ctx, city.id, start, end);
+    const factors: ScoreFactors = {
+      themeFit: themeFit(city, theme),
+      seasonFit: seasonFit(weather),
+      reachability: reachability(travel.minutes, travel.direct),
+      priceSignal: priceSignal(ctx.stayPriceByCity?.get(city.id), priceMedian),
+    };
+    const score = factors.themeFit * factors.seasonFit * factors.reachability * factors.priceSignal;
+    out.push({
+      destinationId: city.id,
+      theme,
+      year: Number(start.slice(0, 4)),
+      month: monthOf(start),
+      score: Math.round(score * 1000) / 1000,
+      factors,
+      travelMinutes: travel.minutes,
+      distanceKm: Math.round(haversineKm(ctx.home, city)),
+      weather,
+    });
+  }
+  return out.sort((a, b) => b.score - a.score);
+}
+
 function median(values: number[]): number | undefined {
   if (values.length === 0) return undefined;
   const s = [...values].sort((a, b) => a - b);
@@ -152,6 +202,7 @@ export function rankDestinations(
           factors,
           travelMinutes: travel.minutes,
           distanceKm: Math.round(haversineKm(ctx.home, city)),
+          weather: climateFor(ctx, city.id, month),
         };
       }
     }

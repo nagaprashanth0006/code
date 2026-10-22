@@ -351,8 +351,50 @@ button.icon.is-on {
 
 /* ================================================================ hub */
 
-.hub {
+/*
+ * A soft wash of colour behind each page, from the theme in view: the
+ * Explore theme filter, or a destination's main theme. Neutral otherwise.
+ */
+@property --mood {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: rgb(0 0 0 / 0);
+}
+.hub,
+.dest-page {
+  --mood: var(--accent);
+  --mood-strength: 9%;
   min-height: 100vh;
+  background:
+    radial-gradient(1400px 720px at 12% -12%, color-mix(in srgb, var(--mood) var(--mood-strength), transparent), transparent 70%),
+    radial-gradient(1100px 620px at 100% -6%, color-mix(in srgb, var(--mood) calc(var(--mood-strength) * 0.6), transparent), transparent 70%),
+    var(--bg);
+  background-attachment: fixed;
+  transition: --mood 0.7s ease;
+}
+[data-mood] {
+  --mood-strength: 14%;
+}
+[data-mood="romantic"] {
+  --mood: #e0457b;
+}
+[data-mood="solo"] {
+  --mood: #3b82f6;
+}
+[data-mood="adventure"] {
+  --mood: #f08a24;
+}
+[data-mood="nature"] {
+  --mood: #2f9e5b;
+}
+[data-mood="historical"] {
+  --mood: #b7791f;
+}
+[data-mood="culture"] {
+  --mood: #8b5cf6;
+}
+:root[data-theme="dark"] [data-mood] {
+  --mood-strength: 18%;
 }
 .topbar {
   position: sticky;
@@ -376,10 +418,7 @@ button.icon.is-on {
 }
 
 .hero {
-  padding: 48px var(--gutter) 28px;
-  background:
-    radial-gradient(1200px 400px at 10% -10%, var(--accent-soft), transparent 60%),
-    radial-gradient(900px 360px at 100% 0%, color-mix(in srgb, var(--star) 14%, transparent), transparent 60%);
+  padding: 40px var(--gutter) 24px;
 }
 .hero__inner {
   max-width: calc(var(--page) - 2 * var(--gutter));
@@ -707,7 +746,7 @@ button.icon.is-on {
   padding: 10px var(--gutter);
   display: flex;
   gap: 10px 16px;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
 }
 .explore__tools {
@@ -715,9 +754,8 @@ button.icon.is-on {
   gap: 8px;
   flex: none;
 }
-.explore__filter {
-  width: 220px;
-  border-radius: 999px !important;
+.explore__view {
+  display: none !important;
 }
 .empty-state {
   display: grid;
@@ -1752,15 +1790,11 @@ button.icon.is-on {
   .explore__bar-inner {
     flex-wrap: wrap;
   }
-  .chips--scroll {
-    flex: 1 1 100%;
-  }
   .explore__tools {
     flex: 1 1 100%;
   }
-  .explore__filter {
+  .explore__tools select {
     flex: 1;
-    width: auto;
   }
   .offline-card {
     flex-direction: column;
@@ -2082,4 +2116,383 @@ button.icon.is-on {
 .plan-card__add h3 {
   margin: 0;
   font-size: 14px;
+}
+
+/* ============================================== plan and explore paths */
+
+.paths {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 4px;
+}
+.path {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 20px;
+  border-radius: var(--radius-lg);
+  background: color-mix(in srgb, var(--surface) 82%, transparent);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-sm);
+  min-width: 0;
+}
+.path__head {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+.path__head h2 {
+  font-size: 1.25rem;
+  font-weight: 750;
+}
+.path__icon {
+  width: 44px;
+  height: 44px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 20px;
+}
+.path__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.path .search {
+  max-width: none;
+}
+.path__go {
+  justify-self: start;
+  min-height: 40px;
+  padding: 8px 20px;
+}
+.chip-btn--quiet {
+  font-weight: 500;
+}
+/* A small dot of each theme's colour, matching the page wash when it's picked. */
+.chip-btn[class*="chip-btn--"]:not(.chip-btn--quiet)::before {
+  content: "";
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  margin-right: 7px;
+  vertical-align: 1px;
+  background: var(--mood);
+}
+.chip-btn--romantic {
+  --mood: #e0457b;
+}
+.chip-btn--solo {
+  --mood: #3b82f6;
+}
+.chip-btn--adventure {
+  --mood: #f08a24;
+}
+.chip-btn--nature {
+  --mood: #2f9e5b;
+}
+.chip-btn--historical {
+  --mood: #b7791f;
+}
+.chip-btn--culture {
+  --mood: #8b5cf6;
+}
+
+/* ============================================================ filters */
+
+.filters {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  flex: 1;
+}
+.filters__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.filters__query {
+  width: 220px;
+  border-radius: 999px !important;
+}
+.filters__clear {
+  white-space: nowrap;
+}
+.range {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  font-size: 13px;
+}
+.range__label {
+  min-width: 112px;
+  white-space: nowrap;
+}
+.range input {
+  width: 110px;
+  accent-color: var(--accent);
+}
+.range.is-disabled {
+  opacity: 0.55;
+}
+.dates {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.dates input {
+  min-height: 34px;
+  border-radius: 999px !important;
+  padding: 4px 12px;
+}
+.filters--compact {
+  gap: 8px;
+}
+.filters--compact .chip-btn {
+  min-height: 30px;
+  padding: 2px 11px;
+  font-size: 12.5px;
+}
+.filters--compact .filters__row > * {
+  font-size: 12.5px;
+}
+.filters--compact .filters__query {
+  flex: 1 1 100%;
+  width: auto;
+}
+.filters--compact select {
+  flex: 1 1 0;
+  min-width: 0;
+}
+.filters--compact .range {
+  flex: 1 1 100%;
+  justify-content: space-between;
+}
+.filters--compact .range input {
+  flex: 1;
+}
+.pane__header--filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.pane__header--filters .pane__kind {
+  font-size: 12.5px;
+}
+
+/* ========================================================= offline dot */
+
+.offline-dot {
+  position: absolute;
+  z-index: 2;
+  top: 12px;
+  right: 12px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow:
+    0 0 0 2px #fff,
+    0 1px 6px rgb(0 0 0 / 0.35);
+}
+
+/* A tooltip for anything with data-tip: on hover, and on keyboard focus. */
+:where([data-tip]) {
+  position: relative;
+}
+[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  z-index: 50;
+  right: -6px;
+  top: calc(100% + 8px);
+  width: max-content;
+  max-width: 260px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: var(--text);
+  color: var(--bg);
+  font: 500 12px/1.4 var(--font);
+  text-align: left;
+  white-space: normal;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(-2px);
+  pointer-events: none;
+  transition:
+    opacity 0.12s,
+    transform 0.12s;
+}
+[data-tip]:hover::after,
+[data-tip]:focus-visible::after {
+  opacity: 1;
+  transform: none;
+}
+.offline-dot[data-tip]::after {
+  white-space: nowrap;
+}
+.info {
+  cursor: help;
+  color: var(--muted);
+  border-radius: 50%;
+}
+.info[data-tip]::after {
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, -2px);
+}
+.info[data-tip]:hover::after,
+.info[data-tip]:focus-visible::after {
+  transform: translate(-50%, 0);
+}
+
+/* ============================================================ explore */
+
+.explore__body {
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: 14px var(--gutter) 48px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(360px, 40%);
+  gap: 20px;
+  align-items: start;
+}
+.explore__list {
+  display: grid;
+  gap: 14px;
+  min-width: 0;
+}
+.explore__list .grid {
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+}
+.explore__aside {
+  position: sticky;
+  top: calc(57px + var(--bar-h, 110px) + 14px);
+  height: calc(100vh - 57px - var(--bar-h, 110px) - 28px);
+  min-height: 320px;
+}
+.explore-map {
+  position: relative;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  background: var(--surface-2);
+}
+.explore-map__canvas {
+  position: absolute;
+  inset: 0;
+}
+.explore-map__legend {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  display: flex;
+  gap: 12px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  background: var(--glass);
+  backdrop-filter: blur(8px);
+  box-shadow: var(--shadow-sm);
+}
+.explore-map__note {
+  position: absolute;
+  inset: auto 10px 48px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--glass);
+  text-align: center;
+}
+.dot {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  margin-right: 4px;
+  vertical-align: -0.5px;
+}
+.dot--ready {
+  background: #22c55e;
+}
+.dot--accent {
+  background: var(--accent);
+}
+.dot--home {
+  background: #f59e0b;
+}
+.explore-popup .maplibregl-popup-content {
+  display: grid;
+  gap: 2px;
+  min-width: 160px;
+}
+.explore-popup span {
+  color: var(--muted);
+}
+.explore-popup button {
+  justify-self: start;
+  margin-top: 4px;
+}
+.card.is-highlighted .card__hit {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+.segmented--inline {
+  margin: 0;
+  grid-template-columns: auto auto;
+}
+.explore__summary strong {
+  color: var(--text);
+}
+
+@media (max-width: 1100px) {
+  .explore__body {
+    grid-template-columns: minmax(0, 1fr) minmax(300px, 38%);
+  }
+}
+@media (max-width: 860px) {
+  .paths {
+    grid-template-columns: 1fr;
+  }
+  .explore__view {
+    display: grid !important;
+  }
+  .explore__body {
+    grid-template-columns: 1fr;
+  }
+  .explore__body[data-view="list"] .explore__aside,
+  .explore__body[data-view="map"] .explore__list {
+    display: none;
+  }
+  .explore__aside {
+    position: static;
+    height: calc(100vh - 57px - var(--bar-h, 160px) - 28px);
+  }
+  .filters__query {
+    flex: 1 1 100%;
+    width: auto;
+  }
+  .filters__row select {
+    flex: 1 1 0;
+    min-width: 0;
+  }
+  .range {
+    flex: 1 1 100%;
+    justify-content: space-between;
+  }
+  .range input {
+    flex: 1;
+  }
 }
